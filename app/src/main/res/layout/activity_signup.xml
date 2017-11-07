@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/bg_screen1"
+    tools:context="capstone.heartbeat.SignupActivity">
+
+    <ImageView
+        android:layout_width="@dimen/logo_width_height"
+        android:layout_height="@dimen/logo_width_height"
+        app:srcCompat="@drawable/ic_heartbeat_white" />
+
+    <ScrollView
+        android:id="@+id/signup_form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/email_signup_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="@dimen/login_signup_width"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <AutoCompleteTextView
+                    android:id="@+id/username"
+                    android:layout_width="@dimen/login_signup_width"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/standardWhite"
+                    android:hint="@string/prompt_username"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:singleLine="true"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="@dimen/login_signup_width"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <EditText
+                    android:id="@+id/fullname"
+                    android:layout_width="@dimen/login_signup_width"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/standardWhite"
+                    android:hint="@string/prompt_fullname"
+                    android:inputType="textPersonName"
+                    android:maxLines="1"
+                    android:singleLine="true"/>
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="@dimen/login_signup_width"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <EditText
+                    android:id="@+id/email"
+                    android:layout_width="@dimen/login_signup_width"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_email"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:backgroundTint="@color/standardWhite"
+                    android:singleLine="true" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="@dimen/login_signup_width"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="@dimen/login_signup_width"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/standardWhite"
+                    android:hint="@string/prompt_password"
+                    android:imeActionId="@+id/btn_login"
+                    android:imeActionLabel="@string/action_sign_in"
+                    android:imeOptions="actionUnspecified"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:singleLine="true"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="@dimen/login_signup_width"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <EditText
+                    android:id="@+id/confirmPassowrd"
+                    android:layout_width="@dimen/login_signup_width"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/prompt_confirmPassword"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:backgroundTint="@color/standardWhite"
+                    android:textColorHint="@color/standardWhite"
+                    android:singleLine="true" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="@dimen/login_signup_width"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp">
+
+                <CheckBox
+                    android:layout_width="@dimen/login_signup_width"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textColor="@color/standardWhite"
+                    android:buttonTint="@color/standardWhite"
+                    android:text="@string/verify_asian_age"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Button
+                android:id="@+id/email_sign_in_button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="@dimen/login_signup_width"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:text="@string/action_sign_up"
+                android:backgroundTint="@color/standardWhite"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

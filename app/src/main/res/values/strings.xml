@@ -1,0 +1,89 @@
+<resources>
+    <string name="app_name">HeartBeat</string>
+
+    <!-- Strings related to introductory pages -->
+    <string name="title_activity_welcome">Home Screen</string>
+    <string name="next">NEXT</string>
+    <string name="skip">SKIP</string>
+    <string name="start">GOT IT</string>
+
+    <string name="slide_1_title">Beat Curiousity</string>
+    <string name="slide_1_desc">Check your heart health status</string>
+
+    <string name="slide_2_title">Beat Unproductivity</string>
+    <string name="slide_2_desc">Change your lifestyle</string>
+
+    <string name="slide_3_title">Beat Inconsistency</string>
+    <string name="slide_3_desc">Keep your heart healthy</string>
+
+    <string name="slide_4_title">Heart Beat</string>
+    <string name="slide_4_desc">Have fun, have a healthy heart!</string>
+
+
+    <!-- Strings for action bar -->
+    <string name="button_next">NEXT</string>
+    <string name="button_proceed">PROCEED</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="prompt_confirmPassword">Confirm password</string>
+    <string name="prompt_fullname">Full name</string>
+    <string name="prompt_username">Username</string>
+    <string name="verify_asian_age">I am Asian and I am between 23 to 85 years old.</string>
+    <string name="action_sign_in">LOGIN</string>
+    <string name="action_sign_up">SIGN UP</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <!-- Strings related to demographics -->
+    <string name="demo_birthday">Date of Birth</string>
+    <string name="demo_gender">Gender</string>
+
+    <!-- Strings related to laboratory values -->
+    <string name="lab_bp">Set your Systolic and Diastolic Blood Pressure</string>
+    <string name="instruction_bp">Hold/pump the bulb to set the blood pressure</string>
+    <string name="lab_systolic">Systolic (First number)</string>
+    <string name="lab_diastolic">Diastolic (Second number)</string>
+    <string name="lab_chol">Set your Total Cholesterol and HDL</string>
+    <string name="instruction_chol">Slide up and down to adjust</string>
+    <string name="lab_totalchol">Total Cholesterol</string>
+    <string name="lab_hdl">High-density Lipids</string>
+
+    <!-- Strings related to history -->
+    <string name="history_diabetes">Do you have a Diabetes? (Present)</string>
+    <string name="history_disease">Do you have any of these diseases? (Previous or Present)</string>
+    <string name="instruction_disease">Please select all of the diseases you have/had:</string>
+    <string name="history_family">Do you have a first degree relative ages 60 years old and below who has/had heart attack? (Previous/Present)</string>
+
+    <!-- Strings related to habits -->
+    <string name="habits_all">Choose all of your habits:</string>
+    <string name="habits_smoke">Do you smoke?</string>
+    <string name="habits_smoker">How many sticks do you consume daily?</string>
+    <string name="habits_nonsmoker">Have you smoked before?</string>
+    <string name="habits_bptreatment">Are you on blood pressure treatment?</string>
+    <string name="habits_physical">How physically active are you?</string>
+    <string name="habits_time">Set your Free time and Sleeping time</string>
+
+    <!-- Strings related to risk results -->
+    <string name="results_risk">Probability of 10-Year Risk of Stroke and Heart Attack</string>
+    <string name="instruction_result">Tap each graph to view details</string>
+    <string name="results_riskfactors">Risk Factors (Highest - Lowest)</string>
+
+    <!-- Strings related to navigation drawer -->
+    <string name="title_activity_menu">Menu</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+</resources>
