@@ -50,7 +50,7 @@ public class WelcomeActivity extends AppCompatActivity {
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         btnSkip = (Button) findViewById(R.id.btn_skip);
         btnNext = (Button) findViewById(R.id.btn_next);
-        btnLogin = (Button) findViewById(R.id.btn_login);
+
         btnSignup = (Button) findViewById(R.id.btn_signup);
 
         // layouts of all welcome sliders
@@ -93,6 +93,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     private void addBottomDots(int currentPage) {
@@ -136,16 +137,27 @@ public class WelcomeActivity extends AppCompatActivity {
             if (position == layouts.length - 1) {
                 // last page. make button text to GOT IT
                 //btnNext.setText(getString(R.string.start));
+
+                btnLogin = (Button) findViewById(R.id.btn_login);
+                btnSignup = (Button) findViewById(R.id.btn_signup);
+
                 btnSkip.setVisibility(View.GONE);
                 btnNext.setVisibility(View.GONE);
-                /*btnLogin.setOnClickListener(new View.OnClickListener() {
+                btnLogin.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         startActivity(new Intent(WelcomeActivity.this, LoginActivity.class));
                         finish();
                     }
-                });*/
+                });
 
+                btnSignup.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(WelcomeActivity.this, SignupActivity.class));
+                        finish();
+                    }
+                });
             } else {
                 // still pages are left
                 btnNext.setText(getString(R.string.next));
