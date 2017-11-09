@@ -1,4 +1,7 @@
 <resources>
+    <item name="visible" type="id"></item>
+    <item name="masked" type="id"></item>
+
     <string name="app_name">HeartBeat</string>
 
     <!-- Strings related to introductory pages -->
