@@ -6,26 +6,21 @@ package capstone.heartbeat;
 
 public class Qrisk2Male {
     private double age,sbp, totalchl, hdl, height,weight;
-    private int ethnic,  gender, smoke,af, diabType1,diabType2,fhcvd,ra,CKD,CHF, HA, VHD,bptreatment;
+    private int ethnic, smoke,af, diabType1,diabType2,fhcvd,ra,CKD,CHF, HA, VHD,bptreatment;
     private double town = 1;
-    public  void Qrisk2Male(double age,double sbp,double totalchl,double hdl,double height,double weight, int ethnic, int gender, int smoke
-            ,int af,int diabType1, int diabType2, int fhcvd, int ra, int CKD, int CHF, int HA, int VHD,int bptreatment){
+    public  void Qrisk2Male(double age,double sbp,double totalchl,double hdl,double height,double weight, int ethnic,  int smoke
+            ,int af,int diabType1, int diabType2, int fhcvd, int ra,int bptreatment){
        this.age= age;
        this.sbp = sbp;
        this.totalchl = totalchl;
        this.af = af;
        this.hdl = hdl;
-       this.gender = gender;
        this.ethnic = ethnic;
        this.diabType1 = diabType1;
        this.diabType2 = diabType2;
        this.ra = ra;
-       this.CHF = CHF;
        this.smoke = smoke;
        this.fhcvd = fhcvd;
-       this.CKD = CKD;
-       this.HA = HA;
-       this.VHD = VHD;
        this.height = height;
        this.weight = weight;
        this.bptreatment = bptreatment;

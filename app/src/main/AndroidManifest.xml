@@ -33,7 +33,9 @@
             android:label="@string/title_activity_menu"
             android:theme="@style/AppTheme" />
         <activity android:name=".LaboratoryActivity" />
-        <activity android:name=".HistoryActivity"></activity>
+        <activity android:name=".HistoryActivity" />
+        <activity android:name=".SampleInput1"></activity>
+        <activity android:name=".SampleInput2"/>
     </application>
 
 </manifest>
