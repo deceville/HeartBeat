@@ -31,6 +31,16 @@ public class SampleInput1 extends AppCompatActivity {
         v5 = hdl.getText().toString();
         v6 = sbp.getText().toString();
 
+
+        final double i1,i2,i3,i4,i5,i6;
+
+        i1 = Double.parseDouble(v1);
+        i2 = Double.parseDouble(v2);
+        i3 = Double.parseDouble(v3);
+        i4 = Double.parseDouble(v4);
+        i5 = Double.parseDouble(v5);
+        i6 = Double.parseDouble(v6);
+
         Button next = (Button)findViewById(R.id.next);
 
         next.setOnClickListener(new View.OnClickListener() {
@@ -38,12 +48,13 @@ public class SampleInput1 extends AppCompatActivity {
             public void onClick(View view) {
 
                 Bundle extras = new Bundle();
-                extras.putString("age",v1);
-                extras.putString("weight",v2);
-                extras.putString("height",v3);
-                extras.putString("chl",v4);
-                extras.putString("hdl",v5);
-                extras.putString("sbp",v6);
+                extras.putDouble("age",i1);
+                extras.putDouble("weight",i2);
+                extras.putDouble("height",i3);
+                extras.putDouble("chl",i4);
+                extras.putDouble("hdl",i5);
+                extras.putDouble("sbp",i6);
+
 
                 Intent intent = new Intent(getApplicationContext(),SampleInput2.class);
                 intent.putExtras(extras);

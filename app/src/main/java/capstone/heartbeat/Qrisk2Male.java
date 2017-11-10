@@ -8,6 +8,10 @@ public class Qrisk2Male {
     private double age,sbp, totalchl, hdl, height,weight;
     private int ethnic, smoke,af, diabType1,diabType2,fhcvd,ra,CKD,CHF, HA, VHD,bptreatment;
     private double town = 1;
+
+    public Qrisk2Male() {
+    }
+
     public  void Qrisk2Male(double age,double sbp,double totalchl,double hdl,double height,double weight, int ethnic,  int smoke
             ,int af,int diabType1, int diabType2, int fhcvd, int ra,int bptreatment){
        this.age= age;
@@ -26,6 +30,23 @@ public class Qrisk2Male {
        this.bptreatment = bptreatment;
     }
 
+
+    public void setValue( double[] continuous, int[] bool){
+        this.age= continuous[0];
+        this.sbp = continuous[1];
+        this.totalchl = continuous[2];
+        this.af = bool[2];
+        this.hdl = continuous[3];
+        this.ethnic = bool[0];
+        this.diabType1 = bool[3];
+        this.diabType2 = bool[4];
+        this.ra = bool[6];
+        this.smoke = bool[1];
+        this.fhcvd = bool[5];
+        this.height = continuous[4];
+        this.weight = continuous[5];
+        this.bptreatment = bool[7];
+    }
     public double getResult(){
        double surv = 0.978794217109680;
 

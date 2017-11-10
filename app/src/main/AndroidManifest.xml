@@ -36,6 +36,7 @@
         <activity android:name=".HistoryActivity" />
         <activity android:name=".SampleInput1"></activity>
         <activity android:name=".SampleInput2"/>
+        <activity android:name=".Result"/>
     </application>
 
 </manifest>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
 
@@ -18,6 +18,7 @@
             android:text="Gender" />
 
         <RadioGroup
+            android:id="@+id/gender"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="horizontal">
@@ -54,6 +55,7 @@
             android:text="Diabetes Type 1" />
 
         <RadioGroup
+            android:id="@+id/type1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -89,6 +91,7 @@
             android:text="Diabetes Type 2" />
 
         <RadioGroup
+            android:id="@+id/type2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -124,6 +127,7 @@
             android:text="Rheumatoid Arthritis" />
 
         <RadioGroup
+            android:id="@+id/rha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -159,6 +163,7 @@
             android:text="Chronic Renal Disease" />
 
         <RadioGroup
+            android:id="@+id/ckd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -193,6 +198,7 @@
             android:text="Chronic Heart Failure" />
 
         <RadioGroup
+            android:id="@+id/chf"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -227,6 +233,7 @@
             android:text="Heart Attack" />
 
         <RadioGroup
+            android:id="@+id/heartAttack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -261,6 +268,7 @@
             android:text="BP Treatment" />
 
         <RadioGroup
+            android:id="@+id/bp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -296,6 +304,7 @@
             android:text="Family History" />
 
         <RadioGroup
+            android:id="@+id/fhcvd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -330,6 +339,7 @@
             android:text="Atrial Fibrillation" />
 
         <RadioGroup
+            android:id="@+id/af"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -349,4 +359,10 @@
                 android:text="No" />
         </RadioGroup>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/done"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Done" />
 </LinearLayout>
