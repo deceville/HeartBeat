@@ -18,7 +18,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
  */
 
-package capstone.heartbeat;
+package com.goodiebag.protractorview;
 
 import android.content.Context;
 import android.content.res.Resources;
