@@ -67,6 +67,16 @@
     <string name="history_disease">Do you have any of these diseases? (Previous or Present)</string>
     <string name="instruction_disease">Please select all of the diseases you have/had:</string>
     <string name="history_family">Do you have a first degree relative ages 60 years old and below who has/had heart attack? (Previous/Present)</string>
+    <string name="btn_yes">Yes</string>
+    <string name="btn_no">No</string>
+
+    <!-- Diseases name -->
+    <string name="disease_congestive">Congestive Heart Failure</string>
+    <string name="disease_heartattack">Heart Attack/Angina</string>
+    <string name="disease_valvular">Valvular Heart Disease</string>
+    <string name="disease_irregular">Irregular Heart Rate</string>
+    <string name="disease_rheumatoid">Rheumatoid Arthritis</string>
+    <string name="disease_chronic">Chronic Kidney Disease (Stage 4 or 5)</string>
 
     <!-- Strings related to habits -->
     <string name="habits_all">Choose all of your habits:</string>
@@ -75,7 +85,14 @@
     <string name="habits_nonsmoker">Have you smoked before?</string>
     <string name="habits_bptreatment">Are you on blood pressure treatment?</string>
     <string name="habits_physical">How physically active are you?</string>
-    <string name="habits_time">Set your Free time and Sleeping time</string>
+    <string name="habits_freetime">Set your free time:</string>
+    <string name="habits_sleeptime">Set your sleeping time:</string>
+
+    <string name="btn_sedentary">Sedentary</string>
+    <string name="btn_light">Lightly active</string>
+    <string name="btn_moderate">Moderately active</string>
+    <string name="btn_very">Very active</string>
+    <string name="btn_extreme">Extremely active</string>
 
     <!-- Strings related to risk results -->
     <string name="results_risk">Probability of 10-Year Risk of Stroke and Heart Attack</string>
