@@ -34,7 +34,8 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".LaboratoryActivity" />
         <activity android:name=".HistoryActivity" />
-        <activity android:name=".HabitsActivity"></activity>
+        <activity android:name=".HabitsActivity" />
+        <activity android:name=".RiskResultsActivity"></activity>
     </application>
 
 </manifest>
