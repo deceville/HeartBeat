@@ -1,4 +1,4 @@
-
+<<<<<<< HEAD
 include ':app', ':ScrollableNumberPicker', ':ProtractorView', ':CircleProgress'
 =======
  include ':app', ':ScrollableNumberPicker', ':ProtractorView'

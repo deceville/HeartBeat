@@ -26,7 +26,7 @@
         <activity
             android:name=".LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
+<<<<<<< HEAD
         <activity
             android:name=".DemographicsActivity"
             android:label="@string/title_activity_demo" />
@@ -48,7 +48,7 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main" />
-
+=======
         <activity android:name=".DemographicsActivity" />
         <activity
             android:name=".Menu"
@@ -64,7 +64,7 @@
         <activity android:name=".HabitsActivity" />
         <activity android:name=".RiskResultsActivity"></activity>
 
-
+>>>>>>> d8ab6e5e1002b748c0146c7925259e4488441110
     </application>
 
 </manifest>

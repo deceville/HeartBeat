@@ -23,10 +23,10 @@ public class HabitsActivity extends AppCompatActivity {
             @Override
             public void onNumberPicked(int value) {
                 if(value == verticalNumberPicker.getMaxValue()) {
-
-
-
-
+<<<<<<< HEAD
+=======
+                    Toast.makeText(HabitsActivity.this, "max", Toast.LENGTH_LONG).show();
+>>>>>>> d8ab6e5e1002b748c0146c7925259e4488441110
                 }
             }
         });
