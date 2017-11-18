@@ -3,6 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/HeartBeat.iml" filepath="$PROJECT_DIR$/HeartBeat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/libs/ProtractorView/ProtractorView.iml" filepath="$PROJECT_DIR$/app/libs/ProtractorView/ProtractorView.iml" />
+      <module fileurl="file://C:\Users\torre\AndroidStudioProjects\HeartBeat\app\libs\ProtractorView\ProtractorView.iml" filepath="C:\Users\torre\AndroidStudioProjects\HeartBeat\app\libs\ProtractorView\ProtractorView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/libs/ScrollableNumberPicker/ScrollableNumberPicker.iml" filepath="$PROJECT_DIR$/app/libs/ScrollableNumberPicker/ScrollableNumberPicker.iml" />
+      <module fileurl="file://C:\Users\torre\AndroidStudioProjects\HeartBeat\app\libs\ScrollableNumberPicker\ScrollableNumberPicker.iml" filepath="C:\Users\torre\AndroidStudioProjects\HeartBeat\app\libs\ScrollableNumberPicker\ScrollableNumberPicker.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

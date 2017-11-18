@@ -1,1 +1,3 @@
-include ':app'
+ include ':app', ':ScrollableNumberPicker', ':ProtractorView'
+project(':ScrollableNumberPicker').projectDir = new File('app/libs/ScrollableNumberPicker')
+project(':ProtractorView').projectDir = new File('app/libs/ProtractorView')

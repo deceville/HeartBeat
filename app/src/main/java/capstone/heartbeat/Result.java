@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 public class Result extends AppCompatActivity {
 
-   private TextView haresult;
+   private TextView haresult,stresult;
 
 
     @Override
@@ -20,10 +20,14 @@ public class Result extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sample_input3);
 
-        Bundle bundle = new Bundle();
+        Bundle bundle = getIntent().getExtras();
         double res = bundle.getDouble("result");
+        double stroke = bundle.getDouble("stroke");
+        String str = Double.toString(stroke);
         String ress = Double.toString(res);
         haresult = (TextView)findViewById(R.id.haresult);
+        stresult = (TextView)findViewById(R.id.stresult);
+        stresult.setText(str);
         haresult.setText(ress);
     }
 }

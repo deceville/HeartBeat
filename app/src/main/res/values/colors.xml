@@ -23,6 +23,14 @@
     <color name="dot_light_screen3">#93c6fd</color>
     <color name="dot_light_screen4">#e4b5fc</color>
 
+    <color name="progress_gray">#FFD8D8D8</color>
+    <color name="progress_gray_dark">#FF383838</color>
+    <color name="default_blue_light">#FF33b5e5</color>
+
+    <color name="progress_gray_trans">#80D8D8D8</color>
+    <color name="progress_gray_dark_teans">#80383838</color>
+    <color name="default_blue_light_teans">#8033b5e5</color>
+
     <array name="array_dot_active">
         <item>@color/dot_light_screen1</item>
         <item>@color/dot_light_screen2</item>
@@ -36,4 +44,8 @@
         <item>@color/dot_dark_screen3</item>
         <item>@color/dot_dark_screen4</item>
     </array>
+
+    <!-- circular button colors -->
+    <color name="circle_green">#8BC34A</color>
+    <color name="circle_red">#FF5722</color>
 </resources>

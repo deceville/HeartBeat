@@ -17,4 +17,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Risk of Heart Attack" />
+    <TextView
+        android:id="@+id/stresult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Risk of Stroke" />
 </LinearLayout>
