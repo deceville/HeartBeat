@@ -1,5 +1,6 @@
 package capstone.heartbeat;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -15,6 +16,7 @@ public class HistoryActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.button, menu);
         return true;
@@ -29,6 +31,7 @@ public class HistoryActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.next) {
+            startActivity(new Intent(getApplicationContext(),MainActivity.class));
             return true;
         }
 

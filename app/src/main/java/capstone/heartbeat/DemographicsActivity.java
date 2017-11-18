@@ -1,5 +1,6 @@
 package capstone.heartbeat;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,22 +9,18 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.VerticalSeekBar;
-import android.widget.VerticalSeekBar_Reverse;
 
 public class DemographicsActivity extends AppCompatActivity {
     VerticalSeekBar verticalSeekBar=null;
-    VerticalSeekBar_Reverse verticalSeekBar_Reverse=null;
-    TextView vsProgress,vs_reverseProgress=null;
+    TextView vsProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demographics1);
 
-        verticalSeekBar = (VerticalSeekBar)findViewById(R.id.vertical_Seekbar);
-        verticalSeekBar_Reverse = (VerticalSeekBar_Reverse)findViewById(R.id.seekbar_reverse);
-        vsProgress = (TextView)findViewById(R.id.vertical_sb_progresstext);
-        vs_reverseProgress = (TextView)findViewById(R.id.reverse_sb_progresstext);
+        verticalSeekBar = (VerticalSeekBar) findViewById(R.id.vertical_Seekbar);
+        vsProgress = (TextView) findViewById(R.id.vertical_sb_progresstext);
 
 
         verticalSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
@@ -43,29 +40,7 @@ public class DemographicsActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress,
                                           boolean fromUser) {
-                vsProgress.setText(progress+"");
-
-            }
-        });
-
-        verticalSeekBar_Reverse.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                // TODO Auto-generated method stub
-
-            }
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress,
-                                          boolean fromUser) {
-                vs_reverseProgress.setText(progress+"");
+                vsProgress.setText(progress + "");
 
             }
         });
@@ -73,6 +48,7 @@ public class DemographicsActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.button, menu);
         return true;
@@ -87,6 +63,7 @@ public class DemographicsActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.next) {
+            startActivity(new Intent(getApplicationContext(),LaboratoryActivity.class));
             return true;
         }
 

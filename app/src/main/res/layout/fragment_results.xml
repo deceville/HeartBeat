@@ -1,0 +1,29 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context="capstone.heartbeat.ResultsFragment">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.github.lzyzsd.circleprogress.DonutProgress
+            android:id="@+id/donut_progress"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            custom:donut_finished_color="#0066FF"
+            custom:donut_finished_stroke_width="15dp"
+            android:backgroundTint="#0066FF"
+            android:backgroundTintMode="add"
+            custom:donut_show_text="false"
+            custom:donut_unfinished_color="@color/primary_material_light"
+            custom:donut_unfinished_stroke_width="15dp" />
+
+
+    </LinearLayout>
+
+</FrameLayout>

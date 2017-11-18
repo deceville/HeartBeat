@@ -43,10 +43,14 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
-    <string name="title_activity_main">MainActivity</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_activity_main">Home</string>
+    <string name="title_activity_demo">Demographics</string>
+    <string name="title_activity_lab">Laboratory Values</string>
+    <string name="title_activity_history">History</string>
+    <string name="title_activity_results">Risk Results</string>
+    <string name="title_activity_habits">Habits</string>
+    <string name="title_activity_profile">Profile</string>
+    <string name="title_activity_editprofile">Edit Profile</string>
 
     <!-- Strings related to demographics -->
     <string name="demo_birthday">Date of Birth</string>
@@ -106,4 +110,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

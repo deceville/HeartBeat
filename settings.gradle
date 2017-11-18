@@ -1,3 +1,4 @@
-include ':app', ':ScrollableNumberPicker', ':ProtractorView'
+include ':app', ':ScrollableNumberPicker', ':ProtractorView', ':CircleProgress'
 project(':ScrollableNumberPicker').projectDir = new File('app/libs/ScrollableNumberPicker')
 project(':ProtractorView').projectDir = new File('app/libs/ProtractorView')
+project(':CircleProgress').projectDir = new File('app/libs/CircleProgress')
