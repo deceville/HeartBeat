@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPicker;
 import com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPickerListener;
@@ -18,13 +17,22 @@ public class HabitsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_habits);
 
 
-        final ScrollableNumberPicker verticalNumberPicker = (ScrollableNumberPicker) findViewById(R.id.np_freetime);
-        verticalNumberPicker.setListener(new ScrollableNumberPickerListener() {
+        final ScrollableNumberPicker np_freetime_hr = (ScrollableNumberPicker) findViewById(R.id.np_freetime_hr);
+        np_freetime_hr.setListener(new ScrollableNumberPickerListener() {
             @Override
             public void onNumberPicked(int value) {
-                if(value == verticalNumberPicker.getMaxValue()) {
+                if(value == np_freetime_hr.getMaxValue()) {
 
 
+                }
+            }
+        });
+
+        final ScrollableNumberPicker np_freetime_min = (ScrollableNumberPicker) findViewById(R.id.np_freetime_min);
+        np_freetime_min.setListener(new ScrollableNumberPickerListener() {
+            @Override
+            public void onNumberPicked(int value) {
+                if(value == np_freetime_min.getMaxValue()) {
 
 
                 }
@@ -36,14 +44,14 @@ public class HabitsActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         super.onCreateOptionsMenu(menu);
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.button, menu);
+        getMenuInflater().inflate(R.menu.next_button, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
+        // automatically handle clicks on the Home/Up next_button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
