@@ -6,12 +6,47 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import abak.tr.com.boxedverticalseekbar.BoxedVertical;
+
 public class LaboratoryActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_laboratory);
+
+        BoxedVertical chol_total = (BoxedVertical)findViewById(R.id.chol_total);
+        BoxedVertical chol_hdl = (BoxedVertical)findViewById(R.id.chol_hdl);
+
+        chol_total.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
+            @Override
+            public void onPointsChanged(BoxedVertical boxedPoints, final int value) {
+                System.out.println(value);
+            }
+
+            @Override
+            public void onStartTrackingTouch(BoxedVertical boxedPoints) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(BoxedVertical boxedPoints) {
+            }
+        });
+
+        chol_hdl.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
+            @Override
+            public void onPointsChanged(BoxedVertical boxedPoints, final int value) {
+                System.out.println(value);
+            }
+
+            @Override
+            public void onStartTrackingTouch(BoxedVertical boxedPoints) {
+            }
+
+            @Override
+            public void onStopTrackingTouch(BoxedVertical boxedPoints) {
+            }
+        });
     }
 
     @Override

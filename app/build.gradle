@@ -35,4 +35,5 @@ dependencies {
     implementation project(':CircleProgress')
     implementation project(':DWRulerView')
     implementation project(':HorizontalPicker')
+    implementation project(':BoxedVerticalSeekBar')
 }

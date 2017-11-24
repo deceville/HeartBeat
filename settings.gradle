@@ -1,7 +1,8 @@
 
-include ':app', ':ScrollableNumberPicker', ':CircleProgress', ':DWRulerView', ':HorizontalPicker'
+include ':app', ':ScrollableNumberPicker', ':CircleProgress', ':DWRulerView', ':HorizontalPicker', ':BoxedVerticalSeekBar'
 include ':app', ':ScrollableNumberPicker'
 project(':ScrollableNumberPicker').projectDir = new File('app/libs/ScrollableNumberPicker')
 project(':CircleProgress').projectDir = new File('app/libs/CircleProgress')
 project(':DWRulerView').projectDir = new File('app/libs/DWRulerView')
 project(':HorizontalPicker').projectDir = new File('app/libs/HorizontalPicker')
+project(':BoxedVerticalSeekBar').projectDir = new File('app/libs/BoxedVerticalSeekBar')
