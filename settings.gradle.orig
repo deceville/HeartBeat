@@ -1,0 +1,8 @@
+<<<<<<< HEAD
+include ':app', ':ScrollableNumberPicker', ':ProtractorView', ':CircleProgress'
+=======
+ include ':app', ':ScrollableNumberPicker', ':ProtractorView'
+>>>>>>> d8ab6e5e1002b748c0146c7925259e4488441110
+project(':ScrollableNumberPicker').projectDir = new File('app/libs/ScrollableNumberPicker')
+project(':ProtractorView').projectDir = new File('app/libs/ProtractorView')
+project(':CircleProgress').projectDir = new File('app/libs/CircleProgress')

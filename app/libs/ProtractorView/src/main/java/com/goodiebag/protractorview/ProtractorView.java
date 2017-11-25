@@ -312,7 +312,7 @@ public class ProtractorView extends View {
                 startTickX = (radiusOffset * Math.cos(thetaInRadians));
                 midTickX = startTickX + (((mTickLength / 2)) * Math.cos(thetaInRadians));
                 midTickY = slope * midTickX;
-                canvas.drawText("" + (360 - i), (float) midTickX, (float) midTickY, (mAngle <= 359 - i) ? mTickTextPaint : mTickTextColoredPaint);
+                canvas.drawText("" + (360 - i), (float) midTickX, (float) midTickY, (mAngle >= 359 - i) ? mTickTextPaint : mTickTextColoredPaint);
                 count = 0;
             } else {
                 //for tick

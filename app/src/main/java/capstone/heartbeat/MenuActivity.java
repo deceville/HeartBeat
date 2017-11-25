@@ -62,7 +62,7 @@ public class MenuActivity extends AppCompatActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
+        // automatically handle clicks on the Home/Up next_button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
@@ -80,22 +80,41 @@ public class MenuActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-       // if (id == R.id.nav_camera) {
+
+        // if (id == R.id.nav_camera) {
+        // Handle the camera action
+        // } else if (id == R.id.nav_gallery) {
+
+        // } else if (id == R.id.nav_slideshow) {
+
+        // } else if (id == R.id.nav_manage) {
+
+        // } else if (id == R.id.nav_share) {
+
+        // } else if (id == R.id.nav_send) {
+
+        if (id == R.id.nav_home) {
             // Handle the camera action
-       // } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_profile) {
 
-       // } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_results) {
 
-       // } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.nav_plans) {
 
-       // } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_suggestions) {
 
-       // } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_goals) {
 
-       // }
+        } else if (id == R.id.nav_help) {
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+        } else if (id == R.id.nav_about) {
+
+        } else if (id == R.id.nav_logout) {
+        }
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
+
     }
+
 }

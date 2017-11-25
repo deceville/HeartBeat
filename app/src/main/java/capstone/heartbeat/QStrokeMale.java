@@ -27,7 +27,7 @@ public class QStrokeMale {
        this.hdl = continuous[3];
         this.ethnic = bool[0];
         this.diabType1 = bool[3];
-        this.diabType2 = bool[4];
+        this.diabType2  = bool[4];
         this.ra = bool[6];
         this.smoke = bool[1];
         this.fhcvd = bool[5];

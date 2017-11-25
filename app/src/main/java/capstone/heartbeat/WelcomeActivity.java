@@ -133,9 +133,9 @@ public class WelcomeActivity extends AppCompatActivity {
         public void onPageSelected(int position) {
             addBottomDots(position);
 
-            // changing the next button text 'NEXT' / 'GOT IT'
+            // changing the next next_button text 'NEXT' / 'GOT IT'
             if (position == layouts.length - 1) {
-                // last page. make button text to GOT IT
+                // last page. make next_button text to GOT IT
                 //btnNext.setText(getString(R.string.start));
 
                 btnLogin = (Button) findViewById(R.id.btn_login);

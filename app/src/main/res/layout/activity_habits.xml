@@ -303,7 +303,7 @@
                 android:orientation="horizontal">
 
                 <com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPicker
-                    android:id="@+id/np_freetime"
+                    android:id="@+id/np_freetime_hr"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -315,10 +315,101 @@
                     app:snp_minValue="1"
                     app:snp_orientation="vertical"
                     app:snp_stepSize="1"
-                    app:snp_value="5"/>
+                    app:snp_value="1"/>
+
+                <TextView
+                    android:id="@+id/freetime_hr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="hour"/>
+
+                <com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPicker
+                    android:id="@+id/np_freetime_min"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/number_picker_bg_color"
+                    android:paddingEnd="8dp"
+                    android:paddingStart="8dp"
+                    app:snp_buttonTouchScaleFactor="0.8"
+                    app:snp_maxValue="59"
+                    app:snp_minValue="1"
+                    app:snp_orientation="vertical"
+                    app:snp_stepSize="1"
+                    app:snp_value="1"/>
+
+                <TextView
+                    android:id="@+id/freetime_min"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="min"/>
             </LinearLayout>
         </LinearLayout>
 
 
+        <LinearLayout
+            android:id="@+id/sleeptime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/demo_question_padding"
+            android:paddingLeft="@dimen/demo_question_padding"
+            android:paddingRight="@dimen/demo_question_padding"
+            android:layout_below="@+id/freetime">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/habits_sleeptime"
+                android:textAppearance="@android:style/TextAppearance.Material.Title" />
+
+            <LinearLayout android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPicker
+                    android:id="@+id/np_sleeptime_hr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/number_picker_bg_color"
+                    android:paddingEnd="8dp"
+                    android:paddingStart="8dp"
+                    app:snp_buttonTouchScaleFactor="0.8"
+                    app:snp_maxValue="11"
+                    app:snp_minValue="7"
+                    app:snp_orientation="vertical"
+                    app:snp_stepSize="1"
+                    app:snp_value="7"/>
+
+                <TextView
+                    android:id="@+id/sleeptime_hr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=":"/>
+
+                <com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPicker
+                    android:id="@+id/np_sleeptimee_min"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/number_picker_bg_color"
+                    android:paddingEnd="8dp"
+                    android:paddingStart="8dp"
+                    app:snp_buttonTouchScaleFactor="0.8"
+                    app:snp_maxValue="59"
+                    app:snp_minValue="1"
+                    app:snp_orientation="vertical"
+                    app:snp_stepSize="1"
+                    app:snp_value="1"/>
+
+                <TextView
+                    android:id="@+id/sleeptime_min"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PM"/>
+            </LinearLayout>
+        </LinearLayout>
     </RelativeLayout>
 </ScrollView>

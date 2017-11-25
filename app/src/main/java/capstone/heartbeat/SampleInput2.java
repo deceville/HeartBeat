@@ -10,6 +10,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import java.util.List;
+
 public class SampleInput2 extends AppCompatActivity {
 
     public RadioGroup gender,type1,type2,rha,ckd,chf,heartAttack,bp,fhcvd,af,vhd;
@@ -66,10 +68,13 @@ public class SampleInput2 extends AppCompatActivity {
                         final double[] continuous = {bundle.getDouble("age"),bundle.getDouble("sbp"),bundle.getDouble("chl"),bundle.getDouble("hdl"),bundle.getDouble("height")
                                 ,bundle.getDouble("weight")};
 
+                    Qrisk2Male qrisk2m = new Qrisk2Male();
+                    QStrokeMale qstroke = new QStrokeMale();
+                    Qrisk2Female qrisk2f = new Qrisk2Female();
+                    QStrokeFemale qstrokef = new QStrokeFemale();
                     if (v1.equals("Male")){
-                        Qrisk2Male qrisk2m = new Qrisk2Male();
                         double v = qrisk2m.getResult(continuous,bool);
-                        double y = qrisk2m.getStrokeResult(convert(v11),convert(v5),convert(v6),convert(v7));
+                        double y =qstroke.getResult(continuous,bool,convert(v11),convert(v5),convert(v6),convert(v7));
                         Bundle b = new Bundle();
                         b.putDouble("result",v);
                         b.putDouble("stroke",y);
@@ -77,10 +82,11 @@ public class SampleInput2 extends AppCompatActivity {
                         intent.putExtras(b);
                         startActivity(intent);
                     }else if(v1.equals("Female")){
-                        Qrisk2Female qrisk2f = new Qrisk2Female();
+                        double y =qstrokef.getResult(continuous,bool,convert(v11),convert(v5),convert(v6),convert(v7));
                         double v = qrisk2f.getResult(continuous,bool);
                         Bundle b = new Bundle();
                         b.putDouble("result",v);
+                        b.putDouble("stroke",y);
                         Intent intent = new Intent(getApplicationContext(),Result.class);
                         intent.putExtras(b);
                         startActivity(intent);
@@ -103,5 +109,9 @@ public class SampleInput2 extends AppCompatActivity {
             case "No": val = 0;return val;
         }
         return val;
+    }
+
+    public List<String> sort(){
+        return null;
     }
 }

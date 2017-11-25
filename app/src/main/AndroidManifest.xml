@@ -16,7 +16,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".WelcomeActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,23 +26,40 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_welcome"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".DemographicsActivity" />
         <activity
             android:name=".Menu"
             android:label="@string/title_activity_menu"
             android:theme="@style/AppTheme" />
-        <activity android:name=".LaboratoryActivity" />
-        <activity android:name=".HistoryActivity" />
 
-        <activity android:name=".SampleInput1"></activity>
-        <activity android:name=".SampleInput2"/>
         <activity android:name=".Result"/>
 
-        <activity android:name=".HabitsActivity" />
-        <activity android:name=".RiskResultsActivity"></activity>
         <activity android:name=".Demographics"/>
+
+        <activity
+            android:name=".DemographicsActivity"
+            android:label="@string/title_activity_demo" />
+        <activity
+            android:name=".MenuActivity"
+            android:label="@string/title_activity_menu" />
+        <activity
+            android:name=".LaboratoryActivity"
+            android:label="@string/title_activity_lab" />
+        <activity
+            android:name=".HistoryActivity"
+            android:label="@string/title_activity_history" />
+        <activity
+            android:name=".HabitsActivity"
+            android:label="@string/title_activity_habits" />
+        <activity
+            android:name=".RiskResultsActivity"
+            android:label="@string/title_activity_results" />
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/title_activity_main" />
+        <activity android:name=".SampleInput1" />
+        <activity android:name=".SampleInput2" />
+        <activity android:name=".ScaleView"></activity>
 
     </application>
 
