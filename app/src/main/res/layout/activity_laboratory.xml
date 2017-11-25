@@ -4,92 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="capstone.heartbeat.LaboratoryActivity">
+    tools:showIn="@layout/activity_laboratory">
 
-    <LinearLayout
-        android:id="@+id/chol_label"
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/demo_question_padding"
-        android:paddingLeft="@dimen/demo_question_padding"
-        android:paddingRight="@dimen/demo_question_padding">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/lab_chol"
-            android:textAppearance="@android:style/TextAppearance.Material.Title"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/instruction_chol"/>
-    </LinearLayout>
+        android:layout_height="match_parent"/>
 
     <LinearLayout
+        android:id="@+id/layoutDots"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dots_height"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/dots_margin_bottom"
+        android:gravity="center"
+        android:orientation="horizontal"></LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:alpha=".5"
+        android:layout_above="@id/layoutDots"
+        android:background="@color/colorPrimary" />
+
+    <Button
+        android:id="@+id/btn_next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/demo_question_padding"
-        android:layout_below="@id/chol_label">
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@null"
+        android:text="@string/next"
+        android:textColor="@color/colorPrimary" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/lab_totalchol"/>
-
-        <abak.tr.com.boxedverticalseekbar.BoxedVertical
-            android:id="@+id/chol_total"
-            android:layout_width="60dp"
-            android:layout_height="250dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:layout_weight="1"
-            app:progressColor="@color/bg_screen2"
-            app:textColor="#FFF"
-            app:cornerRadius="20"
-            app:defaultValue="140"
-            app:imageEnabled="false"
-            app:textEnabled="true"
-            app:max="300"
-            app:step="1"
-            app:textBottomPadding="20"
-            app:textSize="12sp"
-            app:touchDisabled="true" />
-
-    </LinearLayout>
-
-    <LinearLayout
+    <Button
+        android:id="@+id/btn_prev"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginLeft="150dp"
-        android:padding="@dimen/demo_question_padding"
-        android:layout_below="@id/chol_label">
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="@null"
+        android:textColor="@color/colorPrimary" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/lab_hdl"/>
-
-        <abak.tr.com.boxedverticalseekbar.BoxedVertical
-            android:id="@+id/chol_hdl"
-            android:layout_width="60dp"
-            android:layout_height="250dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:layout_weight="1"
-            app:progressColor="@color/bg_screen3"
-            app:textColor="#FFF"
-            app:cornerRadius="20"
-            app:defaultValue="140"
-            app:imageEnabled="false"
-            app:textEnabled="true"
-            app:max="300"
-            app:step="1"
-            app:textBottomPadding="20"
-            app:textSize="12sp"
-            app:touchDisabled="true" />
-    </LinearLayout>
 </RelativeLayout>
