@@ -22,7 +22,8 @@
     <dimen name="demo_question_padding">25sp</dimen>
     <dimen name="btn_width_height">50dp</dimen>
     <dimen name="btn_label">16sp</dimen>
-    <dimen name="switch_label_width">110dp</dimen>
+    <dimen name="switch_label">14sp</dimen>
+    <dimen name="switch_label_width">100dp</dimen>
     <dimen name="switch_width">70dp</dimen>
     <dimen name="physical_label_width">55dp</dimen>
     <dimen name="btn_physical_label">10sp</dimen>

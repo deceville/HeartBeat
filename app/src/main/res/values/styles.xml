@@ -17,4 +17,7 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="SwitchColor" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
 </resources>

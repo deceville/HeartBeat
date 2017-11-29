@@ -1,43 +1,238 @@
 package capstone.heartbeat;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 
-import com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPicker;
-import com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPickerListener;
+public class HabitsActivity extends AppCompatActivity implements NumberPicker.OnValueChangeListener {
+    ImageButton btn_smoking_yes, btn_smoking_no, btn_sedentary, btn_light, btn_moderate, btn_very, btn_extreme;
+    Button btn_bptreat_no, btn_bptreat_yes;
 
-public class HabitsActivity extends AppCompatActivity {
+    public boolean selected = false;
+    public int smoker = 0, non_smoker = 0;
+
+
+    private boolean viewGroupIsVisible = false;
+    private View viewGroup_notsmoking, viewGroup_sticks;
+    public int smoke,smk_quantity,non_smkr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habits);
 
+        viewGroup_notsmoking = findViewById(R.id.viewGroup_notsmoking);
 
-        final ScrollableNumberPicker np_freetime_hr = (ScrollableNumberPicker) findViewById(R.id.np_freetime_hr);
-        np_freetime_hr.setListener(new ScrollableNumberPickerListener() {
+        btn_smoking_yes = (ImageButton) findViewById(R.id.btn_smoking_yes);
+        btn_smoking_no = (ImageButton) findViewById(R.id.btn_smoking_no);
+
+        btn_smoking_no.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onNumberPicked(int value) {
-                if(value == np_freetime_hr.getMaxValue()) {
-
-
+            public void onClick(View v) {
+                if(viewGroupIsVisible || (viewGroup_notsmoking.getVisibility() == View.GONE)){
+                    viewGroup_notsmoking.setVisibility(View.VISIBLE);
+                }else{
+                    viewGroup_notsmoking.setVisibility(View.GONE);
                 }
             }
         });
 
-        final ScrollableNumberPicker np_freetime_min = (ScrollableNumberPicker) findViewById(R.id.np_freetime_min);
-        np_freetime_min.setListener(new ScrollableNumberPickerListener() {
+        btn_smoking_yes.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onNumberPicked(int value) {
-                if(value == np_freetime_min.getMaxValue()) {
-
-
+            public void onClick(View v) {
+                if(viewGroupIsVisible || (viewGroup_sticks.getVisibility() == View.GONE)){
+                    viewGroup_sticks.setVisibility(View.VISIBLE);
+                }else{
+                    viewGroup_sticks.setVisibility(View.GONE);
                 }
             }
         });
+
+        Button numOfSticks = (Button) findViewById(R.id.numOfSticks);
+        viewGroup_sticks = findViewById(R.id.viewGroup_sticks);
+
+        numOfSticks.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showNumOfSticks();
+            }
+        });
+
+        Button btn_freetime = (Button) findViewById(R.id.freetime);
+        btn_freetime.setOnClickListener(new View.OnClickListener()
+        {
+
+            @Override
+            public void onClick(View v) {
+                showFreeTime();
+            }
+        });
+
+        Button btn_sleeptime = (Button) findViewById(R.id.sleeptime);
+        btn_sleeptime.setOnClickListener(new View.OnClickListener()
+        {
+
+            @Override
+            public void onClick(View v) {
+                showSleepTime();
+            }
+        });
+    }
+
+    @Override
+    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+
+        Log.i("value is",""+newVal);
+    }
+
+    public void showFreeTime() {
+
+        final Dialog d = new Dialog(HabitsActivity.this);
+        d.setTitle("Set your free time");
+        d.setContentView(R.layout.ft_dialog);
+        Button b1 = (Button) d.findViewById(R.id.ft_set);
+        Button b2 = (Button) d.findViewById(R.id.ft_cancel);
+        final NumberPicker np = (NumberPicker) d.findViewById(R.id.freetime_hr);
+        np.setMaxValue(4);
+        np.setMinValue(1);
+        np.setWrapSelectorWheel(false);
+        np.setOnValueChangedListener(this);
+
+        final NumberPicker np1 = (NumberPicker) d.findViewById(R.id.freetime_min);
+        np1.setMaxValue(59);
+        np1.setMinValue(0);
+        np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                if(newVal == 4){
+                    np1.setMaxValue(0);
+                }else{
+                    np1.setMaxValue(59);
+                }
+            }
+        });
+        np1.setWrapSelectorWheel(false);
+        np1.setOnValueChangedListener(this);
+        np1.setFormatter(new NumberPicker.Formatter() {
+            public String format(int value) {
+                return String.format("%02d", value);
+            }
+        });
+        b1.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                Button btn_freetime = (Button) findViewById(R.id.freetime);
+
+                btn_freetime.setText(String.valueOf(np.getValue()) + ":" + String.format(String.valueOf(np1.getValue())) + " hours");
+                d.dismiss();
+            }
+        });
+        b2.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                d.dismiss();
+            }
+        });
+        d.show();
+    }
+
+    public void showSleepTime() {
+
+        final Dialog d = new Dialog(HabitsActivity.this);
+        d.setTitle("Set your sleeping time");
+        d.setContentView(R.layout.st_dialog);
+        Button b1 = (Button) d.findViewById(R.id.st_set);
+        Button b2 = (Button) d.findViewById(R.id.st_cancel);
+        final NumberPicker np = (NumberPicker) d.findViewById(R.id.sleeptime_hr);
+        np.setMaxValue(11);
+        np.setMinValue(7);
+        np.setWrapSelectorWheel(false);
+        np.setOnValueChangedListener(this);
+
+        final NumberPicker np1 = (NumberPicker) d.findViewById(R.id.sleeptime_min);
+        np1.setMaxValue(59);
+        np1.setMinValue(0);
+        np.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+            @Override
+            public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+                if(newVal == 11){
+                    np1.setMaxValue(0);
+                }else{
+                    np1.setMaxValue(59);
+                }
+            }
+        });
+        np1.setWrapSelectorWheel(false);
+        np1.setOnValueChangedListener(this);
+        np1.setFormatter(new NumberPicker.Formatter() {
+            public String format(int value) {
+                return String.format("%02d", value);
+            }
+        });
+        b1.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                Button btn_freetime = (Button) findViewById(R.id.sleeptime);
+
+                btn_freetime.setText(String.valueOf(np.getValue()) + ":" + String.format(String.valueOf(np1.getValue())) + " PM");
+                d.dismiss();
+            }
+        });
+        b2.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                d.dismiss();
+            }
+        });
+        d.show();
+    }
+
+
+    public void showNumOfSticks() {
+
+        final Dialog d = new Dialog(HabitsActivity.this);
+        d.setTitle("Sticks per day");
+        d.setContentView(R.layout.sticks_dialog);
+        Button b1 = (Button) d.findViewById(R.id.sticks_set);
+        Button b2 = (Button) d.findViewById(R.id.sticks_cancel);
+        final NumberPicker np = (NumberPicker) d.findViewById(R.id.sticks);
+        np.setMaxValue(30);
+        np.setMinValue(1);
+        np.setWrapSelectorWheel(false);
+        np.setOnValueChangedListener(this);
+
+        b1.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                Button numOfSticks = (Button) findViewById(R.id.numOfSticks);
+
+                numOfSticks.setText(String.valueOf(np.getValue()) + " sticks per day");
+                d.dismiss();
+            }
+        });
+        b2.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                d.dismiss();
+            }
+        });
+        d.show();
     }
 
     @Override

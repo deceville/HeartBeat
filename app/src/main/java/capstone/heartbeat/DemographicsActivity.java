@@ -2,6 +2,7 @@ package capstone.heartbeat;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearSnapHelper;
@@ -23,16 +24,18 @@ import travel.ithaka.android.horizontalpickerlib.PickerLayoutManager;
 
 public class DemographicsActivity extends AppCompatActivity {
     public Button btn_birthdate, btn_female, btn_male;
-    private TextView txtValue, weight;
+    private TextView txtValue;
     public ScaleView rulerViewMm;
     RecyclerView rv;
     PickerAdapter adapter;
 
+    public float height;
 
     public int age, currYear, currMonth, currDay;
     boolean selected = false;
     int male = 0;
     int female = 0;
+    public String weight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,13 +98,13 @@ public class DemographicsActivity extends AppCompatActivity {
 
         final ScaleView rulerViewMm = (ScaleView) findViewById(R.id.my_scale);
         txtValue = (TextView) findViewById(R.id.txt_height);
-        rulerViewMm.setStartingPoint(70);
+        rulerViewMm.setStartingPoint(160);
         rulerViewMm.setUpdateListener(new onViewUpdateListener() {
 
             @Override
             public void onViewUpdate(float result) {
-                float value = (float) Math.round(result * 10f) / 10f;
-                txtValue.setText(value + " cm");
+                height = (float) Math.round(result * 10f) / 10f;
+                txtValue.setText(height + " cm");
             }
         });
 
@@ -112,24 +115,24 @@ public class DemographicsActivity extends AppCompatActivity {
         pickerLayoutManager.setScaleDownBy(0.99f);
         pickerLayoutManager.setScaleDownDistance(0.8f);
 
-        adapter = new PickerAdapter(this, getData(2000), rv);
+        adapter = new PickerAdapter(this, getData(200), rv);
         SnapHelper snapHelper = new LinearSnapHelper();
         snapHelper.attachToRecyclerView(rv);
         rv.setLayoutManager(pickerLayoutManager);
         rv.setAdapter(adapter);
 
-        /*pickerLayoutManager.setOnScrollStopListener(new PickerLayoutManager.onScrollStopListener() {
+        pickerLayoutManager.setOnScrollStopListener(new PickerLayoutManager.onScrollStopListener() {
             @Override
             public void selectedView(View view) {
-                weight.setText(new StringBuilder().append("Weight:"));
+                weight = ((TextView)view).getText().toString();
             }
-        });*/
+        });
     }
 
     public List<String> getData(int count) {
         List<String> data = new ArrayList<>();
-        for (int i = 300; i < count; ++i) {
-            data.add(String.valueOf((double)i / 10));
+        for (int i = 30; i < count; ++i) {
+            data.add(String.valueOf(i));
         }
         return data;
     }
@@ -152,6 +155,13 @@ public class DemographicsActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.next) {
+
+            SharedPreferences prefs = getSharedPreferences("values",MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt("Age", age);
+            editor.putBoolean("Gender", selected);
+            editor.putFloat("Height", height);
+            editor.putString("Weight",weight );
             startActivity(new Intent(getApplicationContext(),LaboratoryActivity.class));
             return true;
         }

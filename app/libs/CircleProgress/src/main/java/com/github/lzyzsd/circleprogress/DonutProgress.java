@@ -92,9 +92,9 @@ public class DonutProgress extends View {
     public DonutProgress(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        default_text_size = Utils.sp2px(getResources(), 18);
+        default_text_size = Utils.sp2px(getResources(), 16);
         min_size = (int) Utils.dp2px(getResources(), 100);
-        default_stroke_width = Utils.dp2px(getResources(), 10);
+        default_stroke_width = Utils.dp2px(getResources(), 15);
         default_inner_bottom_text_size = Utils.sp2px(getResources(), 18);
 
         final TypedArray attributes = context.getTheme().obtainStyledAttributes(attrs, R.styleable.DonutProgress, defStyleAttr, 0);

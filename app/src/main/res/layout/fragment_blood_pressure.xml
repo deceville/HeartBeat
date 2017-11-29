@@ -1,13 +1,114 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="capstone.heartbeat.BloodPressureFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/bp_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/demo_question_padding"
+            android:paddingLeft="@dimen/demo_question_padding"
+            android:paddingRight="@dimen/demo_question_padding">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lab_bp"
+                android:textAppearance="@android:style/TextAppearance.Material.Title"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/instruction_chol"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/demo_question_padding"
+            android:layout_below="@id/bp_label">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/lab_systolic"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/lab_firstnum"/>
+
+            <abak.tr.com.boxedverticalseekbar.BoxedVertical
+                android:id="@+id/bp_systolic"
+                android:layout_width="60dp"
+                android:layout_height="250dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:layout_weight="1"
+                app:progressColor="@color/circle_red"
+                app:textColor="#FFF"
+                app:cornerRadius="20"
+                app:defaultValue="140"
+                app:imageEnabled="false"
+                app:textEnabled="true"
+                app:max="300"
+                app:step="1"
+                app:textBottomPadding="20"
+                app:textSize="12sp"
+                app:touchDisabled="true" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="150dp"
+            android:padding="@dimen/demo_question_padding"
+            android:layout_below="@id/bp_label">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/lab_diastolic"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/lab_secondnum"/>
+
+            <abak.tr.com.boxedverticalseekbar.BoxedVertical
+                android:id="@+id/bp_diastolic"
+                android:layout_width="60dp"
+                android:layout_height="250dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:layout_weight="1"
+                app:progressColor="@color/circle_green"
+                app:textColor="#FFF"
+                app:cornerRadius="20"
+                app:defaultValue="140"
+                app:imageEnabled="false"
+                app:textEnabled="true"
+                app:max="300"
+                app:step="1"
+                app:textBottomPadding="20"
+                app:textSize="12sp"
+                app:touchDisabled="true" />
+        </LinearLayout>
+
+    </RelativeLayout>
 
 </FrameLayout>

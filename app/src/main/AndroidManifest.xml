@@ -9,9 +9,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic__heartbeat_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_heartbeat_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
@@ -27,6 +27,11 @@
         <activity
             android:name=".LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <activity
+            android:name=".SignupActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
         <activity
             android:name=".DemographicsActivity"
             android:label="@string/title_activity_demo" />
@@ -51,7 +56,6 @@
         <activity android:name=".SampleInput1" />
         <activity android:name=".SampleInput2" />
         <activity android:name=".Result" />
-        <activity android:name=".ScaleView" />
     </application>
 
 </manifest>

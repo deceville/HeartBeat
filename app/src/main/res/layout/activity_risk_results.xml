@@ -1,9 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="capstone.heartbeat.RiskResultsActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/riskresults_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/demo_question_padding"
+        android:paddingLeft="@dimen/demo_question_padding"
+        android:paddingRight="@dimen/demo_question_padding">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/results_risk"
+            android:textAppearance="@android:style/TextAppearance.Material.Medium"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/instruction_result"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:paddingTop="@dimen/demo_question_padding"
+        android:paddingLeft="@dimen/demo_question_padding"
+        android:paddingRight="@dimen/demo_question_padding"
+        android:layout_below="@+id/riskresults_label"
+        android:id="@+id/linearLayout">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.github.lzyzsd.circleprogress.DonutProgress
+                android:id="@+id/progress_heartattack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                custom:donut_finished_color="@color/bg_screen1"
+                custom:donut_text_color="@color/bg_screen1"
+                custom:donut_progress="100"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textSize="@dimen/btn_label"
+                android:text="Heart Attack" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:orientation="vertical">
+
+            <com.github.lzyzsd.circleprogress.DonutProgress
+                android:id="@+id/progress_stroke"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                custom:donut_progress="66"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Stroke"
+                android:textSize="@dimen/btn_label"
+                android:layout_gravity="center_horizontal"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

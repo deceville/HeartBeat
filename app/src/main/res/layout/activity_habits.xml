@@ -47,22 +47,22 @@
                     android:textSize="@dimen/btn_label" />
 
                 <ImageButton
-                    android:id="@+id/btn_smoking_no"
-                    android:layout_width="@dimen/btn_width_height"
-                    android:layout_height="@dimen/btn_width_height"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/btn_roundedcorner"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/btn_smoking_no" />
-
-                <ImageButton
                     android:id="@+id/btn_smoking_yes"
                     android:layout_width="@dimen/btn_width_height"
                     android:layout_height="@dimen/btn_width_height"
                     android:layout_margin="10dp"
                     android:background="@drawable/btn_roundedcorner"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/btn_smoking_yes" />
+                    app:srcCompat="@drawable/btn_smoking_yes" />
+
+                <ImageButton
+                    android:id="@+id/btn_smoking_no"
+                    android:layout_width="@dimen/btn_width_height"
+                    android:layout_height="@dimen/btn_width_height"
+                    android:layout_margin="10dp"
+                    android:background="@drawable/btn_roundedcorner"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/btn_smoking_no" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -74,6 +74,97 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/viewGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/habits">
+
+            <LinearLayout
+                android:id="@+id/viewGroup_notsmoking"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:paddingLeft="@dimen/demo_question_padding"
+                android:paddingRight="@dimen/demo_question_padding"
+                android:paddingTop="@dimen/demo_question_padding">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/habits_nonsmoker"
+                    android:textAppearance="@android:style/TextAppearance.Material.Title" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btn_yes"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="@dimen/btn_label" />
+
+                    <ImageButton
+                        android:id="@+id/btn_nonsmoker"
+                        android:layout_width="@dimen/btn_width_height"
+                        android:layout_height="@dimen/btn_width_height"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/btn_roundedcorner"
+                        android:scaleType="fitCenter"
+                        app:srcCompat="@drawable/btn_smoking_no" />
+
+                    <ImageButton
+                        android:id="@+id/btn_smoker"
+                        android:layout_width="@dimen/btn_width_height"
+                        android:layout_height="@dimen/btn_width_height"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/btn_roundedcorner"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/btn_smoking_yes" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/btn_no"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="@dimen/btn_label" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/viewGroup_sticks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:paddingLeft="@dimen/demo_question_padding"
+                android:paddingRight="@dimen/demo_question_padding"
+                android:paddingTop="@dimen/demo_question_padding">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/habits_smoker"
+                    android:textAlignment="center"
+                    android:textAppearance="@android:style/TextAppearance.Material.Title" />
+
+                <Button
+                    android:id="@+id/numOfSticks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:hint="Number of sticks"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/bptreat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -81,7 +172,7 @@
             android:paddingTop="@dimen/demo_question_padding"
             android:paddingLeft="@dimen/demo_question_padding"
             android:paddingRight="@dimen/demo_question_padding"
-            android:layout_below="@+id/habits" >
+            android:layout_below="@+id/viewGroup" >
 
             <TextView
                 android:layout_width="wrap_content"
@@ -164,7 +255,7 @@
                         android:textAlignment="center"
                         android:textSize="@dimen/btn_physical_label" />
 
-                    <ImageButton
+                    <Button
                         android:id="@+id/btn_sedentary"
                         android:layout_width="@dimen/btn_physical_width_height"
                         android:layout_height="@dimen/btn_physical_width_height"
@@ -172,7 +263,10 @@
                         android:layout_margin="10dp"
                         android:background="@drawable/btn_roundedcorner"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/btn_sedentary" />
+                        android:text="1"
+                        android:textColor="@color/standardWhite"
+                        android:textSize="20sp"
+                        android:backgroundTint="@color/circle_green"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -190,14 +284,18 @@
                         android:textAlignment="center"
                         android:textSize="@dimen/btn_physical_label" />
 
-                    <ImageButton
+                    <Button
                         android:id="@+id/btn_light"
                         android:layout_width="@dimen/btn_physical_width_height"
                         android:layout_height="@dimen/btn_physical_width_height"
+                        android:layout_gravity="center"
                         android:layout_margin="10dp"
+                        android:text="2"
+                        android:textColor="@color/standardWhite"
+                        android:textSize="20sp"
                         android:background="@drawable/btn_roundedcorner"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/btn_light" />
+                        android:backgroundTint="@color/circle_lightgreen"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -215,15 +313,18 @@
                         android:textAlignment="center"
                         android:textSize="@dimen/btn_physical_label" />
 
-                    <ImageButton
+                    <Button
                         android:id="@+id/btn_moderate"
                         android:layout_width="@dimen/btn_physical_width_height"
                         android:layout_height="@dimen/btn_physical_width_height"
                         android:layout_gravity="center"
                         android:layout_margin="10dp"
+                        android:text="3"
+                        android:textColor="@color/standardWhite"
+                        android:textSize="20sp"
                         android:background="@drawable/btn_roundedcorner"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/btn_medium" />
+                        android:backgroundTint="@color/circle_yellow"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -241,15 +342,19 @@
                         android:textAlignment="center"
                         android:textSize="@dimen/btn_physical_label" />
 
-                    <ImageButton
+                    <Button
                         android:id="@+id/btn_very"
                         android:layout_width="@dimen/btn_physical_width_height"
                         android:layout_height="@dimen/btn_physical_width_height"
                         android:layout_gravity="center"
+                        android:text="4"
+                        android:textColor="@color/standardWhite"
+                        android:textSize="20sp"
                         android:layout_margin="10dp"
                         android:background="@drawable/btn_roundedcorner"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/btn_very" />
+                        android:backgroundTint="@color/circle_orange"/>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -267,22 +372,26 @@
                         android:textAlignment="center"
                         android:textSize="@dimen/btn_physical_label" />
 
-                    <ImageButton
+                    <Button
                         android:id="@+id/btn_extreme"
                         android:layout_width="@dimen/btn_physical_width_height"
                         android:layout_height="@dimen/btn_physical_width_height"
                         android:layout_gravity="center"
                         android:layout_margin="10dp"
+                        android:text="5"
+                        android:textColor="@color/standardWhite"
+                        android:textSize="20sp"
                         android:background="@drawable/btn_roundedcorner"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/btn_extreme" />
+                        android:backgroundTint="@color/circle_red"/>
+
                 </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/freetime"
+            android:id="@+id/freetime_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -302,60 +411,27 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPicker
-                    android:id="@+id/np_freetime_hr"
+                <Button
+                    android:id="@+id/freetime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/number_picker_bg_color"
-                    android:paddingEnd="8dp"
-                    android:paddingStart="8dp"
-                    app:snp_buttonTouchScaleFactor="0.8"
-                    app:snp_maxValue="4"
-                    app:snp_minValue="1"
-                    app:snp_orientation="vertical"
-                    app:snp_stepSize="1"
-                    app:snp_value="1"/>
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:hint="HH : MM" />
 
-                <TextView
-                    android:id="@+id/freetime_hr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="hour"/>
-
-                <com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPicker
-                    android:id="@+id/np_freetime_min"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/number_picker_bg_color"
-                    android:paddingEnd="8dp"
-                    android:paddingStart="8dp"
-                    app:snp_buttonTouchScaleFactor="0.8"
-                    app:snp_maxValue="59"
-                    app:snp_minValue="1"
-                    app:snp_orientation="vertical"
-                    app:snp_stepSize="1"
-                    app:snp_value="1"/>
-
-                <TextView
-                    android:id="@+id/freetime_min"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="min"/>
             </LinearLayout>
         </LinearLayout>
 
-
         <LinearLayout
-            android:id="@+id/sleeptime"
+            android:id="@+id/sleeptime_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingTop="@dimen/demo_question_padding"
             android:paddingLeft="@dimen/demo_question_padding"
             android:paddingRight="@dimen/demo_question_padding"
-            android:layout_below="@+id/freetime">
+            android:paddingBottom="@dimen/demo_question_padding"
+            android:layout_below="@+id/freetime_view">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -368,47 +444,11 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPicker
-                    android:id="@+id/np_sleeptime_hr"
+                <Button
+                    android:id="@+id/sleeptime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/number_picker_bg_color"
-                    android:paddingEnd="8dp"
-                    android:paddingStart="8dp"
-                    app:snp_buttonTouchScaleFactor="0.8"
-                    app:snp_maxValue="11"
-                    app:snp_minValue="7"
-                    app:snp_orientation="vertical"
-                    app:snp_stepSize="1"
-                    app:snp_value="7"/>
-
-                <TextView
-                    android:id="@+id/sleeptime_hr"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=":"/>
-
-                <com.michaelmuenzer.android.scrollablennumberpicker.ScrollableNumberPicker
-                    android:id="@+id/np_sleeptimee_min"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/number_picker_bg_color"
-                    android:paddingEnd="8dp"
-                    android:paddingStart="8dp"
-                    app:snp_buttonTouchScaleFactor="0.8"
-                    app:snp_maxValue="59"
-                    app:snp_minValue="1"
-                    app:snp_orientation="vertical"
-                    app:snp_stepSize="1"
-                    app:snp_value="1"/>
-
-                <TextView
-                    android:id="@+id/sleeptime_min"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="PM"/>
+                    android:hint="HH : MM" />
             </LinearLayout>
         </LinearLayout>
     </RelativeLayout>

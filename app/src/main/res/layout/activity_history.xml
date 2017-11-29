@@ -87,7 +87,7 @@
                 android:textSize="16sp" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
@@ -95,65 +95,71 @@
                     android:id="@+id/disease_01"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="@dimen/switch_label_width"
                         android:layout_height="wrap_content"
                         android:text="@string/disease_congestive"
                         android:textAlignment="center"
-                        android:textSize="@dimen/btn_label" />
+                        android:textSize="@dimen/switch_label" />
+
                     <Switch
                         android:id="@+id/sw_congestive"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center"
+                        android:theme="@style/SwitchColor" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/disease_02"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="@dimen/switch_label_width"
                         android:layout_height="wrap_content"
                         android:text="@string/disease_heartattack"
                         android:textAlignment="center"
-                        android:textSize="@dimen/btn_label" />
+                        android:textSize="@dimen/switch_label" />
+
                     <Switch
                         android:id="@+id/sw_heartattack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center"
+                        android:theme="@style/SwitchColor" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/disease_03"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="@dimen/switch_label_width"
                         android:layout_height="wrap_content"
                         android:text="@string/disease_valvular"
                         android:textAlignment="center"
-                        android:textSize="@dimen/btn_label" />
+                        android:textSize="@dimen/switch_label" />
+
                     <Switch
                         android:id="@+id/sw_valvular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center"
+                        android:theme="@style/SwitchColor" />
                 </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
@@ -161,60 +167,66 @@
                     android:id="@+id/disease_04"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="@dimen/switch_label_width"
                         android:layout_height="wrap_content"
                         android:text="@string/disease_irregular"
                         android:textAlignment="center"
-                        android:textSize="@dimen/btn_label" />
+                        android:textSize="@dimen/switch_label" />
+
                     <Switch
                         android:id="@+id/sw_irregular"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center"
+                        android:theme="@style/SwitchColor" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/disease_05"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="@dimen/switch_label_width"
                         android:layout_height="wrap_content"
                         android:text="@string/disease_rheumatoid"
                         android:textAlignment="center"
-                        android:textSize="@dimen/btn_label" />
+                        android:textSize="@dimen/switch_label" />
+
                     <Switch
                         android:id="@+id/sw_rheumatoid"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center"
+                        android:theme="@style/SwitchColor" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/disease_06"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_marginTop="10dp">
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
 
                     <TextView
                         android:layout_width="@dimen/switch_label_width"
                         android:layout_height="wrap_content"
                         android:text="@string/disease_chronic"
                         android:textAlignment="center"
-                        android:textSize="@dimen/btn_label" />
+                        android:textSize="@dimen/switch_label" />
+
                     <Switch
                         android:id="@+id/sw_chronic"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"/>
+                        android:layout_gravity="center"
+                        android:theme="@style/SwitchColor" />
                 </LinearLayout>
             </LinearLayout>
 

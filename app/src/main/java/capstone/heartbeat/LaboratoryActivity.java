@@ -2,6 +2,7 @@ package capstone.heartbeat;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.v4.view.PagerAdapter;
@@ -30,6 +31,7 @@ public class LaboratoryActivity extends AppCompatActivity {
     private int[] layouts;
     private Button btnPrev, btnNext;
     private PreferenceManager prefManager;
+    private int sbp,dbp,chl,hdl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +89,12 @@ public class LaboratoryActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.next) {
+            SharedPreferences prefs = getSharedPreferences("values",MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt("sbp",sbp);
+            editor.putInt("dbp",dbp);
+            editor.putInt("chl",chl);
+            editor.putInt("hdl",hdl);
             startActivity(new Intent(getApplicationContext(),HabitsActivity.class));
             return true;
         }
@@ -143,11 +151,29 @@ public class LaboratoryActivity extends AppCompatActivity {
 
                 BoxedVertical chol_total = (BoxedVertical)findViewById(R.id.chol_total);
                 BoxedVertical chol_hdl = (BoxedVertical)findViewById(R.id.chol_hdl);
+                BoxedVertical bp_systolic = (BoxedVertical)findViewById(R.id.bp_systolic);
+                BoxedVertical bp_diastolic = (BoxedVertical)findViewById(R.id.bp_diastolic);
 
                 chol_total.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
                     @Override
                     public void onPointsChanged(BoxedVertical boxedPoints, final int value) {
-                        System.out.println(value);
+                        chl = value;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(BoxedVertical boxedPoints) {
+                    }
+
+
+                    @Override
+                    public void onStopTrackingTouch(BoxedVertical boxedPoints) {
+                    }
+                });
+
+                chol_hdl.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
+                    @Override
+                    public void onPointsChanged(BoxedVertical boxedPoints, final int value) {
+                        hdl = value;
                     }
 
                     @Override
@@ -159,18 +185,36 @@ public class LaboratoryActivity extends AppCompatActivity {
                     }
                 });
 
-                chol_hdl.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
+                bp_diastolic.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
                     @Override
-                    public void onPointsChanged(BoxedVertical boxedPoints, final int value) {
-                        System.out.println(value);
+                    public void onPointsChanged(BoxedVertical boxedPoints, int points) {
+                        dbp = points;
                     }
 
                     @Override
                     public void onStartTrackingTouch(BoxedVertical boxedPoints) {
+
                     }
 
                     @Override
                     public void onStopTrackingTouch(BoxedVertical boxedPoints) {
+
+                    }
+                });
+                bp_systolic.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
+                    @Override
+                    public void onPointsChanged(BoxedVertical boxedPoints, int points) {
+                        sbp = points;
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(BoxedVertical boxedPoints) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(BoxedVertical boxedPoints) {
+
                     }
                 });
 

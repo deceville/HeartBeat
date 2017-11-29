@@ -61,8 +61,10 @@
     <!-- Strings related to laboratory values -->
     <string name="lab_bp">Set your Systolic and Diastolic Blood Pressure</string>
     <string name="instruction_bp">Hold/pump the bulb to set the blood pressure</string>
-    <string name="lab_systolic">Systolic (First number)</string>
-    <string name="lab_diastolic">Diastolic (Second number)</string>
+    <string name="lab_systolic">Systolic</string>
+    <string name="lab_diastolic">Diastolic</string>
+    <string name="lab_firstnum">First number</string>
+    <string name="lab_secondnum">Second number</string>
     <string name="lab_chol">Set your Total Cholesterol and HDL</string>
     <string name="instruction_chol">Slide up and down to adjust</string>
     <string name="lab_totalchol">Total Cholesterol</string>
@@ -101,7 +103,7 @@
     <string name="btn_extreme">Extremely active</string>
 
     <!-- Strings related to risk results -->
-    <string name="results_risk">Probability of 10-Year Risk of Stroke and Heart Attack</string>
+    <string name="results_risk">Probability of 10-Year Risk of Heart Attack and Stroke</string>
     <string name="instruction_result">Tap each graph to view details</string>
     <string name="results_riskfactors">Risk Factors (Highest - Lowest)</string>
 
