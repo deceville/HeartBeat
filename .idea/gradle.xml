@@ -9,9 +9,10 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/app/libs/BoxedVerticalSeekBar" />
             <option value="$PROJECT_DIR$/app/libs/CircleProgress" />
             <option value="$PROJECT_DIR$/app/libs/DWRulerView" />
-            <option value="$PROJECT_DIR$/app/libs/ProtractorView" />
+            <option value="$PROJECT_DIR$/app/libs/HorizontalPicker" />
             <option value="$PROJECT_DIR$/app/libs/ScrollableNumberPicker" />
           </set>
         </option>

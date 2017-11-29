@@ -2,6 +2,7 @@ package capstone.heartbeat;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,16 +28,28 @@ public class WelcomeActivity extends AppCompatActivity {
     private int[] layouts;
     private Button btnSkip, btnNext, btnLogin, btnSignup;
     private PreferenceManager prefManager;
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         // Checking for first time launch - before calling setContentView()
         prefManager = new PreferenceManager(this);
         if (!prefManager.isFirstTimeLaunch()) {
-            launchHomeScreen();
-            finish();
+
+            prefs = getSharedPreferences("login",MODE_PRIVATE);
+            if (prefs.getInt("session", 0) == 1) {
+                startActivity(new Intent(getApplicationContext(),DemographicsActivity.class));
+                finish();
+            }else {
+                launchHomeScreen();
+                finish();
+            }
+
+
+
         }
 
         // Making notification bar transparent

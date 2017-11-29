@@ -4,17 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="capstone.heartbeat.DemographicsActivity">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingTop="20dp"
-        android:paddingLeft="40dp">
+        android:paddingLeft="40dp"
+        android:paddingTop="20dp">
 
         <Button
-            android:id="@+id/btnBirthdate"
+            android:id="@+id/btn_birthdate"
             android:layout_width="@dimen/login_signup_width"
             android:layout_height="wrap_content"
             android:hint="@string/demo_birthday" />
@@ -22,77 +23,72 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:text="@string/demo_gender"
-            android:textSize="18sp"
-            android:layout_marginTop="20dp"/>
+            android:textSize="18sp" />
 
         <LinearLayout
+            android:id="@+id/gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/nav_header_vertical_spacing">
+            android:layout_marginTop="@dimen/label_margin_top">
 
-            <ImageButton
-                android:id="@+id/female"
+            <Button
+                android:id="@+id/btn_male"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
-                android:backgroundTint="@color/bg_screen2"/>
+                android:text="Male"
+                android:background="@color/progress_gray" />
 
-            <ImageButton
-                android:id="@+id/male"
+            <Button
+                android:id="@+id/btn_female"
                 android:layout_width="100dp"
                 android:layout_height="40dp"
-                android:backgroundTint="@color/bg_screen3"/>
+                android:text="Female"
+                android:background="@color/progress_gray" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/label_margin_top">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <com.tistory.dwfox.dwrulerviewlibrary.view.DWRulerSeekbar
-                android:id="@+id/dwRulerSeekbar"
-                android:layout_width="match_parent"
-                android:layout_height="97dp">
-            </com.tistory.dwfox.dwrulerviewlibrary.view.DWRulerSeekbar>
-
             <TextView
-                android:id="@+id/seekbar_value"
-                android:layout_width="match_parent"
+                android:id="@+id/txt_height"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:gravity="center"
-                android:paddingBottom="10dp"
-                android:paddingLeft="25dp"
-                android:textColor="@color/colorPrimary"
-                android:textSize="16sp" />
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@android:color/black" />
 
+            <capstone.heartbeat.ScaleView
+                android:id="@+id/my_scale"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_gravity="right" />
         </LinearLayout>
 
-        <com.goodiebag.protractorview.ProtractorView
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="bottom">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:thumb="@drawable/thumb_normal"
-            app:arcColor="#4a4a4a"
-            app:arcProgressColor="#FF0000"
-            app:tickColor="#4a4a4a"
-            app:tickProgressColor="#abe6"
-            app:textColor="#000"
-            app:textProgressColor="#FF0000"
-            app:angleTextSize="10sp"
-            app:arcWidth="4dp"
-            app:progressWidth="4dp"
-            app:tickOffset="18dp"
-            app:tickLength="10dp"
-            app:angle="180"
-            app:tickIntervals="15"
-            app:ticksBetweenLabel="three"
-            app:touchInside="true"
-            app:roundEdges="true" />
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:clipToPadding="false"
+            android:paddingLeft="183dp"
+            android:paddingRight="183dp" />
     </LinearLayout>
 
 </RelativeLayout>

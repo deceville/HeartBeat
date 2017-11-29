@@ -59,7 +59,8 @@
             android:label="@string/title_activity_main" />
         <activity android:name=".SampleInput1" />
         <activity android:name=".SampleInput2" />
-        <activity android:name=".ScaleView"></activity>
+
+
 
     </application>
 

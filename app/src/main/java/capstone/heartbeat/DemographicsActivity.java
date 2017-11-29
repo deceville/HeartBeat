@@ -4,49 +4,136 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearSnapHelper;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.tistory.dwfox.dwrulerviewlibrary.view.DWRulerSeekbar;
-
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+
+import travel.ithaka.android.horizontalpickerlib.PickerLayoutManager;
 
 public class DemographicsActivity extends AppCompatActivity {
-    public Button btnBirthdate;
+    public Button btn_birthdate, btn_female, btn_male;
+    private TextView txtValue, weight;
+    public ScaleView rulerViewMm;
+    RecyclerView rv;
+    PickerAdapter adapter;
 
-    private DWRulerSeekbar dwRulerSeekbar;
 
-    private static final float MIN_VALUE = 5;
-    private static final float MAX_VALUE = 33;
-    private static final float LINE_RULER_MULTIPLE_SIZE = 3.5f;
-    private TextView rulerText;
-    private TextView seekbarText;
-
+    public int age, currYear, currMonth, currDay;
+    boolean selected = false;
+    int male = 0;
+    int female = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demographics1);
 
-        btnBirthdate = (Button)findViewById(R.id.btnBirthdate);
+        btn_birthdate = (Button)findViewById(R.id.btn_birthdate);
+        btn_female = (Button)findViewById(R.id.btn_female);
+        btn_male = (Button)findViewById(R.id.btn_male);
 
-        btnBirthdate.setOnClickListener(new View.OnClickListener() {
+        btn_female.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selected = true;
+                female = 1;
+                male = 0;
+
+                if(selected && (male == 1 || female == 0)){
+                    btn_male.setBackgroundColor(getResources().getColor(R.color.bg_screen2));
+                    btn_female.setBackgroundColor(getResources().getColor(R.color.progress_gray));
+                }else if(selected && (female == 1 || male == 0)){
+                    btn_female.setBackgroundColor(getResources().getColor(R.color.bg_screen3));
+                    btn_male.setBackgroundColor(getResources().getColor(R.color.progress_gray));
+                }
+            }
+        });
+
+        btn_male.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selected = true;
+                female = 0;
+                male = 1;
+
+                if(selected && (male == 1 || female == 0)){
+                    btn_male.setBackgroundColor(getResources().getColor(R.color.bg_screen2));
+                    btn_female.setBackgroundColor(getResources().getColor(R.color.progress_gray));
+                }else if(selected && (female == 1 || male == 0)){
+                    btn_female.setBackgroundColor(getResources().getColor(R.color.bg_screen3));
+                    btn_male.setBackgroundColor(getResources().getColor(R.color.progress_gray));
+                }
+            }
+        });
+
+
+        btn_birthdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar c = Calendar.getInstance();
-                int mYear = c.get(Calendar.YEAR);
-                int mMonth = c.get(Calendar.MONTH);
-                int mDay = c.get(Calendar.DAY_OF_MONTH);
+                currYear = c.get(Calendar.YEAR);
+                currMonth = c.get(Calendar.MONTH);
+                currDay = c.get(Calendar.DAY_OF_MONTH);
                 DatePickerDialog dialog = new DatePickerDialog(DemographicsActivity.this,
-                        new mDateSetListener(), mYear, mMonth, mDay);
+                        new mDateSetListener(), currYear, currMonth, currDay);
                 dialog.show();
             }
         });
+
+
+
+        final ScaleView rulerViewMm = (ScaleView) findViewById(R.id.my_scale);
+        txtValue = (TextView) findViewById(R.id.txt_height);
+        rulerViewMm.setStartingPoint(70);
+        rulerViewMm.setUpdateListener(new onViewUpdateListener() {
+
+            @Override
+            public void onViewUpdate(float result) {
+                float value = (float) Math.round(result * 10f) / 10f;
+                txtValue.setText(value + " cm");
+            }
+        });
+
+        rv = (RecyclerView) findViewById(R.id.rv);
+
+        PickerLayoutManager pickerLayoutManager = new PickerLayoutManager(this, PickerLayoutManager.HORIZONTAL, false);
+        pickerLayoutManager.setChangeAlpha(true);
+        pickerLayoutManager.setScaleDownBy(0.99f);
+        pickerLayoutManager.setScaleDownDistance(0.8f);
+
+        adapter = new PickerAdapter(this, getData(2000), rv);
+        SnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(rv);
+        rv.setLayoutManager(pickerLayoutManager);
+        rv.setAdapter(adapter);
+
+        /*pickerLayoutManager.setOnScrollStopListener(new PickerLayoutManager.onScrollStopListener() {
+            @Override
+            public void selectedView(View view) {
+                weight.setText(new StringBuilder().append("Weight:"));
+            }
+        });*/
     }
+
+    public List<String> getData(int count) {
+        List<String> data = new ArrayList<>();
+        for (int i = 300; i < count; ++i) {
+            data.add(String.valueOf((double)i / 10));
+        }
+        return data;
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -82,25 +169,13 @@ public class DemographicsActivity extends AppCompatActivity {
             int mYear = year;
             int mMonth = monthOfYear;
             int mDay = dayOfMonth;
-            btnBirthdate.setText(new StringBuilder()
+            btn_birthdate.setText(new StringBuilder()
                     // Month is 0 based so add 1
                     .append(mMonth + 1).append("/").append(mDay).append("/")
                     .append(mYear).append(" "));
-            System.out.println(btnBirthdate.getText().toString());
-
-
+            age = currYear - mYear;
+            System.out.println(btn_birthdate.getText().toString() + "Age: " + age);
         }
     }
 
-    private void initDWSeekbar() {
-        dwRulerSeekbar = (DWRulerSeekbar) findViewById(R.id.dwRulerSeekbar);
-        dwRulerSeekbar
-                .setMinMaxValue((int) MIN_VALUE, (int) MAX_VALUE)
-                .setDWRulerSeekbarListener(new DWRulerSeekbar.OnDWSeekBarListener() {
-                    @Override
-                    public void onStopSeekbarValue(int value) {
-                        seekbarText.setText("DWSeekBar Value : " + value);
-                    }
-                });
-    }
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr format="enum" name="ticksBetweenLabel">
+        <enum name="zero" value="0"/>
+        <enum name="one" value="1"/>
+        <enum name="two" value="2"/>
+        <enum name="three" value="3"/>
+    </attr>
+    <color name="default_blue_light">#FF33b5e5</color>
+    <color name="default_blue_light_teans">#8033b5e5</color>
+    <color name="progress_gray">#FFD8D8D8</color>
+    <color name="progress_gray_dark">#FF383838</color>
+    <color name="progress_gray_dark_teans">#80383838</color>
+    <color name="progress_gray_trans">#80D8D8D8</color>
+    <declare-styleable name="ProtractorView"><attr format="reference" name="thumb"/><attr format="dimension" name="angleTextSize"/><attr format="dimension" name="progressWidth"/><attr format="dimension" name="tickOffset"/><attr format="dimension" name="tickLength"/><attr format="dimension" name="arcWidth"/><attr format="integer" name="angle"/><attr format="integer" name="tickIntervals"/><attr format="color" name="arcColor"/><attr format="color" name="arcProgressColor"/><attr format="color" name="textColor"/><attr format="color" name="textProgressColor"/><attr format="color" name="tickColor"/><attr format="color" name="tickProgressColor"/><attr format="boolean" name="roundEdges"/><attr format="boolean" name="enabled"/><attr format="boolean" name="touchInside"/><attr name="ticksBetweenLabel"/></declare-styleable>
+    <declare-styleable name="ProtractorViewTheme"><attr format="reference" name="protractorViewStyle"/></declare-styleable>
+    <string name="app_name">ProtractorView</string>
+</resources>
