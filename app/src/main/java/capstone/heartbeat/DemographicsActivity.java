@@ -162,6 +162,7 @@ public class DemographicsActivity extends AppCompatActivity {
             editor.putBoolean("Gender", selected);
             editor.putFloat("Height", height);
             editor.putString("Weight",weight );
+            editor.commit();
             startActivity(new Intent(getApplicationContext(),LaboratoryActivity.class));
             return true;
         }

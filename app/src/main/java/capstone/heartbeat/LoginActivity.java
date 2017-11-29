@@ -207,7 +207,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             SharedPreferences.Editor editor = prefs.edit();
 
             editor.putInt("session",1);
-
+            editor.commit();
 
             startActivity(new Intent(getApplicationContext(),DemographicsActivity.class));
 

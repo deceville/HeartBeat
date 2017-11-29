@@ -95,6 +95,7 @@ public class LaboratoryActivity extends AppCompatActivity {
             editor.putInt("dbp",dbp);
             editor.putInt("chl",chl);
             editor.putInt("hdl",hdl);
+            editor.commit();
             startActivity(new Intent(getApplicationContext(),HabitsActivity.class));
             return true;
         }
