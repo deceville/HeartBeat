@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -43,6 +44,7 @@ import static android.Manifest.permission.READ_CONTACTS;
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
+    SharedPreferences prefs;
     /**
      * Id to identity READ_CONTACTS permission request.
      */
@@ -201,7 +203,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
 
+            prefs = getSharedPreferences("login",MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+
+            editor.putInt("session",1);
+
+
             startActivity(new Intent(getApplicationContext(),DemographicsActivity.class));
+
+
 
         }
     }
@@ -372,6 +382,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
         }
+    }
+
+    private void checkLogin(){
+
     }
 }
 

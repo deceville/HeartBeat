@@ -33,15 +33,6 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <activity
-            android:name=".Menu"
-            android:label="@string/title_activity_menu"
-            android:theme="@style/AppTheme" />
-
-        <activity android:name=".Result"/>
-
-        <activity android:name=".Demographics"/>
-
-        <activity
             android:name=".DemographicsActivity"
             android:label="@string/title_activity_demo" />
         <activity
@@ -64,9 +55,7 @@
             android:label="@string/title_activity_main" />
         <activity android:name=".SampleInput1" />
         <activity android:name=".SampleInput2" />
-
         <activity android:name=".Result" />
-        <activity android:name=".ScaleView" />
     </application>
 
 </manifest>
