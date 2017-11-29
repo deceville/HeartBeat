@@ -40,14 +40,14 @@
                     android:textSize="@dimen/btn_label" />
 
                 <Button
-                    android:id="@+id/btn_diabetes_no"
+                    android:id="@+id/btn_diabetes_yes"
                     android:layout_width="@dimen/btn_width_height"
                     android:layout_height="@dimen/btn_width_height"
                     android:layout_margin="10dp"
                     android:background="@drawable/btn_circle_green" />
 
                 <Button
-                    android:id="@+id/btn_diabetes_yes"
+                    android:id="@+id/btn_diabetes_no"
                     android:layout_width="@dimen/btn_width_height"
                     android:layout_height="@dimen/btn_width_height"
                     android:layout_margin="10dp"
@@ -59,6 +59,58 @@
                     android:text="@string/btn_no"
                     android:layout_gravity="center_vertical"
                     android:textSize="@dimen/btn_label" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/diabetes_yes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/diabetes_type1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="@dimen/switch_label_width"
+                        android:layout_height="wrap_content"
+                        android:text="@string/diabetes_type1"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/switch_label" />
+
+                    <Switch
+                        android:id="@+id/sw_diabetes_type1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:theme="@style/SwitchColor" />
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/diabetes_type2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="@dimen/switch_label_width"
+                        android:layout_height="wrap_content"
+                        android:text="@string/diabetes_type2"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/switch_label" />
+
+                    <Switch
+                        android:id="@+id/sw_diabetes_type2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:theme="@style/SwitchColor" />
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>
