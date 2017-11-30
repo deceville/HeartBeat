@@ -2,6 +2,7 @@ package capstone.heartbeat;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,10 +36,26 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
 
         btn_smoking_yes = (ImageButton) findViewById(R.id.btn_smoking_yes);
         btn_smoking_no = (ImageButton) findViewById(R.id.btn_smoking_no);
+        ImageButton btn_smoker = (ImageButton)findViewById(R.id.btn_smoker);
+        ImageButton btn_nonsmoker = (ImageButton)findViewById(R.id.btn_nonsmoker);
+        btn_bptreat_no.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bptr = "0";
+            }
+        });
+
+        btn_bptreat_yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bptr = "1";
+            }
+        });
 
         btn_smoking_no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                smoke = "0";
                 if(viewGroupIsVisible || (viewGroup_notsmoking.getVisibility() == View.GONE)){
                     viewGroup_notsmoking.setVisibility(View.VISIBLE);
                 }else{
@@ -50,11 +67,30 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
         btn_smoking_yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                if(btn_smoking_no.isSelected()){
+                    selectNew = true;
+                }
+
+
                 if(viewGroupIsVisible || (viewGroup_sticks.getVisibility() == View.GONE)){
                     viewGroup_sticks.setVisibility(View.VISIBLE);
                 }else{
                     viewGroup_sticks.setVisibility(View.GONE);
                 }
+            }
+        });
+        btn_smoker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                non_smkr = "0";
+            }
+        });
+        btn_nonsmoker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                non_smkr = "1";
             }
         });
 
@@ -65,7 +101,7 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
             @Override
             public void onClick(View v) {
                 showNumOfSticks();
-                smoker = 1;
+                smoke = "1";
             }
         });
 
@@ -221,7 +257,7 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
             @Override
             public void onClick(View v) {
                 Button numOfSticks = (Button) findViewById(R.id.numOfSticks);
-
+                smk_quantity = String.valueOf(np.getValue());
                 numOfSticks.setText(String.valueOf(np.getValue()) + " sticks per day");
                 d.dismiss();
             }
@@ -244,6 +280,50 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
         return true;
     }
 
+    public void saveTemp(String v1,String v2, String v3, String v4){
+        int smoke = Integer.parseInt(v1);
+        int non_smkr = Integer.parseInt(v2);
+        int quantity = Integer.parseInt(v3);
+        int bptr = Integer.parseInt(v4);
+        int smoker_type = 0;
+
+        SharedPreferences prefs = getSharedPreferences("values",MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+
+
+        if(smoke == 0){
+            if(non_smkr == 1){
+                smoker_type = 0;
+                editor.putInt("smoke_type",smoker_type);
+                editor.commit();
+            }else if(non_smkr == 0){
+                smoker_type = 1;
+                editor.putInt("smoke_type",smoker_type);
+                editor.commit();
+            }
+
+        }else if (smoke == 1){
+            if(quantity > 0 && quantity <= 10){
+                smoker_type = 3;
+                editor.putInt("smoke_type",smoker_type);
+                editor.commit();
+            }else if(quantity >=11 && quantity <20){
+                smoker_type = 4;
+                editor.putInt("smoke_type",smoker_type);
+                editor.commit();
+            }else if (quantity>20){
+                smoker_type = 5;
+                editor.putInt("smoke_type",smoker_type);
+                editor.commit();
+            }
+        }
+
+        editor.putInt("bptr",bptr);
+        editor.commit();
+
+
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -253,6 +333,7 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.next) {
+            saveTemp(this.smoke,this.non_smkr,this.smk_quantity,this.bptr);
             startActivity(new Intent(getApplicationContext(),HistoryActivity.class));
             return true;
         }

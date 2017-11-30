@@ -35,6 +35,7 @@ public class DemographicsActivity extends AppCompatActivity {
     boolean selected = false;
     int male = 0;
     int female = 0;
+    int gender ;
     public String weight;
 
     @Override
@@ -52,7 +53,7 @@ public class DemographicsActivity extends AppCompatActivity {
                 selected = true;
                 female = 1;
                 male = 0;
-
+                gender = 0;
                 if(selected && (male == 1 || female == 0)){
                     btn_male.setBackgroundColor(getResources().getColor(R.color.bg_screen2));
                     btn_female.setBackgroundColor(getResources().getColor(R.color.progress_gray));
@@ -64,12 +65,14 @@ public class DemographicsActivity extends AppCompatActivity {
         });
 
         btn_male.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View v) {
                 selected = true;
                 female = 0;
                 male = 1;
-
+                gender = 1;
                 if(selected && (male == 1 || female == 0)){
                     btn_male.setBackgroundColor(getResources().getColor(R.color.bg_screen2));
                     btn_female.setBackgroundColor(getResources().getColor(R.color.progress_gray));
@@ -156,13 +159,7 @@ public class DemographicsActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.next) {
 
-            SharedPreferences prefs = getSharedPreferences("values",MODE_PRIVATE);
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putInt("Age", age);
-            editor.putBoolean("Gender", selected);
-            editor.putFloat("Height", height);
-            editor.putString("Weight",weight );
-            editor.commit();
+            save(age,gender,height,weight);
             startActivity(new Intent(getApplicationContext(),LaboratoryActivity.class));
             return true;
         }
@@ -170,6 +167,19 @@ public class DemographicsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void save(int v1,int v2,float v3,String v4){
+
+        int height = (int)v3;
+        int weight = Integer.parseInt(v4);
+
+        SharedPreferences prefs = getSharedPreferences("values",MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("Age", v1);
+        editor.putInt("Gender", v2);
+        editor.putInt("Height", height);
+        editor.putInt("Weight",weight );
+        editor.commit();
+    }
     class mDateSetListener implements DatePickerDialog.OnDateSetListener {
 
         @Override
