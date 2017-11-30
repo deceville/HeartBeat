@@ -18,7 +18,7 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
     ImageButton btn_smoking_yes, btn_smoking_no, btn_sedentary, btn_light, btn_moderate, btn_very, btn_extreme;
     Button btn_bptreat_no, btn_bptreat_yes;
 
-    public boolean selected = false;
+    public boolean selected = false, selectNew = true;
     public int smoker = 0, non_smoker = 0;
 
 
@@ -50,6 +50,9 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
         btn_smoking_yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(btn_smoking_no.isSelected()){
+                    selectNew = true;
+                }
                 if(viewGroupIsVisible || (viewGroup_sticks.getVisibility() == View.GONE)){
                     viewGroup_sticks.setVisibility(View.VISIBLE);
                 }else{

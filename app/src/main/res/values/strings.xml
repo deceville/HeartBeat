@@ -77,6 +77,8 @@
     <string name="history_family">Do you have a first degree relative ages 60 years old and below who has/had heart attack? (Previous/Present)</string>
     <string name="btn_yes">Yes</string>
     <string name="btn_no">No</string>
+    <string name="diabetes_type1">Type 1</string>
+    <string name="diabetes_type2">Type 2</string>
 
     <!-- Diseases name -->
     <string name="disease_congestive">Congestive Heart Failure</string>
