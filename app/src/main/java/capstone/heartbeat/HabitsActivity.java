@@ -50,9 +50,6 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
         btn_smoking_yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(btn_smoking_no.isSelected()){
-                    selectNew = true;
-                }
                 if(viewGroupIsVisible || (viewGroup_sticks.getVisibility() == View.GONE)){
                     viewGroup_sticks.setVisibility(View.VISIBLE);
                 }else{
@@ -138,7 +135,7 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
             public void onClick(View v) {
                 Button btn_freetime = (Button) findViewById(R.id.freetime);
 
-                btn_freetime.setText(String.valueOf(np.getValue()) + ":" + String.format(String.valueOf(np1.getValue())) + " hours");
+                btn_freetime.setText(String.format("%02d:%02d", np.getValue(), np1.getValue()) + " hours");
                 d.dismiss();
             }
         });
@@ -191,7 +188,7 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
             public void onClick(View v) {
                 Button btn_freetime = (Button) findViewById(R.id.sleeptime);
 
-                btn_freetime.setText(String.valueOf(np.getValue()) + ":" + String.format(String.valueOf(np1.getValue())) + " PM");
+                btn_freetime.setText(String.format("%02d:%02d", np.getValue(), np1.getValue()) + " PM");
                 d.dismiss();
             }
         });

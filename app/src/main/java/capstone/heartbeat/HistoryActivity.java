@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -50,10 +51,14 @@ public class HistoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 diabetes = true;
+                btn_diabetes_yes.setSelected(true);
+                btn_diabetes_no.setSelected(false);
                 if(viewGroupIsVisible || (diabetes_yes.getVisibility() == View.GONE)){
                     diabetes_yes.setVisibility(View.VISIBLE);
                 }else{
                     diabetes_yes.setVisibility(View.GONE);
+                    btn_diabetes_yes.setSelected(false);
+                    viewGroupIsVisible = false;
                 }
             }
         });
@@ -84,6 +89,12 @@ public class HistoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 diabetes = false;
+                btn_diabetes_no.setSelected(true);
+                btn_diabetes_yes.setSelected(false);
+                if(viewGroupIsVisible || (diabetes_yes.getVisibility() == View.VISIBLE)){
+                    diabetes_yes.setVisibility(View.GONE);
+                    viewGroupIsVisible = false;
+                }
             }
         });
 
@@ -93,6 +104,8 @@ public class HistoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 famhistory = true;
+                btn_famhistory_yes.setSelected(true);
+                btn_famhistory_no.setSelected(false);
             }
         });
 
@@ -100,6 +113,8 @@ public class HistoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 famhistory = false;
+                btn_famhistory_yes.setSelected(false);
+                btn_famhistory_no.setSelected(true);
             }
         });
     }
