@@ -18,6 +18,10 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import capstone.heartbeat.DemographicsActivity;
+import capstone.heartbeat.PreferenceManager;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -35,12 +39,13 @@ public class WelcomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
 
+
+
         // Checking for first time launch - before calling setContentView()
         prefManager = new PreferenceManager(this);
         if (!prefManager.isFirstTimeLaunch()) {
 
-            prefs = getSharedPreferences("login",MODE_PRIVATE);
-            if (prefs.getInt("session", 0) == 1) {
+            if (isLoggedIn()) {
                 startActivity(new Intent(getApplicationContext(),DemographicsActivity.class));
                 finish();
             }else {
@@ -50,6 +55,8 @@ public class WelcomeActivity extends AppCompatActivity {
 
 
 
+        }else{
+            prefManager.setFirstTimeLaunch(false);
         }
 
         // Making notification bar transparent
@@ -61,7 +68,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
-        btnSkip = (Button) findViewById(R.id.btn_skip);
+          btnSkip = (Button) findViewById(R.id.btn_skip);
         btnNext = (Button) findViewById(R.id.btn_next);
 
         btnSignup = (Button) findViewById(R.id.btn_signup);
@@ -107,6 +114,16 @@ public class WelcomeActivity extends AppCompatActivity {
             }
         });
 
+    }
+    private boolean isLoggedIn(){
+        boolean state = false;
+        prefs = getSharedPreferences("login",MODE_PRIVATE);
+        if (prefs.getInt("session", 0) == 1){
+            state = true;
+            return state;
+        }else
+
+        return state;
     }
 
     private void addBottomDots(int currentPage) {

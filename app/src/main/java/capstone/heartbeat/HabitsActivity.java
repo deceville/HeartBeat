@@ -24,7 +24,7 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
 
     private boolean viewGroupIsVisible = false;
     private View viewGroup_notsmoking, viewGroup_sticks;
-    public int smoke,smk_quantity,non_smkr;
+    public String smoke,smk_quantity,non_smkr,bptr,activ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +65,7 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
             @Override
             public void onClick(View v) {
                 showNumOfSticks();
+                smoker = 1;
             }
         });
 
