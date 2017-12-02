@@ -49,20 +49,18 @@
                 <ImageButton
                     android:id="@+id/btn_smoking_yes"
                     android:layout_width="@dimen/btn_width_height"
-                    android:layout_height="@dimen/btn_width_height"
+                    android:layout_height="55dp"
                     android:layout_margin="10dp"
-                    android:background="@drawable/btn_roundedcorner"
-                    android:scaleType="fitCenter"
-                    app:srcCompat="@drawable/btn_smoking_yes" />
+                    android:background="@drawable/btn_selector_smoking"
+                    android:scaleType="fitCenter" />
 
                 <ImageButton
                     android:id="@+id/btn_smoking_no"
                     android:layout_width="@dimen/btn_width_height"
-                    android:layout_height="@dimen/btn_width_height"
+                    android:layout_height="55dp"
                     android:layout_margin="10dp"
-                    android:background="@drawable/btn_roundedcorner"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/btn_smoking_no" />
+                    android:background="@drawable/btn_selector_notsmoking"
+                    android:scaleType="fitCenter" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -113,20 +111,18 @@
                     <ImageButton
                         android:id="@+id/btn_nonsmoker"
                         android:layout_width="@dimen/btn_width_height"
-                        android:layout_height="@dimen/btn_width_height"
+                        android:layout_height="55dp"
                         android:layout_margin="10dp"
-                        android:background="@drawable/btn_roundedcorner"
-                        android:scaleType="fitCenter"
-                        app:srcCompat="@drawable/btn_smoking_no" />
+                        android:background="@drawable/btn_selector_notsmoking"
+                        android:scaleType="fitCenter"/>
 
                     <ImageButton
                         android:id="@+id/btn_smoker"
                         android:layout_width="@dimen/btn_width_height"
-                        android:layout_height="@dimen/btn_width_height"
+                        android:layout_height="55dp"
                         android:layout_margin="10dp"
-                        android:background="@drawable/btn_roundedcorner"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/btn_smoking_yes" />
+                        android:background="@drawable/btn_selector_smoking"
+                        android:scaleType="fitCenter" />
 
                     <TextView
                         android:layout_width="wrap_content"

@@ -37,12 +37,16 @@ public class DemographicsActivity extends AppCompatActivity {
     int female = 0;
     int gender ;
     public String weight;
+    SharedPreferences prefs;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demographics1);
 
+        prefs = getSharedPreferences("values",MODE_PRIVATE);
+        editor = prefs.edit();
         btn_birthdate = (Button)findViewById(R.id.btn_birthdate);
         btn_female = (Button)findViewById(R.id.btn_female);
         btn_male = (Button)findViewById(R.id.btn_male);
@@ -54,6 +58,8 @@ public class DemographicsActivity extends AppCompatActivity {
                 female = 1;
                 male = 0;
                 gender = 0;
+                editor.putInt("Gender", gender);
+
                 if(selected && (male == 1 || female == 0)){
                     btn_male.setBackgroundColor(getResources().getColor(R.color.bg_screen2));
                     btn_female.setBackgroundColor(getResources().getColor(R.color.progress_gray));
@@ -73,6 +79,8 @@ public class DemographicsActivity extends AppCompatActivity {
                 female = 0;
                 male = 1;
                 gender = 1;
+                editor.putInt("Gender", gender);
+
                 if(selected && (male == 1 || female == 0)){
                     btn_male.setBackgroundColor(getResources().getColor(R.color.bg_screen2));
                     btn_female.setBackgroundColor(getResources().getColor(R.color.progress_gray));
@@ -107,6 +115,7 @@ public class DemographicsActivity extends AppCompatActivity {
             @Override
             public void onViewUpdate(float result) {
                 height = (float) Math.round(result * 10f) / 10f;
+                editor.putInt("height",(int)height);
                 txtValue.setText(height + " cm");
             }
         });
@@ -128,6 +137,10 @@ public class DemographicsActivity extends AppCompatActivity {
             @Override
             public void selectedView(View view) {
                 weight = ((TextView)view).getText().toString();
+                weight = weight.substring(0,weight.length()-3);
+                int weigh = Integer.parseInt(weight);
+                editor.putInt("weight", weigh);
+
             }
         });
     }
@@ -159,7 +172,7 @@ public class DemographicsActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.next) {
 
-            save(age,gender,height,weight);
+            editor.commit();
             startActivity(new Intent(getApplicationContext(),LaboratoryActivity.class));
             return true;
         }
@@ -167,19 +180,7 @@ public class DemographicsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void save(int v1,int v2,float v3,String v4){
 
-        int height = (int)v3;
-        int weight = Integer.parseInt(v4);
-
-        SharedPreferences prefs = getSharedPreferences("values",MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt("Age", v1);
-        editor.putInt("Gender", v2);
-        editor.putInt("Height", height);
-        editor.putInt("Weight",weight );
-        editor.commit();
-    }
     class mDateSetListener implements DatePickerDialog.OnDateSetListener {
 
         @Override
@@ -195,6 +196,8 @@ public class DemographicsActivity extends AppCompatActivity {
                     .append(mMonth + 1).append("/").append(mDay).append("/")
                     .append(mYear).append(" "));
             age = currYear - mYear;
+            editor.putInt("age",age);
+            editor.commit();
             System.out.println(btn_birthdate.getText().toString() + "Age: " + age);
         }
     }

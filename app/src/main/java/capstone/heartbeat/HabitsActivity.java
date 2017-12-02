@@ -16,7 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 
 public class HabitsActivity extends AppCompatActivity implements NumberPicker.OnValueChangeListener {
-    ImageButton btn_smoking_yes, btn_smoking_no, btn_sedentary, btn_light, btn_moderate, btn_very, btn_extreme;
+    ImageButton btn_smoking_yes, btn_smoking_no, btn_smoker, btn_nonsmoker, btn_sedentary, btn_light, btn_moderate, btn_very, btn_extreme;
     Button btn_bptreat_no, btn_bptreat_yes;
 
     public boolean selected = false, selectNew = true;
@@ -27,21 +27,34 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
     private View viewGroup_notsmoking, viewGroup_sticks;
     public String smoke,smk_quantity,non_smkr,bptr,activ;
 
+    SharedPreferences prefs;
+    SharedPreferences.Editor editor ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_habits);
 
+        prefs = getSharedPreferences("values",MODE_PRIVATE);
+        editor = prefs.edit();
+
         viewGroup_notsmoking = findViewById(R.id.viewGroup_notsmoking);
 
         btn_smoking_yes = (ImageButton) findViewById(R.id.btn_smoking_yes);
         btn_smoking_no = (ImageButton) findViewById(R.id.btn_smoking_no);
-        ImageButton btn_smoker = (ImageButton)findViewById(R.id.btn_smoker);
-        ImageButton btn_nonsmoker = (ImageButton)findViewById(R.id.btn_nonsmoker);
+        btn_smoker = (ImageButton)findViewById(R.id.btn_smoker);
+        btn_nonsmoker = (ImageButton)findViewById(R.id.btn_nonsmoker);
+        btn_bptreat_no = (Button)findViewById(R.id.btn_bptreat_no);
+        btn_bptreat_yes =(Button)findViewById(R.id.btn_bptreat_yes);
         btn_bptreat_no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 bptr = "0";
+                btn_bptreat_no.setSelected(true);
+                btn_bptreat_yes.setSelected(false);
+                int bptrs = Integer.parseInt(bptr);
+                editor.putInt("bptr",bptrs);
+                editor.commit();
             }
         });
 
@@ -49,6 +62,11 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
             @Override
             public void onClick(View view) {
                 bptr = "1";
+                btn_bptreat_no.setSelected(false);
+                btn_bptreat_yes.setSelected(true);
+                int bptrs = Integer.parseInt(bptr);
+                editor.putInt("bptr",bptrs);
+                editor.commit();
             }
         });
 
@@ -56,10 +74,13 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
             @Override
             public void onClick(View v) {
                 smoke = "0";
+                btn_smoking_no.setSelected(true);
+                btn_smoking_yes.setSelected(false);
                 if(viewGroupIsVisible || (viewGroup_notsmoking.getVisibility() == View.GONE)){
                     viewGroup_notsmoking.setVisibility(View.VISIBLE);
                 }else{
                     viewGroup_notsmoking.setVisibility(View.GONE);
+                    btn_smoking_no.setSelected(false);
                 }
             }
         });
@@ -67,8 +88,8 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
         btn_smoking_yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
+                btn_smoking_no.setSelected(false);
+                btn_smoking_yes.setSelected(true);
                 if(btn_smoking_no.isSelected()){
                     selectNew = true;
                 }
@@ -78,6 +99,7 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
                     viewGroup_sticks.setVisibility(View.VISIBLE);
                 }else{
                     viewGroup_sticks.setVisibility(View.GONE);
+                    btn_smoking_yes.setSelected(false);
                 }
             }
         });
@@ -85,12 +107,21 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
             @Override
             public void onClick(View view) {
                 non_smkr = "0";
+                btn_smoker.setSelected(true);
+                btn_smoker.setSelected(false);
+                editor.putInt("smoke_type",1);
+                editor.commit();
             }
         });
         btn_nonsmoker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 non_smkr = "1";
+                btn_nonsmoker.setSelected(true);
+                btn_nonsmoker.setSelected(false);
+                editor.putInt("smoke_type",0);
+                editor.commit();
+
             }
         });
 
@@ -258,7 +289,22 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
             public void onClick(View v) {
                 Button numOfSticks = (Button) findViewById(R.id.numOfSticks);
                 smk_quantity = String.valueOf(np.getValue());
+                int quantity = np.getValue();
+                int smoker_type;
                 numOfSticks.setText(String.valueOf(np.getValue()) + " sticks per day");
+                if(quantity > 0 && quantity <= 10){
+                    smoker_type = 3;
+                    editor.putInt("smoke_type",smoker_type);
+                    editor.commit();
+                }else if(quantity >=11 && quantity <20){
+                    smoker_type = 4;
+                    editor.putInt("smoke_type",smoker_type);
+                    editor.commit();
+                }else if (quantity>20){
+                    smoker_type = 5;
+                    editor.putInt("smoke_type",smoker_type);
+                    editor.commit();
+                }
                 d.dismiss();
             }
         });
@@ -333,7 +379,7 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.next) {
-            saveTemp(this.smoke,this.non_smkr,this.smk_quantity,this.bptr);
+
             startActivity(new Intent(getApplicationContext(),HistoryActivity.class));
             return true;
         }

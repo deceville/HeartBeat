@@ -8,169 +8,34 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-<<<<<<< HEAD
-=======
 import android.view.ViewGroup;
->>>>>>> e81ae8bfaf791b8f26d8f5ecf2023ac5d7d59139
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
 public class HistoryActivity extends AppCompatActivity {
-<<<<<<< HEAD
     private Button diabetes_t1no,diabetes_t1yes,famhistory_yes,famhistoy_no;
     private Switch congestive,heartattack,valvular,irrefular,rheumatoid,chronic;
-    private int type1,cong,ha,val,irr,rhe,chr,fhcvd;
-    private SharedPreferences prefs = getSharedPreferences("values",MODE_PRIVATE);
-    private SharedPreferences.Editor editor = prefs.edit();
-=======
+    private int dia,type2,type1,cong,ha,val,irr,rhe,chr,fhcvd;
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor editor ;
+
     public Button btn_diabetes_no, btn_diabetes_yes, btn_famhistory_no, btn_famhistory_yes;
     public ViewGroup diabetes_yes;
     public Switch sw_congestive, sw_heartattack, sw_valvular, sw_irregular, sw_rheumatoid, sw_chronic;
     public Switch sw_diabetes_type1, sw_diabetes_type2;
 
-    public boolean diabetes = false;
-    public boolean diabetes_type1 = false;
-    public boolean diabetes_type2 = false;
-    public boolean famhistory = false;
-    public boolean congestive = false;
-    public boolean heartattack = false;
-    public boolean valvular = false;
-    public boolean irregular = false;
-    public boolean rheumatoid = false;
-    public boolean chronic = false;
 
     private boolean viewGroupIsVisible = false;
->>>>>>> e81ae8bfaf791b8f26d8f5ecf2023ac5d7d59139
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
-<<<<<<< HEAD
-        diabetes_t1no = (Button)findViewById(R.id.btn_diabetes_no);
-        diabetes_t1yes = (Button)findViewById(R.id.btn_diabetes_yes);
-        famhistory_yes =(Button)findViewById(R.id.btn_famhistory_yes);
-        famhistoy_no = (Button)findViewById(R.id.btn_famhistory_no);
-        congestive = (Switch)findViewById(R.id.sw_congestive);
-        heartattack =(Switch)findViewById(R.id.sw_heartattack);
-        valvular = (Switch)findViewById(R.id.sw_valvular);
-        irrefular = (Switch)findViewById(R.id.sw_irregular);
-        rheumatoid =(Switch)findViewById(R.id.sw_rheumatoid);
-        chronic = (Switch)findViewById(R.id.sw_chronic);
+        prefs = getSharedPreferences("values",MODE_PRIVATE);
+        editor = prefs.edit();
 
-        diabetes_t1yes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                type1 = 1;
-                editor.putInt("type1",type1);
-                editor.commit();
-            }
-        });
-        diabetes_t1no.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                type1 = 0;
-                editor.putInt("type1",type1);
-                editor.commit();
-            }
-        });
-        famhistory_yes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fhcvd = 1;
-                editor.putInt("fhcvd",fhcvd);
-                editor.commit();
-            }
-        });
-        famhistoy_no.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fhcvd = 0;
-                editor.putInt("fhcvd",fhcvd);
-                editor.commit();
-            }
-        });
-        congestive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b){
-                    cong = 1;
-                    editor.putInt("congestive",cong);
-                    editor.commit();
-                }else {
-                    cong = 0;
-                    editor.putInt("congestive",cong);
-                    editor.commit();
-                }
-            }
-        });
-        heartattack.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b){
-                    ha = 1;
-                    editor.putInt("heartattack",ha);
-                    editor.commit();
-                }else {ha =0;
-                    editor.putInt("heartattack",ha);
-                    editor.commit();}
-            }
-        });
-        valvular.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
-                    val = 1;
-                    editor.putInt("valvular",val);
-                    editor.commit();
-                }else {val = 0;
-                    editor.putInt("valvular",val);
-                    editor.commit();}
-            }
-        });
-        irrefular.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b){
-                    irr=1;
-                    editor.putInt("irregular",irr);
-                    editor.commit();
-                }else {irr =0;
-                    editor.putInt("irregular",irr);
-                    editor.commit();}
-            }
-        });
-        rheumatoid.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b){
-                    rhe = 1;
-                    editor.putInt("rheumatoid",rhe);
-                    editor.commit();
-                }else {rhe =0;
-                    editor.putInt("rheumatoid",rhe);
-                    editor.commit();}
-            }
-        });
-        chronic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b){
-                    chr =1;
-                    editor.putInt("chronic",chr);
-                    editor.commit();
-                }else {chr = 0;
-                    editor.putInt("chronic",chr);
-                    editor.commit();}
-            }
-        });
-
-
-
-
-=======
         diabetes_yes = (ViewGroup) findViewById(R.id.diabetes_yes);
         btn_diabetes_no = (Button) findViewById(R.id.btn_diabetes_no);
         btn_diabetes_yes = (Button) findViewById(R.id.btn_diabetes_yes);
@@ -181,10 +46,12 @@ public class HistoryActivity extends AppCompatActivity {
         sw_diabetes_type1 = (Switch) findViewById(R.id.sw_diabetes_type1);
         sw_diabetes_type2 = (Switch) findViewById(R.id.sw_diabetes_type2);
 
+        getSwitchValues();
+
         btn_diabetes_yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                diabetes = true;
+                dia = 1;
                 btn_diabetes_yes.setSelected(true);
                 btn_diabetes_no.setSelected(false);
                 if(viewGroupIsVisible || (diabetes_yes.getVisibility() == View.GONE)){
@@ -194,6 +61,8 @@ public class HistoryActivity extends AppCompatActivity {
                     btn_diabetes_yes.setSelected(false);
                     viewGroupIsVisible = false;
                 }
+                editor.putInt("dia",dia);
+                editor.commit();
             }
         });
 
@@ -201,9 +70,13 @@ public class HistoryActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    diabetes_type2 = true;
+                    type2 = 1;
+                    editor.putInt("type2",type2);
+                    editor.commit();
                 }else{
-                    diabetes_type2 = false;
+                    type2 = 0;
+                    editor.putInt("type2",type2);
+                    editor.commit();
                 }
             }
         });
@@ -212,9 +85,13 @@ public class HistoryActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    diabetes_type1 = true;
+                    type1 = 1;
+                    editor.putInt("type1",type1);
+                    editor.commit();
                 }else{
-                    diabetes_type1 = false;
+                    type1 = 0;
+                    editor.putInt("type1",type1);
+                    editor.commit();
                 }
             }
         });
@@ -222,33 +99,37 @@ public class HistoryActivity extends AppCompatActivity {
         btn_diabetes_no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                diabetes = false;
+                dia = 0;
                 btn_diabetes_no.setSelected(true);
                 btn_diabetes_yes.setSelected(false);
                 if(viewGroupIsVisible || (diabetes_yes.getVisibility() == View.VISIBLE)){
                     diabetes_yes.setVisibility(View.GONE);
                     viewGroupIsVisible = false;
                 }
+                editor.putInt("dia",dia);
+                editor.commit();
             }
         });
-
-        getSwitchValues();
 
         btn_famhistory_yes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                famhistory = true;
+                fhcvd = 1;
                 btn_famhistory_yes.setSelected(true);
                 btn_famhistory_no.setSelected(false);
+                editor.putInt("fhcvd",fhcvd);
+                editor.commit();
             }
         });
 
         btn_famhistory_no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                famhistory = false;
+                fhcvd = 0;
                 btn_famhistory_yes.setSelected(false);
                 btn_famhistory_no.setSelected(true);
+                editor.putInt("fhcvd",fhcvd);
+                editor.commit();
             }
         });
     }
@@ -264,10 +145,14 @@ public class HistoryActivity extends AppCompatActivity {
         sw_chronic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    chronic = true;
-                }else{
-                    chronic = false;
+                if (isChecked){
+                    chr = 1;
+                    editor.putInt("chronic",chr);
+                    editor.commit();
+                }else {
+                    chr = 0;
+                    editor.putInt("chronic",chr);
+                    editor.commit();
                 }
             }
         });
@@ -275,10 +160,14 @@ public class HistoryActivity extends AppCompatActivity {
         sw_congestive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    congestive = true;
-                }else{
-                    congestive = false;
+                if (isChecked){
+                    cong = 1;
+                    editor.putInt("congestive",cong);
+                    editor.commit();
+                }else {
+                    cong = 0;
+                    editor.putInt("congestive",cong);
+                    editor.commit();
                 }
             }
         });
@@ -287,9 +176,13 @@ public class HistoryActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    valvular = true;
-                }else{
-                    valvular = false;
+                    val = 1;
+                    editor.putInt("valvular",val);
+                    editor.commit();
+                }else {
+                    val = 0;
+                    editor.putInt("valvular",val);
+                    editor.commit();
                 }
             }
         });
@@ -297,10 +190,14 @@ public class HistoryActivity extends AppCompatActivity {
         sw_rheumatoid.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    rheumatoid = true;
-                }else{
-                    rheumatoid = false;
+                if (isChecked){
+                    rhe = 1;
+                    editor.putInt("rheumatoid",rhe);
+                    editor.commit();
+                }else {
+                    rhe = 0;
+                    editor.putInt("rheumatoid",rhe);
+                    editor.commit();
                 }
             }
         });
@@ -308,10 +205,14 @@ public class HistoryActivity extends AppCompatActivity {
         sw_irregular.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    irregular = true;
-                }else{
-                    irregular = false;
+                if (isChecked){
+                    irr = 1;
+                    editor.putInt("irregular",irr);
+                    editor.commit();
+                }else {
+                    irr = 0;
+                    editor.putInt("irregular",irr);
+                    editor.commit();
                 }
             }
         });
@@ -319,14 +220,17 @@ public class HistoryActivity extends AppCompatActivity {
         sw_heartattack.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
-                    heartattack = true;
-                }else{
-                    heartattack = false;
+                if (isChecked){
+                    ha = 1;
+                    editor.putInt("heartattack",ha);
+                    editor.commit();
+                }else {
+                    ha = 0;
+                    editor.putInt("heartattack",ha);
+                    editor.commit();
                 }
             }
         });
->>>>>>> e81ae8bfaf791b8f26d8f5ecf2023ac5d7d59139
     }
 
     @Override
@@ -346,23 +250,6 @@ public class HistoryActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.next) {
-<<<<<<< HEAD
-
-=======
-            SharedPreferences prefs = getSharedPreferences("values",MODE_PRIVATE);
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putBoolean("Diabetes", diabetes);
-            editor.putBoolean("Diabetes type 1", diabetes_type1);
-            editor.putBoolean("Diabetes type 2", diabetes_type2);
-            editor.putBoolean("Chronic", chronic);
-            editor.putBoolean("Congestive", congestive);
-            editor.putBoolean("Valvular", valvular);
-            editor.putBoolean("Rheumatoid", rheumatoid);
-            editor.putBoolean("Irregular", irregular);
-            editor.putBoolean("Heartattack", heartattack);
-            editor.putBoolean("Family history", famhistory);
-            editor.commit();
->>>>>>> e81ae8bfaf791b8f26d8f5ecf2023ac5d7d59139
             startActivity(new Intent(getApplicationContext(),RiskResultsActivity.class));
             return true;
         }

@@ -8,7 +8,7 @@ import com.github.lzyzsd.circleprogress.DonutProgress;
 public class RiskResultsActivity extends AppCompatActivity {
 
     private DonutProgress heartattack,stroke;
-    private SharedPreferences prefs = getSharedPreferences("values",MODE_PRIVATE);
+    private SharedPreferences prefs ;
     private double age,sbp, totalchl, hdl, height,weight;
     private int smoke,af, diabType1,diabType2,fhcvd,ra,CKD,CHF, HA, VHD,bptreatment;
 
@@ -16,6 +16,8 @@ public class RiskResultsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_risk_results);
+
+        prefs = getSharedPreferences("values",MODE_PRIVATE);
 
         heartattack =(DonutProgress)findViewById(R.id.progress_heartattack);
         stroke = (DonutProgress)findViewById(R.id.progress_stroke);
@@ -40,23 +42,25 @@ public class RiskResultsActivity extends AppCompatActivity {
         int gender = prefs.getInt("gender",0);
 
         final int bool[]={5,smoke,af,diabType1,diabType2,fhcvd,ra,bptreatment};
-        final double continuous[]={age,sbp,totalchl,hdl,height,weight};
+        final double continuous[]={50,140,200,60,height,weight};
 
         Qrisk2Male hm = new Qrisk2Male();
         Qrisk2Female hf = new Qrisk2Female();
         QStrokeMale sm = new QStrokeMale();
         QStrokeFemale sf = new QStrokeFemale();
 
-        double heartAttack,Stroke;
+        double heartAttack=0,Stroke=0;
         if (gender==0){
-             heartAttack = hf.getResult(continuous,bool);
-             Stroke = sf.getResult(continuous,bool,VHD,CKD,CHF,HA);
-             heartattack.setProgress((float)heartAttack);
-             stroke.setProgress((float)Stroke);
+            heartAttack = hf.getResult(continuous,bool);
+            Stroke = sf.getResult(continuous,bool,VHD,CKD,CHF,HA);
+            System.out.println(heartAttack+" "+Stroke);
+            heartattack.setProgress((float)heartAttack);
+            stroke.setProgress((float)Stroke);
 
         }else if(gender==1){
             heartAttack = hm.getResult(continuous,bool);
             Stroke = sm.getResult(continuous,bool,VHD,CKD,CHF,HA);
+            System.out.println(heartAttack+" "+Stroke);
             heartattack.setProgress((float)heartAttack);
             stroke.setProgress((float)Stroke);
         }

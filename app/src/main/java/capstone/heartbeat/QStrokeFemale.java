@@ -11,7 +11,7 @@ import static java.lang.Math.pow;
 public class QStrokeFemale {
     private double age,sbp, totalchl, hdl, height,weight,bmi,rati;
     private int ethnic, smoke,af, diabType1,diabType2,fhcvd,ra,CKD,CHF, HA, VHD,bptreatment;
-    private double town = 1;
+   // private double town = 1;
 
     public QStrokeFemale() {
     }
@@ -155,7 +155,7 @@ public class QStrokeFemale {
         a += age_2 * town * 0.0000037518903323942880000;
 
 	/* Calculate the score itself */
-        double score = 100.0 * (1 - pow(surv2, exp(a)) );
+        double score = 100.0 * (1 - Math.pow(surv2, Math.exp(a)) );
         return score;
     }
 

@@ -65,8 +65,6 @@
         <activity android:name=".SampleInput1" />
         <activity android:name=".SampleInput2" />
 
-        <activity android:name=".Result" />
-        <activity android:name=".ScaleView" />
     </application>
 
 </manifest>

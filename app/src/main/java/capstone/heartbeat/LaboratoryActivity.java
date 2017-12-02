@@ -159,6 +159,7 @@ public class LaboratoryActivity extends AppCompatActivity {
                     @Override
                     public void onPointsChanged(BoxedVertical boxedPoints, final int value) {
                         chl = value;
+                        System.out.println(chl);
                     }
 
                     @Override
