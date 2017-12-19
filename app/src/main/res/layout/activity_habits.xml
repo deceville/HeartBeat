@@ -109,20 +109,20 @@
                         android:textSize="@dimen/btn_label" />
 
                     <ImageButton
-                        android:id="@+id/btn_nonsmoker"
-                        android:layout_width="@dimen/btn_width_height"
-                        android:layout_height="55dp"
-                        android:layout_margin="10dp"
-                        android:background="@drawable/btn_selector_notsmoking"
-                        android:scaleType="fitCenter"/>
-
-                    <ImageButton
                         android:id="@+id/btn_smoker"
                         android:layout_width="@dimen/btn_width_height"
                         android:layout_height="55dp"
                         android:layout_margin="10dp"
                         android:background="@drawable/btn_selector_smoking"
                         android:scaleType="fitCenter" />
+
+                    <ImageButton
+                        android:id="@+id/btn_nonsmoker"
+                        android:layout_width="@dimen/btn_width_height"
+                        android:layout_height="55dp"
+                        android:layout_margin="10dp"
+                        android:background="@drawable/btn_selector_notsmoking"
+                        android:scaleType="fitCenter"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -257,12 +257,11 @@
                         android:layout_height="@dimen/btn_physical_width_height"
                         android:layout_gravity="center"
                         android:layout_margin="10dp"
-                        android:background="@drawable/btn_roundedcorner"
+                        android:background="@drawable/btn_physical_sedentary"
                         android:scaleType="fitCenter"
                         android:text="1"
                         android:textColor="@color/standardWhite"
-                        android:textSize="20sp"
-                        android:backgroundTint="@color/circle_green"/>
+                        android:textSize="20sp"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -289,9 +288,8 @@
                         android:text="2"
                         android:textColor="@color/standardWhite"
                         android:textSize="20sp"
-                        android:background="@drawable/btn_roundedcorner"
-                        android:scaleType="fitCenter"
-                        android:backgroundTint="@color/circle_lightgreen"/>
+                        android:background="@drawable/btn_physical_light"
+                        android:scaleType="fitCenter"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -318,9 +316,8 @@
                         android:text="3"
                         android:textColor="@color/standardWhite"
                         android:textSize="20sp"
-                        android:background="@drawable/btn_roundedcorner"
-                        android:scaleType="fitCenter"
-                        android:backgroundTint="@color/circle_yellow"/>
+                        android:background="@drawable/btn_physical_moderate"
+                        android:scaleType="fitCenter"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -347,9 +344,8 @@
                         android:textColor="@color/standardWhite"
                         android:textSize="20sp"
                         android:layout_margin="10dp"
-                        android:background="@drawable/btn_roundedcorner"
-                        android:scaleType="fitCenter"
-                        android:backgroundTint="@color/circle_orange"/>
+                        android:background="@drawable/btn_physical_very"
+                        android:scaleType="fitCenter"/>
 
                 </LinearLayout>
 
@@ -377,9 +373,8 @@
                         android:text="5"
                         android:textColor="@color/standardWhite"
                         android:textSize="20sp"
-                        android:background="@drawable/btn_roundedcorner"
-                        android:scaleType="fitCenter"
-                        android:backgroundTint="@color/circle_red"/>
+                        android:background="@drawable/btn_physical_extreme"
+                        android:scaleType="fitCenter"/>
 
                 </LinearLayout>
             </LinearLayout>

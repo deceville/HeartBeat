@@ -109,6 +109,13 @@
     <string name="instruction_result">Tap each graph to view details</string>
     <string name="results_riskfactors">Risk Factors (Highest - Lowest)</string>
 
+    <!-- Strings related to add to plan form -->
+    <string name="plan_name">Plan name</string>
+    <string name="plan_currentdate">Date</string>
+    <string name="plan_freetime">Free time</string>
+    <string name="plan_activity">Activities</string>
+    <string name="plan_calories">Date</string>
+
     <!-- Strings related to navigation drawer -->
     <string name="title_activity_menu">Menu</string>
 
