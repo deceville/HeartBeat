@@ -1,6 +1,5 @@
 package capstone.heartbeat;
 
-
 public class Suggestions {
     int id;
     String title;
@@ -8,7 +7,7 @@ public class Suggestions {
     boolean checked;
 
 
-    Suggestions(int id, String title, String desc, boolean box) {
+    Suggestions(int id, String title, String desc, boolean checked) {
         this.id = id;
         this.title = title;
         this.desc = desc;

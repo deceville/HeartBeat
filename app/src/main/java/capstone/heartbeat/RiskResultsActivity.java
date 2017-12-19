@@ -88,7 +88,7 @@ public class RiskResultsActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.proceed) {
-            startActivity(new Intent(getApplicationContext(),MainActivity.class));
+            startActivity(new Intent(getApplicationContext(),AddPlanActivity.class));
             return true;
         }
 

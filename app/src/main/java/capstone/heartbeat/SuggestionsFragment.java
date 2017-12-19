@@ -41,7 +41,7 @@ public class SuggestionsFragment extends Fragment{
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(), "Selected", Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -50,14 +50,14 @@ public class SuggestionsFragment extends Fragment{
         btn_addPlan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String selected = "Selected: \n";
+                StringBuilder selected = new StringBuilder("Selected: \n");
 
                 for (int i = 0; i < suggestions.size(); i++){
                     if(suggestions.get(i).isChecked()){
-                        selected += (++i) + "\n";
+                        selected.append(i).append("\n");
                     }
                 }
-                Toast.makeText(getContext(), selected, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), selected.toString(), Toast.LENGTH_SHORT).show();
             }
         });
 

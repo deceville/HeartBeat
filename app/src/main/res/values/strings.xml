@@ -11,6 +11,7 @@
     <string name="start">GOT IT</string>
     <string name="proceed">PROCEED</string>
     <string name="prev">PREVIOUS</string>
+    <string name="save">SAVE</string>
 
     <string name="slide_1_title">Beat Curiousity</string>
     <string name="slide_1_desc">Check your heart health status</string>
@@ -53,6 +54,7 @@
     <string name="title_activity_habits">Habits</string>
     <string name="title_activity_profile">Profile</string>
     <string name="title_activity_editprofile">Edit Profile</string>
+    <string name="title_activity_addplan">Add a plan</string>
 
     <!-- Strings related to demographics -->
     <string name="demo_birthday">Date of Birth</string>
