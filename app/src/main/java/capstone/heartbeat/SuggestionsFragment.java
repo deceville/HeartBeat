@@ -53,7 +53,9 @@ public class SuggestionsFragment extends Fragment{
                 String selected = "Selected: \n";
 
                 for (int i = 0; i < suggestions.size(); i++){
-                    selected += i + "\n";
+                    if(suggestions.get(i).isChecked()){
+                        selected += (++i) + "\n";
+                    }
                 }
                 Toast.makeText(getContext(), selected, Toast.LENGTH_SHORT).show();
             }
