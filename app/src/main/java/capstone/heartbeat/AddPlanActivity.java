@@ -23,7 +23,7 @@ public class AddPlanActivity extends AppCompatActivity {
     public FloatingActionButton btn_addActivity;
     List<Suggestions> suggestions;
     ListAdapter adapter;
-    Button btn_addPlan;
+    Button btn_addSuggestion;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -59,9 +59,9 @@ public class AddPlanActivity extends AppCompatActivity {
                     }
                 });
 
-                btn_addPlan = (Button) dialog.findViewById(R.id.btn_addPlan);
+                btn_addSuggestion = (Button) dialog.findViewById(R.id.btn_addSuggestion);
 
-                btn_addPlan.setOnClickListener(new View.OnClickListener() {
+                btn_addSuggestion.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         StringBuilder selected = new StringBuilder("Selected: \n");
@@ -72,6 +72,7 @@ public class AddPlanActivity extends AppCompatActivity {
                             }
                         }
                         Toast.makeText(getApplicationContext(), selected.toString(), Toast.LENGTH_SHORT).show();
+                        dialog.hide();
                     }
                 });
             }

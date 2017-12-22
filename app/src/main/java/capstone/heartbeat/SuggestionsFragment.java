@@ -17,7 +17,7 @@ import java.util.List;
 public class SuggestionsFragment extends Fragment{
     List<Suggestions> suggestions;
     ListAdapter adapter;
-    Button btn_addPlan;
+    Button btn_addSuggestion;
     public SuggestionsFragment() {
         // Required empty public constructor
     }
@@ -45,9 +45,9 @@ public class SuggestionsFragment extends Fragment{
             }
         });
 
-        btn_addPlan = (Button) view.findViewById(R.id.btn_addPlan);
+        btn_addSuggestion = (Button) view.findViewById(R.id.btn_addSuggestion);
 
-        btn_addPlan.setOnClickListener(new View.OnClickListener() {
+        btn_addSuggestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 StringBuilder selected = new StringBuilder("Selected: \n");

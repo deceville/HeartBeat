@@ -35,4 +35,6 @@ dependencies {
     implementation project(':DWRulerView')
     implementation project(':HorizontalPicker')
     implementation project(':BoxedVerticalSeekBar')
+    compile 'com.github.clans:fab:1.6.4'
+    implementation project(':FloatingActionButton')
 }

@@ -12,6 +12,7 @@
             <option value="$PROJECT_DIR$/app/libs/BoxedVerticalSeekBar" />
             <option value="$PROJECT_DIR$/app/libs/CircleProgress" />
             <option value="$PROJECT_DIR$/app/libs/DWRulerView" />
+            <option value="$PROJECT_DIR$/app/libs/FloatingActionButton" />
             <option value="$PROJECT_DIR$/app/libs/HorizontalPicker" />
           </set>
         </option>
