@@ -17,7 +17,8 @@ import java.util.List;
 public class SuggestionsFragment extends Fragment{
     List<Suggestions> suggestions;
     ListAdapter adapter;
-    Button btn_addSuggestion;
+    Button btn_addSuggestion, btn_cancel;
+    
     public SuggestionsFragment() {
         // Required empty public constructor
     }
@@ -26,6 +27,9 @@ public class SuggestionsFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_suggestions, container, false);
+        btn_cancel = (Button) view.findViewById(R.id.btn_cancel);
+
+        btn_cancel.setVisibility(View.GONE);
         suggestions = new ArrayList<Suggestions>();
         suggestions.add(new Suggestions(1, "Running","105 calories will burn", false));
         suggestions.add(new Suggestions(2, "Dancing","98 calories will burn", false));
@@ -63,16 +67,6 @@ public class SuggestionsFragment extends Fragment{
 
         // Inflate the layout for this fragment
         return view;
-    }
-
-    /*void fillData() {
-        for (int i = 0; i < suggestionsList.size(); i++) {
-            suggestions.add(new Suggestions(suggestionsList.get(i).toString(), descList.get(i).toString(), false));
-        }
-    }*/
-
-    public void showResult(View v) {
-
     }
 
 

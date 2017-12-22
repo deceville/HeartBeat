@@ -72,7 +72,7 @@
                 android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
             <Button
-                android:id="@+id/plan_freetme"
+                android:id="@+id/plan_freetime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"

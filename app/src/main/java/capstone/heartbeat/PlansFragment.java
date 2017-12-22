@@ -55,7 +55,7 @@ public class PlansFragment extends Fragment{
 
     List<Suggestions> suggestions;
     ListAdapter adapter;
-    Button btn_addSuggestion;
+    Button btn_addSuggestion, btn_cancel;
 
     public PlansFragment() {
         // Required empty public constructor
@@ -293,6 +293,15 @@ public class PlansFragment extends Fragment{
                             }
                             Toast.makeText(getContext(), selected.toString(), Toast.LENGTH_SHORT).show();
 
+                            dialog.hide();
+                        }
+                    });
+
+                    btn_cancel = (Button) dialog.findViewById(R.id.btn_cancel);
+
+                    btn_cancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
                             dialog.hide();
                         }
                     });
