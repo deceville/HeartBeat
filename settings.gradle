@@ -1,7 +1,8 @@
 
-include ':app', ':CircleProgress', ':DWRulerView', ':HorizontalPicker', ':BoxedVerticalSeekBar'
+include ':app', ':CircleProgress', ':DWRulerView', ':HorizontalPicker', ':BoxedVerticalSeekBar', ':FloatingActionButton'
 include ':app'
 project(':CircleProgress').projectDir = new File('app/libs/CircleProgress')
 project(':DWRulerView').projectDir = new File('app/libs/DWRulerView')
 project(':HorizontalPicker').projectDir = new File('app/libs/HorizontalPicker')
 project(':BoxedVerticalSeekBar').projectDir = new File('app/libs/BoxedVerticalSeekBar')
+project(':FloatingActionButton').projectDir = new File('app/libs/FloatingActionButton')

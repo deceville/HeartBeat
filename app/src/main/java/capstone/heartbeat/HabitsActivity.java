@@ -16,8 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 
 public class HabitsActivity extends AppCompatActivity implements NumberPicker.OnValueChangeListener {
-    ImageButton btn_smoking_yes, btn_smoking_no, btn_smoker, btn_nonsmoker, btn_sedentary, btn_light, btn_moderate, btn_very, btn_extreme;
-    Button btn_bptreat_no, btn_bptreat_yes;
+    ImageButton btn_smoking_yes, btn_smoking_no, btn_smoker, btn_nonsmoker;
+    Button btn_bptreat_no, btn_bptreat_yes, btn_sedentary, btn_light, btn_moderate, btn_very, btn_extreme;
 
     public boolean selected = false, selectNew = true;
     public int smoker = 0, non_smoker = 0;
@@ -25,7 +25,7 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
 
     private boolean viewGroupIsVisible = false;
     private View viewGroup_notsmoking, viewGroup_sticks;
-    public String smoke,smk_quantity,non_smkr,bptr,activ;
+    public String smoke,smk_quantity,non_smkr,bptr,activ,sedentary,light,moderate,very,extreme;
 
     SharedPreferences prefs;
     SharedPreferences.Editor editor ;
@@ -46,6 +46,13 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
         btn_nonsmoker = (ImageButton)findViewById(R.id.btn_nonsmoker);
         btn_bptreat_no = (Button)findViewById(R.id.btn_bptreat_no);
         btn_bptreat_yes =(Button)findViewById(R.id.btn_bptreat_yes);
+
+        btn_sedentary = (Button) findViewById(R.id.btn_sedentary);
+        btn_light = (Button) findViewById(R.id.btn_light);
+        btn_moderate = (Button) findViewById(R.id.btn_moderate);
+        btn_very = (Button) findViewById(R.id.btn_very);
+        btn_extreme = (Button) findViewById(R.id.btn_extreme);
+
         btn_bptreat_no.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,7 +115,7 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
             public void onClick(View view) {
                 non_smkr = "0";
                 btn_smoker.setSelected(true);
-                btn_smoker.setSelected(false);
+                btn_nonsmoker.setSelected(false);
                 editor.putInt("smoke_type",1);
                 editor.commit();
             }
@@ -118,7 +125,7 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
             public void onClick(View view) {
                 non_smkr = "1";
                 btn_nonsmoker.setSelected(true);
-                btn_nonsmoker.setSelected(false);
+                btn_smoker.setSelected(false);
                 editor.putInt("smoke_type",0);
                 editor.commit();
 
@@ -133,6 +140,76 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
             public void onClick(View v) {
                 showNumOfSticks();
                 smoke = "1";
+            }
+        });
+
+        btn_sedentary.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_sedentary.setSelected(true);
+                btn_light.setSelected(false);
+                btn_moderate.setSelected(false);
+                btn_very.setSelected(false);
+                btn_extreme.setSelected(false);
+                sedentary = "1";
+                editor.putInt("physical_type",1);
+                editor.commit();
+            }
+        });
+
+        btn_light.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_sedentary.setSelected(false);
+                btn_light.setSelected(true);
+                btn_moderate.setSelected(false);
+                btn_very.setSelected(false);
+                btn_extreme.setSelected(false);
+                light = "2";
+                editor.putInt("physical_type",2);
+                editor.commit();
+            }
+        });
+
+        btn_moderate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_sedentary.setSelected(false);
+                btn_light.setSelected(false);
+                btn_moderate.setSelected(true);
+                btn_very.setSelected(false);
+                btn_extreme.setSelected(false);
+                moderate = "3";
+                editor.putInt("physical_type",3);
+                editor.commit();
+            }
+        });
+
+        btn_very.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_sedentary.setSelected(false);
+                btn_light.setSelected(false);
+                btn_moderate.setSelected(false);
+                btn_very.setSelected(true);
+                btn_extreme.setSelected(false);
+                very = "4";
+                editor.putInt("physical_type",4);
+                editor.commit();
+            }
+        });
+
+        btn_extreme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                btn_sedentary.setSelected(false);
+                btn_light.setSelected(false);
+                btn_moderate.setSelected(false);
+                btn_very.setSelected(false);
+                btn_extreme.setSelected(true);
+                extreme = "5";
+                editor.putInt("physical_type",5);
+                editor.commit();
             }
         });
 

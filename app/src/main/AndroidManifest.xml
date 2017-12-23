@@ -33,11 +33,6 @@
             android:name=".SignupActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
-        <activity
-            android:name=".Menu"
-            android:label="@string/title_activity_menu"
-            android:theme="@style/AppTheme" />
-
         <activity android:name=".Result"/>
 
         <activity android:name=".Demographics"/>
@@ -45,9 +40,6 @@
         <activity
             android:name=".DemographicsActivity"
             android:label="@string/title_activity_demo" />
-        <activity
-            android:name=".MenuActivity"
-            android:label="@string/title_activity_menu" />
         <activity
             android:name=".LaboratoryActivity"
             android:label="@string/title_activity_lab" />
@@ -61,10 +53,12 @@
             android:name=".RiskResultsActivity"
             android:label="@string/title_activity_results" />
         <activity
+            android:name=".AddPlanActivity"
+            android:label="@string/title_activity_addplan" />
+        <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main" />
-        <activity android:name=".SampleInput1" />
-        <activity android:name=".SampleInput2" />
+            android:label="@string/title_activity_main"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
     </application>
 

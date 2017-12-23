@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/libs/BoxedVerticalSeekBar/BoxedVerticalSeekBar.iml" filepath="$PROJECT_DIR$/app/libs/BoxedVerticalSeekBar/BoxedVerticalSeekBar.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/libs/CircleProgress/CircleProgress.iml" filepath="$PROJECT_DIR$/app/libs/CircleProgress/CircleProgress.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/libs/DWRulerView/DWRulerView.iml" filepath="$PROJECT_DIR$/app/libs/DWRulerView/DWRulerView.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/libs/FloatingActionButton/FloatingActionButton.iml" filepath="$PROJECT_DIR$/app/libs/FloatingActionButton/FloatingActionButton.iml" />
       <module fileurl="file://$PROJECT_DIR$/HeartBeat.iml" filepath="$PROJECT_DIR$/HeartBeat.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/libs/HorizontalPicker/HorizontalPicker.iml" filepath="$PROJECT_DIR$/app/libs/HorizontalPicker/HorizontalPicker.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />

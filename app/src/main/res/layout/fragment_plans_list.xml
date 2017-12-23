@@ -1,13 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/list"
     android:name="capstone.heartbeat.PlansFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginLeft="16dp"
     android:layout_marginRight="16dp"
+    android:id="@+id/fragment_plans"
     app:layoutManager="LinearLayoutManager"
     tools:context="capstone.heartbeat.PlansFragment"
-    tools:listitem="@layout/fragment_plans" />
+    tools:listitem="@layout/activity_plans">
+
+    <ExpandableListView
+        android:id="@+id/lv_plans"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/>
+
+    <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/menu_red"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:layout_marginBottom="70dp"
+        fab:menu_labels_ellipsize="end"
+        fab:menu_labels_singleLine="true"
+        fab:menu_backgroundColor="#ccffffff"
+        fab:menu_fab_label="Menu label">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/menu_createPlan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_menu_plans"
+            fab:fab_size="mini"
+            fab:fab_label="Create a plan" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/menu_addActivity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_menu_suggestions"
+            fab:fab_size="mini"
+            fab:fab_label="Add an activity" />
+
+    </com.github.clans.fab.FloatingActionMenu>
+
+
+</FrameLayout>

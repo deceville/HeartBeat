@@ -4,7 +4,7 @@
 
     <color name="colorPrimary">#D12F2F</color>
     <color name="colorPrimaryDark">#9A0007</color>
-    <color name="colorAccent">#FFFFFF</color>
+    <color name="colorAccent">#ffffff</color>
 
     <!-- Screens background color-->
     <color name="bg_screen1">#D12F2F</color>
@@ -27,7 +27,7 @@
     <color name="progress_gray_dark">#FF383838</color>
     <color name="default_blue_light">#FF33b5e5</color>
 
-    <color name="progress_gray_trans">#80D8D8D8</color>
+    <color name="progress_gray_trans">#696969</color>
     <color name="progress_gray_dark_teans">#80383838</color>
     <color name="default_blue_light_teans">#8033b5e5</color>
 
