@@ -119,7 +119,7 @@ public class WelcomeActivity extends AppCompatActivity {
         boolean state = false;
         prefs = getSharedPreferences("login",MODE_PRIVATE);
         if (prefs.getInt("session", 0) == 1){
-            state = true;
+            state = false;
             return state;
         }else
 

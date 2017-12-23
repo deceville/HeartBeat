@@ -124,6 +124,7 @@
 
                 <CheckBox
                     android:layout_width="@dimen/login_signup_width"
+                    android:id="@+id/check"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
                     android:textColor="@color/standardWhite"
