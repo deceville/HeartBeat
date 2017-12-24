@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -158,8 +159,7 @@ public class LaboratoryActivity extends AppCompatActivity {
                 chol_total.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
                     @Override
                     public void onPointsChanged(BoxedVertical boxedPoints, final int value) {
-                        chl = value;
-                        System.out.println(chl);
+                        Log.e("value",value+" ");
                     }
 
                     @Override

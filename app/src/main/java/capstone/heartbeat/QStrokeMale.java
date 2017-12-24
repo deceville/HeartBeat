@@ -20,24 +20,24 @@ public class QStrokeMale {
 
 
     public double getResult(double[] continuous, int[] bool,int vhd,int ckd,int chf,int ha){
-        this.age= continuous[0];
-       this.sbp = continuous[1];
-      this.totalchl = continuous[2];
-        this.af = bool[2];
-       this.hdl = continuous[3];
-        this.ethnic = bool[0];
-        this.diabType1 = bool[3];
-        this.diabType2  = bool[4];
-        this.ra = bool[6];
-        this.smoke = bool[1];
-        this.fhcvd = bool[5];
-        this.height = continuous[4];
-        this.weight = continuous[5];
-        this.bptreatment = bool[7];
-        this.HA = ha;
-        this.CHF = chf;
-        this.VHD = vhd;
-        this.CKD = ckd;
+        age= continuous[0];
+       sbp = continuous[1];
+       totalchl = continuous[2];
+       af = bool[2];
+       hdl = continuous[3];
+       ethnic = bool[0];
+       diabType1 = bool[3];
+       diabType2  = bool[4];
+       ra = bool[6];
+       smoke = bool[1];
+       fhcvd = bool[5];
+       height = continuous[4];
+       weight = continuous[5];
+       bptreatment = bool[7];
+       HA = ha;
+       CHF = chf;
+       VHD = vhd;
+       CKD = ckd;
         double[] Iethrisk = {
                 0,
                 0,
@@ -65,13 +65,13 @@ public class QStrokeMale {
         this.rati = totalchl/hdl;
         double dage = age;
         dage=dage/10;
-        double age_1 = pow(dage,-1);
-        double age_2 = pow(dage,-1)*log(dage);
+        double age_1 = Math.pow(dage,-1);
+        double age_2 = Math.pow(dage,-1)*Math.log(dage);
         double dbmi = bmi;
         dbmi=dbmi/10;
-        double bmi_1 = pow(dbmi,-2);
-        double bmi_2 = pow(dbmi,-2)*log(dbmi);
-        double surv2 = 9.2403842314780817000000000;
+        double bmi_1 = Math.pow(dbmi,-2);
+        double bmi_2 = Math.pow(dbmi,-2)*Math.log(dbmi);
+        double surv = 9.2403842314780817000000000;
 
 	/* Centring the continuous variables */
 
@@ -79,9 +79,9 @@ public class QStrokeMale {
         age_2 = age_2 - 0.334742367267609;
         bmi_1 = bmi_1 - 0.144959196448326;
         bmi_2 = bmi_2 - 0.139980062842369;
-        double ratio = rati - 4.374470233917236;
-        double sbp2 = sbp - 131.996871948242190;
-        double town2 = town - -0.014665771275759;
+        rati = rati - 4.374470233917236;
+        sbp = sbp - 131.996871948242190;
+        town = town - -0.014665771275759;
 
 	/* Start of Sum */
         double a=0;
@@ -97,9 +97,9 @@ public class QStrokeMale {
         a += age_2 * -39.0347420211951500000000000;
         a += bmi_1 * 5.1085638322885796000000000;
         a += bmi_2 * -10.3408874619570030000000000;
-        a += ratio * 0.0740254180616774230000000;
-        a += sbp2 * 0.0141266123505316420000000;
-        a += town2 * 0.0410201030054811660000000;
+        a += rati * 0.0740254180616774230000000;
+        a += sbp * 0.0141266123505316420000000;
+        a += town * 0.0410201030054811660000000;
 
 	/* Sum from boolean values */
 
@@ -117,10 +117,10 @@ public class QStrokeMale {
 	/* Sum from interaction terms */
 
         switch (smoke){
-            case 1:a += age_1 * Ismoke[smoke] *  0.1319310717787916000000000;
-            case 2:a += age_1 * Ismoke[smoke] *  -3.7777100480315955000000000;
-            case 3:a += age_1 * Ismoke[smoke] * -2.0141772764248631000000000;
-            case 4: a += age_1 * Ismoke[smoke] * -3.2046066813681535000000000;
+            case 1:a += age_1 * Ismoke[smoke] *  0.1319310717787916000000000;break;
+            case 2:a += age_1 * Ismoke[smoke] *  -3.7777100480315955000000000;break;
+            case 3:a += age_1 * Ismoke[smoke] * -2.0141772764248631000000000;break;
+            case 4: a += age_1 * Ismoke[smoke] * -3.2046066813681535000000000;break;
         }
 
         a += age_1 * CHF * 16.9738747052129460000000000;
@@ -132,13 +132,13 @@ public class QStrokeMale {
         a += age_1 * bmi_1 * 11.6370752202834820000000000;
         a += age_1 * bmi_2 * -106.2099990656921900000000000;
         a += age_1 * fhcvd * 1.6754678961432341000000000;
-        a += age_1 * sbp2 * -0.0525602068113598110000000;
-        a += age_1 * town2 * -0.6221233366101081000000000;
+        a += age_1 * sbp * -0.0525602068113598110000000;
+        a += age_1 * town * -0.6221233366101081000000000;
         switch (smoke){
-            case 1:a += age_2 * Ismoke[smoke] *  1.5734752401338576000000000;
-            case 2:a += age_2 * Ismoke[smoke] *   10.1004566263405860000000000;
-            case 3:a += age_2 * Ismoke[smoke] * 5.9354809751853459000000000;
-            case 4: a += age_2 * Ismoke[smoke] * 9.2403842314780817000000000;
+            case 1:a += age_2 * Ismoke[smoke] *  1.5734752401338576000000000;break;
+            case 2:a += age_2 * Ismoke[smoke] *   10.1004566263405860000000000;break;
+            case 3:a += age_2 * Ismoke[smoke] * 5.9354809751853459000000000;break;
+            case 4: a += age_2 * Ismoke[smoke] * 9.2403842314780817000000000;break;
         }
 
         a += age_2 * CHF * -11.7308096828027860000000000;
@@ -150,11 +150,11 @@ public class QStrokeMale {
         a += age_2 * bmi_1 * 31.2645930525128970000000000;
         a += age_2 * bmi_2 * 32.9081007514201290000000000;
         a += age_2 * fhcvd * 1.3708144818564409000000000;
-        a += age_2 * sbp2 * 0.2323283327543341500000000;
-        a += age_2 * town2 * 1.4980914447710214000000000;
+        a += age_2 * sbp * 0.2323283327543341500000000;
+        a += age_2 * town * 1.4980914447710214000000000;
 
 	/* Calculate the score itself */
-        double score = 100.0 * (1 - Math.pow(surv2, Math.exp(a)) );
+        double score = 100.0 * (1 - Math.pow(surv, Math.exp(a)) );
         return score;
     }
 
