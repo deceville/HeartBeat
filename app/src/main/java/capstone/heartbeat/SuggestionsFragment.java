@@ -18,7 +18,7 @@ public class SuggestionsFragment extends Fragment{
     List<Suggestions> suggestions;
     ListAdapter adapter;
     Button btn_addSuggestion, btn_cancel;
-    
+
     public SuggestionsFragment() {
         // Required empty public constructor
     }
