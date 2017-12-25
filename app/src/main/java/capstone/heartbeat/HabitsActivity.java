@@ -278,8 +278,11 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
             @Override
             public void onClick(View v) {
                 Button btn_freetime = (Button) findViewById(R.id.freetime);
-
-                btn_freetime.setText(String.format("%02d:%02d", np.getValue(), np1.getValue()) + " hours");
+                if(np.getValue() == 1){
+                    btn_freetime.setText(String.format("%02d:%02d", np.getValue(), np1.getValue()) + " hour");
+                }else{
+                    btn_freetime.setText(String.format("%02d:%02d", np.getValue(), np1.getValue()) + " hours");
+                }
                 d.dismiss();
             }
         });

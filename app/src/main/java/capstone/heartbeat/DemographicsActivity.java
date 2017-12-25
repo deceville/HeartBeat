@@ -3,6 +3,8 @@ package capstone.heartbeat;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearSnapHelper;
@@ -100,7 +102,15 @@ public class DemographicsActivity extends AppCompatActivity {
                 currMonth = c.get(Calendar.MONTH);
                 currDay = c.get(Calendar.DAY_OF_MONTH);
                 DatePickerDialog dialog = new DatePickerDialog(DemographicsActivity.this,
-                        new mDateSetListener(), currYear, currMonth, currDay);
+                        android.R.style.Theme_Holo_Light_Dialog,
+                        new mDateSetListener(), currYear, currMonth, currDay){
+                    @Override
+                    public void onCreate(Bundle savedInstanceState)
+                    {
+                        super.onCreate(savedInstanceState);
+                        getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                    }
+                };
                 dialog.show();
             }
         });

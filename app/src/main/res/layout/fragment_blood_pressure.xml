@@ -30,11 +30,12 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="@dimen/demo_question_padding"
-            android:layout_below="@id/bp_label">
+            android:layout_below="@id/bp_label"
+            android:gravity="center_horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -67,45 +68,6 @@
                 app:textSize="12sp"
                 app:touchDisabled="true" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginLeft="150dp"
-            android:padding="@dimen/demo_question_padding"
-            android:layout_below="@id/bp_label">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/lab_diastolic"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/lab_secondnum"/>
-
-            <abak.tr.com.boxedverticalseekbar.BoxedVertical
-                android:id="@+id/bp_diastolic"
-                android:layout_width="60dp"
-                android:layout_height="250dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="30dp"
-                android:layout_weight="1"
-                app:progressColor="@color/circle_green"
-                app:textColor="#FFF"
-                app:cornerRadius="20"
-                app:defaultValue="140"
-                app:imageEnabled="false"
-                app:textEnabled="true"
-                app:max="300"
-                app:step="1"
-                app:textBottomPadding="20"
-                app:textSize="12sp"
-                app:touchDisabled="true" />
         </LinearLayout>
 
     </RelativeLayout>

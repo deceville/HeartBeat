@@ -154,7 +154,6 @@ public class LaboratoryActivity extends AppCompatActivity {
                 BoxedVertical chol_total = (BoxedVertical)findViewById(R.id.chol_total);
                 BoxedVertical chol_hdl = (BoxedVertical)findViewById(R.id.chol_hdl);
                 BoxedVertical bp_systolic = (BoxedVertical)findViewById(R.id.bp_systolic);
-                BoxedVertical bp_diastolic = (BoxedVertical)findViewById(R.id.bp_diastolic);
 
                 chol_total.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
                     @Override
@@ -187,22 +186,6 @@ public class LaboratoryActivity extends AppCompatActivity {
                     }
                 });
 
-                bp_diastolic.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
-                    @Override
-                    public void onPointsChanged(BoxedVertical boxedPoints, int points) {
-                        dbp = points;
-                    }
-
-                    @Override
-                    public void onStartTrackingTouch(BoxedVertical boxedPoints) {
-
-                    }
-
-                    @Override
-                    public void onStopTrackingTouch(BoxedVertical boxedPoints) {
-
-                    }
-                });
                 bp_systolic.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
                     @Override
                     public void onPointsChanged(BoxedVertical boxedPoints, int points) {

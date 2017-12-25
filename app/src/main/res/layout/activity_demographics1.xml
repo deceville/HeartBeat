@@ -14,11 +14,18 @@
         android:paddingLeft="40dp"
         android:paddingTop="20dp">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/demo_birthday"
+            android:textSize="18sp" />
+
         <Button
             android:id="@+id/btn_birthdate"
             android:layout_width="@dimen/login_signup_width"
             android:layout_height="wrap_content"
-            android:hint="@string/demo_birthday" />
+            android:hint="Month / Day / Year" />
 
         <TextView
             android:layout_width="wrap_content"
