@@ -27,6 +27,8 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
     private View viewGroup_notsmoking, viewGroup_sticks;
     public String smoke,smk_quantity,non_smkr,bptr,activ,sedentary,light,moderate,very,extreme;
 
+    public String freetime;
+
     SharedPreferences prefs;
     SharedPreferences.Editor editor ;
 
@@ -280,8 +282,14 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
                 Button btn_freetime = (Button) findViewById(R.id.freetime);
                 if(np.getValue() == 1){
                     btn_freetime.setText(String.format("%02d:%02d", np.getValue(), np1.getValue()) + " hour");
+                    freetime = String.format("%02d:%02d", np.getValue(), np1.getValue()) + " hour";
+                    editor.putString("freetime", freetime);
+                    editor.commit();
                 }else{
                     btn_freetime.setText(String.format("%02d:%02d", np.getValue(), np1.getValue()) + " hours");
+                    freetime = String.format("%02d:%02d", np.getValue(), np1.getValue()) + " hours";
+                    editor.putString("freetime", freetime);
+                    editor.commit();
                 }
                 d.dismiss();
             }
@@ -294,6 +302,7 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
             }
         });
         d.show();
+
     }
 
     public void showSleepTime() {

@@ -39,6 +39,7 @@ dependencies {
     implementation project(':BoxedVerticalSeekBar')
     compile 'com.github.clans:fab:1.6.4'
     implementation project(':FloatingActionButton')
+    compile project(path: ':MPChartLib')
 }
 
 
