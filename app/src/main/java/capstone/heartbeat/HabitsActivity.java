@@ -87,7 +87,8 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
                 btn_smoking_yes.setSelected(false);
                 if(viewGroupIsVisible || (viewGroup_notsmoking.getVisibility() == View.GONE)){
                     viewGroup_notsmoking.setVisibility(View.VISIBLE);
-                }else{
+                    viewGroup_sticks.setVisibility(View.GONE);
+                }else if(viewGroup_sticks.getVisibility() == View.VISIBLE){
                     viewGroup_notsmoking.setVisibility(View.GONE);
                     btn_smoking_no.setSelected(false);
                 }
@@ -99,14 +100,10 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
             public void onClick(View v) {
                 btn_smoking_no.setSelected(false);
                 btn_smoking_yes.setSelected(true);
-                if(btn_smoking_no.isSelected()){
-                    selectNew = true;
-                }
-
-
                 if(viewGroupIsVisible || (viewGroup_sticks.getVisibility() == View.GONE)){
                     viewGroup_sticks.setVisibility(View.VISIBLE);
-                }else{
+                    viewGroup_notsmoking.setVisibility(View.GONE);
+                }else if(viewGroup_notsmoking.getVisibility() == View.VISIBLE){
                     viewGroup_sticks.setVisibility(View.GONE);
                     btn_smoking_yes.setSelected(false);
                 }
