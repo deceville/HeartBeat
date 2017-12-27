@@ -55,7 +55,10 @@
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AboutActivity"></activity>
+
+        <activity
+            android:name=".AboutActivity"
+            android:label="@string/title_activity_about"/>
     </application>
 
 </manifest>
