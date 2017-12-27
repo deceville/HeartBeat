@@ -3,6 +3,11 @@
     <item name="masked" type="id"></item>
 
     <string name="app_name">HeartBeat</string>
+    <string name="version">Version 1.0</string>
+    <string name="dev_title">Developer Team:</string>
+    <string name="dev_armas">Arvi Armas</string>
+    <string name="dev_geduriagao">Decebel Gedurigao</string>
+    <string name="dev_torres">Mark Anthony Torres</string>
 
     <!-- Strings related to introductory pages -->
     <string name="title_activity_welcome">Home Screen</string>

@@ -1,5 +1,6 @@
 package capstone.heartbeat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -142,7 +143,7 @@ public class MainActivity extends AppCompatActivity
 
 
         if (id == R.id.nav_home) {
-            // Handle the camera action
+
         } else if (id == R.id.nav_profile) {
 
         } else if (id == R.id.nav_results) {
@@ -156,8 +157,10 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_help) {
 
         } else if (id == R.id.nav_about) {
-
+            Intent i = new Intent(MainActivity.this, AboutActivity.class);
+            startActivity(i);
         } else if (id == R.id.nav_logout) {
+
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

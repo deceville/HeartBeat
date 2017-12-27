@@ -28,15 +28,11 @@
         <activity
             android:name=".LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".SignupActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name=".Result"/>
-
-        <activity android:name=".Demographics"/>
-
+        <activity android:name=".Result" />
+        <activity android:name=".Demographics" />
         <activity
             android:name=".DemographicsActivity"
             android:label="@string/title_activity_demo" />
@@ -58,8 +54,8 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".AboutActivity"></activity>
     </application>
 
 </manifest>
