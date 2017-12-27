@@ -55,10 +55,16 @@
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".AboutActivity"
-            android:label="@string/title_activity_about"/>
+            android:label="@string/title_activity_about" />
+        <activity
+            android:name=".ProfileActivity"
+            android:label="@string/title_activity_profile" />
+
+        <activity
+            android:name=".EditProfileActivity"
+            android:label="@string/title_activity_editprofile"/>
     </application>
 
 </manifest>

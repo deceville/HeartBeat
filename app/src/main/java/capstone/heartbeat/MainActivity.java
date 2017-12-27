@@ -145,7 +145,8 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_home) {
 
         } else if (id == R.id.nav_profile) {
-
+            Intent i = new Intent(MainActivity.this, ProfileActivity.class);
+            startActivity(i);
         } else if (id == R.id.nav_results) {
 
         } else if (id == R.id.nav_plans) {

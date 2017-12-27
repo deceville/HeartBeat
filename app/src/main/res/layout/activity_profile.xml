@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="capstone.heartbeat.ProfileActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:orientation="vertical">
+
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Full name"
+        android:textSize="@dimen/btn_label"/>
+
+        <TextView
+            android:id="@+id/profile_fullname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Dece Bill"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="E-mail address"
+            android:textSize="@dimen/btn_label"/>
+
+        <TextView
+            android:id="@+id/profile_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="decebill@gmail.com"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Date of Birth"
+            android:textSize="@dimen/btn_label"/>
+
+        <TextView
+            android:id="@+id/profile_birthday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="December 10, 1997"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Free time"
+            android:textSize="@dimen/btn_label"/>
+
+        <TextView
+            android:id="@+id/profile_freetime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1:00 hour"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Sleeping time"
+            android:textSize="@dimen/btn_label"/>
+
+        <TextView
+            android:id="@+id/profile_sleeptime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10:00 PM"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+    </LinearLayout>
+
+</RelativeLayout>
