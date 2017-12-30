@@ -20,10 +20,10 @@ import java.util.List;
 
 
 public class AddPlanActivity extends AppCompatActivity {
-    public FloatingActionButton btn_addActivity;
-    List<Suggestions> suggestions;
-    ListAdapter adapter;
-    Button btn_addSuggestion, btn_cancel;
+    private FloatingActionButton btn_addActivity;
+    private List<Suggestions> suggestions;
+    private ListAdapter adapter;
+    private Button btn_addSuggestion, btn_cancel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -370,15 +370,15 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
                 int smoker_type;
                 numOfSticks.setText(String.valueOf(np.getValue()) + " sticks per day");
                 if(quantity > 0 && quantity <= 10){
-                    smoker_type = 3;
+                    smoker_type = 2;
                     editor.putInt("smoke_type",smoker_type);
                     editor.commit();
                 }else if(quantity >=11 && quantity <20){
-                    smoker_type = 4;
+                    smoker_type = 3;
                     editor.putInt("smoke_type",smoker_type);
                     editor.commit();
                 }else if (quantity>20){
-                    smoker_type = 5;
+                    smoker_type = 4;
                     editor.putInt("smoke_type",smoker_type);
                     editor.commit();
                 }

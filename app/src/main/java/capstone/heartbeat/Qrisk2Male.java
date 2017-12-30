@@ -11,7 +11,7 @@ import static java.lang.Math.pow;
 public class Qrisk2Male {
     private double age,sbp, totalchl, hdl, height,weight,bmi,rati;
     private int ethnic, smoke,af, diabType1,diabType2,fhcvd,ra,CKD,CHF, HA, VHD,bptreatment;
-    private double town = 1;
+    private double town = 2.2;
 
     public Qrisk2Male() {
     }

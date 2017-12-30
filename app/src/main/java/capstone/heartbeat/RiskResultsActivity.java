@@ -52,21 +52,25 @@ public class RiskResultsActivity extends AppCompatActivity {
         Qrisk2Female hf = new Qrisk2Female();
         QStrokeMale sm = new QStrokeMale();
         QStrokeFemale sf = new QStrokeFemale();
-
+        int ha, st;
         double heartAttack=0,Stroke=0;
         if (gender==0){
             heartAttack = hf.getResult(continuous,bool);
             Stroke = sf.getResult(continuous,bool,VHD,CKD,CHF,HA);
             System.out.println(heartAttack+" "+Stroke);
-            heartattack.setProgress((float)heartAttack);
-            stroke.setProgress((float)Stroke);
+            ha = (int) Math.floor(heartAttack);
+            st = (int)Math.floor(Stroke);
+            heartattack.setProgress((float)ha);
+            stroke.setProgress((float)st);
 
         }else if(gender==1){
             heartAttack = hm.getResult(continuous,bool);
             Stroke = sm.getResult(continuous,bool,VHD,CKD,CHF,HA);
             System.out.println(heartAttack+" "+Stroke);
-            heartattack.setProgress((float)heartAttack);
-            stroke.setProgress((float)Stroke);
+            ha = (int) Math.floor(heartAttack);
+            st = (int)Math.floor(Stroke);
+            heartattack.setProgress((float)ha);
+            stroke.setProgress((float)st);
         }
 
     }
@@ -89,6 +93,7 @@ public class RiskResultsActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.proceed) {
             startActivity(new Intent(getApplicationContext(),AddPlanActivity.class));
+            finish();
             return true;
         }
 

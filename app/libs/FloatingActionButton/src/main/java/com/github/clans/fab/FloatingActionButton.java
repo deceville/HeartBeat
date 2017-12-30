@@ -713,7 +713,7 @@ public class FloatingActionButton extends ImageButton {
 
         @Override
         public int getOpacity() {
-            return PixelFormat.TRANSPARENT;
+            return 0;
         }
     }
 

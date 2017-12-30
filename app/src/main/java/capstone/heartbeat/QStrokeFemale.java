@@ -40,7 +40,7 @@ public class QStrokeFemale {
         this.CKD = ckd;
         this.bmi = weight/ pow(height/100,2);
         this.rati = totalchl/hdl;
-        double surv2 = 0.0037591358040036760000000;
+        double surv = 0.994471669197083;
         double town = 1;
         double[] Iethrisk = {
                 0,
@@ -80,8 +80,8 @@ public class QStrokeFemale {
         age_2 = age_2 - 94.252044677734375;
         bmi_1 = bmi_1 - 0.152111470699310;
         bmi_2 = bmi_2 - 0.143223732709885;
-        double ratio = rati - 3.597237586975098;
-        double sbp2 = sbp - 127.181053161621090;
+        rati = rati - 3.597237586975098;
+        sbp = sbp - 127.181053161621090;
         town = town - -0.092155806720257;
 
 	/* Start of Sum */
@@ -98,8 +98,8 @@ public class QStrokeFemale {
         a += age_2 * -0.0093489805139222847000000;
         a += bmi_1 * 2.3158227325733081000000000;
         a += bmi_2 * -8.3927388985024596000000000;
-        a += ratio * 0.0763818306795134570000000;
-        a += sbp2 * 0.0110106548819008700000000;
+        a += rati * 0.0763818306795134570000000;
+        a += sbp * 0.0110106548819008700000000;
         a += town * 0.0569282538300162900000000;
 
 	/* Sum from boolean values */
@@ -118,10 +118,10 @@ public class QStrokeFemale {
 	/* Sum from interaction terms */
 
         switch (smoke){
-            case 1:a += age_1 * Ismoke[smoke] * -0.0021738924907283397000000;
-            case 2:a += age_1 * Ismoke[smoke] *  0.0092958354691607976000000;
-            case 3:a += age_1 * Ismoke[smoke] *  -0.0238445203390637290000000;
-            case 4: a += age_1 * Ismoke[smoke] * -0.0442081168504774720000000;
+            case 1:a += age_1 * Ismoke[smoke] * -0.0021738924907283397000000;break;
+            case 2:a += age_1 * Ismoke[smoke] *  0.0092958354691607976000000;break;
+            case 3:a += age_1 * Ismoke[smoke] *  -0.0238445203390637290000000;break;
+            case 4: a += age_1 * Ismoke[smoke] * -0.0442081168504774720000000;break;
         }
         a += age_1 * af * -0.0378746660763275570000000;
         a += age_1 * CHF * -0.0703338932750366820000000;
@@ -133,13 +133,13 @@ public class QStrokeFemale {
         a += age_1 * bmi_1 * 0.0366468069607603160000000;
         a += age_1 * bmi_2 * 0.8374396689614352900000000;
         a += age_1 * fhcvd * -0.0209588947842873420000000;
-        a += age_1 * sbp2 * -0.0000512566841259084420000;
+        a += age_1 * sbp * -0.0000512566841259084420000;
         a += age_1 * town * -0.0016537747988553985000000;
         switch (smoke){
-            case 1:a += age_2 * Ismoke[smoke] * 0.0000417982804007417310000;
-            case 2:a += age_2 * Ismoke[smoke] *  -0.0015127223843011640000000;
-            case 3:a += age_2 * Ismoke[smoke] *  0.0018092337569956974000000;
-            case 4: a += age_2 * Ismoke[smoke] * 0.0037591358040036760000000;
+            case 1:a += age_2 * Ismoke[smoke] * 0.0000417982804007417310000;break;
+            case 2:a += age_2 * Ismoke[smoke] *  -0.0015127223843011640000000;break;
+            case 3:a += age_2 * Ismoke[smoke] *  0.0018092337569956974000000;break;
+            case 4: a += age_2 * Ismoke[smoke] * 0.0037591358040036760000000;break;
         }
         a += age_2 * af * 0.0026309641213272967000000;
         a += age_2 * CHF * 0.0052237718320413701000000;
@@ -151,11 +151,11 @@ public class QStrokeFemale {
         a += age_2 * bmi_1 * -0.0082953327794458437000000;
         a += age_2 * bmi_2 * -0.0642802685411782150000000;
         a += age_2 * fhcvd * 0.0014106757779590851000000;
-        a += age_2 * sbp2 * -0.0000179366158909618290000;
+        a += age_2 * sbp * -0.0000179366158909618290000;
         a += age_2 * town * 0.0000037518903323942880000;
 
 	/* Calculate the score itself */
-        double score = 100.0 * (1 - Math.pow(surv2, Math.exp(a)) );
+        double score = 100.0 * (1 - Math.pow(surv, Math.exp(a)) );
         return score;
     }
 
