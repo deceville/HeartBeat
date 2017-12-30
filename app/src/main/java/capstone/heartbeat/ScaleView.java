@@ -107,7 +107,7 @@ public class ScaleView extends View {
                 canvas.drawText((i / 10) + " cm", endPoint - textStartPoint, startingPoint + 8, textPaint);
             }
         }
-        canvas.drawLine(0f, midScreenPoint, width - 20, midScreenPoint, goldenPaint);
+        canvas.drawLine(0f, midScreenPoint - 170, width - 20, midScreenPoint - 170, goldenPaint);
     }
 
     @Override

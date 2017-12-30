@@ -1,8 +1,12 @@
 package capstone.heartbeat;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -12,23 +16,35 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.support.design.widget.FloatingActionButton;
+import android.widget.DatePicker;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 
 public class AddPlanActivity extends AppCompatActivity {
-    private FloatingActionButton btn_addActivity;
-    private List<Suggestions> suggestions;
-    private ListAdapter adapter;
-    private Button btn_addSuggestion, btn_cancel;
+
+    public FloatingActionButton btn_addActivity;
+    List<Suggestions> suggestions;
+    ListAdapter adapter;
+    Button btn_addSuggestion, btn_cancel, btn_currentdate;
+    public int currYear, currMonth, currDay;
+    TextView text_plan_freetime;
+
+    SharedPreferences prefs;
+    SharedPreferences.Editor editor;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plans);
+
+
         btn_addActivity = (FloatingActionButton) findViewById(R.id.btn_addActivity);
 
         btn_addActivity.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +102,32 @@ public class AddPlanActivity extends AppCompatActivity {
                 });
             }
         });
+
+        btn_currentdate = (Button) findViewById(R.id.btn_currentdate);
+
+        btn_currentdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar c = Calendar.getInstance();
+                currYear = c.get(Calendar.YEAR);
+                currMonth = c.get(Calendar.MONTH);
+                currDay = c.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog dialog = new DatePickerDialog(AddPlanActivity.this,
+                        android.R.style.Theme_Material_Light_Dialog,
+                        new mDateSetListener(), currYear, currMonth, currDay){
+                    @Override
+                    public void onCreate(Bundle savedInstanceState)
+                    {
+                        super.onCreate(savedInstanceState);
+                    }
+                };
+                dialog.show();
+            }
+        });
+
+        prefs = getSharedPreferences("values",MODE_PRIVATE);
+        text_plan_freetime = (TextView) findViewById(R.id.text_plan_freetime);
+        text_plan_freetime.setText(prefs.getString("freetime", ""));
     }
 
     @Override
@@ -110,5 +152,22 @@ public class AddPlanActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    class mDateSetListener implements DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int monthOfYear,
+                              int dayOfMonth) {
+            // TODO Auto-generated method stub
+            // getCalender();
+            int mYear = year;
+            int mMonth = monthOfYear;
+            int mDay = dayOfMonth;
+            btn_currentdate.setText(new StringBuilder()
+                    // Month is 0 based so add 1
+                    .append(mMonth + 1).append("/").append(mDay).append("/")
+                    .append(mYear).append(" "));
+        }
     }
 }

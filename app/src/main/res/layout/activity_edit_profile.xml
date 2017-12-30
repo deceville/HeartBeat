@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="capstone.heartbeat.ProfileActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Full name"
+            android:textSize="@dimen/btn_label"/>
+
+        <EditText
+            android:id="@+id/edit_fullname"
+            android:layout_width="@dimen/login_signup_width"
+            android:layout_height="wrap_content"
+            android:hint="Full name"
+            android:text="Dece Bill"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="E-mail address"
+            android:textSize="@dimen/btn_label"/>
+
+        <EditText
+            android:id="@+id/edit_email"
+            android:layout_width="@dimen/login_signup_width"
+            android:layout_height="wrap_content"
+            android:hint="E-mail address"
+            android:text="decebill@gmail.com"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Date of Birth"
+            android:textSize="@dimen/btn_label"/>
+
+        <Button
+            android:id="@+id/edit_birthday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="December 10, 1997"
+            android:hint="Date of birth"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Free time"
+            android:textSize="@dimen/btn_label"/>
+
+        <TextView
+            android:id="@+id/edit_freetime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="1:00 hour"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Sleeping time"
+            android:textSize="@dimen/btn_label"/>
+
+        <Button
+            android:id="@+id/edit_sleeptime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="10:00 PM"
+            android:hint="Sleeping time"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+    </LinearLayout>
+
+</RelativeLayout>

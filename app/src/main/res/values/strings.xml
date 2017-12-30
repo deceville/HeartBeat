@@ -3,6 +3,11 @@
     <item name="masked" type="id"></item>
 
     <string name="app_name">HeartBeat</string>
+    <string name="version">Version 1.0</string>
+    <string name="dev_title">Developer Team:</string>
+    <string name="dev_armas">Arvi Armas</string>
+    <string name="dev_geduriagao">Decebel Gedurigao</string>
+    <string name="dev_torres">Mark Anthony Torres</string>
 
     <!-- Strings related to introductory pages -->
     <string name="title_activity_welcome">Home Screen</string>
@@ -12,6 +17,7 @@
     <string name="proceed">PROCEED</string>
     <string name="prev">PREVIOUS</string>
     <string name="save">SAVE</string>
+    <string name="edit">EDIT</string>
 
     <string name="slide_1_title">Beat Curiousity</string>
     <string name="slide_1_desc">Check your heart health status</string>
@@ -55,6 +61,7 @@
     <string name="title_activity_profile">Profile</string>
     <string name="title_activity_editprofile">Edit Profile</string>
     <string name="title_activity_addplan">Add a plan</string>
+    <string name="title_activity_about">About</string>
 
     <!-- Strings related to demographics -->
     <string name="demo_birthday">Date of Birth</string>

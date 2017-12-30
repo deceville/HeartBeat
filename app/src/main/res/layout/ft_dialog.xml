@@ -1,7 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal">
+    android:gravity="center_horizontal"
+    android:padding="40dp">
 
     <LinearLayout
         android:id="@+id/np"
@@ -30,8 +31,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@+id/np"
-        android:layout_marginTop="@dimen/img_margin_top"
-        android:layout_marginBottom="@dimen/img_margin_top">
+        android:layout_marginTop="@dimen/img_margin_top">
 
         <Button
             android:id="@+id/ft_set"

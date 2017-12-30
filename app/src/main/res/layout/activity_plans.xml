@@ -63,6 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -71,18 +72,19 @@
                 android:text="@string/plan_freetime"
                 android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
-            <Button
-                android:id="@+id/plan_freetime"
+            <TextView
+                android:id="@+id/text_plan_freetime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:clickable="false"/>
+                android:textAppearance="@android:style/TextAppearance.Material.Title"
+                android:layout_marginStart="30dp"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
             android:orientation="vertical">
 
             <TextView
