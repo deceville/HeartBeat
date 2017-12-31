@@ -93,7 +93,6 @@ public class LaboratoryActivity extends AppCompatActivity {
             SharedPreferences prefs = getSharedPreferences("values",MODE_PRIVATE);
             SharedPreferences.Editor editor = prefs.edit();
             editor.putInt("sbp",sbp);
-            editor.putInt("dbp",dbp);
             editor.putInt("chl",chl);
             editor.putInt("hdl",hdl);
             editor.commit();
@@ -157,8 +156,8 @@ public class LaboratoryActivity extends AppCompatActivity {
 
                 chol_total.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
                     @Override
-                    public void onPointsChanged(BoxedVertical boxedPoints, final int value) {
-                        Log.e("value",value+" ");
+                    public void onPointsChanged(BoxedVertical boxedPoints, int value) {
+                        chl = value;
                     }
 
                     @Override
@@ -173,7 +172,7 @@ public class LaboratoryActivity extends AppCompatActivity {
 
                 chol_hdl.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
                     @Override
-                    public void onPointsChanged(BoxedVertical boxedPoints, final int value) {
+                    public void onPointsChanged(BoxedVertical boxedPoints, int value) {
                         hdl = value;
                     }
 
@@ -188,8 +187,8 @@ public class LaboratoryActivity extends AppCompatActivity {
 
                 bp_systolic.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
                     @Override
-                    public void onPointsChanged(BoxedVertical boxedPoints, int points) {
-                        sbp = points;
+                    public void onPointsChanged(BoxedVertical boxedPoints, int value) {
+                        sbp = value;
                     }
 
                     @Override
