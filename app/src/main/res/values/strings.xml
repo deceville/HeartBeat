@@ -117,6 +117,7 @@
     <string name="results_risk">Probability of 10-Year Risk of Heart Attack and Stroke</string>
     <string name="instruction_result">Tap each graph to view details</string>
     <string name="results_riskfactors">Risk Factors (Highest - Lowest)</string>
+    <string name="progress_risk">Progress of risk results</string>
 
     <!-- Strings related to add to plan form -->
     <string name="plan_name">Plan name</string>
@@ -133,6 +134,7 @@
 
     <string name="action_settings">Settings</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Strings related to goals and quest -->
+    <string name="goals">Goals</string>
+    <string name="quest">Quests</string>
 </resources>
