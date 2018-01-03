@@ -21,6 +21,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -37,12 +43,16 @@ public class AddPlanActivity extends AppCompatActivity {
 
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
+    private DatabaseReference rootRef,actRef;
+    ActivityDatabase myDb;
+    ArrayList<Activity> myActivities;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plans);
+        myDb = new ActivityDatabase(AddPlanActivity.this);
 
 
         btn_addActivity = (FloatingActionButton) findViewById(R.id.btn_addActivity);
@@ -56,13 +66,15 @@ public class AddPlanActivity extends AppCompatActivity {
                         .create();
 
                 dialog.show();
-                suggestions = new ArrayList<Suggestions>();
-                suggestions.add(new Suggestions(1, "Running","105 calories will burn", false));
-                suggestions.add(new Suggestions(2, "Dancing","98 calories will burn", false));
-                suggestions.add(new Suggestions(3, "Walking","77 calories will burn", false));
-                suggestions.add(new Suggestions(4, "Jumping","78 calories will burn", false));
 
-                adapter = new ListAdapter (getApplicationContext(), suggestions);
+                myActivities =  myDb.getName();
+
+                suggestions = new ArrayList<Suggestions>();
+
+
+
+
+                adapter = new ListAdapter (getApplicationContext(), myActivities);
 
                 ListView lvMain = (ListView) dialog.findViewById(R.id.lv_suggestions);
                 lvMain.setAdapter(adapter);

@@ -53,7 +53,8 @@ public class PlansFragment extends Fragment{
     private List<FloatingActionMenu> menus = new ArrayList<>();
     private Handler mUiHandler = new Handler();
 
-    List<Suggestions> suggestions;
+    ArrayList<Activity> suggestions;
+    ActivityDatabase myDB;
     ListAdapter adapter;
     Button btn_addSuggestion, btn_cancel;
 
@@ -260,12 +261,10 @@ public class PlansFragment extends Fragment{
                             .create();
 
                     dialog.show();
-                    suggestions = new ArrayList<Suggestions>();
-                    suggestions.add(new Suggestions(1, "Running","105 calories will burn", false));
-                    suggestions.add(new Suggestions(2, "Dancing","98 calories will burn", false));
-                    suggestions.add(new Suggestions(3, "Walking","77 calories will burn", false));
-                    suggestions.add(new Suggestions(4, "Jumping","78 calories will burn", false));
+                    suggestions = new ArrayList<Activity>();
+                    myDB = new ActivityDatabase(getContext());
 
+                    suggestions = myDB.getName();
                     adapter = new ListAdapter (getContext(), suggestions);
 
                     ListView lvMain = (ListView) dialog.findViewById(R.id.lv_suggestions);
@@ -281,7 +280,7 @@ public class PlansFragment extends Fragment{
 
                     btn_addSuggestion = (Button) dialog.findViewById(R.id.btn_addSuggestion);
 
-                    btn_addSuggestion.setOnClickListener(new View.OnClickListener() {
+                  /*  btn_addSuggestion.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             StringBuilder selected = new StringBuilder("Selected: \n");
@@ -296,7 +295,7 @@ public class PlansFragment extends Fragment{
                             dialog.hide();
                         }
                     });
-
+*/
                     btn_cancel = (Button) dialog.findViewById(R.id.btn_cancel);
 
                     btn_cancel.setOnClickListener(new View.OnClickListener() {

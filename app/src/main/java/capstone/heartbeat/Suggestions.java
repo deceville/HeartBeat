@@ -7,6 +7,7 @@ public class Suggestions {
     boolean checked;
 
 
+
     Suggestions(int id, String title, String desc, boolean checked) {
         this.id = id;
         this.title = title;

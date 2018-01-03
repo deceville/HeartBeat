@@ -15,7 +15,7 @@ import java.util.List;
 
 
 public class SuggestionsFragment extends Fragment{
-    List<Suggestions> suggestions;
+    ArrayList<Activity> suggestions;
     ListAdapter adapter;
     Button btn_addSuggestion, btn_cancel;
 
@@ -28,13 +28,10 @@ public class SuggestionsFragment extends Fragment{
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_suggestions, container, false);
         btn_cancel = (Button) view.findViewById(R.id.btn_cancel);
-
+        ActivityDatabase myDB = new ActivityDatabase(getContext());
         btn_cancel.setVisibility(View.GONE);
-        suggestions = new ArrayList<Suggestions>();
-        suggestions.add(new Suggestions(1, "Running","105 calories will burn", false));
-        suggestions.add(new Suggestions(2, "Dancing","98 calories will burn", false));
-        suggestions.add(new Suggestions(3, "Walking","77 calories will burn", false));
-        suggestions.add(new Suggestions(4, "Jumping","78 calories will burn", false));
+        suggestions = new ArrayList<Activity>();
+        suggestions = myDB.getName();
 
         adapter = new ListAdapter(getContext(), suggestions);
 
@@ -51,7 +48,7 @@ public class SuggestionsFragment extends Fragment{
 
         btn_addSuggestion = (Button) view.findViewById(R.id.btn_addSuggestion);
 
-        btn_addSuggestion.setOnClickListener(new View.OnClickListener() {
+       /* btn_addSuggestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 StringBuilder selected = new StringBuilder("Selected: \n");
@@ -63,7 +60,7 @@ public class SuggestionsFragment extends Fragment{
                 }
                 Toast.makeText(getContext(), selected.toString(), Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
         // Inflate the layout for this fragment
         return view;

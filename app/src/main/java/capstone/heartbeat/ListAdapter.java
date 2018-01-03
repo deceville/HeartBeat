@@ -13,17 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class ListAdapter extends BaseAdapter {
     Context ctx;
     LayoutInflater lInflater;
-    List<Suggestions> suggestions = null;
+    List<Activity> suggestions = null;
 
-    ListAdapter(Context context, List<Suggestions> suggestions) {
+    ListAdapter(Context context, ArrayList<Activity> suggestions) {
         ctx = context;
         this.suggestions = suggestions;
         lInflater = (LayoutInflater) ctx
