@@ -1,10 +1,14 @@
 package capstone.heartbeat;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearSnapHelper;
@@ -15,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +33,7 @@ public class DemographicsActivity extends AppCompatActivity {
     public Button btn_birthdate, btn_female, btn_male;
     private TextView txtValue;
     public ScaleView rulerViewMm;
+    public ImageView avatar;
     RecyclerView rv;
     PickerAdapter adapter;
 
@@ -69,6 +75,8 @@ public class DemographicsActivity extends AppCompatActivity {
                     btn_female.setBackgroundColor(getResources().getColor(R.color.bg_screen3));
                     btn_male.setBackgroundColor(getResources().getColor(R.color.progress_gray));
                 }
+
+                setFemaleCharacter(age);
             }
         });
 
@@ -90,6 +98,8 @@ public class DemographicsActivity extends AppCompatActivity {
                     btn_female.setBackgroundColor(getResources().getColor(R.color.bg_screen3));
                     btn_male.setBackgroundColor(getResources().getColor(R.color.progress_gray));
                 }
+
+                setMaleCharacter(age);
             }
         });
 
@@ -209,7 +219,80 @@ public class DemographicsActivity extends AppCompatActivity {
             editor.putInt("age",age);
             editor.commit();
             System.out.println(btn_birthdate.getText().toString() + "Age: " + age);
+            if(age > 84 || age < 25){
+                alertAgeLimit();
+            }
+
+            if(male == 1 && female == 0){
+                setMaleCharacter(age);
+            }else if(female == 1 && male == 0){
+                setFemaleCharacter(age);
+            }
         }
+    }
+
+    public void setMaleCharacter (int age){
+
+        avatar = (ImageView) findViewById(R.id.avatar);
+
+        if(age >= 25 && age <= 35){
+            avatar.setVisibility(View.VISIBLE);
+            avatar.setImageResource(R.drawable.char_male_01);
+        }else if (age <= 45 && age >= 36){
+            avatar.setVisibility(View.VISIBLE);
+            avatar.setImageResource(R.drawable.char_male_02);
+        }else if (age <= 55 && age >= 46){
+            avatar.setVisibility(View.VISIBLE);
+            avatar.setImageResource(R.drawable.char_male_03);
+        }else if (age <= 70 && age >= 56){
+            avatar.setVisibility(View.VISIBLE);
+            avatar.setImageResource(R.drawable.char_male_04);
+        }else if (age <= 84 && age >= 71){
+            avatar.setVisibility(View.VISIBLE);
+            avatar.setImageResource(R.drawable.char_male_05);
+        }else{
+            avatar.setVisibility(View.INVISIBLE);
+        }
+
+    }
+
+    public void setFemaleCharacter (int age){
+
+        avatar = (ImageView) findViewById(R.id.avatar);
+        if(age >= 25 && age <= 35){
+            avatar.setVisibility(View.VISIBLE);
+            avatar.setImageResource(R.drawable.char_female_01);
+        }else if (age <= 45 && age >= 36){
+            avatar.setVisibility(View.VISIBLE);
+            avatar.setImageResource(R.drawable.char_female_02);
+        }else if (age <= 55 && age >= 46){
+            avatar.setVisibility(View.VISIBLE);
+            avatar.setImageResource(R.drawable.char_female_03);
+        }else if (age <= 70 && age >= 56){
+            avatar.setVisibility(View.VISIBLE);
+            avatar.setImageResource(R.drawable.char_female_04);
+        }else if (age <= 84 && age >= 71){
+            avatar.setVisibility(View.VISIBLE);
+            avatar.setImageResource(R.drawable.char_female_03);
+        }else{
+            avatar.setVisibility(View.INVISIBLE);
+        }
+
+    }
+
+    public void alertAgeLimit (){
+        AlertDialog.Builder builder = new AlertDialog.Builder(DemographicsActivity.this, R.style.Theme_AppCompat_Dialog_Alert);
+
+        builder.setTitle("Oh bummer!")
+                .setMessage("Your current age is not allowed. Ages only between 25 and 84 are allowed to continue.")
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert);
+
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 
 }

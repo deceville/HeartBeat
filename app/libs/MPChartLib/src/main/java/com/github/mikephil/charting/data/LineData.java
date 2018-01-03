@@ -24,4 +24,5 @@ public class LineData extends BarLineScatterCandleBubbleData<ILineDataSet> {
     public LineData(List<ILineDataSet> dataSets) {
         super(dataSets);
     }
+
 }
