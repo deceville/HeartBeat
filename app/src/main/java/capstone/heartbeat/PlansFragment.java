@@ -264,7 +264,7 @@ public class PlansFragment extends Fragment{
                     suggestions = new ArrayList<Activity>();
                     myDB = new ActivityDatabase(getContext());
 
-                    suggestions = myDB.getName();
+                    suggestions = myDB.getActivities();
                     adapter = new ListAdapter (getContext(), suggestions);
 
                     ListView lvMain = (ListView) dialog.findViewById(R.id.lv_suggestions);

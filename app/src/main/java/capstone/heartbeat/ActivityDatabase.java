@@ -33,24 +33,24 @@ public class ActivityDatabase extends SQLiteAssetHelper {
 
     public ArrayList<Activity>getActivities(){
         SQLiteDatabase db = getWritableDatabase();
-        String[] columns = {ActivityDatabase.ID,ActivityDatabase.ACTIVITIES,ActivityDatabase.METS,ActivityDatabase.INTENSITY,ActivityDatabase.EQUIPMENT};
+        String[] columns = {ActivityDatabase.ACTIVITIES,ActivityDatabase.METS,ActivityDatabase.INTENSITY,ActivityDatabase.EQUIPMENT};
         Cursor cursor = db.query(ActivityDatabase.ACTIVITY_TABLE,columns,null,null,null,null,null);
         ArrayList<Activity> activityList = new ArrayList<>();
 
         while(cursor.moveToNext()){
             Activity acts = new Activity();
-            acts.id = cursor.getInt(cursor.getColumnIndex(ActivityDatabase.ID));
             acts.Activities = cursor.getString(cursor.getColumnIndex(ActivityDatabase.ACTIVITIES));
             acts.METS = cursor.getDouble(cursor.getColumnIndex(ActivityDatabase.METS));
             acts.Intensity = cursor.getString(cursor.getColumnIndex(ActivityDatabase.INTENSITY));
             acts.Equipment = cursor.getString(cursor.getColumnIndex(ActivityDatabase.EQUIPMENT));
+            activityList.add(acts);
         }
         return activityList;
     }
 
     public ArrayList<Activity>getName(){
         SQLiteDatabase db = getWritableDatabase();
-        String[] columns = {ActivityDatabase.ID,ActivityDatabase.ACTIVITIES,ActivityDatabase.METS,ActivityDatabase.INTENSITY,ActivityDatabase.EQUIPMENT};
+        String[] columns = {ActivityDatabase.ACTIVITIES,ActivityDatabase.METS,ActivityDatabase.INTENSITY,ActivityDatabase.EQUIPMENT};
         Cursor cursor = db.query(ActivityDatabase.ACTIVITY_TABLE,columns,null,null,null,null,null);
         ArrayList<Activity> activityList = new ArrayList<>();
 

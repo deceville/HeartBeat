@@ -31,7 +31,7 @@ public class SuggestionsFragment extends Fragment{
         ActivityDatabase myDB = new ActivityDatabase(getContext());
         btn_cancel.setVisibility(View.GONE);
         suggestions = new ArrayList<Activity>();
-        suggestions = myDB.getName();
+        suggestions = myDB.getActivities();
 
         adapter = new ListAdapter(getContext(), suggestions);
 

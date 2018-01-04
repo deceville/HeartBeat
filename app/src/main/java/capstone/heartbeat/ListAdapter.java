@@ -54,8 +54,8 @@ public class ListAdapter extends BaseAdapter {
             view = lInflater.inflate(R.layout.list_suggestions, parent, false);
         }
 
-        ((TextView) view.findViewById(R.id.title_suggestions)).setText(suggestions.get(position).getTitle());
-        ((TextView) view.findViewById(R.id.desc_suggestions)).setText(suggestions.get(position).getDesc());
+        ((TextView) view.findViewById(R.id.title_suggestions)).setText(suggestions.get(position).getActivities());
+        ((TextView) view.findViewById(R.id.desc_suggestions)).setText(suggestions.get(position).getIntensity());
 
         CheckBox cbox = (CheckBox) view.findViewById(R.id.cbox_suggestions);
         cbox.setChecked(suggestions.get(position).checked);
@@ -66,7 +66,7 @@ public class ListAdapter extends BaseAdapter {
             public void onClick(View v) {
                 boolean newState = !suggestions.get(position).isChecked();
                 suggestions.get(position).checked = newState;
-                String sugg = suggestions.get(position).title;
+                String sugg = suggestions.get(position).Activities;
                 Toast.makeText(finalView.getContext(),
                         sugg + " checked: " + newState,
                         Toast.LENGTH_LONG).show();

@@ -67,7 +67,7 @@ public class AddPlanActivity extends AppCompatActivity {
 
                 dialog.show();
 
-                myActivities =  myDb.getName();
+                myActivities =  myDb.getActivities();
 
                 suggestions = new ArrayList<Suggestions>();
 
