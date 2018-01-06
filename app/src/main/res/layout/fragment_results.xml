@@ -5,10 +5,11 @@
     android:layout_height="fill_parent"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:fillViewport="true"
-    tools:context="capstone.heartbeat.ResultsFragment">
+    tools:context="capstone.heartbeat.fragments.ResultsFragment">
 
 
         <LinearLayout
+            android:id="@+id/fragment_risk"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">

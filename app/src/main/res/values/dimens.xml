@@ -32,7 +32,7 @@
     <dimen name="scale_line_small">10dp</dimen>
     <dimen name="scale_line_medium">25dp</dimen>
     <dimen name="scale_line_large">50dp</dimen>
-    <dimen name="yellow_line_stroke_width">3dp</dimen>
+    <dimen name="yellow_line_stroke_width">8dp</dimen>
     <dimen name="label_margin_top">10dp</dimen>
     <dimen name="textview_ruler">100dp</dimen>
 </resources>

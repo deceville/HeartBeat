@@ -11,7 +11,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@color/bg_screen1"
-    tools:context="capstone.heartbeat.SignupActivity">
+    tools:context="capstone.heartbeat.account.SignupActivity">
 
     <ImageView
         android:layout_width="@dimen/logo_width_height"

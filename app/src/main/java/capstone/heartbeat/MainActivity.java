@@ -1,15 +1,14 @@
 package capstone.heartbeat;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -19,8 +18,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import capstone.heartbeat.account.LoginActivity;
+import capstone.heartbeat.account.ProfileActivity;
+import capstone.heartbeat.fragments.GoalsFragment;
+import capstone.heartbeat.fragments.PlansFragment;
+import capstone.heartbeat.fragments.ResultsFragment;
+import capstone.heartbeat.fragments.SuggestionsFragment;
+import capstone.heartbeat.others.AboutActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -28,6 +37,7 @@ public class MainActivity extends AppCompatActivity
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -148,8 +158,18 @@ public class MainActivity extends AppCompatActivity
             Intent i = new Intent(MainActivity.this, ProfileActivity.class);
             startActivity(i);
         } else if (id == R.id.nav_results) {
+            /*FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.fragment_results, new ResultsFragment());
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            ft.addToBackStack(null);
+            ft.commit();*/
 
         } else if (id == R.id.nav_plans) {
+            /*FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.fragment_plans, new PlansFragment());
+            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+            ft.addToBackStack(null);
+            ft.commit();*/
 
         } else if (id == R.id.nav_suggestions) {
 
@@ -161,6 +181,14 @@ public class MainActivity extends AppCompatActivity
             Intent i = new Intent(MainActivity.this, AboutActivity.class);
             startActivity(i);
         } else if (id == R.id.nav_logout) {
+            FirebaseAuth.getInstance().signOut();
+            prefs = getSharedPreferences("login",MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt("session",0);
+            editor.commit();
+            startActivity(new Intent(MainActivity.this,LoginActivity.class));
+            finish();
+
 
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context="capstone.heartbeat.GoalsFragment">
+    tools:context="capstone.heartbeat.fragments.GoalsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

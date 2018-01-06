@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".WelcomeActivity"
+            android:name=".account.WelcomeActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -28,44 +28,42 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".account.LoginActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".SignupActivity"
+            android:name=".account.SignupActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".Result" />
-        <activity android:name=".Demographics" />
         <activity
-            android:name=".DemographicsActivity"
+            android:name=".assessment.DemographicsActivity"
             android:label="@string/title_activity_demo" />
         <activity
-            android:name=".LaboratoryActivity"
+            android:name=".assessment.LaboratoryActivity"
             android:label="@string/title_activity_lab" />
         <activity
-            android:name=".HistoryActivity"
+            android:name=".assessment.HistoryActivity"
             android:label="@string/title_activity_history" />
         <activity
-            android:name=".HabitsActivity"
+            android:name=".assessment.HabitsActivity"
             android:label="@string/title_activity_habits" />
         <activity
-            android:name=".RiskResultsActivity"
+            android:name=".assessment.RiskResultsActivity"
             android:label="@string/title_activity_results" />
         <activity
-            android:name=".AddPlanActivity"
+            android:name=".others.AddPlanActivity"
             android:label="@string/title_activity_addplan" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".AboutActivity"
+            android:name=".others.AboutActivity"
             android:label="@string/title_activity_about" />
         <activity
-            android:name=".ProfileActivity"
+            android:name=".account.ProfileActivity"
             android:label="@string/title_activity_profile" />
 
         <activity
-            android:name=".EditProfileActivity"
+            android:name=".account.EditProfileActivity"
             android:label="@string/title_activity_editprofile"/>
     </application>
 

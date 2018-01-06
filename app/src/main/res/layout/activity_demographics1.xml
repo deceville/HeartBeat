@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="capstone.heartbeat.DemographicsActivity">
+    tools:context="capstone.heartbeat.assessment.DemographicsActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -85,7 +85,7 @@
                     android:visibility="invisible"
                     android:src="@drawable/char_female_01"/>
 
-                <capstone.heartbeat.ScaleView
+                <capstone.heartbeat.models.ScaleView
                     android:id="@+id/my_scale"
                     android:layout_width="match_parent"
                     android:layout_height="250dp"
