@@ -241,7 +241,7 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
 
     public void showFreeTime() {
 
-        final Dialog d = new Dialog(HabitsActivity.this);
+        final Dialog d = new Dialog(HabitsActivity.this, android.R.style.Theme_Holo_Light_Dialog);
         d.setTitle("Set your free time");
         d.setContentView(R.layout.ft_dialog);
         Button b1 = (Button) d.findViewById(R.id.ft_set);
@@ -304,7 +304,7 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
 
     public void showSleepTime() {
 
-        final Dialog d = new Dialog(HabitsActivity.this);
+        final Dialog d = new Dialog(HabitsActivity.this, android.R.style.Theme_Holo_Light_Dialog);
         d.setTitle("Set your sleeping time");
         d.setContentView(R.layout.st_dialog);
         Button b1 = (Button) d.findViewById(R.id.st_set);
@@ -358,7 +358,7 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
 
     public void showNumOfSticks() {
 
-        final Dialog d = new Dialog(HabitsActivity.this);
+        final Dialog d = new Dialog(HabitsActivity.this, android.R.style.Theme_Holo_Light_Dialog);
         d.setTitle("Sticks per day");
         d.setContentView(R.layout.sticks_dialog);
         Button b1 = (Button) d.findViewById(R.id.sticks_set);
@@ -467,6 +467,7 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
         if (id == R.id.next) {
 
             startActivity(new Intent(getApplicationContext(),HistoryActivity.class));
+            finish();
             return true;
         }
 

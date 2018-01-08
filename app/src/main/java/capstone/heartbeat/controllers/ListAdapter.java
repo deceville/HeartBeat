@@ -71,9 +71,9 @@ public class ListAdapter extends BaseAdapter {
                 boolean newState = !suggestions.get(position).isChecked();
                 suggestions.get(position).checked = newState;
                 String sugg = suggestions.get(position).Activities;
-                Toast.makeText(finalView.getContext(),
+                /*Toast.makeText(finalView.getContext(),
                         sugg + " checked: " + newState,
-                        Toast.LENGTH_LONG).show();
+                        Toast.LENGTH_LONG).show();*/
             }
         });
 

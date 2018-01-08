@@ -41,9 +41,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
+import capstone.heartbeat.MainActivity;
 import capstone.heartbeat.R;
 import capstone.heartbeat.assessment.DemographicsActivity;
 
@@ -78,9 +80,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
     private FirebaseAuth mAuth;
+    private TextView signup;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
@@ -99,6 +102,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+
                 if (id == R.id.btn_login || id == EditorInfo.IME_NULL) {
                     attemptLogin();
                     return true;
@@ -111,12 +115,24 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 attemptLogin();
             }
         });
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+
+        signup = (TextView) findViewById(R.id.signup_frmLogin);
+
+        signup.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, SignupActivity.class));
+                finish();
+            }
+        });
+
     }
 
     private void populateAutoComplete() {
@@ -169,6 +185,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
+
         if (mAuthTask != null) {
            return;
 
@@ -210,22 +227,34 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
+
             showProgress(true);
             //mAuthTask = new UserLoginTask(email, password);
            // mAuthTask.execute((Void) null);
             mAuth = FirebaseAuth.getInstance();
-            mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+
+            mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
+
+
+
                     if (task.isSuccessful()){
-                        startActivity(new Intent(getApplicationContext(),DemographicsActivity.class));
                         prefs = getSharedPreferences("login",MODE_PRIVATE);
                         SharedPreferences.Editor editor = prefs.edit();
-
                         editor.putInt("session",1);
                         editor.commit();
+                        boolean isCalculated = prefs.getBoolean("isCalculated",false);
+                        if (isCalculated){
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            finish();
+                        }else {
+                            startActivity(new Intent(getApplicationContext(), DemographicsActivity.class));
+                            finish();
+                        }
                     }else{
                         showProgress(false);
+
                     }
                 }
             });

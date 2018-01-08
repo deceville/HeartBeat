@@ -15,10 +15,62 @@
       },
       "oauth_client": [
         {
+          "client_id": "113404760251-gpl7rla77n7oc43f25pe06m1hfsiio47.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "capstone.heartbeat",
+            "certificate_hash": "d8aecee06529c1a7aaa1944277108869eeafdbbc"
+          }
+        },
+        {
           "client_id": "113404760251-37e5vruio254f00po2j3rh4jsn1aa8u5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "capstone.heartbeat",
+            "certificate_hash": "dd522c6e7495b4ffa08a9a64033f4dfe1b600022"
+          }
+        },
+        {
+          "client_id": "113404760251-kiof7mucl6gos7d5tl1vpcr3umhu0fhg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAouCSzvJmNpvnl--So4bqoRh7vmsm0YHg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "113404760251-kiof7mucl6gos7d5tl1vpcr3umhu0fhg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:113404760251:android:198598ab96a90106",
+        "android_client_info": {
+          "package_name": "com.example.torre.fireapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "113404760251-o1tecrt01vs3im38evj6k8d9dnu9riqu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.torre.fireapp",
             "certificate_hash": "dd522c6e7495b4ffa08a9a64033f4dfe1b600022"
           }
         },

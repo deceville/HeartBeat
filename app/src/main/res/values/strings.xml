@@ -42,7 +42,7 @@
     <string name="prompt_confirmPassword">Confirm password</string>
     <string name="prompt_fullname">Full name</string>
     <string name="prompt_username">Username</string>
-    <string name="verify_asian_age">I am Asian and I am between 23 to 85 years old.</string>
+    <string name="verify_asian_age">I am Asian and I am between 24 to 85 years old.</string>
     <string name="action_sign_in">LOGIN</string>
     <string name="action_sign_up">SIGN UP</string>
     <string name="error_invalid_email">This email address is invalid</string>

@@ -52,7 +52,7 @@ public class DemographicsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_demographics1);
+        setContentView(R.layout.activity_demographics);
 
         prefs = getSharedPreferences("values",MODE_PRIVATE);
         editor = prefs.edit();
@@ -195,6 +195,7 @@ public class DemographicsActivity extends AppCompatActivity {
 
             editor.commit();
             startActivity(new Intent(getApplicationContext(),LaboratoryActivity.class));
+            finish();
             return true;
         }
 
@@ -284,10 +285,12 @@ public class DemographicsActivity extends AppCompatActivity {
     public void alertAgeLimit (){
         AlertDialog.Builder builder = new AlertDialog.Builder(DemographicsActivity.this, R.style.Theme_AppCompat_Dialog_Alert);
 
-        builder.setTitle("Oh bummer!")
+        builder.setTitle("Oh no!")
                 .setMessage("Your current age is not allowed. Ages only between 25 and 84 are allowed to continue.")
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        btn_birthdate.setText("MONTH / DAY / YEAR");
+                        btn_birthdate.setTextColor(getResources().getColor(R.color.progress_gray_trans));
                     }
                 })
                 .setIcon(android.R.drawable.ic_dialog_alert);

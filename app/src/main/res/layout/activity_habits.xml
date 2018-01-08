@@ -245,7 +245,7 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="25dp"
                         android:layout_gravity="center_horizontal"
                         android:text="@string/btn_sedentary"
                         android:textAlignment="center"
@@ -273,7 +273,7 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="25dp"
                         android:layout_gravity="center_horizontal"
                         android:text="@string/btn_light"
                         android:textAlignment="center"
@@ -301,7 +301,7 @@
 
                     <TextView
                         android:layout_width="@dimen/physical_label_width"
-                        android:layout_height="wrap_content"
+                        android:layout_height="25dp"
                         android:layout_gravity="center_horizontal"
                         android:text="@string/btn_moderate"
                         android:textAlignment="center"
@@ -329,7 +329,7 @@
 
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="25dp"
                         android:layout_gravity="center_horizontal"
                         android:text="@string/btn_very"
                         android:textAlignment="center"
@@ -357,8 +357,8 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/physical_label_width"
+                        android:layout_height="25dp"
                         android:layout_gravity="center_horizontal"
                         android:text="@string/btn_extreme"
                         android:textAlignment="center"

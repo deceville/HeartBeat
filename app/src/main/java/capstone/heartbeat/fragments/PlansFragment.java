@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,9 +17,11 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.animation.OvershootInterpolator;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
@@ -258,30 +261,68 @@ public class PlansFragment extends Fragment{
                     startActivity(new Intent(getContext(), AddPlanActivity.class));
                     break;
                 case R.id.menu_addActivity:
-                    final AlertDialog dialog = new AlertDialog.Builder(getContext())
-                            .setTitle("Suggestions")
-                            .setView(R.layout.fragment_suggestions)
-                            .create();
+                    final Dialog d = new Dialog(getContext(), android.R.style.Theme_Holo_Light_Dialog);
+                    d.setTitle("Choose a plan");
+                    d.setContentView(R.layout.plan_dialog);
 
-                    dialog.show();
-                    suggestions = new ArrayList<Activity>();
-                    myDB = new ActivityDatabase(getContext());
+                    Spinner spinner = (Spinner) d.findViewById(R.id.spinner_plans);
+                    Button b1 = (Button) d.findViewById(R.id.sp_next);
+                    Button b2 = (Button) d.findViewById(R.id.sp_cancel);
 
-                    suggestions = myDB.getActivities();
-                    adapter = new ListAdapter (getContext(), suggestions);
+                    List<String> list = new ArrayList<String>();
+                    list.add("list 1");
+                    list.add("list 2");
+                    list.add("list 3");
+                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
+                            android.R.layout.simple_spinner_item, list);
+                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner.setAdapter(dataAdapter);
 
-                    ListView lvMain = (ListView) dialog.findViewById(R.id.lv_suggestions);
-                    lvMain.setAdapter(adapter);
-
-                    lvMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
+                    b1.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                        public void onClick(View v) {
+                            displaySuggestionDialog();
+                            d.dismiss();
                         }
                     });
+                    b2.setOnClickListener(new View.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(View v) {
+                            d.dismiss();
+                        }
+                    });
+                    d.show();
+                    break;
+            }
+        }
+    };
 
-                    btn_addSuggestion = (Button) dialog.findViewById(R.id.btn_addSuggestion);
+    public void displaySuggestionDialog(){
+        final AlertDialog dialog = new AlertDialog.Builder(getContext())
+                .setTitle("Suggestions")
+                .setView(R.layout.fragment_suggestions)
+                .create();
+
+        dialog.show();
+        suggestions = new ArrayList<Activity>();
+        myDB = new ActivityDatabase(getContext());
+
+        suggestions = myDB.getActivities();
+        adapter = new ListAdapter (getContext(), suggestions);
+
+        ListView lvMain = (ListView) dialog.findViewById(R.id.lv_suggestions);
+        lvMain.setAdapter(adapter);
+
+        lvMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
+
+        btn_addSuggestion = (Button) dialog.findViewById(R.id.btn_addSuggestion);
 
                   /*  btn_addSuggestion.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -299,16 +340,13 @@ public class PlansFragment extends Fragment{
                         }
                     });
 */
-                    btn_cancel = (Button) dialog.findViewById(R.id.btn_cancel);
+        btn_cancel = (Button) dialog.findViewById(R.id.btn_cancel);
 
-                    btn_cancel.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            dialog.hide();
-                        }
-                    });
-                    break;
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.hide();
             }
-        }
-    };
+        });
+    }
 }

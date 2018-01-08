@@ -45,6 +45,7 @@ public class AddPlanActivity extends AppCompatActivity {
     private DatabaseReference rootRef,actRef;
     ActivityDatabase myDb;
     ArrayList<Activity> myActivities;
+    ArrayList <Activity> selectedActivities;
 
 
     @Override
@@ -68,10 +69,7 @@ public class AddPlanActivity extends AppCompatActivity {
 
                 myActivities =  myDb.getActivities();
 
-                suggestions = new ArrayList<Suggestions>();
-
-
-
+                //suggestions = new ArrayList<Suggestions>();
 
                 adapter = new ListAdapter (getApplicationContext(), myActivities);
 
@@ -88,17 +86,35 @@ public class AddPlanActivity extends AppCompatActivity {
 
                 btn_addSuggestion = (Button) dialog.findViewById(R.id.btn_addSuggestion);
 
+                // selected list of activities on add plan form
+                selectedActivities = new ArrayList<Activity>();
+
                 btn_addSuggestion.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         StringBuilder selected = new StringBuilder("Selected: \n");
 
-                        for (int i = 0; i < suggestions.size(); i++){
-                            if(suggestions.get(i).isChecked()){
-                                selected.append(i).append("\n");
+                        for (int i = 0; i < myActivities.size(); i++){
+                            if(myActivities.get(i).isChecked()){
+                                selectedActivities.add(myActivities.get(i));
+
                             }
                         }
-                        Toast.makeText(getApplicationContext(), selected.toString(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), selected.toString(), Toast.LENGTH_SHORT).show();
+
+                        adapter = new ListAdapter (getApplicationContext(), selectedActivities);
+
+                        ListView lvPlan = (ListView) findViewById(R.id.plans_suggestions);
+                        lvPlan.setAdapter(adapter);
+
+                        lvPlan.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                            }
+                        });
+
                         dialog.hide();
                     }
                 });
@@ -111,6 +127,7 @@ public class AddPlanActivity extends AppCompatActivity {
                         dialog.hide();
                     }
                 });
+
             }
         });
 
@@ -159,6 +176,7 @@ public class AddPlanActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.save) {
             startActivity(new Intent(getApplicationContext(),MainActivity.class));
+            finish();
             return true;
         }
 

@@ -54,11 +54,14 @@ public class WelcomeActivity extends AppCompatActivity {
                 startActivity(new Intent(getApplicationContext(),MainActivity.class));
                 finish();
             }else if (!isLoggedIn()&&isCalculated()) {
-                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+
+                Intent i = new Intent(getApplicationContext(),LoginActivity.class);
+                startActivity(i);
                 finish();
             }
             else {
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                Intent i = new Intent(getApplicationContext(),LoginActivity.class);
+                startActivity(i);
                 finish();
             }
 

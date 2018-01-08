@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -41,6 +42,7 @@ public class SignupActivity extends AppCompatActivity {
     private String username,name,email,pass,passconfirm;
     private DatabaseReference rootRef, userRef,account;
     private int counter;
+    private TextView login;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,7 +59,7 @@ public class SignupActivity extends AppCompatActivity {
         txtEmail = (EditText)findViewById(R.id.email);
         txtPassword =(EditText)findViewById(R.id.password);
         txtPassConfirm =(EditText)findViewById(R.id.confirmPassowrd);
-        btnSignup = (Button)findViewById(R.id.email_sign_in_button);
+        btnSignup = (Button)findViewById(R.id.email_sign_up_button);
         cbCondition =(CheckBox)findViewById(R.id.check);
 
         btnSignup.setEnabled(false);
@@ -112,7 +114,15 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
+        login = (TextView) findViewById(R.id.login_frmSignUp);
 
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+                finish();
+            }
+        });
 
 
     }

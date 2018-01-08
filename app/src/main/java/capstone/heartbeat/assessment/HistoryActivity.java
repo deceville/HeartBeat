@@ -252,6 +252,7 @@ public class HistoryActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.next) {
             startActivity(new Intent(getApplicationContext(),RiskResultsActivity.class));
+            finish();
             return true;
         }
 

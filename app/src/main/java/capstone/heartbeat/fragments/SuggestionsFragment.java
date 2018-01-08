@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -33,7 +34,7 @@ public class SuggestionsFragment extends Fragment{
         btn_cancel = (Button) view.findViewById(R.id.btn_cancel);
         ActivityDatabase myDB = new ActivityDatabase(getContext());
         btn_cancel.setVisibility(View.GONE);
-        suggestions = new ArrayList<Activity>();
+        //suggestions = new ArrayList<Activity>();
         suggestions = myDB.getActivities();
 
         adapter = new ListAdapter(getContext(), suggestions);
@@ -51,7 +52,7 @@ public class SuggestionsFragment extends Fragment{
 
         btn_addSuggestion = (Button) view.findViewById(R.id.btn_addSuggestion);
 
-       /* btn_addSuggestion.setOnClickListener(new View.OnClickListener() {
+        btn_addSuggestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 StringBuilder selected = new StringBuilder("Selected: \n");
@@ -63,7 +64,7 @@ public class SuggestionsFragment extends Fragment{
                 }
                 Toast.makeText(getContext(), selected.toString(), Toast.LENGTH_SHORT).show();
             }
-        });*/
+        });
 
         // Inflate the layout for this fragment
         return view;

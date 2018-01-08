@@ -50,6 +50,7 @@
             android:id="@+id/btn_login"
             android:layout_width="@dimen/login_signup_width"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
             android:backgroundTint="@color/standardWhite"
             android:text="LOGIN" />
 
@@ -57,6 +58,7 @@
             android:id="@+id/btn_signup"
             android:layout_width="@dimen/login_signup_width"
             android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
             android:backgroundTint="@color/standardWhite"
             android:text="SIGN UP" />
     </LinearLayout>

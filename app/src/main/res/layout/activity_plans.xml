@@ -93,29 +93,29 @@
                 android:text="@string/plan_activity"
                 android:textAppearance="@android:style/TextAppearance.Material.Medium" />
 
-            <LinearLayout
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp">
 
                 <ListView
                     android:id="@+id/plans_suggestions"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
                 </ListView>
 
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/btn_addActivity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
+                    android:layout_gravity="end|bottom"
                     android:layout_margin="16dp"
                     app:backgroundTint="@color/colorPrimary"
                     android:clickable="true"
                     app:srcCompat="@drawable/ic_add"
 
                     app:tint="@color/colorAccent" />
-            </LinearLayout>
+            </FrameLayout>
 
         </LinearLayout>
 
