@@ -62,7 +62,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:113404760251:android:198598ab96a90106",
         "android_client_info": {
-          "package_name": "com.example.torre.fireapp"
+          "package_name": "capstone.heartbeat"
         }
       },
       "oauth_client": [
@@ -70,7 +70,7 @@
           "client_id": "113404760251-o1tecrt01vs3im38evj6k8d9dnu9riqu.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.torre.fireapp",
+            "package_name": "capstone.heartbeat",
             "certificate_hash": "dd522c6e7495b4ffa08a9a64033f4dfe1b600022"
           }
         },

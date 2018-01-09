@@ -1,5 +1,7 @@
 package capstone.heartbeat.fragments;
 
+import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -7,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.lzyzsd.circleprogress.DonutProgress;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
@@ -25,10 +28,20 @@ import java.util.List;
 
 import capstone.heartbeat.R;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class ResultsFragment extends Fragment{
+
+    private DonutProgress heartattack,stroke;
+    private SharedPreferences pref;
 
     public ResultsFragment() {
         // Required empty public constructor
+    }
+
+    @SuppressLint("ValidFragment")
+    public ResultsFragment(SharedPreferences pref){
+        this.pref = pref;
     }
 
     @Override
@@ -36,6 +49,14 @@ public class ResultsFragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_results, container, false);
+        int ha = pref.getInt("haResult",0);
+        int st = pref.getInt("stResult",0);
+
+        heartattack =(DonutProgress) view.findViewById(R.id.progress_heartattack);
+        stroke = (DonutProgress) view.findViewById(R.id.progress_stroke);
+
+        heartattack.setProgress((float)ha);
+        stroke.setProgress((float)st);
 
         LineChart chart = (LineChart) view.findViewById(R.id.chart1);
 

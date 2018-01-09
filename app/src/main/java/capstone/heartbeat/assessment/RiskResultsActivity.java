@@ -29,6 +29,7 @@ public class RiskResultsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_risk_results);
 
         prefs = getSharedPreferences("values",MODE_PRIVATE);
+        SharedPreferences.Editor ed = prefs.edit();
 
         heartattack =(DonutProgress)findViewById(R.id.progress_heartattack);
         stroke = (DonutProgress)findViewById(R.id.progress_stroke);
@@ -67,6 +68,9 @@ public class RiskResultsActivity extends AppCompatActivity {
             System.out.println(heartAttack+" "+Stroke);
             ha = (int) Math.floor(heartAttack);
             st = (int)Math.floor(Stroke);
+            ed.putInt("haResult",ha);
+            ed.putInt("stResult",st);
+            ed.commit();
             heartattack.setProgress((float)ha);
             stroke.setProgress((float)st);
 
@@ -76,6 +80,9 @@ public class RiskResultsActivity extends AppCompatActivity {
             System.out.println(heartAttack+" "+Stroke);
             ha = (int) Math.floor(heartAttack);
             st = (int)Math.floor(Stroke);
+            ed.putInt("haResult",ha);
+            ed.putInt("stResult",st);
+            ed.commit();
             heartattack.setProgress((float)ha);
             stroke.setProgress((float)st);
         }

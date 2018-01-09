@@ -76,8 +76,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void setupViewPager(ViewPager viewPager) {
+        prefs = getSharedPreferences("values",MODE_PRIVATE);
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new ResultsFragment(), "Results");
+        adapter.addFragment(new ResultsFragment(prefs), "Results");
         adapter.addFragment(new SuggestionsFragment(), "Suggestions");
         adapter.addFragment(new PlansFragment(), "Plans");
         adapter.addFragment(new GoalsFragment(), "Goals & Quests");
