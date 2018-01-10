@@ -20,8 +20,9 @@ public class RiskResultsActivity extends AppCompatActivity {
 
     private DonutProgress heartattack,stroke;
     private SharedPreferences prefs ;
-    private double age,sbp, totalchl, hdl, height,weight;
-    private int smoke,af, diabType1,diabType2,fhcvd,ra,CKD,CHF, HA, VHD,bptreatment;
+    public double age,sbp, totalchl, hdl, height,weight;
+    public int smoke,af, diabType1,diabType2,fhcvd,ra,CKD,CHF, HA, VHD,bptreatment,gender ;
+    public int ha, st;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,16 +51,16 @@ public class RiskResultsActivity extends AppCompatActivity {
         bptreatment = prefs.getInt("bptr",0);
         diabType2 = 0;
         CHF = prefs.getInt("congestive",0);
-        int gender = prefs.getInt("gender",0);
+        gender = prefs.getInt("gender",0);
 
         final int bool[]={5,smoke,af,diabType1,diabType2,fhcvd,ra,bptreatment};
-        final double continuous[]={50,140,200,60,height,weight};
+        final double continuous[]={age,sbp,totalchl,hdl,height,weight};
 
         Qrisk2Male hm = new Qrisk2Male();
         Qrisk2Female hf = new Qrisk2Female();
         QStrokeMale sm = new QStrokeMale();
         QStrokeFemale sf = new QStrokeFemale();
-        int ha, st;
+
         double heartAttack=0,Stroke=0;
         if (gender==0){
             heartAttack = hf.getResult(continuous,bool);

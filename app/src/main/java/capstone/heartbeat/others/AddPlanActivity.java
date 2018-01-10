@@ -28,6 +28,7 @@ import capstone.heartbeat.MainActivity;
 import capstone.heartbeat.R;
 import capstone.heartbeat.controllers.ActivityDatabase;
 import capstone.heartbeat.controllers.ListAdapter;
+import capstone.heartbeat.controllers.ResultEvaluator;
 import capstone.heartbeat.models.Activity;
 import capstone.heartbeat.models.Suggestions;
 
@@ -68,7 +69,9 @@ public class AddPlanActivity extends AppCompatActivity {
 
                 dialog.show();
 
-                myActivities =  myDb.getActivities();
+                ResultEvaluator re = new ResultEvaluator();
+                double met = re.getSuggestedMet();
+                myActivities =  myDb.getSuggestedActivities((int)met);
 
                 adapter = new ListAdapter (getApplicationContext(), myActivities);
 

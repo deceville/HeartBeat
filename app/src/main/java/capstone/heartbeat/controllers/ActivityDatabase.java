@@ -25,6 +25,8 @@ public class ActivityDatabase extends SQLiteAssetHelper {
     private static final String EQUIPMENT = "Equipment";
     private static final String ACTIVITY_TABLE ="ActivityList";
 
+    private SQLiteDatabase mydb;
+
     public ActivityDatabase(Context context, String name, String storageDirectory, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, storageDirectory, factory, version);
     }
@@ -61,5 +63,21 @@ public class ActivityDatabase extends SQLiteAssetHelper {
             acts.Activities = cursor.getString(cursor.getColumnIndex(ActivityDatabase.ACTIVITIES));
         }
         return activityList;
+    }
+
+    public ArrayList<Activity> getSuggestedActivities(int met){
+        mydb=getWritableDatabase();
+        String[] columns = {ACTIVITIES,METS,INTENSITY,EQUIPMENT};
+        String query = "SELECT * FROM "+ ACTIVITY_TABLE+" WHERE "+METS+" = "+met;
+        Cursor cursor = mydb.rawQuery(query,null);
+        ArrayList<Activity> activityList = new ArrayList<>();
+
+        while (cursor.moveToNext()){
+            Activity acts = new Activity();
+            acts.Activities = cursor.getString(cursor.getColumnIndex(ActivityDatabase.ACTIVITIES));
+            acts.METS = cursor.getDouble(cursor.getColumnIndex(ActivityDatabase.METS));
+            activityList.add(acts);
+        }
+        return  activityList;
     }
 }
