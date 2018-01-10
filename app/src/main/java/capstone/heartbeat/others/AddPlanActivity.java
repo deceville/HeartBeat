@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,6 +46,7 @@ public class AddPlanActivity extends AppCompatActivity {
     private DatabaseReference rootRef,actRef;
     ActivityDatabase myDb;
     ArrayList<Activity> myActivities;
+    private FirebaseDatabase database;
 
 
     @Override
@@ -67,11 +69,6 @@ public class AddPlanActivity extends AppCompatActivity {
                 dialog.show();
 
                 myActivities =  myDb.getActivities();
-
-                suggestions = new ArrayList<Suggestions>();
-
-
-
 
                 adapter = new ListAdapter (getApplicationContext(), myActivities);
 

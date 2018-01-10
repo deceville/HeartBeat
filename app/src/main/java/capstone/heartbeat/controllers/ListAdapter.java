@@ -82,6 +82,7 @@ public class ListAdapter extends BaseAdapter {
         return view;
     }
 
+
     Suggestions getSuggestion(int position) {
         return ((Suggestions) getItem(position));
     }
