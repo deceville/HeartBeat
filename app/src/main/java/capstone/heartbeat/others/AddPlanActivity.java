@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.support.design.widget.FloatingActionButton;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +28,7 @@ import capstone.heartbeat.MainActivity;
 import capstone.heartbeat.R;
 import capstone.heartbeat.controllers.ActivityDatabase;
 import capstone.heartbeat.controllers.ListAdapter;
+import capstone.heartbeat.controllers.PlansDatabase;
 import capstone.heartbeat.models.Activity;
 import capstone.heartbeat.models.Suggestions;
 
@@ -39,6 +41,7 @@ public class AddPlanActivity extends AppCompatActivity {
     Button btn_addSuggestion, btn_cancel, btn_currentdate;
     public int currYear, currMonth, currDay;
     TextView text_plan_freetime;
+    private EditText plan_name;
 
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
@@ -52,8 +55,13 @@ public class AddPlanActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_plans);
+
+        prefs = getSharedPreferences("values",MODE_PRIVATE);
+
         myDb = new ActivityDatabase(AddPlanActivity.this);
 
+        // get plan name input
+        plan_name = (EditText) findViewById(R.id.plan_name);
 
         btn_addActivity = (FloatingActionButton) findViewById(R.id.btn_addActivity);
 
@@ -115,7 +123,7 @@ public class AddPlanActivity extends AppCompatActivity {
                             }
                         });
 
-                        dialog.hide();
+                        dialog.dismiss();
                     }
                 });
 
@@ -124,7 +132,7 @@ public class AddPlanActivity extends AppCompatActivity {
                 btn_cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        dialog.hide();
+                        dialog.dismiss();
                     }
                 });
 
@@ -153,7 +161,6 @@ public class AddPlanActivity extends AppCompatActivity {
             }
         });
 
-        prefs = getSharedPreferences("values",MODE_PRIVATE);
         text_plan_freetime = (TextView) findViewById(R.id.text_plan_freetime);
         text_plan_freetime.setText(prefs.getString("freetime", ""));
     }
@@ -175,6 +182,27 @@ public class AddPlanActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.save) {
+
+
+            prefs = getSharedPreferences("values",MODE_PRIVATE);
+            editor = prefs.edit();
+            editor.putString("plan_name", plan_name.getText().toString());
+            editor.apply();
+
+            String title = prefs.getString("plan_name",null);
+            String date = prefs.getString("plan_date",null);
+            double cal = 100;
+            int initialMinutes = 15;
+            int freeTime = prefs.getInt("free",0);
+
+
+
+
+            PlansDatabase plans = new PlansDatabase(getApplicationContext());
+            plans.open();
+            plans.createEntry1(title,date,cal,initialMinutes,freeTime,selectedActivities);
+            plans.createEntry2(title,selectedActivities);
+            plans.close();
             startActivity(new Intent(getApplicationContext(),MainActivity.class));
             finish();
             return true;
@@ -193,10 +221,13 @@ public class AddPlanActivity extends AppCompatActivity {
             int mYear = year;
             int mMonth = monthOfYear;
             int mDay = dayOfMonth;
-            btn_currentdate.setText(new StringBuilder()
-                    // Month is 0 based so add 1
-                    .append(mMonth + 1).append("/").append(mDay).append("/")
-                    .append(mYear).append(" "));
+
+//initialize editor
+            prefs = getSharedPreferences("values",MODE_PRIVATE);
+            SharedPreferences.Editor editor = prefs.edit();
+            String plan_date = mMonth + 1 + "/" + mDay + "/" + mYear + " ";
+            editor.putString("plan_date", plan_date);
+            editor.commit();
         }
     }
 }

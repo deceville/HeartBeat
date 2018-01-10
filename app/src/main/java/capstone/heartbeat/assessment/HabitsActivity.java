@@ -280,12 +280,16 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
                 if(np.getValue() == 1){
                     btn_freetime.setText(String.format("%02d:%02d", np.getValue(), np1.getValue()) + " hour");
                     freetime = String.format("%02d:%02d", np.getValue(), np1.getValue()) + " hour";
+                    int free = (np.getValue()*60)+np1.getValue();
                     editor.putString("freetime", freetime);
+                    editor.putInt("free",free);
                     editor.commit();
                 }else{
                     btn_freetime.setText(String.format("%02d:%02d", np.getValue(), np1.getValue()) + " hours");
                     freetime = String.format("%02d:%02d", np.getValue(), np1.getValue()) + " hours";
+                    int free = (np.getValue()*60)+np1.getValue();
                     editor.putString("freetime", freetime);
+                    editor.putInt("free",free);
                     editor.commit();
                 }
                 d.dismiss();

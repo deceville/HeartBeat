@@ -36,6 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import capstone.heartbeat.controllers.ActivityDatabase;
+import capstone.heartbeat.controllers.PlansDatabase;
 import capstone.heartbeat.others.AddPlanActivity;
 import capstone.heartbeat.controllers.ExpandableListAdapter;
 import capstone.heartbeat.controllers.ListAdapter;
@@ -147,6 +148,10 @@ public class PlansFragment extends Fragment{
         planlist = new ArrayList<String>();
         plan = new HashMap<String, List<String>>();
 
+        PlansDatabase db = new PlansDatabase(getContext());
+        db.open();
+        String res = db.getData();
+
         // Adding child data
         planlist.add("Plan 1");
         planlist.add("Plan 2");
@@ -154,9 +159,7 @@ public class PlansFragment extends Fragment{
 
         // Adding child data
         List<String> plans1 = new ArrayList<String>();
-        plans1.add("Running");
-        plans1.add("Dancing");
-        plans1.add("Walking");
+        plans1.add(res);
 
         List<String> plans2 = new ArrayList<String>();
         plans2.add("Sitting");
