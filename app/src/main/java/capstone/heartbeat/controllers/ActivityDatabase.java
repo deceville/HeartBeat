@@ -61,6 +61,7 @@ public class ActivityDatabase extends SQLiteAssetHelper {
         while(cursor.moveToNext()){
             Activity acts = new Activity();
             acts.Activities = cursor.getString(cursor.getColumnIndex(ActivityDatabase.ACTIVITIES));
+
         }
         return activityList;
     }
@@ -68,7 +69,7 @@ public class ActivityDatabase extends SQLiteAssetHelper {
     public ArrayList<Activity> getSuggestedActivities(int met){
         mydb=getWritableDatabase();
         String[] columns = {ACTIVITIES,METS,INTENSITY,EQUIPMENT};
-        String query = "SELECT * FROM "+ ACTIVITY_TABLE+" WHERE "+METS+" = "+met;
+        String query = "SELECT * FROM "+ ACTIVITY_TABLE+" WHERE "+METS+" = " + met;
         Cursor cursor = mydb.rawQuery(query,null);
         ArrayList<Activity> activityList = new ArrayList<>();
 
@@ -76,6 +77,8 @@ public class ActivityDatabase extends SQLiteAssetHelper {
             Activity acts = new Activity();
             acts.Activities = cursor.getString(cursor.getColumnIndex(ActivityDatabase.ACTIVITIES));
             acts.METS = cursor.getDouble(cursor.getColumnIndex(ActivityDatabase.METS));
+            acts.Intensity = cursor.getString(cursor.getColumnIndex(ActivityDatabase.INTENSITY));
+            acts.Equipment = cursor.getString(cursor.getColumnIndex(ActivityDatabase.EQUIPMENT));
             activityList.add(acts);
         }
         return  activityList;
