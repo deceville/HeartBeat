@@ -6,6 +6,7 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -36,6 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import capstone.heartbeat.controllers.ActivityDatabase;
+import capstone.heartbeat.controllers.PlanActivitiesDatabase;
 import capstone.heartbeat.controllers.PlansDatabase;
 import capstone.heartbeat.others.AddPlanActivity;
 import capstone.heartbeat.controllers.ExpandableListAdapter;
@@ -152,12 +154,22 @@ public class PlansFragment extends Fragment{
         db.open();
         String res = db.getData();
 
-        // Adding child data
-        planlist.add("Plan 1");
-        planlist.add("Plan 2");
-        planlist.add("Plan 3");
+        PlanActivitiesDatabase db1 = new PlanActivitiesDatabase(getContext());
+        db1.open();
 
         // Adding child data
+        for (String title:db1.getTitle()) {
+            planlist.add(title);
+        }
+
+        // Adding child data
+
+       /* List<String> activities = new ArrayList<>();
+        Cursor c = db.getActivities();
+        int acts = c.getColumnIndex(db.KEY_ACTIVITY);
+        for (c.moveToFirst();!c.isAfterLast () ;c.moveToNext()) {
+            activities.add(c.getString(acts));
+        }*/
         List<String> plans1 = new ArrayList<String>();
         plans1.add(res);
 

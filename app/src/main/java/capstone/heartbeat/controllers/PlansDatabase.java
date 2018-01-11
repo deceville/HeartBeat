@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import capstone.heartbeat.models.Activity;
@@ -20,14 +21,17 @@ public class PlansDatabase  {
     private static final String DATABASE_NAME="PlansDB";
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_TABLE ="Plans";
-    private static final String DATABASE_TABLE2 ="PlanActivities";
-    public static final String KEY_ROWID = "_id";
+    private static final String DATABASE_TABLE2 ="Activity";
+    private static final String DATABASE_TABLE3 ="PlanActivity";
+    public static final String KEY_ROWID = "plan_activity_id";
+    public static final String KEY_PLANID = "plan_id";
+    public static final String KEY_ACTIVITYID = "activity_id";
     public static final String KEY_TITLE ="title";
     public static final String KEY_DATE = "date";
     public static final String KEY_FREETIME = "free_time";
     public static final String KEY_MINUTES = "minutes";
     public static final String KEY_CALORIES = "calories";
-    private static final String KEY_ACTIVITY = "activities";
+    public static final String KEY_ACTIVITY = "activities";
     public static List<Activity> activityList;
 
     private DBHelper ourHelper;
@@ -42,20 +46,26 @@ public class PlansDatabase  {
         }
         @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL  ("CREATE TABLE IF NOT EXISTS " + DATABASE_TABLE + "( " + KEY_ROWID
+            db.execSQL  ("CREATE TABLE IF NOT EXISTS " + DATABASE_TABLE + "( " + KEY_ACTIVITYID
                     + " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_TITLE
-                    + " TEXT NOT NULL, " + KEY_DATE + " TEXT NOT NULL, "+KEY_CALORIES
+                    + " TEXT NOT NULL, " + KEY_CALORIES
                     + " NUMERIC NOT NULL, " + KEY_MINUTES + " INTEGER NOT NULL, " + KEY_FREETIME
                     + " INTEGER NOT NULL)");
 
-            /*db.execSQL  ("CREATE TABLE IF NOT EXISTS " + DATABASE_TABLE2 + "( " + KEY_ROWID
-                    + " INTEGER PRIMARY KEY, " + KEY_TITLE
-                    + " TEXT NOT NULL, " + KEY_ACTIVITY + " TEXT NOT NULL)");*/
+            db.execSQL  ("CREATE TABLE IF NOT EXISTS " + DATABASE_TABLE2 + "( " + KEY_PLANID
+                    + " INTEGER PRIMARY KEY, " + KEY_DATE + " TEXT NOT NULL, " + KEY_TITLE
+                    + " TEXT NOT NULL, " + KEY_ACTIVITY + " TEXT NOT NULL)");
+
+            db.execSQL("CREATE TABLE IF NOT EXISTS " + DATABASE_TABLE3 + "( " + KEY_ROWID
+                    + " INTEGER PRIMARY KEY, " + KEY_PLANID + " INTEGER, " + KEY_ACTIVITYID
+                    + " INTEGER)");
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE);
+            db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE2);
+            db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE3);
             onCreate(db);
         }
     }
@@ -120,10 +130,37 @@ public class PlansDatabase  {
         int iFreetime = c.getColumnIndex(KEY_FREETIME);
 
         for (c.moveToFirst();!c.isAfterLast () ;c.moveToNext()) {
-            result = result + c.getInt (iRow) + "" + c.getString (iTitle) + "" + c.getString (iDate) + "" +
+            result = result + c.getString (iTitle) + "" + c.getString (iDate) + "" +
                     c.getDouble (iCalorie) + c.getInt(iMinutes) + c.getInt(iFreetime) + "\n";
         }
         return result;
+    }
+
+    public List<String> getTitle(){
+        String[] columns = new String[] {KEY_ROWID,KEY_TITLE};
+        Cursor c = ourDatabase.query(DATABASE_TABLE2, columns, null, null, null, null,
+                null);
+
+        List<String> titles = new ArrayList<>();
+        int title = c.getColumnIndex(KEY_TITLE);
+        for (c.moveToFirst();!c.isAfterLast () ;c.moveToNext()) {
+             titles.add(c.getString(title));
+        }
+        return titles;
+    }
+
+    public Cursor getActivities(){
+        String[] columns = new String[] {KEY_ROWID,KEY_TITLE};
+        String[] column = new String[]{KEY_TITLE,KEY_ACTIVITY};
+        Cursor c = ourDatabase.query(DATABASE_TABLE, column, null, null, null, null,
+                null);
+
+        List<String> titles = new ArrayList<>();
+        int title = c.getColumnIndex(KEY_TITLE);
+        for (c.moveToFirst();!c.isAfterLast () ;c.moveToNext()) {
+            titles.add(c.getString(title));
+        }
+        return c;
     }
 
 

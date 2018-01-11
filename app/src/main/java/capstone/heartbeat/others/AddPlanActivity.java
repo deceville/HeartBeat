@@ -28,6 +28,7 @@ import capstone.heartbeat.MainActivity;
 import capstone.heartbeat.R;
 import capstone.heartbeat.controllers.ActivityDatabase;
 import capstone.heartbeat.controllers.ListAdapter;
+import capstone.heartbeat.controllers.PlanActivitiesDatabase;
 import capstone.heartbeat.controllers.PlansDatabase;
 import capstone.heartbeat.models.Activity;
 import capstone.heartbeat.models.Suggestions;
@@ -200,9 +201,14 @@ public class AddPlanActivity extends AppCompatActivity {
 
             PlansDatabase plans = new PlansDatabase(getApplicationContext());
             plans.open();
-            plans.createEntry1(title,date,cal,initialMinutes,freeTime,selectedActivities);
-            plans.createEntry2(title,selectedActivities);
+            //  plans.createEntry1(title,cal,initialMinutes,freeTime,selectedActivities);
             plans.close();
+
+            PlanActivitiesDatabase plans1 = new PlanActivitiesDatabase(getApplicationContext());
+            plans1.open();
+            plans1.createEntry2(title,date,selectedActivities);
+            plans1.close();
+
             startActivity(new Intent(getApplicationContext(),MainActivity.class));
             finish();
             return true;

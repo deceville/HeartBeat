@@ -62,4 +62,6 @@ public class ActivityDatabase extends SQLiteAssetHelper {
         }
         return activityList;
     }
+
+
 }

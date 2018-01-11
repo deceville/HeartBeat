@@ -135,7 +135,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
     }
     private boolean isLoggedIn(){
-        boolean state = false;
+        boolean state = true;
         prefs = getSharedPreferences("login",MODE_PRIVATE);
         if (prefs.getInt("session", 0) == 1){
             state = true;
@@ -150,7 +150,7 @@ public class WelcomeActivity extends AppCompatActivity {
         boolean calculated = prefs.getBoolean("isCalculated",false);
         prefs =getSharedPreferences("login",MODE_PRIVATE);
         if (calculated==true){
-            status = true;
+            status = false;
             return status;
         }else {
             return status;

@@ -54,7 +54,7 @@ public class RiskResultsActivity extends AppCompatActivity {
         int gender = prefs.getInt("gender",0);
 
         final int bool[]={5,smoke,af,diabType1,diabType2,fhcvd,ra,bptreatment};
-        final double continuous[]={50,140,200,60,height,weight};
+        final double continuous[]={50,sbp,totalchl,hdl,height,weight};
 
         Qrisk2Male hm = new Qrisk2Male();
         Qrisk2Female hf = new Qrisk2Female();

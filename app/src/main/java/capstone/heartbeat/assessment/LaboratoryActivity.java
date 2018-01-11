@@ -30,6 +30,8 @@ public class LaboratoryActivity extends AppCompatActivity {
     private Button btnPrev, btnNext;
     private PreferenceManager prefManager;
     private int sbp,dbp,chl,hdl;
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,12 +89,10 @@ public class LaboratoryActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.next) {
-            SharedPreferences prefs = getSharedPreferences("values",MODE_PRIVATE);
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putInt("sbp",sbp);
-            editor.putInt("chl",chl);
-            editor.putInt("hdl",hdl);
-            editor.commit();
+            prefs = getSharedPreferences("values", MODE_PRIVATE);
+            System.out.println("CHL: " + prefs.getInt("chl",chl));
+            System.out.println("SBP: " + prefs.getInt("sbp",sbp));
+            System.out.println("HDL: " + prefs.getInt("hdl",hdl));
             startActivity(new Intent(getApplicationContext(),HabitsActivity.class));
             finish();
             return true;
@@ -147,59 +147,6 @@ public class LaboratoryActivity extends AppCompatActivity {
 
 
             } else {
-
-                BoxedVertical chol_total = (BoxedVertical)findViewById(R.id.chol_total);
-                BoxedVertical chol_hdl = (BoxedVertical)findViewById(R.id.chol_hdl);
-                BoxedVertical bp_systolic = (BoxedVertical)findViewById(R.id.bp_systolic);
-
-                chol_total.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
-                    @Override
-                    public void onPointsChanged(BoxedVertical boxedPoints, int value) {
-                        chl = value;
-                    }
-
-                    @Override
-                    public void onStartTrackingTouch(BoxedVertical boxedPoints) {
-                    }
-
-
-                    @Override
-                    public void onStopTrackingTouch(BoxedVertical boxedPoints) {
-                    }
-                });
-
-                chol_hdl.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
-                    @Override
-                    public void onPointsChanged(BoxedVertical boxedPoints, int value) {
-                        hdl = value;
-                    }
-
-                    @Override
-                    public void onStartTrackingTouch(BoxedVertical boxedPoints) {
-                    }
-
-                    @Override
-                    public void onStopTrackingTouch(BoxedVertical boxedPoints) {
-                    }
-                });
-
-                bp_systolic.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
-                    @Override
-                    public void onPointsChanged(BoxedVertical boxedPoints, int value) {
-                        sbp = value;
-                    }
-
-                    @Override
-                    public void onStartTrackingTouch(BoxedVertical boxedPoints) {
-
-                    }
-
-                    @Override
-                    public void onStopTrackingTouch(BoxedVertical boxedPoints) {
-
-                    }
-                });
-
                 // still pages are left
                 btnNext.setText(getString(R.string.next));
                 btnPrev.setVisibility(View.GONE);
@@ -236,6 +183,71 @@ public class LaboratoryActivity extends AppCompatActivity {
 
             View view = layoutInflater.inflate(layouts[position], container, false);
             container.addView(view);
+
+
+            BoxedVertical chol_total = (BoxedVertical)view.findViewById(R.id.chol_total);
+            BoxedVertical chol_hdl = (BoxedVertical)view.findViewById(R.id.chol_hdl);
+            BoxedVertical bp_systolic = (BoxedVertical)view.findViewById(R.id.bp_systolic);
+
+
+            prefs = getSharedPreferences("values",MODE_PRIVATE);
+            editor = prefs.edit();
+
+            if(position == layouts.length - 1){
+                bp_systolic.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
+                    @Override
+                    public void onPointsChanged(BoxedVertical boxedPoints, int value) {
+                        sbp = value;
+                        editor.putInt("sbp", sbp);
+                        editor.commit();
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(BoxedVertical boxedPoints) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(BoxedVertical boxedPoints) {
+
+                    }
+                });
+            }else{
+                chol_total.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
+                    @Override
+                    public void onPointsChanged(BoxedVertical boxedPoints, int value) {
+                        chl = value;
+                        editor.putInt("chl", chl);
+                        editor.commit();
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(BoxedVertical boxedPoints) {
+                    }
+
+
+                    @Override
+                    public void onStopTrackingTouch(BoxedVertical boxedPoints) {
+                    }
+                });
+
+                chol_hdl.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
+                    @Override
+                    public void onPointsChanged(BoxedVertical boxedPoints, int value) {
+                        hdl = value;
+                        editor.putInt("hdl", hdl);
+                        editor.commit();
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(BoxedVertical boxedPoints) {
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(BoxedVertical boxedPoints) {
+                    }
+                });
+            }
 
             return view;
         }
