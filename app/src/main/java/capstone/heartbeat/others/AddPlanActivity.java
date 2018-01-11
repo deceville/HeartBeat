@@ -222,7 +222,11 @@ public class AddPlanActivity extends AppCompatActivity {
             int mMonth = monthOfYear;
             int mDay = dayOfMonth;
 
-//initialize editor
+            btn_currentdate.setText(new StringBuilder()
+                    // Month is 0 based so add 1
+                    .append(mMonth + 1).append("/").append(mDay).append("/")
+                    .append(mYear).append(" "));
+            //initialize editor
             prefs = getSharedPreferences("values",MODE_PRIVATE);
             SharedPreferences.Editor editor = prefs.edit();
             String plan_date = mMonth + 1 + "/" + mDay + "/" + mYear + " ";

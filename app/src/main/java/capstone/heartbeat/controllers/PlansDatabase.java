@@ -17,8 +17,8 @@ import capstone.heartbeat.models.Activity;
 
 public class PlansDatabase  {
 
-    private static final String DATABASE_NAME="ActivityListDB.sqlite";
-    private static final int DATABASE_VERSION=1;
+    private static final String DATABASE_NAME="PlansDB";
+    private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_TABLE ="Plans";
     private static final String DATABASE_TABLE2 ="PlanActivities";
     public static final String KEY_ROWID = "_id";
