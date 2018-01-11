@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,8 +29,13 @@ import capstone.heartbeat.MainActivity;
 import capstone.heartbeat.R;
 import capstone.heartbeat.controllers.ActivityDatabase;
 import capstone.heartbeat.controllers.ListAdapter;
+<<<<<<< HEAD
 import capstone.heartbeat.controllers.PlanActivitiesDatabase;
 import capstone.heartbeat.controllers.PlansDatabase;
+||||||| merged common ancestors
+=======
+import capstone.heartbeat.controllers.ResultEvaluator;
+>>>>>>> development-Mark
 import capstone.heartbeat.models.Activity;
 import capstone.heartbeat.models.Suggestions;
 
@@ -50,6 +56,7 @@ public class AddPlanActivity extends AppCompatActivity {
     ActivityDatabase myDb;
     ArrayList<Activity> myActivities;
     ArrayList <Activity> selectedActivities;
+    private FirebaseDatabase database;
 
 
     @Override
@@ -76,9 +83,14 @@ public class AddPlanActivity extends AppCompatActivity {
 
                 dialog.show();
 
-                myActivities =  myDb.getActivities();
+                //myActivities =  myDb.getActivities();
 
                 //suggestions = new ArrayList<Suggestions>();
+                suggestions = new ArrayList<Suggestions>();
+
+                ResultEvaluator re = new ResultEvaluator();
+                double met = re.getSuggestedMet();
+                myActivities =  myDb.getSuggestedActivities((int)met);
 
                 adapter = new ListAdapter (getApplicationContext(), myActivities);
 
