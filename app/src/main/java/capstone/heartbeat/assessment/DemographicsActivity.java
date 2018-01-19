@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -130,7 +131,7 @@ public class DemographicsActivity extends AppCompatActivity {
 
         final ScaleView rulerViewMm = (ScaleView) findViewById(R.id.my_scale);
         txtValue = (TextView) findViewById(R.id.txt_height);
-        rulerViewMm.setStartingPoint(160);
+        rulerViewMm.setStartingPoint(160f);
         rulerViewMm.setUpdateListener(new onViewUpdateListener() {
 
             @Override
@@ -299,4 +300,20 @@ public class DemographicsActivity extends AppCompatActivity {
         alert.show();
     }
 
+    public boolean alertHeightLimit (){
+        AlertDialog.Builder builder = new AlertDialog.Builder(DemographicsActivity.this, R.style.Theme_AppCompat_Dialog_Alert);
+        final ScaleView rulerViewM = (ScaleView) findViewById(R.id.my_scale);
+        builder.setTitle("Oh no!")
+                .setMessage("Your maximum height is 300cm.")
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                       rulerViewM.setStartingPoint(160f);
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert);
+
+        AlertDialog alert = builder.create();
+        alert.show();
+        return true;
+    }
 }

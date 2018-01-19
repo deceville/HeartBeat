@@ -29,13 +29,9 @@ import capstone.heartbeat.MainActivity;
 import capstone.heartbeat.R;
 import capstone.heartbeat.controllers.ActivityDatabase;
 import capstone.heartbeat.controllers.ListAdapter;
-<<<<<<< HEAD
 import capstone.heartbeat.controllers.PlanActivitiesDatabase;
 import capstone.heartbeat.controllers.PlansDatabase;
-||||||| merged common ancestors
-=======
 import capstone.heartbeat.controllers.ResultEvaluator;
->>>>>>> development-Mark
 import capstone.heartbeat.models.Activity;
 import capstone.heartbeat.models.Suggestions;
 
@@ -50,7 +46,7 @@ public class AddPlanActivity extends AppCompatActivity {
     TextView text_plan_freetime;
     private EditText plan_name;
 
-    SharedPreferences prefs;
+    public static SharedPreferences prefs;
     SharedPreferences.Editor editor;
     private DatabaseReference rootRef,actRef;
     ActivityDatabase myDb;
@@ -86,11 +82,13 @@ public class AddPlanActivity extends AppCompatActivity {
                 //myActivities =  myDb.getActivities();
 
                 //suggestions = new ArrayList<Suggestions>();
-                suggestions = new ArrayList<Suggestions>();
+
 
                 ResultEvaluator re = new ResultEvaluator();
                 double met = re.getSuggestedMet();
-                myActivities =  myDb.getSuggestedActivities((int)met);
+                System.out.println("met:" +met);
+                myActivities =  myDb.getSuggestedActivities(met);
+
 
                 adapter = new ListAdapter (getApplicationContext(), myActivities);
 
@@ -108,19 +106,22 @@ public class AddPlanActivity extends AppCompatActivity {
                 btn_addSuggestion = (Button) dialog.findViewById(R.id.btn_addSuggestion);
 
                 // selected list of activities on add plan form
-                selectedActivities = new ArrayList<Activity>();
+                selectedActivities = new ArrayList<>();
 
                 btn_addSuggestion.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         StringBuilder selected = new StringBuilder("Selected: \n");
-
-                        for (int i = 0; i < myActivities.size(); i++){
-                            if(myActivities.get(i).isChecked()){
-                                selectedActivities.add(myActivities.get(i));
-
+                        for (Activity acts:myActivities){
+                            if(acts.isChecked()){
+                                selectedActivities.add(acts);
                             }
                         }
+
+                        /*PlansDatabase plans = new PlansDatabase(getApplicationContext());
+                        plans.open();
+                        plans.createEntry2(selectedActivities,plan_name.getText().toString());
+                        plans.close();*/
                         //Toast.makeText(getApplicationContext(), selected.toString(), Toast.LENGTH_SHORT).show();
 
                         adapter = new ListAdapter (getApplicationContext(), selectedActivities);
@@ -208,18 +209,18 @@ public class AddPlanActivity extends AppCompatActivity {
             int initialMinutes = 15;
             int freeTime = prefs.getInt("free",0);
 
-
-
+            List<String> selected = new ArrayList<>();
+            for (Activity a:selectedActivities
+                 ) {
+               selected.add(a.Activities);
+            }
 
             PlansDatabase plans = new PlansDatabase(getApplicationContext());
             plans.open();
-            //  plans.createEntry1(title,cal,initialMinutes,freeTime,selectedActivities);
+            plans.createEntry1(title,date,cal,initialMinutes,freeTime);
+            //plans.createEntry2(selectedActivities);
+            plans.createEntry2(selected,title);
             plans.close();
-
-            PlanActivitiesDatabase plans1 = new PlanActivitiesDatabase(getApplicationContext());
-            plans1.open();
-            plans1.createEntry2(title,date,selectedActivities);
-            plans1.close();
 
             startActivity(new Intent(getApplicationContext(),MainActivity.class));
             finish();

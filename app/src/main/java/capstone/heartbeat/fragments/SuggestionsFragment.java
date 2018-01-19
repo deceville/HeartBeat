@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import capstone.heartbeat.controllers.ActivityDatabase;
 import capstone.heartbeat.controllers.ListAdapter;
 import capstone.heartbeat.R;
+import capstone.heartbeat.controllers.ResultEvaluator;
 import capstone.heartbeat.models.Activity;
 
 
@@ -35,7 +36,11 @@ public class SuggestionsFragment extends Fragment{
         ActivityDatabase myDB = new ActivityDatabase(getContext());
         btn_cancel.setVisibility(View.GONE);
         //suggestions = new ArrayList<Activity>();
-        suggestions = myDB.getActivities();
+        ResultEvaluator re = new ResultEvaluator();
+        double met = re.getSuggestedMet();
+        System.out.println("met:" +met);
+        suggestions =  myDB.getSuggestedActivities((int)met);
+
 
         adapter = new ListAdapter(getContext(), suggestions);
 

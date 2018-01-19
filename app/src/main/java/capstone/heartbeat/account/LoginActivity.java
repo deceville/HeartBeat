@@ -48,6 +48,7 @@ import java.util.List;
 import capstone.heartbeat.MainActivity;
 import capstone.heartbeat.R;
 import capstone.heartbeat.assessment.DemographicsActivity;
+import capstone.heartbeat.controllers.PlansDatabase;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -231,7 +232,31 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(true);
             //mAuthTask = new UserLoginTask(email, password);
            // mAuthTask.execute((Void) null);
-            mAuth = FirebaseAuth.getInstance();
+
+            PlansDatabase db = new PlansDatabase(getApplicationContext());
+            db.open();
+            boolean exists = db.checkUser(email,password);
+            if (exists){
+                System.out.println(exists+"");
+                prefs = getSharedPreferences("login",MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putInt("session",1);
+                editor.commit();
+                boolean isCalculated = prefs.getBoolean("isCalculated",false);
+                if (isCalculated){
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    finish();
+                }else {
+                    startActivity(new Intent(getApplicationContext(), DemographicsActivity.class));
+                    finish();
+                }
+            }else{
+                System.out.println(exists+"");
+                showProgress(false);
+
+            }
+            db.close();
+           /* mAuth = FirebaseAuth.getInstance();
 
             mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
                 @Override
@@ -257,7 +282,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                     }
                 }
-            });
+            });*/
 
 
 

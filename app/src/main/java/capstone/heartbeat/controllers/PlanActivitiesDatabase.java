@@ -40,9 +40,8 @@ public class PlanActivitiesDatabase  {
         @Override
         public void onCreate(SQLiteDatabase db) {
             db.execSQL  ("CREATE TABLE IF NOT EXISTS " + DATABASE_TABLE2 + "( " + KEY_ROWID
-                    + " INTEGER PRIMARY KEY, " + KEY_TITLE
-                    + " TEXT NOT NULL, " + KEY_DATE
-                    + " TEXT NOT NULL, " + KEY_ACTIVITY + " TEXT NOT NULL)");
+                    + " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_TITLE
+                    + " TEXT NOT NULL, " + KEY_ACTIVITY + " TEXT NOT NULL )");
         }
 
         @Override
@@ -66,13 +65,12 @@ public class PlanActivitiesDatabase  {
         ourHelper.close();
     }
 
-    public long createEntry2(String id,String date,List<Activity> activity){
+    public long createEntry2(List<Activity> activity){
         ContentValues con = new ContentValues();
         for (Activity a:activity
                 ) {
             String title =a.getActivities();
-            con.put(KEY_ROWID,id);
-            con.put(KEY_DATE,date);
+
             con.put(KEY_ACTIVITY,title);
         }
         return ourDatabase.insert(DATABASE_TABLE2,null,con);
@@ -121,18 +119,23 @@ public class PlanActivitiesDatabase  {
         return dates;
     }
 
-    public Cursor getActivities(){
-        String[] columns = new String[] {KEY_ROWID,KEY_TITLE};
-        String[] column = new String[]{KEY_TITLE,KEY_ACTIVITY};
-        Cursor c = ourDatabase.query(DATABASE_TABLE2, column, null, null, null, null,
-                null);
+    public List<List<String>> getActivities(List<String> planName){
+        List<List<String>> Plans = new ArrayList<>();
+        for (String plan:planName
+             ) {
+            String[] column = new String[]{KEY_TITLE,KEY_ACTIVITY};
+            Cursor c = ourDatabase.rawQuery("SELECT * FROM "+DATABASE_TABLE2+" WHERE  "+KEY_TITLE+" = "+plan+";",null);
+            //Cursor c = ourDatabase.query(DATABASE_TABLE2, column, plan, null, null, null, null);
+            List<String> activity = new ArrayList<>();
+            int title = c.getColumnIndex(KEY_TITLE);
+            for (c.moveToFirst();!c.isAfterLast () ;c.moveToNext()) {
+                activity.add(c.getString(title));
+            }
+          Plans.add(activity);
 
-        List<String> titles = new ArrayList<>();
-        int title = c.getColumnIndex(KEY_TITLE);
-        for (c.moveToFirst();!c.isAfterLast () ;c.moveToNext()) {
-            titles.add(c.getString(title));
         }
-        return c;
+
+        return Plans;
     }
 
 

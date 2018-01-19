@@ -22,7 +22,7 @@ public class RiskResultsActivity extends AppCompatActivity {
     private SharedPreferences prefs ;
     public double age,sbp, totalchl, hdl, height,weight;
     public int smoke,af, diabType1,diabType2,fhcvd,ra,CKD,CHF, HA, VHD,bptreatment,gender ;
-    public int ha, st;
+    public int ha, st,nha,nst;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,21 +57,29 @@ public class RiskResultsActivity extends AppCompatActivity {
         final int bool[]={5,smoke,af,diabType1,diabType2,fhcvd,ra,bptreatment};
         final double continuous[]={age,sbp,totalchl,hdl,height,weight};
 
+        final int normalBool[]={5,0,af,diabType1,diabType2,fhcvd,ra,0};
+        final double normalContinuous[]={age,120,200,60,170,65};
+
 
         Qrisk2Male hm = new Qrisk2Male();
         Qrisk2Female hf = new Qrisk2Female();
         QStrokeMale sm = new QStrokeMale();
         QStrokeFemale sf = new QStrokeFemale();
 
-        double heartAttack=0,Stroke=0;
+        double heartAttack=0,Stroke=0,normalHeartAttack=0,normalStroke=0;
         if (gender==0){
             heartAttack = hf.getResult(continuous,bool);
             Stroke = sf.getResult(continuous,bool,VHD,CKD,CHF,HA);
-            System.out.println(heartAttack+" "+Stroke);
+            normalHeartAttack = hf.getResult(normalContinuous,normalBool);
+            normalStroke = sf.getResult(normalContinuous,normalBool,VHD,CKD,CHF,HA);
             ha = (int) Math.floor(heartAttack);
             st = (int)Math.floor(Stroke);
+            nha = (int) Math.floor(normalHeartAttack);
+            nst = (int)Math.floor(normalStroke);
             ed.putInt("haResult",ha);
             ed.putInt("stResult",st);
+            ed.putInt("normalHA",nha);
+            ed.putInt("normalST",nst);
             ed.commit();
             heartattack.setProgress((float)ha);
             stroke.setProgress((float)st);
@@ -79,11 +87,16 @@ public class RiskResultsActivity extends AppCompatActivity {
         }else if(gender==1){
             heartAttack = hm.getResult(continuous,bool);
             Stroke = sm.getResult(continuous,bool,VHD,CKD,CHF,HA);
-            System.out.println(heartAttack+" "+Stroke);
+            normalHeartAttack = hf.getResult(normalContinuous,normalBool);
+            normalStroke = sf.getResult(normalContinuous,normalBool,VHD,CKD,CHF,HA);
             ha = (int) Math.floor(heartAttack);
             st = (int)Math.floor(Stroke);
+            nha = (int) Math.floor(normalHeartAttack);
+            nst = (int)Math.floor(normalStroke);
             ed.putInt("haResult",ha);
             ed.putInt("stResult",st);
+            ed.putInt("normalHA",nha);
+            ed.putInt("normalST",nst);
             ed.commit();
             heartattack.setProgress((float)ha);
             stroke.setProgress((float)st);

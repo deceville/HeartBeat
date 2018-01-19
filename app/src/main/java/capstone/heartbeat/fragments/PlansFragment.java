@@ -152,42 +152,37 @@ public class PlansFragment extends Fragment{
 
         PlansDatabase db = new PlansDatabase(getContext());
         db.open();
-        String res = db.getData();
+        /*String res = db.getData();*/
 
-        PlanActivitiesDatabase db1 = new PlanActivitiesDatabase(getContext());
-        db1.open();
 
-        // Adding child data
-        for (String title:db1.getTitle()) {
+
+
+
+        // adding title of plans
+        for (String title:db.getTitle()) {
             planlist.add(title);
         }
 
         // Adding child data
 
-       /* List<String> activities = new ArrayList<>();
-        Cursor c = db.getActivities();
-        int acts = c.getColumnIndex(db.KEY_ACTIVITY);
-        for (c.moveToFirst();!c.isAfterLast () ;c.moveToNext()) {
-            activities.add(c.getString(acts));
+      /*  PlanActivitiesDatabase db1 = new PlanActivitiesDatabase(getContext());
+        db1.open();*/
+       List<List<String>> Plans = new ArrayList<>();
+        List<String> activities = new ArrayList<>();
+
+        Plans = db.getActivities(planlist);
+
+        System.out.println(db.getData());
+
+       //replace with data from activities plan tables
+        /*List<String> plans1 = new ArrayList<String>();
+        for (String title:db.getTitle()) {
+            plans1.add(title);
         }*/
-        List<String> plans1 = new ArrayList<String>();
-        plans1.add(res);
 
-        List<String> plans2 = new ArrayList<String>();
-        plans2.add("Sitting");
-        plans2.add("Dancing");
-        plans2.add("Running");
-        plans2.add("Jogging");
-
-        List<String> plans3 = new ArrayList<String>();
-        plans3.add("Jogging");
-        plans3.add("Sitting");
-        plans3.add("Dancing");
-        plans3.add("Running");
-
-        plan.put(planlist.get(0), plans1); // Header, Child data
-        plan.put(planlist.get(1), plans2);
-        plan.put(planlist.get(2), plans3);
+        for(int i = 0; i < planlist.size(); i++){
+            plan.put(planlist.get(i), Plans.get(i)); // Header, Child data
+        }
     }
 
     @Override

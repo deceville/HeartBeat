@@ -27,6 +27,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import capstone.heartbeat.R;
+import capstone.heartbeat.controllers.PlansDatabase;
 
 /**
  * Created by Lenevo on 11/2/2017.
@@ -93,7 +94,7 @@ public class SignupActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Enter password!",Toast.LENGTH_SHORT).show();
                 }
 
-                mAuth = FirebaseAuth.getInstance();
+                /*mAuth = FirebaseAuth.getInstance();
                 mAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -111,6 +112,15 @@ public class SignupActivity extends AppCompatActivity {
                         }
                     }
                 });
+*/
+                PlansDatabase db = new PlansDatabase(getApplicationContext());
+                db.open();
+                db.insertUser(username,name,email,pass);
+                getDatabaseCount();
+                startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+                finish();
+                System.out.println("Success");
+                db.close();
             }
         });
 

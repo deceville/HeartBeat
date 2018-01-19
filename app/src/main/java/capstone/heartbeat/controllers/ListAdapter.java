@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ public class ListAdapter extends BaseAdapter {
     Context ctx;
     LayoutInflater lInflater;
     List<Activity> suggestions = null;
+    SharedPreferences prefs;
 
     public ListAdapter(Context context, ArrayList<Activity> suggestions) {
         ctx = context;
@@ -58,8 +60,13 @@ public class ListAdapter extends BaseAdapter {
             view = lInflater.inflate(R.layout.list_suggestions, parent, false);
         }
 
+        prefs = ctx.getSharedPreferences("values",Context.MODE_PRIVATE);
+        int weight = prefs.getInt("weight",0);
+        double met = suggestions.get(position).getMETS();
+        double cal = ((met*3.5*weight)/200)*15;
+        int min = 15;
         ((TextView) view.findViewById(R.id.title_suggestions)).setText(suggestions.get(position).getActivities());
-        ((TextView) view.findViewById(R.id.desc_suggestions)).setText(suggestions.get(position).getIntensity());
+        ((TextView) view.findViewById(R.id.desc_suggestions)).setText(Double.toString(cal)+" will burn every "+min+" minutes.");
 
         CheckBox cbox = (CheckBox) view.findViewById(R.id.cbox_suggestions);
         cbox.setChecked(suggestions.get(position).checked);

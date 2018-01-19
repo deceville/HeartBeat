@@ -106,11 +106,13 @@ public class ScaleView extends View {
             int size = (i % 10 == 0) ? scaleLineLarge : (i % 5 == 0) ? scaleLineMedium : scaleLineSmall;
             canvas.drawLine(endPoint - size, startingPoint, endPoint, startingPoint, rulerPaint);
             if (i % 10 == 0) {
-                System.out.println("done   " + i);
+                System.out.println("done   " + i+" "+endPoint);
                 canvas.drawText((i / 10) + " cm", endPoint - textStartPoint, startingPoint + 8, textPaint);
             }
         }
-        canvas.drawLine(430f, midScreenPoint, width - 20, midScreenPoint, goldenPaint);
+            canvas.drawLine(430f, midScreenPoint, width - 20, midScreenPoint, goldenPaint);
+
+
     }
 
     @Override

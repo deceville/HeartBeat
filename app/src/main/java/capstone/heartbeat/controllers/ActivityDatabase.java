@@ -67,10 +67,11 @@ public class ActivityDatabase extends SQLiteAssetHelper {
     }
 
 
-    public ArrayList<Activity> getSuggestedActivities(int met){
+    public ArrayList<Activity> getSuggestedActivities(double maxMet){
         mydb=getWritableDatabase();
+        double minMet = 0.9;
         String[] columns = {ACTIVITIES,METS,INTENSITY,EQUIPMENT};
-        String query = "SELECT * FROM "+ ACTIVITY_TABLE+" WHERE "+METS+" = " + met;
+        String query = "SELECT * FROM "+ ACTIVITY_TABLE+" WHERE "+METS+" BETWEEN " + minMet+" AND "+maxMet+";";
         Cursor cursor = mydb.rawQuery(query,null);
         ArrayList<Activity> activityList = new ArrayList<>();
 

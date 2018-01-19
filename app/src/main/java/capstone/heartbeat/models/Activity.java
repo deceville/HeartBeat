@@ -7,6 +7,8 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.List;
+
 /**
  * Created by torre on 8/15/2017.
  */
@@ -16,7 +18,27 @@ public class Activity {
     public String Activities;
     public double METS;
     public String Intensity;
+
+    public int getMinutes() {
+        return minutes;
+    }
+
+    public void setMinutes(int minutes) {
+        this.minutes = minutes;
+    }
+
+    public double getCalories() {
+        return calories;
+    }
+
+    public void setCalories(double calories) {
+        this.calories = calories;
+    }
+
     public String Equipment;
+    public int minutes;
+    private double calories;
+    private List<Activity> activities;
 
     public boolean isChecked() {
         return checked;

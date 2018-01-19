@@ -1,23 +1,28 @@
 package capstone.heartbeat.controllers;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import capstone.heartbeat.MainActivity;
 import capstone.heartbeat.assessment.RiskResultsActivity;
 import capstone.heartbeat.calculators.QStrokeFemale;
 import capstone.heartbeat.calculators.QStrokeMale;
 import capstone.heartbeat.calculators.Qrisk2Female;
 import capstone.heartbeat.calculators.Qrisk2Male;
+import capstone.heartbeat.others.AddPlanActivity;
+
+import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created by torre on 1/10/2018.
  */
 
-public class ResultEvaluator extends RiskResultsActivity {
+public class ResultEvaluator extends AddPlanActivity {
     private double suggestedMet;
-    private SharedPreferences prefs;
+    private SharedPreferences pref;
 
 
     public ResultEvaluator(){}
@@ -25,12 +30,17 @@ public class ResultEvaluator extends RiskResultsActivity {
 
     public double getSuggestedMet(){
         boolean giveSuggestion = false;
-        int h = getBaseResult()[0];
-        int s = getBaseResult()[1];
+       pref = AddPlanActivity.prefs;
+       int h= pref.getInt("normalHA",0);
+       int s= pref.getInt("normalST",0);
+       int ha = pref.getInt("haResult",0);
+        int st = pref.getInt("stResult",0);
+        int gender = pref.getInt("gender",0);
+        int age = pref.getInt("age",0);
 
         int haDif = ha - h;
         int stDif = st - s;
-
+        System.out.println(haDif+ "  "+stDif+" "+s+ha+h);
         if (haDif > 0 || stDif>0){
             giveSuggestion = true;
             if (gender==0){
@@ -44,6 +54,8 @@ public class ResultEvaluator extends RiskResultsActivity {
                     suggestedMet = 4;return suggestedMet;
                 }else if (age >=66&& age <=84){
                     suggestedMet = 2; return suggestedMet;
+                }else {
+                    suggestedMet = 1.5; return suggestedMet;
                 }
 
             }else if (gender ==1){
@@ -57,50 +69,17 @@ public class ResultEvaluator extends RiskResultsActivity {
                     suggestedMet = 6;return suggestedMet;
                 }else if (age >=66&& age <=84){
                     suggestedMet = 3; return suggestedMet;
+                }else {
+                    suggestedMet = 1.5; return suggestedMet;
                 }
             }
         }else {
-            giveSuggestion = false;
+            suggestedMet = 1.5; return suggestedMet;
         }
 
         return suggestedMet;
     }
 
-    public int[] getBaseResult(){
 
-        final int bool[]={5,0,af,diabType1,diabType2,fhcvd,ra,0};
-        final double continuous[]={age,120,200,60,170,65};
-
-        int[] res = new int[2];
-        Qrisk2Male hm = new Qrisk2Male();
-        Qrisk2Female hf = new Qrisk2Female();
-        QStrokeMale sm = new QStrokeMale();
-        QStrokeFemale sf = new QStrokeFemale();
-        int ha, st;
-        double heartAttack=0,Stroke=0;
-        if (gender==0){
-            heartAttack = hf.getResult(continuous,bool);
-            Stroke = sf.getResult(continuous,bool,VHD,CKD,CHF,HA);
-            System.out.println(heartAttack+" "+Stroke);
-            ha = (int) Math.floor(heartAttack);
-            st = (int)Math.floor(Stroke);
-            res[0]=ha;
-            res[1]=st;
-            return  res;
-
-        }else if(gender==1){
-            heartAttack = hm.getResult(continuous,bool);
-            Stroke = sm.getResult(continuous,bool,VHD,CKD,CHF,HA);
-            System.out.println(heartAttack+" "+Stroke);
-            ha = (int) Math.floor(heartAttack);
-            st = (int)Math.floor(Stroke);
-            res[0]=ha;
-            res[1]=st;
-            return  res;
-
-
-        }
-        return res;
-    }
 
 }

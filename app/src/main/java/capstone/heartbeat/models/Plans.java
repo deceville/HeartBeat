@@ -8,9 +8,19 @@ import java.util.List;
 
 public class Plans {
 
+    public int id;
     private String title;
     private String date;
     public int minutes;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int freetime;
     private double calories;
     private List<Activity> activities;
