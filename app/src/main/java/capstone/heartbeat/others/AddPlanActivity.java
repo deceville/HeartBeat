@@ -16,7 +16,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -29,8 +28,7 @@ import capstone.heartbeat.MainActivity;
 import capstone.heartbeat.R;
 import capstone.heartbeat.controllers.ActivityDatabase;
 import capstone.heartbeat.controllers.ListAdapter;
-import capstone.heartbeat.controllers.PlanActivitiesDatabase;
-import capstone.heartbeat.controllers.PlansDatabase;
+import capstone.heartbeat.controllers.HeartBeatDB;
 import capstone.heartbeat.controllers.ResultEvaluator;
 import capstone.heartbeat.models.Activity;
 import capstone.heartbeat.models.Suggestions;
@@ -118,7 +116,7 @@ public class AddPlanActivity extends AppCompatActivity {
                             }
                         }
 
-                        /*PlansDatabase plans = new PlansDatabase(getApplicationContext());
+                        /*HeartBeatDB plans = new HeartBeatDB(getApplicationContext());
                         plans.open();
                         plans.createEntry2(selectedActivities,plan_name.getText().toString());
                         plans.close();*/
@@ -215,7 +213,7 @@ public class AddPlanActivity extends AppCompatActivity {
                selected.add(a.Activities);
             }
 
-            PlansDatabase plans = new PlansDatabase(getApplicationContext());
+            HeartBeatDB plans = new HeartBeatDB(getApplicationContext());
             plans.open();
             plans.createEntry1(title,date,cal,initialMinutes,freeTime);
             //plans.createEntry2(selectedActivities);

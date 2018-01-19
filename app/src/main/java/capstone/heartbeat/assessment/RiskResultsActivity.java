@@ -9,6 +9,8 @@ import android.view.MenuItem;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
+import capstone.heartbeat.controllers.HeartBeatDB;
+import capstone.heartbeat.models.User;
 import capstone.heartbeat.others.AddPlanActivity;
 import capstone.heartbeat.R;
 import capstone.heartbeat.calculators.QStrokeFemale;
@@ -121,6 +123,60 @@ public class RiskResultsActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.proceed) {
+            String bday = prefs.getString("birth",null);
+            sbp = (double)prefs.getInt("sbp",0);
+            totalchl =(double)prefs.getInt("chl",0);
+            hdl =(double)prefs.getInt("hdl",0);
+            height =(double)prefs.getInt("height",0);
+            weight =(double)prefs.getInt("weight",0);
+            smoke = prefs.getInt("smoke_type",0);
+            af = prefs.getInt("irregular",0);
+            diabType1 =prefs.getInt("type1",0);
+            fhcvd = prefs.getInt("fhcvd",0);
+            ra = prefs.getInt("rheumatoid",0);
+            CKD = prefs.getInt("chronic",0);
+            VHD = prefs.getInt("valvular",0);
+            HA = prefs.getInt("heartattack",0);
+            bptreatment = prefs.getInt("bptr",0);
+            diabType2 = 0;
+            CHF = prefs.getInt("congestive",0);
+            gender = prefs.getInt("gender",0);
+            int stroke = prefs.getInt("stResult",0);
+            int heart = prefs.getInt("haResult",0);
+
+
+            User user = new User();
+            user.setBirth(bday);
+            user.setAct(0);
+            user.setBptr(bptreatment);
+            user.setChf(CHF);
+            user.setChl((int)totalchl);
+            user.setHdl((int)hdl);
+            user.setSbp((int)sbp);
+            user.setDbp(0);
+            user.setCkd(CKD);
+            user.setRha(ra);
+            user.setVhd(VHD);
+            user.setRa(af);
+            user.setDiab1(diabType1);
+            user.setDiab2(diabType2);
+            user.setFhcvd(fhcvd);
+            if (gender ==0) {
+                user.setGender("female");
+            }else{
+                user.setGender("male");
+            }
+            user.setSleep("sleep");
+            user.setSmoke(smoke);
+            user.setStroke(stroke);
+            user.setHeart_attack(heart);
+            prefs =getSharedPreferences("login",MODE_PRIVATE);
+            int uid = prefs.getInt("id",0);
+
+            HeartBeatDB db = new HeartBeatDB(getApplicationContext());
+            db.open();
+            db.insertUserData(user,uid);
+            db.close();
 
             prefs = getSharedPreferences("login",MODE_PRIVATE);
             SharedPreferences.Editor editor = prefs.edit();

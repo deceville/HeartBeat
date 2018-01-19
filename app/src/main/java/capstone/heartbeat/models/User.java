@@ -6,6 +6,7 @@ package capstone.heartbeat.models;
 
 public class User {
 
+    public int id;
     public String username;
     public String email;
     public String name;
@@ -66,6 +67,14 @@ public class User {
         this.fhcvd = fhcvd;
         this.heart_attack = heart_attack;
         this.stroke = stroke;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUsername() {

@@ -214,11 +214,14 @@ public class DemographicsActivity extends AppCompatActivity {
             int mYear = year;
             int mMonth = monthOfYear;
             int mDay = dayOfMonth;
-            btn_birthdate.setText(new StringBuilder()
-                    // Month is 0 based so add 1
-                    .append(mMonth + 1).append("/").append(mDay).append("/")
-                    .append(mYear).append(" "));
+
+            StringBuilder birth =  new StringBuilder();
+            birth.append(mMonth + 1).append("/").append(mDay).append("/")
+                    .append(mYear).append(" ");
+            String birthday = birth.toString();
+            btn_birthdate.setText(birth);
             age = currYear - mYear;
+            editor.putString("birth",birthday);
             editor.putInt("age",age);
             editor.commit();
             System.out.println(btn_birthdate.getText().toString() + "Age: " + age);

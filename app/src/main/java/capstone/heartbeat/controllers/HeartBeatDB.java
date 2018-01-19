@@ -11,18 +11,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import capstone.heartbeat.models.Activity;
+import capstone.heartbeat.models.User;
 
 /**
  * Created by Lenevo on 1/9/2018.
  */
 
-public class PlansDatabase  {
+public class HeartBeatDB {
 
     private static final String DATABASE_NAME="HeartBeatDB";
     private static final int DATABASE_VERSION = 2;
     private static final String DATABASE_TABLE ="Plans";
     private static final String DATABASE_TABLE2 ="Activity";
     private static final String DATABASE_TABLE3 ="Users";
+    private static final String DATABASE_TABLE4 ="Goals";
     public static final String KEY_ROWID = "_id";
     public static final String KEY_PLANID = "plan_id";
     public static final String KEY_ACTIVITYID = "activity_id";
@@ -36,6 +38,7 @@ public class PlansDatabase  {
     public static final String KEY_NAME = "name";
     public static final String KEY_EMAIL = "email";
     public static final String KEY_PASSWORD = "password";
+
     public static final String KEY_BIRTH ="birth";
     public static final String KEY_GENDER = "gender";
     public static final String KEY_CHL = "chl";
@@ -57,6 +60,13 @@ public class PlansDatabase  {
     public static final String KEY_FHCVD = "fhcvd";
     public static final String KEY_HEARTATTACK = "heart_attack";
     public static final String KEY_STROKE = "stroke";
+
+    public static final String KEY_GOALID = "goal_id";
+    public static final String KEY_DESCRIPTION = "description";
+    public static final String KEY_DURATION = "duration";
+    public static final String KEY_COMPLETED = "completed";
+
+
 
 
     public static List<Activity> activityList;
@@ -85,18 +95,22 @@ public class PlansDatabase  {
             db.execSQL  ("CREATE TABLE IF NOT EXISTS " + DATABASE_TABLE3 + "( " + KEY_ROWID
                     + " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_USERNAME
                     + " TEXT NOT NULL, " + KEY_NAME + " TEXT NOT NULL, "+KEY_EMAIL
-                    + " TEXT NOT NULL, " + KEY_PASSWORD + " TEXT NOT NULL, "+KEY_BIRTH
-                    + " DATE NOT NULL, " + KEY_GENDER + " TEXT NOT NULL, "+KEY_CHL
-                    + " INTEGER NOT NULL, " + KEY_HDL + " INTEGER NOT NULL, "+KEY_SBP
-                    + " INTEGER NOT NULL, " + KEY_DBP + " INTEGER NOT NULL, "+KEY_SMOKE
-                    + " TEXT NOT NULL, " + KEY_BPTR + " TEXT NOT NULL, "+KEY_SLEEP
-                    + " TEXT NOT NULL, " + KEY_ACT + " TEXT NOT NULL, "+KEY_DIABETES1
-                    + " TEXT NOT NULL, " + KEY_DIABETES2 + " TEXT NOT NULL, "+KEY_CHF
-                    + " TEXT NOT NULL, " + KEY_HA + " TEXT NOT NULL, "+KEY_VHD
-                    + " TEXT NOT NULL, " + KEY_RA + " TEXT NOT NULL, "+KEY_RHA
-                    + " TEXT NOT NULL, " + KEY_CKD + " TEXT NOT NULL, "+KEY_FHCVD
-                    + " TEXT NOT NULL, " + KEY_HEARTATTACK
-                    + " TEXT NOT NULL, " + KEY_STROKE+" TEXT NOT NULL )");
+                    + " TEXT NOT NULL, " + KEY_PASSWORD + " TEXT , "+KEY_BIRTH
+                    + " TEXT , " + KEY_GENDER + " TEXT , "+KEY_CHL
+                    + " INTEGER , " + KEY_HDL + " INTEGER , "+KEY_SBP
+                    + " INTEGER , " + KEY_DBP + " INTEGER , "+KEY_SMOKE
+                    + " TEXT , " + KEY_BPTR + " TEXT , "+KEY_SLEEP
+                    + " TEXT , " + KEY_ACT + " TEXT , "+KEY_DIABETES1
+                    + " TEXT , " + KEY_DIABETES2 + " TEXT , "+KEY_CHF
+                    + " TEXT , " + KEY_HA + " TEXT , "+KEY_VHD
+                    + " TEXT , " + KEY_RA + " TEXT , "+KEY_RHA
+                    + " TEXT , " + KEY_CKD + " TEXT , "+KEY_FHCVD
+                    + " TEXT , " + KEY_HEARTATTACK
+                    + " INTEGER , " + KEY_STROKE+" INTEGER )");
+            db.execSQL  ("CREATE TABLE IF NOT EXISTS " + DATABASE_TABLE4 + "( " + KEY_GOALID
+                    + " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_ROWID
+                    + " TEXT NOT NULL, " + KEY_DESCRIPTION + " TEXT NOT NULL, "+KEY_DURATION
+                    + " TEXT NOT NULL, " + KEY_COMPLETED+" TEXT NOT NULL )");
 
         }
 
@@ -105,15 +119,16 @@ public class PlansDatabase  {
             db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE);
             db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE2);
             db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE3);
+            db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE4);
             onCreate(db);
         }
     }
 
-    public PlansDatabase(Context context) {
+    public HeartBeatDB(Context context) {
         ourContext = context;
     }
 
-    public PlansDatabase open() throws SQLException {
+    public HeartBeatDB open() throws SQLException {
         ourHelper = new DBHelper(ourContext);
         ourDatabase = ourHelper.getWritableDatabase();
         return this;
@@ -152,8 +167,88 @@ public class PlansDatabase  {
             con.put(KEY_PASSWORD,password);
         System.out.println("success");
             return ourDatabase.insert(DATABASE_TABLE3,null,con);
+    }
 
+    public long insertUserData(User user,int userID){
 
+        ContentValues con = new ContentValues();
+        con.put(KEY_BIRTH,user.birth);
+        con.put(KEY_ACT,user.act);
+        con.put(KEY_BPTR,user.bptr);
+        con.put(KEY_CHF,user.chf);
+        con.put(KEY_CHL,user.chl);
+        con.put(KEY_HDL,user.hdl);
+        con.put(KEY_SBP,user.sbp);
+        con.put(KEY_DBP,user.dbp);
+        con.put(KEY_CKD,user.ckd);
+        con.put(KEY_RHA,user.rha);
+        con.put(KEY_VHD,user.vhd);
+        con.put(KEY_RA,user.ra);
+        con.put(KEY_DIABETES1,user.diab1);
+        con.put(KEY_DIABETES2,user.diab2);
+        con.put(KEY_FHCVD,user.fhcvd);
+        con.put(KEY_GENDER,user.gender);
+        con.put(KEY_SLEEP,user.sleep);
+        con.put(KEY_SMOKE,user.smoke);
+        con.put(KEY_STROKE,user.stroke);
+        con.put(KEY_HEARTATTACK,user.heart_attack);
+
+        return ourDatabase.update(DATABASE_TABLE3,con,KEY_ROWID+" = "+ user.id,null);
+    }
+
+    public User getUserAssessData(int userID) {
+//TODO Auto-generated method stub
+        String[] columns = new String[] {KEY_BIRTH, KEY_ACT,KEY_ACT,KEY_BPTR,KEY_CHF,KEY_CHL,
+        KEY_HDL,KEY_SBP,KEY_DBP,KEY_CKD,KEY_RHA,KEY_VHD,KEY_RA,KEY_DIABETES1,KEY_DIABETES2,KEY_FHCVD,KEY_GENDER,
+        KEY_SLEEP,KEY_SMOKE,KEY_STROKE,KEY_HEARTATTACK};
+        Cursor c = ourDatabase.query(DATABASE_TABLE3, columns, null, null, null, null,
+                null);
+        String result = "";
+
+        int iBirth = c.getColumnIndex(KEY_BIRTH);
+        int iAct = c.getColumnIndex (KEY_ACT);
+        int iBptr = c.getColumnIndex(KEY_BPTR);
+        int iCHF = c.getColumnIndex(KEY_CHF);
+        int iCHL = c.getColumnIndex (KEY_CHL);
+        int iHDL = c.getColumnIndex(KEY_HDL);
+        int iSBP = c.getColumnIndex(KEY_SBP);
+        int iDBP = c.getColumnIndex (KEY_DBP);
+        int iCKD = c.getColumnIndex(KEY_CKD);
+        int iRHA = c.getColumnIndex(KEY_RHA);
+        int iVHD = c.getColumnIndex (KEY_VHD);
+        int iRA = c.getColumnIndex(KEY_RA);
+        int iDIAB1 = c.getColumnIndex(KEY_DIABETES1);
+        int iDIAB2 = c.getColumnIndex (KEY_DIABETES2);
+        int iFHCVD = c.getColumnIndex(KEY_FHCVD);
+        int iGENDER = c.getColumnIndex(KEY_GENDER);
+        int iSLEEP = c.getColumnIndex (KEY_SLEEP);
+        int iSMOKE = c.getColumnIndex(KEY_SMOKE);
+        int iSTROKE = c.getColumnIndex(KEY_STROKE);
+        int iHEART = c.getColumnIndex (KEY_HEARTATTACK);
+
+        User user = new User();
+        user.setBirth(c.getString(iBirth));
+        user.setAct(c.getInt(iAct));
+        user.setBptr(c.getInt(iBptr));
+        user.setChf(c.getInt(iCHF));
+        user.setChl(c.getInt(iCHL));
+        user.setHdl(c.getInt(iHDL));
+        user.setSbp(c.getInt(iSBP));
+        user.setDbp(c.getInt(iDBP));
+        user.setCkd(c.getInt(iCKD));
+        user.setRha(c.getInt(iRHA));
+        user.setVhd(c.getInt(iVHD));
+        user.setRa(c.getInt(iRA));
+        user.setDiab1(c.getInt(iDIAB1));
+        user.setDiab2(c.getInt(iDIAB2));
+        user.setFhcvd(c.getInt(iFHCVD));
+        user.setGender(c.getString(iGENDER));
+        user.setSleep(c.getString(iSLEEP));
+        user.setSmoke(c.getInt(iSMOKE));
+        user.setStroke(c.getInt(iSTROKE));
+        user.setHeart_attack(c.getInt(iHEART));
+
+        return user;
     }
 
 
@@ -178,6 +273,27 @@ public class PlansDatabase  {
             }
         }
         return exist;
+    }
+
+    public int getUserID(String email){
+        String[] columns = new String[] {KEY_ROWID,KEY_EMAIL};
+        Cursor c = ourDatabase.query(DATABASE_TABLE3, columns, null, null, null, null,
+                null);
+
+        boolean exist = false;
+        int id = 0;
+        int user = c.getColumnIndex(KEY_EMAIL);
+        int userID = c.getColumnIndex(KEY_ROWID);
+
+        while (c.moveToNext()){
+            if (email.equals(c.getString(user))){
+
+                id = c.getInt(userID);
+                return id;
+
+            }
+        }
+        return id;
     }
     public String getData() {
 //TODO Auto-generated method stub
@@ -216,7 +332,7 @@ public class PlansDatabase  {
                 ) {
             Cursor c = ourDatabase.rawQuery("SELECT "+KEY_ACTIVITY+" FROM "+DATABASE_TABLE2+" WHERE  "+KEY_TITLE+" = '"+plan+"';",null);
             List<String> activity = new ArrayList<>();
-            int title = c.getColumnIndex(PlansDatabase.KEY_ACTIVITY);
+            int title = c.getColumnIndex(HeartBeatDB.KEY_ACTIVITY);
 
             while (c.moveToNext()) {
                 String acts = c.getString(title);
