@@ -1,5 +1,6 @@
 package capstone.heartbeat.assessment;
 
+import android.support.v7.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,12 +10,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import capstone.heartbeat.controllers.GoalAdapter;
 import capstone.heartbeat.controllers.HeartBeatDB;
@@ -38,6 +42,9 @@ public class RiskResultsActivity extends AppCompatActivity {
     ArrayList <String> goals;
     ListAdapter adapter;
     Button btn_lets, btn_cancel;
+
+
+    ArrayAdapter <String> arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,20 +149,28 @@ public class RiskResultsActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.proceed) {
-            final Dialog d = new Dialog(getApplicationContext(), android.R.style.Theme_Holo_Light_Dialog);
-            d.setTitle("Goals");
-            d.setContentView(R.layout.goals_dialog);
+            final AlertDialog d = new AlertDialog.Builder(RiskResultsActivity.this)
+                    .setTitle("Goals")
+                    .setView(R.layout.goals_dialog)
+                    .create();
 
-            Button lets = (Button) d.findViewById(R.id.goal_lets);
-            Button cancel = (Button) d.findViewById(R.id.goal_cancel);
+            d.show();
 
+            btn_lets = (Button) d.findViewById(R.id.goal_lets);
+            btn_cancel = (Button) d.findViewById(R.id.goal_cancel);
+
+            ListView lvMain = (ListView) d.findViewById(R.id.lv_goals);
 
             ArrayList<Goal> list = new ArrayList<>();
 
-            GoalAdapter goalAdapter = new GoalAdapter(getApplicationContext(), list);
+            String [] goals_dummy = new String [] {"Goal 1", "Goal 2", "Goal 3"};
+            ArrayList<String> dummygoals = new ArrayList<String>();
+            dummygoals.addAll(Arrays.asList(goals_dummy));
 
-            ListView lvMain = (ListView) findViewById(R.id.lv_goals);
-            lvMain.setAdapter(goalAdapter);
+            GoalAdapter goalAdapter = new GoalAdapter(getApplicationContext(), list);
+            arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.list_goals, R.id.title_goals, dummygoals);
+
+            lvMain.setAdapter(arrayAdapter);
 
             lvMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
