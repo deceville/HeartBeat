@@ -35,7 +35,9 @@ public class LaboratoryActivity extends AppCompatActivity {
     private int sbp,dbp,chl,hdl;
     private SharedPreferences prefs;
     private SharedPreferences.Editor editor;
-    AlertDialog alert;
+    private AlertDialog alert;
+    private BoxedVertical chol_total, chol_hdl, bp_systolic;
+    private boolean complete = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,6 +108,24 @@ public class LaboratoryActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+        if(updateProceedButton()){
+            menu.getItem(0).setEnabled(true);
+        }else{
+            menu.getItem(0).setEnabled(false);
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    public boolean updateProceedButton(){
+        if(complete){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     private void addBottomDots(int currentPage) {
         dots = new TextView[layouts.length];
 
@@ -139,6 +159,8 @@ public class LaboratoryActivity extends AppCompatActivity {
             // changing the next to prev
             if (position == layouts.length - 1) {
                 // last page. make next_button text to prev
+                complete = true;
+                invalidateOptionsMenu();
                 btnPrev.setText(getString(R.string.prev));
                 btnNext.setVisibility(View.GONE);
                 btnPrev.setVisibility(View.VISIBLE);
@@ -190,9 +212,9 @@ public class LaboratoryActivity extends AppCompatActivity {
             container.addView(view);
 
 
-            BoxedVertical chol_total = (BoxedVertical)view.findViewById(R.id.chol_total);
-            BoxedVertical chol_hdl = (BoxedVertical)view.findViewById(R.id.chol_hdl);
-            BoxedVertical bp_systolic = (BoxedVertical)view.findViewById(R.id.bp_systolic);
+            chol_total = (BoxedVertical)view.findViewById(R.id.chol_total);
+            chol_hdl = (BoxedVertical)view.findViewById(R.id.chol_hdl);
+            bp_systolic = (BoxedVertical)view.findViewById(R.id.bp_systolic);
 
 
             prefs = getSharedPreferences("values",MODE_PRIVATE);
@@ -292,7 +314,6 @@ public class LaboratoryActivity extends AppCompatActivity {
                         .setMessage("HDL value should not be more than Total Cholesterol value.")
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                BoxedVertical chol_hdl = (BoxedVertical)findViewById(R.id.chol_hdl);
                                 chol_hdl.setValue(chol/2);
 
                             }
@@ -315,7 +336,6 @@ public class LaboratoryActivity extends AppCompatActivity {
                         .setMessage("Total Cholesterol value should not be less than 130.")
                         .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                BoxedVertical chol_total = (BoxedVertical)findViewById(R.id.chol_total);
                                 chol_total.setValue(140);
 
                             }
