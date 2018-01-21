@@ -1,10 +1,12 @@
 package capstone.heartbeat.assessment;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
@@ -20,6 +22,7 @@ import android.widget.TextView;
 import abak.tr.com.boxedverticalseekbar.BoxedVertical;
 import capstone.heartbeat.controllers.PreferenceManager;
 import capstone.heartbeat.R;
+import capstone.heartbeat.models.ScaleView;
 
 public class LaboratoryActivity extends AppCompatActivity {
     private ViewPager viewPager;
@@ -30,6 +33,9 @@ public class LaboratoryActivity extends AppCompatActivity {
     private Button btnPrev, btnNext;
     private PreferenceManager prefManager;
     private int sbp,dbp,chl,hdl;
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor editor;
+    AlertDialog alert;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,12 +93,11 @@ public class LaboratoryActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.next) {
-            SharedPreferences prefs = getSharedPreferences("values",MODE_PRIVATE);
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putInt("sbp",sbp);
-            editor.putInt("chl",chl);
-            editor.putInt("hdl",hdl);
-            editor.commit();
+            prefs = getSharedPreferences("values", MODE_PRIVATE);
+            System.out.println("CHL: " + prefs.getInt("chl",chl));
+            System.out.println("SBP: " + prefs.getInt("sbp",sbp));
+            System.out.println("DBP: " + prefs.getInt("dbp",dbp));
+            System.out.println("HDL: " + prefs.getInt("hdl",hdl));
             startActivity(new Intent(getApplicationContext(),HabitsActivity.class));
             finish();
             return true;
@@ -147,59 +152,6 @@ public class LaboratoryActivity extends AppCompatActivity {
 
 
             } else {
-
-                BoxedVertical chol_total = (BoxedVertical)findViewById(R.id.chol_total);
-                BoxedVertical chol_hdl = (BoxedVertical)findViewById(R.id.chol_hdl);
-                BoxedVertical bp_systolic = (BoxedVertical)findViewById(R.id.bp_systolic);
-
-                chol_total.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
-                    @Override
-                    public void onPointsChanged(BoxedVertical boxedPoints, int value) {
-                        chl = value;
-                    }
-
-                    @Override
-                    public void onStartTrackingTouch(BoxedVertical boxedPoints) {
-                    }
-
-
-                    @Override
-                    public void onStopTrackingTouch(BoxedVertical boxedPoints) {
-                    }
-                });
-
-                chol_hdl.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
-                    @Override
-                    public void onPointsChanged(BoxedVertical boxedPoints, int value) {
-                        hdl = value;
-                    }
-
-                    @Override
-                    public void onStartTrackingTouch(BoxedVertical boxedPoints) {
-                    }
-
-                    @Override
-                    public void onStopTrackingTouch(BoxedVertical boxedPoints) {
-                    }
-                });
-
-                bp_systolic.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
-                    @Override
-                    public void onPointsChanged(BoxedVertical boxedPoints, int value) {
-                        sbp = value;
-                    }
-
-                    @Override
-                    public void onStartTrackingTouch(BoxedVertical boxedPoints) {
-
-                    }
-
-                    @Override
-                    public void onStopTrackingTouch(BoxedVertical boxedPoints) {
-
-                    }
-                });
-
                 // still pages are left
                 btnNext.setText(getString(R.string.next));
                 btnPrev.setVisibility(View.GONE);
@@ -237,6 +189,79 @@ public class LaboratoryActivity extends AppCompatActivity {
             View view = layoutInflater.inflate(layouts[position], container, false);
             container.addView(view);
 
+
+            BoxedVertical chol_total = (BoxedVertical)view.findViewById(R.id.chol_total);
+            BoxedVertical chol_hdl = (BoxedVertical)view.findViewById(R.id.chol_hdl);
+            BoxedVertical bp_systolic = (BoxedVertical)view.findViewById(R.id.bp_systolic);
+
+
+            prefs = getSharedPreferences("values",MODE_PRIVATE);
+            editor = prefs.edit();
+
+            if(position == layouts.length - 1){
+                bp_systolic.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
+                    @Override
+                    public void onPointsChanged(BoxedVertical boxedPoints, int value) {
+                        sbp = value;
+                        editor.putInt("sbp", sbp);
+                        editor.commit();
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(BoxedVertical boxedPoints) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(BoxedVertical boxedPoints) {
+
+                    }
+                });
+            }else{
+                chol_total.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
+                    @Override
+                    public void onPointsChanged(BoxedVertical boxedPoints, int value) {
+                        if(value < 130){
+                            alertCHOLLimit();
+                        }else{
+                            chl = value;
+                        }
+                        editor.putInt("chl", chl);
+                        editor.commit();
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(BoxedVertical boxedPoints) {
+                    }
+
+
+                    @Override
+                    public void onStopTrackingTouch(BoxedVertical boxedPoints) {
+                    }
+                });
+
+                chol_hdl.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
+                    @Override
+                    public void onPointsChanged(BoxedVertical boxedPoints, int value) {
+                        if(value > chl){
+                            alertHDLLimit(chl);
+                        }else{
+                            hdl = value;
+                        }
+                        editor.putInt("hdl", hdl);
+                        editor.commit();
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(BoxedVertical boxedPoints) {
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(BoxedVertical boxedPoints) {
+                    }
+                });
+            }
+
             return view;
         }
 
@@ -255,6 +280,52 @@ public class LaboratoryActivity extends AppCompatActivity {
         public void destroyItem(ViewGroup container, int position, Object object) {
             View view = (View) object;
             container.removeView(view);
+        }
+
+        public boolean alertHDLLimit (final int chol){
+            AlertDialog.Builder builder = new AlertDialog.Builder(LaboratoryActivity.this, R.style.Theme_AppCompat_Dialog_Alert);
+            final ScaleView rulerViewM = (ScaleView) findViewById(R.id.my_scale);
+            if (alert != null && alert.isShowing()) {
+                // A dialog is already open, wait for it to be dismissed, do nothing
+            } else {
+                builder.setTitle("Oops!")
+                        .setMessage("HDL value should not be more than Total Cholesterol value.")
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                BoxedVertical chol_hdl = (BoxedVertical)findViewById(R.id.chol_hdl);
+                                chol_hdl.setValue(chol/2);
+
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert);
+            }
+
+            alert = builder.create();
+            alert.show();
+            return true;
+        }
+
+        public boolean alertCHOLLimit (){
+            AlertDialog.Builder builder = new AlertDialog.Builder(LaboratoryActivity.this, R.style.Theme_AppCompat_Dialog_Alert);
+            final ScaleView rulerViewM = (ScaleView) findViewById(R.id.my_scale);
+            if (alert != null && alert.isShowing()) {
+                // A dialog is already open, wait for it to be dismissed, do nothing
+            } else {
+                builder.setTitle("Oops!")
+                        .setMessage("Total Cholesterol value should not be less than 130.")
+                        .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                BoxedVertical chol_total = (BoxedVertical)findViewById(R.id.chol_total);
+                                chol_total.setValue(140);
+
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert);
+            }
+
+            alert = builder.create();
+            alert.show();
+            return true;
         }
     }
 }
