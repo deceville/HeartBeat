@@ -1,16 +1,25 @@
 package capstone.heartbeat.assessment;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ListView;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
+import java.util.ArrayList;
+
+import capstone.heartbeat.controllers.GoalAdapter;
 import capstone.heartbeat.controllers.HeartBeatDB;
-import capstone.heartbeat.models.User;
+import capstone.heartbeat.controllers.ListAdapter;
+import capstone.heartbeat.models.Goal;
 import capstone.heartbeat.others.AddPlanActivity;
 import capstone.heartbeat.R;
 import capstone.heartbeat.calculators.QStrokeFemale;
@@ -22,9 +31,13 @@ public class RiskResultsActivity extends AppCompatActivity {
 
     private DonutProgress heartattack,stroke;
     private SharedPreferences prefs ;
-    public double age,sbp, totalchl, hdl, height,weight;
+    public double age,sbp,dbp,totalchl, hdl, height,weight;
     public int smoke,af, diabType1,diabType2,fhcvd,ra,CKD,CHF, HA, VHD,bptreatment,gender ;
     public int ha, st,nha,nst;
+
+    ArrayList <String> goals;
+    ListAdapter adapter;
+    Button btn_lets, btn_cancel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +52,7 @@ public class RiskResultsActivity extends AppCompatActivity {
 
         age = (double)prefs.getInt("age",0);
         sbp = (double)prefs.getInt("sbp",0);
+        dbp = (double)prefs.getInt("dbp",0);
         totalchl =(double)prefs.getInt("chl",0);
         hdl =(double)prefs.getInt("hdl",0);
         height =(double)prefs.getInt("height",0);
@@ -57,7 +71,7 @@ public class RiskResultsActivity extends AppCompatActivity {
         gender = prefs.getInt("gender",0);
 
         final int bool[]={5,smoke,af,diabType1,diabType2,fhcvd,ra,bptreatment};
-        final double continuous[]={age,sbp,totalchl,hdl,height,weight};
+        final double continuous[]={age,sbp,dbp,totalchl,hdl,height,weight};
 
         final int normalBool[]={5,0,af,diabType1,diabType2,fhcvd,ra,0};
         final double normalContinuous[]={age,120,200,60,170,65};
@@ -104,6 +118,11 @@ public class RiskResultsActivity extends AppCompatActivity {
             stroke.setProgress((float)st);
         }
 
+        HeartBeatDB db = new HeartBeatDB(getApplicationContext());
+        db.open();
+
+
+
     }
 
     @Override
@@ -123,67 +142,43 @@ public class RiskResultsActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.proceed) {
-            String bday = prefs.getString("birth",null);
-            sbp = (double)prefs.getInt("sbp",0);
-            totalchl =(double)prefs.getInt("chl",0);
-            hdl =(double)prefs.getInt("hdl",0);
-            height =(double)prefs.getInt("height",0);
-            weight =(double)prefs.getInt("weight",0);
-            smoke = prefs.getInt("smoke_type",0);
-            af = prefs.getInt("irregular",0);
-            diabType1 =prefs.getInt("type1",0);
-            fhcvd = prefs.getInt("fhcvd",0);
-            ra = prefs.getInt("rheumatoid",0);
-            CKD = prefs.getInt("chronic",0);
-            VHD = prefs.getInt("valvular",0);
-            HA = prefs.getInt("heartattack",0);
-            bptreatment = prefs.getInt("bptr",0);
-            diabType2 = 0;
-            CHF = prefs.getInt("congestive",0);
-            gender = prefs.getInt("gender",0);
-            int stroke = prefs.getInt("stResult",0);
-            int heart = prefs.getInt("haResult",0);
+            final Dialog d = new Dialog(getApplicationContext(), android.R.style.Theme_Holo_Light_Dialog);
+            d.setTitle("Goals");
+            d.setContentView(R.layout.goals_dialog);
+
+            Button lets = (Button) d.findViewById(R.id.goal_lets);
+            Button cancel = (Button) d.findViewById(R.id.goal_cancel);
 
 
-            User user = new User();
-            user.setBirth(bday);
-            user.setAct(0);
-            user.setBptr(bptreatment);
-            user.setChf(CHF);
-            user.setChl((int)totalchl);
-            user.setHdl((int)hdl);
-            user.setSbp((int)sbp);
-            user.setDbp(0);
-            user.setCkd(CKD);
-            user.setRha(ra);
-            user.setVhd(VHD);
-            user.setRa(af);
-            user.setDiab1(diabType1);
-            user.setDiab2(diabType2);
-            user.setFhcvd(fhcvd);
-            if (gender ==0) {
-                user.setGender("female");
-            }else{
-                user.setGender("male");
-            }
-            user.setSleep("sleep");
-            user.setSmoke(smoke);
-            user.setStroke(stroke);
-            user.setHeart_attack(heart);
-            prefs =getSharedPreferences("login",MODE_PRIVATE);
-            int uid = prefs.getInt("id",0);
+            ArrayList<Goal> list = new ArrayList<>();
 
-            HeartBeatDB db = new HeartBeatDB(getApplicationContext());
-            db.open();
-            db.insertUserData(user,uid);
-            db.close();
+            GoalAdapter goalAdapter = new GoalAdapter(getApplicationContext(), list);
 
-            prefs = getSharedPreferences("login",MODE_PRIVATE);
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putBoolean("isCalculated",true);
-            editor.commit();
-            startActivity(new Intent(getApplicationContext(),AddPlanActivity.class));
-            finish();
+            ListView lvMain = (ListView) findViewById(R.id.lv_goals);
+            lvMain.setAdapter(goalAdapter);
+
+            lvMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                }
+            });
+
+            btn_lets.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                startActivity(new Intent(getApplicationContext(), AddPlanActivity.class));
+                finish();
+                }
+            });
+
+            btn_cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    d.hide();
+                }
+            });
             return true;
         }
 

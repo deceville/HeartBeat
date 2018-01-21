@@ -10,7 +10,25 @@ public class Goal {
     public String Description;
     public String Duration;
     public boolean completed;
+    public String goals;
+
+    public String getGoals() {
+        return goals;
+    }
+
+    public void setGoals(String goals) {
+        this.goals = goals;
+    }
     public Goal() {
+    }
+
+    public Goal(String USERUID, String goalID, String description, String duration, boolean completed, String goals) {
+        this.USERUID = USERUID;
+        GoalID = goalID;
+        Description = description;
+        Duration = duration;
+        this.completed = completed;
+        this.goals = goals;
     }
 
     public String getUSERUID() {

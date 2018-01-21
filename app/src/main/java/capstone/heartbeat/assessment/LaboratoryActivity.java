@@ -92,6 +92,7 @@ public class LaboratoryActivity extends AppCompatActivity {
             prefs = getSharedPreferences("values", MODE_PRIVATE);
             System.out.println("CHL: " + prefs.getInt("chl",chl));
             System.out.println("SBP: " + prefs.getInt("sbp",sbp));
+            System.out.println("DBP: " + prefs.getInt("dbp",dbp));
             System.out.println("HDL: " + prefs.getInt("hdl",hdl));
             startActivity(new Intent(getApplicationContext(),HabitsActivity.class));
             finish();
@@ -188,6 +189,7 @@ public class LaboratoryActivity extends AppCompatActivity {
             BoxedVertical chol_total = (BoxedVertical)view.findViewById(R.id.chol_total);
             BoxedVertical chol_hdl = (BoxedVertical)view.findViewById(R.id.chol_hdl);
             BoxedVertical bp_systolic = (BoxedVertical)view.findViewById(R.id.bp_systolic);
+            BoxedVertical bp_diastolic = (BoxedVertical)view.findViewById(R.id.bp_diastolic);
 
 
             prefs = getSharedPreferences("values",MODE_PRIVATE);
@@ -199,6 +201,24 @@ public class LaboratoryActivity extends AppCompatActivity {
                     public void onPointsChanged(BoxedVertical boxedPoints, int value) {
                         sbp = value;
                         editor.putInt("sbp", sbp);
+                        editor.commit();
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(BoxedVertical boxedPoints) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(BoxedVertical boxedPoints) {
+
+                    }
+                });
+                bp_diastolic.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
+                    @Override
+                    public void onPointsChanged(BoxedVertical boxedPoints, int value) {
+                        dbp = value;
+                        editor.putInt("dbp", dbp);
                         editor.commit();
                     }
 

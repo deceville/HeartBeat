@@ -18,6 +18,8 @@
     <string name="prev">PREVIOUS</string>
     <string name="save">SAVE</string>
     <string name="edit">EDIT</string>
+    <string name="lets">LET\'S DO IT</string>
+    <string name="cancel">CANCEL</string>
 
     <string name="slide_1_title">Beat Curiousity</string>
     <string name="slide_1_desc">Check your heart health status</string>
@@ -137,4 +139,5 @@
     <!-- Strings related to goals and quest -->
     <string name="goals">Goals</string>
     <string name="quest">Quests</string>
+    <string name="instruction_goals">Complete all the goals to have a normal risk level and ear badges!</string>
 </resources>

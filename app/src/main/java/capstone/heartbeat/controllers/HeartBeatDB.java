@@ -193,7 +193,7 @@ public class HeartBeatDB {
         con.put(KEY_STROKE,user.stroke);
         con.put(KEY_HEARTATTACK,user.heart_attack);
 
-        return ourDatabase.update(DATABASE_TABLE3,con,KEY_ROWID+" = "+ user.id,null);
+        return ourDatabase.update(DATABASE_TABLE3,con,KEY_ROWID+" = "+ userID,null);
     }
 
     public User getUserAssessData(int userID) {
