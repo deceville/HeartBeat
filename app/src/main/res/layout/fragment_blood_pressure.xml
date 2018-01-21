@@ -62,7 +62,7 @@
                 app:defaultValue="140"
                 app:imageEnabled="false"
                 app:textEnabled="true"
-                app:max="300"
+                app:max="220"
                 app:step="1"
                 app:textBottomPadding="20"
                 app:textSize="12sp"

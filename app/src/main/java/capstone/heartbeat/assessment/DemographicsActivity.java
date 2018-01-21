@@ -40,7 +40,7 @@ public class DemographicsActivity extends AppCompatActivity {
 
     public float height;
 
-    public int age, currYear, currMonth, currDay;
+    public int age, currYear, currMonth, currDay, weigh;
     boolean selected = false;
     int male = 0;
     int female = 0;
@@ -48,6 +48,8 @@ public class DemographicsActivity extends AppCompatActivity {
     public String weight;
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
+
+    boolean complete = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +79,7 @@ public class DemographicsActivity extends AppCompatActivity {
                     btn_male.setBackgroundColor(getResources().getColor(R.color.progress_gray));
                 }
 
+                invalidateOptionsMenu();
                 setFemaleCharacter(age);
             }
         });
@@ -100,6 +103,7 @@ public class DemographicsActivity extends AppCompatActivity {
                     btn_male.setBackgroundColor(getResources().getColor(R.color.progress_gray));
                 }
 
+                invalidateOptionsMenu();
                 setMaleCharacter(age);
             }
         });
@@ -130,7 +134,7 @@ public class DemographicsActivity extends AppCompatActivity {
 
         final ScaleView rulerViewMm = (ScaleView) findViewById(R.id.my_scale);
         txtValue = (TextView) findViewById(R.id.txt_height);
-        rulerViewMm.setStartingPoint(160);
+        rulerViewMm.setStartingPoint(140);
         rulerViewMm.setUpdateListener(new onViewUpdateListener() {
 
             @Override
@@ -138,6 +142,7 @@ public class DemographicsActivity extends AppCompatActivity {
                 height = (float) Math.round(result * 10f) / 10f;
                 editor.putInt("height",(int)height);
                 txtValue.setText(height + " cm");
+                invalidateOptionsMenu();
             }
         });
 
@@ -159,8 +164,9 @@ public class DemographicsActivity extends AppCompatActivity {
             public void selectedView(View view) {
                 weight = ((TextView)view).getText().toString();
                 weight = weight.substring(0,weight.length()-3);
-                int weigh = Integer.parseInt(weight);
+                weigh = Integer.parseInt(weight);
                 editor.putInt("weight", weigh);
+                invalidateOptionsMenu();
 
             }
         });
@@ -184,6 +190,24 @@ public class DemographicsActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+        if(updateProceedButton()){
+            menu.getItem(0).setEnabled(true);
+        }else{
+            menu.getItem(0).setEnabled(false);
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    public boolean updateProceedButton(){
+        if(selected && age != 0 && height != 0 && weigh != 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up next_button, so long
@@ -201,7 +225,6 @@ public class DemographicsActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 
     class mDateSetListener implements DatePickerDialog.OnDateSetListener {
 
@@ -230,6 +253,7 @@ public class DemographicsActivity extends AppCompatActivity {
             }else if(female == 1 && male == 0){
                 setFemaleCharacter(age);
             }
+            invalidateOptionsMenu();
         }
     }
 
