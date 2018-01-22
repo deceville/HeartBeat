@@ -76,11 +76,11 @@ public class RiskResultsActivity extends AppCompatActivity {
         VHD = prefs.getInt("valvular",0);
         HA = prefs.getInt("heartattack",0);
         bptreatment = prefs.getInt("bptr",0);
-        diabType2 = 0;
+        diabType2 = prefs.getInt("type2",0);
         CHF = prefs.getInt("congestive",0);
-        gender = prefs.getInt("gender",0);
+        gender = prefs.getInt("Gender",0);
 
-        final int bool[]={5,smoke,af,diabType1,diabType2,fhcvd,ra,bptreatment};
+        final int bool[]={5,smoke,af,diabType1,diabType2,fhcvd,ra,bptreatment,CKD};
         final double continuous[]={age,sbp,dbp,totalchl,hdl,height,weight};
 
         final int normalBool[]={5,0,af,diabType1,diabType2,fhcvd,ra,0};
@@ -95,9 +95,9 @@ public class RiskResultsActivity extends AppCompatActivity {
         double heartAttack=0,Stroke=0,normalHeartAttack=0,normalStroke=0;
         if (gender==0){
             heartAttack = hf.getResult(continuous,bool);
-            Stroke = sf.getResult(continuous,bool,VHD,CKD,CHF,HA);
+            Stroke = sf.getResult(continuous,bool,VHD,CHF,HA);
             normalHeartAttack = hf.getResult(normalContinuous,normalBool);
-            normalStroke = sf.getResult(normalContinuous,normalBool,VHD,CKD,CHF,HA);
+            normalStroke = sf.getResult(normalContinuous,normalBool,VHD,CHF,HA);
             ha = (int) Math.floor(heartAttack);
             st = (int)Math.floor(Stroke);
             nha = (int) Math.floor(normalHeartAttack);
@@ -112,9 +112,9 @@ public class RiskResultsActivity extends AppCompatActivity {
 
         }else if(gender==1){
             heartAttack = hm.getResult(continuous,bool);
-            Stroke = sm.getResult(continuous,bool,VHD,CKD,CHF,HA);
+            Stroke = sm.getResult(continuous,bool,VHD,CHF,HA);
             normalHeartAttack = hf.getResult(normalContinuous,normalBool);
-            normalStroke = sf.getResult(normalContinuous,normalBool,VHD,CKD,CHF,HA);
+            normalStroke = sf.getResult(normalContinuous,normalBool,VHD,CHF,HA);
             ha = (int) Math.floor(heartAttack);
             st = (int)Math.floor(Stroke);
             nha = (int) Math.floor(normalHeartAttack);

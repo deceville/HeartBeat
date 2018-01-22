@@ -1,86 +1,281 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     tools:context="capstone.heartbeat.assessment.RiskResultsActivity">
 
     <LinearLayout
-        android:id="@+id/riskresults_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/demo_question_padding"
-        android:paddingLeft="@dimen/demo_question_padding"
-        android:paddingRight="@dimen/demo_question_padding">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/results_risk"
-            android:textAppearance="@android:style/TextAppearance.Material.Medium"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/instruction_result"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        android:paddingTop="@dimen/demo_question_padding"
-        android:paddingLeft="@dimen/demo_question_padding"
-        android:paddingRight="@dimen/demo_question_padding"
-        android:layout_below="@+id/riskresults_label"
-        android:id="@+id/linearLayout">
-
+        android:paddingBottom="20dp"
+        android:orientation="vertical">
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/riskresults_label"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <com.github.lzyzsd.circleprogress.DonutProgress
-                android:id="@+id/progress_heartattack"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                custom:donut_finished_color="@color/bg_screen1"
-                custom:donut_text_color="@color/bg_screen1"
-                custom:donut_progress="0"/>
+            android:orientation="vertical"
+            android:paddingTop="@dimen/demo_question_padding"
+            android:paddingLeft="@dimen/demo_question_padding"
+            android:paddingRight="@dimen/demo_question_padding">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:textSize="@dimen/btn_label"
-                android:text="Heart Attack" />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:orientation="vertical">
-
-            <com.github.lzyzsd.circleprogress.DonutProgress
-                android:id="@+id/progress_stroke"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                custom:donut_progress="0"/>
+                android:text="@string/results_risk"
+                android:textAppearance="@android:style/TextAppearance.Material.Medium"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Stroke"
-                android:textSize="@dimen/btn_label"
-                android:layout_gravity="center_horizontal"/>
+                android:text="@string/instruction_result"/>
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:paddingTop="@dimen/demo_question_padding"
+            android:paddingLeft="@dimen/demo_question_padding"
+            android:paddingRight="@dimen/demo_question_padding"
+            android:layout_below="@+id/riskresults_label"
+            android:id="@+id/DonutProgress">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.github.lzyzsd.circleprogress.DonutProgress
+                    android:id="@+id/progress_heartattack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    custom:donut_finished_color="@color/bg_screen1"
+                    custom:donut_text_color="@color/bg_screen1"
+                    custom:donut_progress="0"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="@dimen/btn_label"
+                    android:text="Heart Attack" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+                android:orientation="vertical">
+
+                <com.github.lzyzsd.circleprogress.DonutProgress
+                    android:id="@+id/progress_stroke"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    custom:donut_progress="0"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Stroke"
+                    android:textSize="@dimen/btn_label"
+                    android:layout_gravity="center_horizontal"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_below="@id/DonutProgress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/demo_question_padding"
+            android:paddingLeft="@dimen/demo_question_padding"
+            android:paddingRight="@dimen/demo_question_padding"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/results_riskfactors"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:text="BMI" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="-20dp"
+                    android:text="0.0"
+                    android:textSize="16sp" />
+
+                <ProgressBar
+                    android:id="@+id/bmi_progress"
+                    style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:scaleY="2"
+                    android:max="100"
+                    android:progress="50"
+                    android:layout_marginTop="5dp"
+                    android:progressTint="@color/bg_screen3" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:text="Total Cholesterol" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="-20dp"
+                    android:text="180 mg/dl"
+                    android:textSize="16sp" />
+
+                <ProgressBar
+                    android:id="@+id/total_progress"
+                    style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:scaleY="2"
+                    android:max="100"
+                    android:progress="47"
+                    android:layout_marginTop="5dp"
+                    android:progressTint="@color/bg_screen1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:text="HDL Cholesterol" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="-20dp"
+                    android:text="60 mg/dl"
+                    android:textSize="16sp" />
+
+                <ProgressBar
+                    android:id="@+id/hdl_progress"
+                    style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:scaleY="2"
+                    android:max="100"
+                    android:progress="68"
+                    android:layout_marginTop="5dp"
+                    android:progressTint="@color/bg_screen2" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:text="Systolic Blood Pressure" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="-20dp"
+                    android:text="140 mmHg"
+                    android:textSize="16sp" />
+
+                <ProgressBar
+                    android:id="@+id/systolic_progress"
+                    style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:scaleY="2"
+                    android:max="100"
+                    android:progress="47"
+                    android:layout_marginTop="5dp"
+                    android:progressTint="@color/bg_screen1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginEnd="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:text="Sticks smoked" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginTop="-20dp"
+                    android:text="30 sticks"
+                    android:textSize="16sp" />
+
+                <ProgressBar
+                    android:id="@+id/sticks_progress"
+                    style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:scaleY="2"
+                    android:max="100"
+                    android:progress="68"
+                    android:layout_marginTop="5dp"
+                    android:progressTint="@color/bg_screen2" />
+            </LinearLayout>
+
+        </LinearLayout>
     </LinearLayout>
 
 
-</RelativeLayout>
+</ScrollView>

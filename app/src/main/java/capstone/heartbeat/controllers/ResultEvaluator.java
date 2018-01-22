@@ -120,7 +120,7 @@ public class ResultEvaluator extends AddPlanActivity {
         if (bmi >= 18 && bmi < 25) {
             cat = "normal";
             BMIdescripancy = bmi - normal;
-            goalWeight = bmi * (pow((double) height / 100, 2));
+            goalWeight =(double)weight - normal * (pow((double)height / 100, 2));
             cv.put("cat", cat);
             cv.put("BMIDescripancy", BMIdescripancy);
             System.out.println(goalWeight);
@@ -130,7 +130,7 @@ public class ResultEvaluator extends AddPlanActivity {
         } else if (bmi < 18) {
             cat = "underweight";
             BMIdescripancy = normal - bmi;
-            goalWeight = bmi * (pow(height / 100, 2));
+            goalWeight = normal * (pow((double)height / 100, 2)) - (double)weight ;
             cv.put("cat", cat);
             cv.put("BMIDescripancy", BMIdescripancy);
             System.out.println(goalWeight);
@@ -140,7 +140,7 @@ public class ResultEvaluator extends AddPlanActivity {
         } else if (bmi >= 25 && bmi <= 29) {
             cat = "overweight";
             BMIdescripancy = bmi - normal;
-            goalWeight = bmi * (pow(this.height / 100, 2));
+            goalWeight =(double)weight - normal * (pow((double)height / 100, 2));
             System.out.println(goalWeight);
             cv.put("cat", cat);
             cv.put("BMIDescripancy", BMIdescripancy);
@@ -150,7 +150,7 @@ public class ResultEvaluator extends AddPlanActivity {
         } else if (bmi >= 30) {
             cat = "obese";
             BMIdescripancy = bmi - normal;
-            goalWeight = bmi * (pow(this.height / 100, 2));
+            goalWeight = (double)weight - normal * (pow((double)height / 100, 2));
             System.out.println(goalWeight);
             cv.put("cat", cat);
             cv.put("BMIDescripancy", BMIdescripancy);

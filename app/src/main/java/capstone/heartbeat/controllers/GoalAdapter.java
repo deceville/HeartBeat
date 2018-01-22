@@ -53,6 +53,7 @@ public class GoalAdapter extends BaseAdapter{
         }
 
         ((TextView) view.findViewById(R.id.title_goals)).setText(goals.get(position).getDescription());
+        ((TextView) view.findViewById(R.id.duration_goals)).setText(goals.get(position).getDuration());
 
         return view;
     }

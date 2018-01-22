@@ -11,7 +11,7 @@ import static java.lang.Math.pow;
 public class QStrokeMale {
     private double age,sbp, totalchl, hdl, height,weight,bmi,rati;
     private int ethnic, smoke,af, diabType1,diabType2,fhcvd,ra,CKD,CHF, HA, VHD,bptreatment;
-    private double town = 1;
+    private double town = -2.3;
 
     public QStrokeMale() {
     }
@@ -19,7 +19,7 @@ public class QStrokeMale {
 
 
 
-    public double getResult(double[] continuous, int[] bool,int vhd,int ckd,int chf,int ha){
+    public double getResult(double[] continuous, int[] bool,int vhd,int chf,int ha){
         age= continuous[0];
        sbp = continuous[1];
        totalchl = continuous[2];
@@ -37,7 +37,7 @@ public class QStrokeMale {
        HA = ha;
        CHF = chf;
        VHD = vhd;
-       CKD = ckd;
+        this.CKD = bool[7];
         double[] Iethrisk = {
                 0,
                 0,

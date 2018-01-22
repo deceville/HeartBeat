@@ -368,8 +368,10 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
         Button b1 = (Button) d.findViewById(R.id.sticks_set);
         Button b2 = (Button) d.findViewById(R.id.sticks_cancel);
         final NumberPicker np = (NumberPicker) d.findViewById(R.id.sticks);
-        np.setMaxValue(30);
-        np.setMinValue(1);
+        np.setMaxValue(29);
+        np.setDisplayedValues(new String[] {"1","2","3","4","5","6","7","8","9","10","11","12",
+                "13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29",">30"});
+        np.setMinValue(0);
         np.setWrapSelectorWheel(false);
         np.setOnValueChangedListener(this);
 
@@ -381,7 +383,11 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
                 smk_quantity = String.valueOf(np.getValue());
                 int quantity = np.getValue();
                 int smoker_type;
-                numOfSticks.setText(String.valueOf(np.getValue()) + " sticks per day");
+                if((quantity+1) == 30){
+                    numOfSticks.setText(">" + String.valueOf(quantity+1) + " sticks per day");
+                }else{
+                    numOfSticks.setText(String.valueOf(quantity+1) + " sticks per day");
+                }
                 if(quantity > 0 && quantity <= 10){
                     smoker_type = 2;
                     editor.putInt("smoke_type",smoker_type);
@@ -414,50 +420,6 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.next_button, menu);
         return true;
-    }
-
-    public void saveTemp(String v1,String v2, String v3, String v4){
-        int smoke = Integer.parseInt(v1);
-        int non_smkr = Integer.parseInt(v2);
-        int quantity = Integer.parseInt(v3);
-        int bptr = Integer.parseInt(v4);
-        int smoker_type = 0;
-
-        SharedPreferences prefs = getSharedPreferences("values",MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-
-
-        if(smoke == 0){
-            if(non_smkr == 1){
-                smoker_type = 0;
-                editor.putInt("smoke_type",smoker_type);
-                editor.commit();
-            }else if(non_smkr == 0){
-                smoker_type = 1;
-                editor.putInt("smoke_type",smoker_type);
-                editor.commit();
-            }
-
-        }else if (smoke == 1){
-            if(quantity > 0 && quantity <= 10){
-                smoker_type = 3;
-                editor.putInt("smoke_type",smoker_type);
-                editor.commit();
-            }else if(quantity >=11 && quantity <20){
-                smoker_type = 4;
-                editor.putInt("smoke_type",smoker_type);
-                editor.commit();
-            }else if (quantity>20){
-                smoker_type = 5;
-                editor.putInt("smoke_type",smoker_type);
-                editor.commit();
-            }
-        }
-
-        editor.putInt("bptr",bptr);
-        editor.commit();
-
-
     }
 
     @Override

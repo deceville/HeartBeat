@@ -19,7 +19,7 @@ public class QStrokeFemale {
 
 
 
-    public double getResult(double[] continuous, int[] bool,int vhd,int ckd,int chf,int ha){
+    public double getResult(double[] continuous, int[] bool,int vhd,int chf,int ha){
         this.age= continuous[0];
        this.sbp = continuous[1];
       this.totalchl = continuous[2];
@@ -37,11 +37,11 @@ public class QStrokeFemale {
         this.HA = ha;
         this.CHF = chf;
         this.VHD = vhd;
-        this.CKD = ckd;
+        this.CKD = bool[7];
         this.bmi = weight/ pow((double)height/100,2);
         this.rati = totalchl/hdl;
         double surv = 0.994471669197083;
-        double town = 1;
+        double town = -1;
         double[] Iethrisk = {
                 0,
                 0,
