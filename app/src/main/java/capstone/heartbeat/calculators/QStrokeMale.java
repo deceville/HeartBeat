@@ -31,8 +31,8 @@ public class QStrokeMale {
        ra = bool[6];
        smoke = bool[1];
        fhcvd = bool[5];
-       height = continuous[4];
-       weight = continuous[5];
+       height = continuous[5];
+       weight = continuous[6];
        bptreatment = bool[7];
        HA = ha;
        CHF = chf;
@@ -61,7 +61,8 @@ public class QStrokeMale {
 	/* Applying the fractional polynomial transforms */
 	/* (which includes scaling)                      */
 
-     this.bmi = weight/ pow(height/100,2);
+     this.bmi = weight/ pow((double)height/100,2);
+        System.out.println("bmi: "+bmi);
         this.rati = totalchl/hdl;
         double dage = age;
         dage=dage/10;

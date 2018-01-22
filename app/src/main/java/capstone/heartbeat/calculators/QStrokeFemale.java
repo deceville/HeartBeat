@@ -31,14 +31,14 @@ public class QStrokeFemale {
         this.ra = bool[6];
         this.smoke = bool[1];
         this.fhcvd = bool[5];
-        this.height = continuous[4];
-        this.weight = continuous[5];
+        this.height = continuous[5];
+        this.weight = continuous[6];
         this.bptreatment = bool[7];
         this.HA = ha;
         this.CHF = chf;
         this.VHD = vhd;
         this.CKD = ckd;
-        this.bmi = weight/ pow(height/100,2);
+        this.bmi = weight/ pow((double)height/100,2);
         this.rati = totalchl/hdl;
         double surv = 0.994471669197083;
         double town = 1;

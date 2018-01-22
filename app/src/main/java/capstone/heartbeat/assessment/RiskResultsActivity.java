@@ -1,5 +1,6 @@
 package capstone.heartbeat.assessment;
 
+import android.content.ContentValues;
 import android.support.v7.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
@@ -19,10 +20,12 @@ import com.github.lzyzsd.circleprogress.DonutProgress;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import capstone.heartbeat.controllers.GoalAdapter;
 import capstone.heartbeat.controllers.HeartBeatDB;
 import capstone.heartbeat.controllers.ListAdapter;
+import capstone.heartbeat.controllers.ResultEvaluator;
 import capstone.heartbeat.models.Goal;
 import capstone.heartbeat.others.AddPlanActivity;
 import capstone.heartbeat.R;
@@ -81,7 +84,7 @@ public class RiskResultsActivity extends AppCompatActivity {
         final double continuous[]={age,sbp,dbp,totalchl,hdl,height,weight};
 
         final int normalBool[]={5,0,af,diabType1,diabType2,fhcvd,ra,0};
-        final double normalContinuous[]={age,120,200,60,170,65};
+        final double normalContinuous[]={age,120,80,200,60,170,65};
 
 
         Qrisk2Male hm = new Qrisk2Male();
@@ -159,10 +162,34 @@ public class RiskResultsActivity extends AppCompatActivity {
             btn_lets = (Button) d.findViewById(R.id.goal_lets);
             btn_cancel = (Button) d.findViewById(R.id.goal_cancel);
 
+            prefs = getSharedPreferences("values",MODE_PRIVATE);
+            int weight = prefs.getInt("height",0);
+            int height = prefs.getInt("weight",0);
+            int sbp = prefs.getInt("sbp",0);
+            int dbp = prefs.getInt("dbp",0);
+            int chl = prefs.getInt("chl",0);
+            int hdl = prefs.getInt("hdl",0);
+
+            List<Integer> goalSet = new ArrayList<>();
+            goalSet.add(weight);
+            goalSet.add(height);
+            goalSet.add(sbp);
+            goalSet.add(dbp);
+            goalSet.add(chl);
+            goalSet.add(hdl);
+
+            ContentValues goals = new ContentValues();
+            ResultEvaluator e = new ResultEvaluator();
+            goals = e.getGoals(goalSet);
+            Goal goal = new Goal();
+            goal = setGoal(goals);
+
+
+
             ListView lvMain = (ListView) d.findViewById(R.id.lv_goals);
 
             ArrayList<Goal> list = new ArrayList<>();
-
+            list.add(goal);
             String [] goals_dummy = new String [] {"Goal 1", "Goal 2", "Goal 3"};
             ArrayList<String> dummygoals = new ArrayList<String>();
             dummygoals.addAll(Arrays.asList(goals_dummy));
@@ -170,7 +197,7 @@ public class RiskResultsActivity extends AppCompatActivity {
             GoalAdapter goalAdapter = new GoalAdapter(getApplicationContext(), list);
             arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.list_goals, R.id.title_goals, dummygoals);
 
-            lvMain.setAdapter(arrayAdapter);
+            lvMain.setAdapter(goalAdapter);
 
             lvMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -198,5 +225,23 @@ public class RiskResultsActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public Goal setGoal(ContentValues cv){
+            double goalWeight = cv.getAsDouble("goalWeight");
+            Goal goal = new Goal();
+        if (cv.getAsString("cat").equals("underweight")) {
+            String description = "Gain "+ goalWeight + " kilograms to achieve optimal BMI.";
+            String duration = "2 weeks";
+            goal.setDescription(description);
+            goal.setDuration(duration);
+            return goal;
+        }else {
+            String description = "Reduce "+ goalWeight + " kilograms to achieve optimal BMI.";
+            String duration = "2 weeks";
+            goal.setDescription(description);
+            goal.setDuration(duration);
+            return goal;
+        }
     }
 }

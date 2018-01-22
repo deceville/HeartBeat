@@ -48,8 +48,8 @@ public class Qrisk2Female {
         ra = bool[6];
         smoke = bool[1];
         fhcvd = bool[5];
-        height = continuous[4];
-        weight = continuous[5];
+        height = continuous[5];
+        weight = continuous[6];
         bptreatment = bool[7];
        double surv = 0.989747583866119;
 
@@ -84,7 +84,7 @@ public class Qrisk2Female {
         dage=dage/10;
         double age_1 = Math.pow(dage,.5);
         double age_2 = dage;
-        bmi = weight/ Math.pow(height/100,2);
+        bmi = weight/ Math.pow((double)height/100,2);
         double dbmi = bmi;
         dbmi=dbmi/10;
         double bmi_2 = Math.pow(dbmi,-2)* Math.log(dbmi);

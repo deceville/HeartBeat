@@ -48,8 +48,8 @@ public class Qrisk2Male {
         this.ra = bool[6];
         this.smoke = bool[1];
         this.fhcvd = bool[5];
-        this.height = continuous[4];
-        this.weight = continuous[5];
+        this.height = continuous[5];
+        this.weight = continuous[6];
         this.bptreatment = bool[7];
        double surv = 0.978794217109680;
 

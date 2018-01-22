@@ -90,10 +90,6 @@ public class LaboratoryActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.next) {
             prefs = getSharedPreferences("values", MODE_PRIVATE);
-            System.out.println("CHL: " + prefs.getInt("chl",chl));
-            System.out.println("SBP: " + prefs.getInt("sbp",sbp));
-            System.out.println("DBP: " + prefs.getInt("dbp",dbp));
-            System.out.println("HDL: " + prefs.getInt("hdl",hdl));
             startActivity(new Intent(getApplicationContext(),HabitsActivity.class));
             finish();
             return true;

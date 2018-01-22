@@ -52,7 +52,7 @@ public class GoalAdapter extends BaseAdapter{
             view = lInflater.inflate(R.layout.list_goals, parent, false);
         }
 
-        ((TextView) view.findViewById(R.id.title_goals)).setText(goals.get(position).getGoals());
+        ((TextView) view.findViewById(R.id.title_goals)).setText(goals.get(position).getDescription());
 
         return view;
     }
