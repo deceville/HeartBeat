@@ -29,7 +29,7 @@
 
         <Button
             android:id="@+id/sticks_set"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="50dp"
             android:layout_marginRight="@dimen/img_margin_top"
@@ -37,7 +37,7 @@
 
         <Button
             android:id="@+id/sticks_cancel"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="Cancel" />
     </LinearLayout>
