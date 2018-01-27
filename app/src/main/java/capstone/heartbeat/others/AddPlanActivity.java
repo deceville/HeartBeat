@@ -39,7 +39,7 @@ public class AddPlanActivity extends AppCompatActivity {
     public FloatingActionButton btn_addActivity;
     List<Suggestions> suggestions;
     ListAdapter adapter;
-    Button btn_addSuggestion, btn_cancel, btn_currentdate;
+    Button btn_addSuggestion, btn_cancel, btn_currentdate, btn_buytime;
     public int currYear, currMonth, currDay;
     TextView text_plan_freetime;
     private EditText plan_name;
@@ -64,6 +64,20 @@ public class AddPlanActivity extends AppCompatActivity {
 
         // get plan name input
         plan_name = (EditText) findViewById(R.id.plan_name);
+
+        btn_buytime = (Button) findViewById(R.id.btn_buytime);
+
+        btn_buytime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final AlertDialog dialog = new AlertDialog.Builder(AddPlanActivity.this)
+                        .setTitle("Buy Time")
+                        .setView(R.layout.shop_dialog)
+                        .create();
+
+                dialog.show();
+            }
+        });
 
         btn_addActivity = (FloatingActionButton) findViewById(R.id.btn_addActivity);
 
@@ -215,9 +229,8 @@ public class AddPlanActivity extends AppCompatActivity {
 
             HeartBeatDB plans = new HeartBeatDB(getApplicationContext());
             plans.open();
-            plans.createEntry1(title,date,cal,initialMinutes,freeTime);
-            //plans.createEntry2(selectedActivities);
-            plans.createEntry2(selected,title);
+            plans.createEntry1(title,date,cal,initialMinutes,freeTime,false);
+            plans.createEntry2(selected,title,false);
             plans.close();
 
             startActivity(new Intent(getApplicationContext(),MainActivity.class));

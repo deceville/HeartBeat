@@ -6,14 +6,35 @@ package capstone.heartbeat.models;
 
 public class Goal {
     public String USERUID;
-    public String GoalID;
+    public int GoalID;
     public String Description;
     public String Duration;
     public boolean completed;
     public String goals;
+    public String action;
+
+
+
+    public double getValue() {
+        return value;
+    }
+
+    public void setValue(double value) {
+        this.value = value;
+    }
+
+    public double value;
 
     public String getGoals() {
         return goals;
+    }
+
+    public String getAction() {
+        return action;
+    }
+
+    public void setAction(String action) {
+        this.action = action;
     }
 
     public void setGoals(String goals) {
@@ -22,13 +43,15 @@ public class Goal {
     public Goal() {
     }
 
-    public Goal(String USERUID, String goalID, String description, String duration, boolean completed, String goals) {
+    public Goal(String USERUID, int goalID, String description, String duration, boolean completed, String goals,double value,String action) {
         this.USERUID = USERUID;
         GoalID = goalID;
         Description = description;
         Duration = duration;
         this.completed = completed;
         this.goals = goals;
+        this.value = value;
+        this.action = action;
     }
 
     public String getUSERUID() {
@@ -39,11 +62,11 @@ public class Goal {
         this.USERUID = USERUID;
     }
 
-    public String getGoalID() {
+    public int getGoalID() {
         return GoalID;
     }
 
-    public void setGoalID(String goalID) {
+    public void setGoalID(int goalID) {
         GoalID = goalID;
     }
 

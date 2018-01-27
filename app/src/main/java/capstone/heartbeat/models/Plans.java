@@ -12,6 +12,7 @@ public class Plans {
     private String title;
     private String date;
     public int minutes;
+    public boolean isDone;
 
     public int getId() {
         return id;
@@ -25,13 +26,22 @@ public class Plans {
     private double calories;
     private List<Activity> activities;
 
-    public Plans(String title, String date, int minutes, int freetime, double calories, List<Activity> activities) {
+    public boolean isDone() {
+        return isDone;
+    }
+
+    public void setDone(boolean done) {
+        isDone = done;
+    }
+
+    public Plans(String title, String date, int minutes, int freetime, double calories, List<Activity> activities, boolean done) {
         this.title = title;
         this.date = date;
         this.minutes = minutes;
         this.freetime = freetime;
         this.calories = calories;
         this.activities = activities;
+        this.isDone = done;
     }
 
     public Plans() {

@@ -9,9 +9,9 @@ import static java.lang.Math.pow;
  */
 
 public class QStrokeMale {
-    private double age,sbp, totalchl, hdl, height,weight,bmi,rati;
+    private double age,sbp, totalchl, hdl, height,weight,bmi,rati,dbp;
     private int ethnic, smoke,af, diabType1,diabType2,fhcvd,ra,CKD,CHF, HA, VHD,bptreatment;
-    private double town = -2.3;
+    private double town = 2.2;
 
     public QStrokeMale() {
     }
@@ -22,7 +22,8 @@ public class QStrokeMale {
     public double getResult(double[] continuous, int[] bool,int vhd,int chf,int ha){
         age= continuous[0];
        sbp = continuous[1];
-       totalchl = continuous[2];
+       totalchl = continuous[3];
+       dbp = continuous[2];
        af = bool[2];
        hdl = continuous[3];
        ethnic = bool[0];
@@ -37,7 +38,7 @@ public class QStrokeMale {
        HA = ha;
        CHF = chf;
        VHD = vhd;
-        this.CKD = bool[7];
+       CKD = bool[8];
         double[] Iethrisk = {
                 0,
                 0,

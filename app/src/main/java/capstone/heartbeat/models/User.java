@@ -34,6 +34,8 @@ public class User {
     public int heart_attack;
     public int stroke;
     public int age;
+    public double weight;
+    public double height;
     public User() {
     }
 
@@ -45,7 +47,7 @@ public class User {
     }
 
     public User(String birth,String gender,int chl,int hdl,int sbp,int dbp,int smoke,int bptr,String sleep,int act,int diab1,int diab2,int chf,
-                int ha,int vhd,int ra,int rha,int ckd,int fhcvd,int heart_attack,int stroke){
+                int ha,int vhd,int ra,int rha,int ckd,int fhcvd,int heart_attack,int stroke,double weight,double height){
         this.birth = birth;
         this.gender = gender;
         this.chl = chl;
@@ -67,6 +69,24 @@ public class User {
         this.fhcvd = fhcvd;
         this.heart_attack = heart_attack;
         this.stroke = stroke;
+        this.weight = weight;
+        this.height = height;
+    }
+
+    public double getWeight() {
+        return weight;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
     }
 
     public int getId() {

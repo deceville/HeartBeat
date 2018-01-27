@@ -344,8 +344,9 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
             @Override
             public void onClick(View v) {
                 Button btn_freetime = (Button) findViewById(R.id.sleeptime);
-
-                btn_freetime.setText(String.format("%02d:%02d", np.getValue(), np1.getValue()) + " PM");
+                String sleep = String.format("%02d:%02d", np.getValue(), np1.getValue()) + " PM";
+                btn_freetime.setText(sleep);
+                prefs.edit().putString("sleep",sleep);
                 d.dismiss();
             }
         });
@@ -382,6 +383,7 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
                 Button numOfSticks = (Button) findViewById(R.id.numOfSticks);
                 smk_quantity = String.valueOf(np.getValue());
                 int quantity = np.getValue();
+                editor.putInt("sticks",quantity);
                 int smoker_type;
                 if((quantity+1) == 30){
                     numOfSticks.setText(">" + String.valueOf(quantity+1) + " sticks per day");

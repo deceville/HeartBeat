@@ -6,10 +6,14 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -20,6 +24,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -78,6 +84,12 @@ public class PlansFragment extends Fragment{
         // get the listview
         expListView = (ExpandableListView) view.findViewById(R.id.lv_plans);
 
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
+        params.setMargins(0, 0, 0, 80);
+        expListView.setLayoutParams(params);
+
+        registerForContextMenu(expListView);
+
         // preparing list data
         prepareListData();
 
@@ -129,6 +141,7 @@ public class PlansFragment extends Fragment{
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
                 // TODO Auto-generated method stub
+
                 Toast.makeText(
                         getContext(),
                         planlist.get(groupPosition)
@@ -141,7 +154,117 @@ public class PlansFragment extends Fragment{
             }
         });
 
+        /*expListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                // When clicked on child, function longClick is executed
+                if (ExpandableListView.getPackedPositionType(id) == ExpandableListView.PACKED_POSITION_TYPE_CHILD) {
+                    int groupPosition = ExpandableListView.getPackedPositionGroup(id);
+                    int childPosition = ExpandableListView.getPackedPositionChild(id);
+                    longClick( expListView, groupPosition, childPosition);
+                    return true;
+                }
+                return false;
+            }
+        });*/
+
         return view;
+    }
+
+    public void onCreateContextMenu(ContextMenu menu, View v,
+                                    ContextMenu.ContextMenuInfo menuInfo)
+    {
+        super.onCreateContextMenu(menu, v, menuInfo);
+
+        ExpandableListView.ExpandableListContextMenuInfo info =
+                (ExpandableListView.ExpandableListContextMenuInfo) menuInfo;
+
+        int type =
+                ExpandableListView.getPackedPositionType(info.packedPosition);
+
+        int group =
+                ExpandableListView.getPackedPositionGroup(info.packedPosition);
+
+        int child =
+                ExpandableListView.getPackedPositionChild(info.packedPosition);
+
+        // Only create a context menu for child items
+        if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD)
+        {
+            // Array created earlier when we built the expandable list
+            menu.add(0, v.getId(), 0, "Done");
+            menu.add(0, v.getId(),0,"Delete");
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public boolean onContextItemSelected(MenuItem menuItem)
+    {
+        ExpandableListView.ExpandableListContextMenuInfo info =
+                (ExpandableListView.ExpandableListContextMenuInfo) menuItem.getMenuInfo();
+
+        int groupPos = 0, childPos = 0;
+
+        int type = ExpandableListView.getPackedPositionType(info.packedPosition);
+        if (type == ExpandableListView.PACKED_POSITION_TYPE_CHILD)
+        {
+            groupPos = ExpandableListView.getPackedPositionGroup(info.packedPosition);
+
+
+            childPos = ExpandableListView.getPackedPositionChild(info.packedPosition);
+
+
+            switch (menuItem.getTitle().toString()){
+
+                case "Done" : {
+
+
+                    HeartBeatDB db = new HeartBeatDB(getContext());
+                    db.open();
+                    if (plan.get(planlist.get(groupPos)).size() <1) {
+                    db.updatePlanList(planlist.get(groupPos),true);
+                    plan.get(planlist.remove(groupPos));
+                        listAdapter.notifyDataSetChanged();
+                    }else {
+                        db.updatePlan(planlist.get(groupPos), plan.get(planlist.get(groupPos)).get(childPos), true);
+                        plan.get(planlist.get(groupPos)).remove(childPos);
+                        listAdapter.notifyDataSetChanged();
+                    }
+
+                    Toast.makeText(getContext(), "+1 coin",Toast.LENGTH_SHORT).show();
+                    db.close();
+                    return true;
+                }
+        }
+
+
+
+    }
+
+
+
+//        // Pull values from the array we built when we created the list
+//        String author = mListStringArray[groupPos][0];
+//        String page = mListStringArray[groupPos][childPos * 3 + 1];
+//        rowId = Integer.parseInt(mListStringArray[groupPos][childPos * 3 + 3]);
+//
+//        switch (menuItem.getItemId())
+//        {
+//            case MENU_READ:
+//                readNote(rowId);
+//                return true;
+//
+//            case MENU_EDIT:
+//                editNote(rowId);
+//                return true;
+//
+//            // etc..
+//
+//            default:
+//                return super.onContextItemSelected(menuItem);
+//        }
+
+        return false;
     }
 
     private void prepareListData() {
@@ -231,6 +354,10 @@ public class PlansFragment extends Fragment{
         createCustomAnimation();
     }
 
+    private void reloadList(){
+
+    }
+
     private void createCustomAnimation() {
         AnimatorSet set = new AnimatorSet();
 
@@ -273,23 +400,26 @@ public class PlansFragment extends Fragment{
                     d.setTitle("Choose a plan");
                     d.setContentView(R.layout.plan_dialog);
 
-                    Spinner spinner = (Spinner) d.findViewById(R.id.spinner_plans);
+                    final Spinner spinner = (Spinner) d.findViewById(R.id.spinner_plans);
                     Button b1 = (Button) d.findViewById(R.id.sp_next);
                     Button b2 = (Button) d.findViewById(R.id.sp_cancel);
 
-                    List<String> list = new ArrayList<String>();
-                    list.add("list 1");
-                    list.add("list 2");
-                    list.add("list 3");
+                    HeartBeatDB DeceDB = new HeartBeatDB(getContext());
+                    DeceDB.open();
+                    List<String> plans = DeceDB.getTitle();
+
+
                     ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
-                            android.R.layout.simple_spinner_item, list);
+                            android.R.layout.simple_spinner_item, plans);
                     dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                     spinner.setAdapter(dataAdapter);
+
 
                     b1.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            displaySuggestionDialog();
+                            String titles = spinner.getSelectedItem().toString();
+                            displaySuggestionDialog(titles);
                             d.dismiss();
                         }
                     });
@@ -306,7 +436,7 @@ public class PlansFragment extends Fragment{
         }
     };
 
-    public void displaySuggestionDialog(){
+    public void displaySuggestionDialog(final String title){
         final AlertDialog dialog = new AlertDialog.Builder(getContext())
                 .setTitle("Suggestions")
                 .setView(R.layout.fragment_suggestions)
@@ -332,22 +462,32 @@ public class PlansFragment extends Fragment{
 
         btn_addSuggestion = (Button) dialog.findViewById(R.id.btn_addSuggestion);
 
-                  /*  btn_addSuggestion.setOnClickListener(new View.OnClickListener() {
+                    btn_addSuggestion.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            StringBuilder selected = new StringBuilder("Selected: \n");
 
-                            for (int i = 0; i < suggestions.size(); i++){
-                                if(suggestions.get(i).isChecked()){
-                                    selected.append(i).append("\n");
+                            List<Activity> selectedActivities = new ArrayList<>();
+                            for (Activity acts:suggestions){
+                                if(acts.isChecked()){
+                                    selectedActivities.add(acts);
                                 }
                             }
-                            Toast.makeText(getContext(), selected.toString(), Toast.LENGTH_SHORT).show();
+
+                            List<String> selected = new ArrayList<>();
+                            for (Activity a:selectedActivities
+                                    ) {
+                                selected.add(a.Activities);
+                            }
+                            //add here
+                            HeartBeatDB plans = new HeartBeatDB(getContext());
+                            plans.open();
+                            plans.createEntry2(selected,title,false);
+                            plans.close();
 
                             dialog.hide();
+                            listAdapter.notifyDataSetChanged();
                         }
                     });
-*/
         btn_cancel = (Button) dialog.findViewById(R.id.btn_cancel);
 
         btn_cancel.setOnClickListener(new View.OnClickListener() {

@@ -89,7 +89,7 @@
                     app:progressColor="@color/circle_green"
                     app:textColor="#FFF"
                     app:cornerRadius="20"
-                    app:defaultValue="140"
+                    app:defaultValue="70"
                     app:imageEnabled="false"
                     app:textEnabled="true"
                     app:max="300"

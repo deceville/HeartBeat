@@ -98,70 +98,109 @@ public class ResultEvaluator extends AddPlanActivity {
         return suggestedMet;
     }
 
-    public ContentValues getGoals(List<Integer> goalSet) {
-        this.height = goalSet.get(0);
-        this.weight = goalSet.get(1);
+    public Goal getBMIGoal(double weight,double height){
 
-        this.sbp = goalSet.get(2);
-        this.dbp = goalSet.get(3);
-        this.chl = goalSet.get(4);
-        this.hdl = goalSet.get(5);
-
-        ContentValues cv = new ContentValues();
-
-        List<ContentValues> values = new ArrayList<ContentValues>();
-
-        double bmi = weight / Math.pow((double) height / 100, 2);
         double BMIdescripancy;
-        double normal = 18;
-        double goalWeight;
+        double normal = 22.5;
+
+        Goal myGoal = new Goal();
 
         String cat = "normal";
-        if (bmi >= 18 && bmi < 25) {
-            cat = "normal";
-            BMIdescripancy = bmi - normal;
-            goalWeight =(double)weight - normal * (pow((double)height / 100, 2));
-            cv.put("cat", cat);
-            cv.put("BMIDescripancy", BMIdescripancy);
-            System.out.println(goalWeight);
-            cv.put("goalWeight", goalWeight);
-            values.add(cv);
-            return cv;
+        double bmi = weight / Math.pow( height / 100, 2);
+        double goalWeight = weight - normal * (pow(height / 100, 2));
+        BMIdescripancy = bmi - normal;
+
+        myGoal.setDescription("BMI");
+        myGoal.setValue(goalWeight);
+        myGoal.setCompleted(false);
+        myGoal.setDuration("1 month");
+
+        if ( bmi >= 18 && bmi < 25) {
+            myGoal.setAction("reduce");
+            return myGoal;
         } else if (bmi < 18) {
-            cat = "underweight";
-            BMIdescripancy = normal - bmi;
-            goalWeight = normal * (pow((double)height / 100, 2)) - (double)weight ;
-            cv.put("cat", cat);
-            cv.put("BMIDescripancy", BMIdescripancy);
-            System.out.println(goalWeight);
-            cv.put("goalWeight", goalWeight);
-            values.add(cv);
-            return cv;
-        } else if (bmi >= 25 && bmi <= 29) {
-            cat = "overweight";
-            BMIdescripancy = bmi - normal;
-            goalWeight =(double)weight - normal * (pow((double)height / 100, 2));
-            System.out.println(goalWeight);
-            cv.put("cat", cat);
-            cv.put("BMIDescripancy", BMIdescripancy);
-            cv.put("goalWeight", goalWeight);
-            values.add(cv);
-            return cv;
+           goalWeight = normal * (pow(height / 100, 2))- weight;
+           myGoal.setValue(goalWeight);
+           myGoal.setAction("gain");
+           return myGoal;
+
+        } else if (bmi >= 25 && bmi < 30) {
+            myGoal.setAction("reduce");
+            return myGoal;
         } else if (bmi >= 30) {
-            cat = "obese";
-            BMIdescripancy = bmi - normal;
-            goalWeight = (double)weight - normal * (pow((double)height / 100, 2));
-            System.out.println(goalWeight);
-            cv.put("cat", cat);
-            cv.put("BMIDescripancy", BMIdescripancy);
-            cv.put("goalWeight", goalWeight);
-            values.add(cv);
-            return cv;
+            myGoal.setAction("reduce");
+            return myGoal;
         }
 
+        return myGoal;
 
-        return cv;
     }
 
+    public double getBMI(double weight,double height){
+        double bmi = 0;
+        bmi = weight / Math.pow( height / 100, 2);
+        System.out.println(weight +", "+height+": "+bmi);
+        return  bmi;
+    }
+
+    public Goal getCholGoal(double chol){
+        Goal arvi_goal = new Goal();
+        arvi_goal.setDuration("1 month");
+        arvi_goal.setDescription("Total Cholesterol");
+        arvi_goal.setCompleted(false);
+        if (chol > 200){
+            arvi_goal.setValue(chol - 200);
+            arvi_goal.setAction("reduce");
+            return arvi_goal;
+
+        }else  {
+            arvi_goal.setValue(chol);
+            arvi_goal.setAction("maintain");
+            return arvi_goal;
+        }
+    }
+
+    public Goal getHDLGoal(double hdl){
+        Goal arvi_goal = new Goal();
+        arvi_goal.setDuration("1 month");
+        arvi_goal.setDescription("HDL");
+        arvi_goal.setCompleted(false);
+        if (hdl < 60 ){
+            arvi_goal.setValue(60-hdl);
+            arvi_goal.setAction("gain");
+            return arvi_goal;
+
+        }else  {
+            arvi_goal.setValue(hdl);
+            arvi_goal.setAction("maintain");
+            return arvi_goal;
+        }
+    }
+
+    public Goal getBPGoal(double sbp,double dbp){
+        Goal arvi_goal = new Goal();
+        arvi_goal.setDuration("1 month");
+        arvi_goal.setDescription("BP");
+        arvi_goal.setCompleted(false);
+        /*if (sbp > 120){
+            arvi_goal.setValue(chol - 200);
+            arvi_goal.setAction("reduce");
+            return arvi_goal;
+
+        }else  {
+            arvi_goal.setValue(chol);
+            arvi_goal.setAction("maintain");
+            return arvi_goal;
+        }*/
+        return arvi_goal;
+    }
+
+
+    public double getNormalWeight(double bmi,double height){
+        double weight = 0;
+        weight  = 22.5 * Math.pow( height / 100, 2);
+        System.out.println(weight +", "+height+": "+bmi);
+        return  weight;
+    }
 
 }

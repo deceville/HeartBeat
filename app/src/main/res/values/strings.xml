@@ -127,6 +127,7 @@
     <string name="plan_freetime">Free time</string>
     <string name="plan_activity">Activities</string>
     <string name="plan_calories">Date</string>
+    <string name="shop_buy">Want to buy more time?</string>
 
     <!-- Strings related to navigation drawer -->
     <string name="title_activity_menu">Menu</string>
@@ -140,4 +141,5 @@
     <string name="goals">Goals</string>
     <string name="quest">Quests</string>
     <string name="instruction_goals">Complete all the goals to have a normal risk level and ear badges!</string>
+    <string name="done">Done</string>
 </resources>
