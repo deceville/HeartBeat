@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/app/libs/FloatingActionButton" />
             <option value="$PROJECT_DIR$/app/libs/HorizontalPicker" />
             <option value="$PROJECT_DIR$/app/libs/MPChartLib" />
+            <option value="$PROJECT_DIR$/facebook-share" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

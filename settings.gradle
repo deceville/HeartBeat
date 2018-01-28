@@ -1,5 +1,5 @@
 
-include ':app', ':CircleProgress', ':DWRulerView', ':HorizontalPicker', ':BoxedVerticalSeekBar', ':FloatingActionButton', ':MPChartLib'
+include ':app', ':CircleProgress', ':DWRulerView', ':HorizontalPicker', ':BoxedVerticalSeekBar', ':FloatingActionButton', ':MPChartLib', ':facebook-share'
 include ':app'
 project(':CircleProgress').projectDir = new File('app/libs/CircleProgress')
 project(':DWRulerView').projectDir = new File('app/libs/DWRulerView')
