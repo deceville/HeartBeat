@@ -98,11 +98,33 @@
             android:layout_marginTop="20dp"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/plan_activity"
-                android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginEnd="50dp"
+                    android:text="@string/plan_activity"
+                    android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="10dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:text="Total calories burn:"/>
+
+                <TextView
+                    android:id="@+id/calories_total"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+            </LinearLayout>
 
             <FrameLayout
                 android:layout_width="match_parent"
