@@ -12,6 +12,7 @@ public class Plans {
     private String title;
     private String date;
     public int minutes;
+    public double reduction;
 
     public int getId() {
         return id;
@@ -19,6 +20,14 @@ public class Plans {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public double getReduction() {
+        return reduction;
+    }
+
+    public void setReduction(double reduction) {
+        this.reduction = reduction;
     }
 
     public int freetime;
