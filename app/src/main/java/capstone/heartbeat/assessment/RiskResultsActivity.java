@@ -1,5 +1,8 @@
 package capstone.heartbeat.assessment;
 
+import android.content.ContentValues;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
@@ -13,17 +16,22 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import capstone.heartbeat.controllers.GoalAdapter;
 import capstone.heartbeat.controllers.HeartBeatDB;
 import capstone.heartbeat.controllers.ListAdapter;
+import capstone.heartbeat.controllers.ResultEvaluator;
 import capstone.heartbeat.models.Goal;
+import capstone.heartbeat.models.User;
 import capstone.heartbeat.others.AddPlanActivity;
 import capstone.heartbeat.R;
 import capstone.heartbeat.calculators.QStrokeFemale;
@@ -34,10 +42,11 @@ import capstone.heartbeat.calculators.Qrisk2Male;
 public class RiskResultsActivity extends AppCompatActivity {
 
     private DonutProgress heartattack,stroke;
-    private SharedPreferences prefs ;
+    private SharedPreferences prefs,use ;
     public double age,sbp,dbp,totalchl, hdl, height,weight;
-    public int smoke,af, diabType1,diabType2,fhcvd,ra,CKD,CHF, HA, VHD,bptreatment,gender ;
-    public int ha, st,nha,nst;
+    public int smoke,af, diabType1,diabType2,fhcvd,ra,CKD,CHF, HA, VHD,bptreatment,gender ,sticks;
+    public int ha, st,nha,nst,act,uid;
+    public String sleep,birth;
 
     ArrayList <String> goals;
     ListAdapter adapter;
@@ -46,12 +55,16 @@ public class RiskResultsActivity extends AppCompatActivity {
 
     ArrayAdapter <String> arrayAdapter;
 
+    private ProgressBar bmi_progress , chol_progress, hdl_progress,sbp_progress,smoke_progress;
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_risk_results);
 
         prefs = getSharedPreferences("values",MODE_PRIVATE);
+         use = getSharedPreferences("login",MODE_PRIVATE);
         SharedPreferences.Editor ed = prefs.edit();
 
         heartattack =(DonutProgress)findViewById(R.id.progress_heartattack);
@@ -73,15 +86,22 @@ public class RiskResultsActivity extends AppCompatActivity {
         VHD = prefs.getInt("valvular",0);
         HA = prefs.getInt("heartattack",0);
         bptreatment = prefs.getInt("bptr",0);
-        diabType2 = 0;
+        diabType2 = prefs.getInt("type2",0);
         CHF = prefs.getInt("congestive",0);
-        gender = prefs.getInt("gender",0);
+        gender = prefs.getInt("Gender",0);
+        sticks = prefs.getInt("sticks",0);
+        sleep = prefs.getString("sleep","10:00 PM");
+        birth = prefs.getString("birth",null);
+        act = prefs.getInt("physical_type",1);
+        uid = prefs.getInt("id",0);
 
-        final int bool[]={5,smoke,af,diabType1,diabType2,fhcvd,ra,bptreatment};
+
+
+        final int bool[]={5,smoke,af,diabType1,diabType2,fhcvd,ra,bptreatment,CKD};
         final double continuous[]={age,sbp,dbp,totalchl,hdl,height,weight};
 
-        final int normalBool[]={5,0,af,diabType1,diabType2,fhcvd,ra,0};
-        final double normalContinuous[]={age,120,200,60,170,65};
+        final int normalBool[]={5,0,af,diabType1,diabType2,fhcvd,ra,0,CKD};
+        final double normalContinuous[]={age,120,80,200,60,170,65};
 
 
         Qrisk2Male hm = new Qrisk2Male();
@@ -92,9 +112,9 @@ public class RiskResultsActivity extends AppCompatActivity {
         double heartAttack=0,Stroke=0,normalHeartAttack=0,normalStroke=0;
         if (gender==0){
             heartAttack = hf.getResult(continuous,bool);
-            Stroke = sf.getResult(continuous,bool,VHD,CKD,CHF,HA);
+            Stroke = sf.getResult(continuous,bool,VHD,CHF,HA);
             normalHeartAttack = hf.getResult(normalContinuous,normalBool);
-            normalStroke = sf.getResult(normalContinuous,normalBool,VHD,CKD,CHF,HA);
+            normalStroke = sf.getResult(normalContinuous,normalBool,VHD,CHF,HA);
             ha = (int) Math.floor(heartAttack);
             st = (int)Math.floor(Stroke);
             nha = (int) Math.floor(normalHeartAttack);
@@ -106,12 +126,13 @@ public class RiskResultsActivity extends AppCompatActivity {
             ed.commit();
             heartattack.setProgress((float)ha);
             stroke.setProgress((float)st);
+            System.out.println(ha+"  :  "+st);
 
         }else if(gender==1){
             heartAttack = hm.getResult(continuous,bool);
-            Stroke = sm.getResult(continuous,bool,VHD,CKD,CHF,HA);
+            Stroke = sm.getResult(continuous,bool,VHD,CHF,HA);
             normalHeartAttack = hf.getResult(normalContinuous,normalBool);
-            normalStroke = sf.getResult(normalContinuous,normalBool,VHD,CKD,CHF,HA);
+            normalStroke = sf.getResult(normalContinuous,normalBool,VHD,CHF,HA);
             ha = (int) Math.floor(heartAttack);
             st = (int)Math.floor(Stroke);
             nha = (int) Math.floor(normalHeartAttack);
@@ -123,12 +144,103 @@ public class RiskResultsActivity extends AppCompatActivity {
             ed.commit();
             heartattack.setProgress((float)ha);
             stroke.setProgress((float)st);
+            System.out.println(ha+"  :  "+st);
         }
 
+
+
+
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        bmi_progress = (ProgressBar) findViewById(R.id.bmi_progress);
+        chol_progress = (ProgressBar) findViewById(R.id.total_progress);
+        hdl_progress = (ProgressBar) findViewById(R.id.hdl_progress);
+        sbp_progress = (ProgressBar) findViewById(R.id.systolic_progress);
+        smoke_progress = (ProgressBar) findViewById(R.id.sticks_progress);
+        TextView bmi_desc = (TextView)findViewById(R.id.bmi_description);
+        TextView chl_desc = (TextView)findViewById(R.id.chol_description);
+        TextView hdl_desc = (TextView)findViewById(R.id.hdl_description);
+        TextView sbp_desc = (TextView)findViewById(R.id.sbp_description);
+        TextView smoke_desc = (TextView)findViewById(R.id.smoke_description);
+
+        bmi_progress.setMax(50);
+
+        String desc;
+
+                ResultEvaluator assessor = new ResultEvaluator();
+        double bmi = assessor.getBMI(weight,height);
+        String bmi_string = Double.toString(bmi);
+        bmi_desc.setText(bmi_string);
+        bmi_progress.setProgress((int)bmi);
+
+        chol_progress.setMax(300);
+        desc = Double.toString(totalchl) + " mm/dl";
+        chl_desc.setText(desc);
+        chol_progress.setProgress((int)totalchl);
+
+        hdl_progress.setMax((int) totalchl);
+        desc = Double.toString(hdl) + " mm/dl";
+        hdl_desc.setText(desc);
+        hdl_progress.setProgress((int)hdl);
+
+        sbp_progress.setMax(240);
+        desc = Double.toString(sbp) + " mm/Hg";
+        sbp_desc.setText(desc);
+        sbp_progress.setProgress((int)sbp);
+
+        smoke_progress.setMax(30);
+        desc = Integer.toString(sticks) + " sticks";
+        smoke_desc.setText(desc);
+        smoke_progress.setProgress(sticks);
+
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+
+        int id = use.getInt("id",0);
+        System.out.println(id);
         HeartBeatDB db = new HeartBeatDB(getApplicationContext());
         db.open();
+        User user = new User();
+        user.setHeart_attack(ha);
+        user.setStroke(st);
+        user.setSmoke(smoke);
+        user.setSleep(sleep);
+        if (gender==0)
+        user.setGender("Female");
+        else user.setGender("Male");
 
-
+        user.setFhcvd(fhcvd);
+        user.setDiab1(diabType1);
+        user.setDiab2(diabType2);
+        user.setVhd(VHD);
+        user.setRha(ra);
+        user.setCkd(CKD);
+        user.setDbp((int)dbp);
+        user.setSbp((int)sbp);
+        user.setHdl((int)hdl);
+        user.setChl((int)totalchl);
+        user.setChf(CHF);
+        user.setBptr(bptreatment);
+        user.setBirth(birth);
+        user.setAct(act);
+        user.setRa(af);
+        user.setHa(HA);
+        user.setFhcvd(fhcvd);
+        user.setWeight(weight);
+        user.setHeight(height);
+        db.insertUserData(user,id);
+        db.close();
 
     }
 
@@ -149,6 +261,12 @@ public class RiskResultsActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.proceed) {
+
+            //ADD TO DATABASE
+
+
+
+
             final AlertDialog d = new AlertDialog.Builder(RiskResultsActivity.this)
                     .setTitle("Goals")
                     .setView(R.layout.goals_dialog)
@@ -159,18 +277,36 @@ public class RiskResultsActivity extends AppCompatActivity {
             btn_lets = (Button) d.findViewById(R.id.goal_lets);
             btn_cancel = (Button) d.findViewById(R.id.goal_cancel);
 
+
+            HeartBeatDB heDB = new HeartBeatDB(getApplicationContext());
+            ResultEvaluator e = new ResultEvaluator();
+            heDB.open();
+            User Dece = new User();
+                    Dece = heDB.getUserAssessData(uid);
+
+
+            List<Goal> everyones_goal = new ArrayList<>();
+            Goal Dece_goal = e.getBMIGoal(weight,height);
+            everyones_goal.add(Dece_goal);
+            Dece_goal = e.getCholGoal(totalchl);
+            everyones_goal.add(Dece_goal);
+            Dece_goal = e.getHDLGoal(hdl);
+            everyones_goal.add(Dece_goal);
+
+            heDB.close();
+
             ListView lvMain = (ListView) d.findViewById(R.id.lv_goals);
 
             ArrayList<Goal> list = new ArrayList<>();
+            for (Goal g : everyones_goal
+                 ) {
+                list.add(g);
+            }
 
-            String [] goals_dummy = new String [] {"Goal 1", "Goal 2", "Goal 3"};
-            ArrayList<String> dummygoals = new ArrayList<String>();
-            dummygoals.addAll(Arrays.asList(goals_dummy));
 
             GoalAdapter goalAdapter = new GoalAdapter(getApplicationContext(), list);
-            arrayAdapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.list_goals, R.id.title_goals, dummygoals);
 
-            lvMain.setAdapter(arrayAdapter);
+            lvMain.setAdapter(goalAdapter);
 
             lvMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -183,6 +319,7 @@ public class RiskResultsActivity extends AppCompatActivity {
             btn_lets.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                 startActivity(new Intent(getApplicationContext(), AddPlanActivity.class));
                 finish();
                 }
@@ -199,4 +336,6 @@ public class RiskResultsActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 }

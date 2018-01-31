@@ -58,7 +58,7 @@ public class ResultsFragment extends Fragment{
         heartattack.setProgress((float)ha);
         stroke.setProgress((float)st);
 
-        LineChart chart = (LineChart) view.findViewById(R.id.chart1);
+       /* LineChart chart = (LineChart) view.findViewById(R.id.chart1);
 
         // creating list of entry (y-axis)
         ArrayList <Entry> entries = new ArrayList<>();
@@ -70,12 +70,12 @@ public class ResultsFragment extends Fragment{
         Collections.sort(entries, new EntryXComparator());
 
         //creating list of labels (x-axis)
-        /*ArrayList <String> labels = new ArrayList<>();
+        *//*ArrayList <String> labels = new ArrayList<>();
             labels.add("10");
             labels.add("20");
             labels.add("30");
             labels.add("40");
-            labels.add("50");*/
+            labels.add("50");*//*
 
 
         LineDataSet dataSet = new LineDataSet(entries, "Dataset 1"); // add entries to dataset
@@ -110,7 +110,7 @@ public class ResultsFragment extends Fragment{
         chart.setAutoScaleMinMaxEnabled(true);
         chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
         chart.getAxisRight().setEnabled(false);
-        chart.invalidate(); // refresh
+        chart.invalidate(); // refresh*/
 
         return view;
     }

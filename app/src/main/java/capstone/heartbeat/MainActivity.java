@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private SharedPreferences prefs;
+    public SharedPreferences user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        user = getSharedPreferences("login",MODE_PRIVATE);
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity
         adapter.addFragment(new ResultsFragment(prefs), "Results");
         adapter.addFragment(new SuggestionsFragment(), "Suggestions");
         adapter.addFragment(new PlansFragment(), "Plans");
-        adapter.addFragment(new GoalsFragment(), "Goals & Quests");
+        adapter.addFragment(new GoalsFragment(user), "Goals & Quests");
         viewPager.setAdapter(adapter);
     }
 

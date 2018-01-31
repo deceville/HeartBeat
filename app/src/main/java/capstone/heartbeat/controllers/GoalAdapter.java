@@ -51,8 +51,50 @@ public class GoalAdapter extends BaseAdapter{
         if (view == null) {
             view = lInflater.inflate(R.layout.list_goals, parent, false);
         }
+        String description;
+        double value = goals.get(position).getValue();
+        String duration =goals.get(position).getDuration();
+        switch (goals.get(position).getDescription()){
+            case "BMI": {
+                if (goals.get(position).getAction().equals("reduce")){
+                    description = "Reduce " + value + " kilograms in " + duration;
+                    ((TextView) view.findViewById(R.id.title_goals)).setText(description);
+                }else if (goals.get(position).getAction().equals("gain")){
+                    description = "Gain " + value + " kilograms in " + duration;
+                    ((TextView) view.findViewById(R.id.title_goals)).setText(description);
+                }else {
+                    description = "Maintain " + value + " kilograms in " + duration;
+                    ((TextView) view.findViewById(R.id.title_goals)).setText(description);
+                }
+            }
+            case "Total Cholesterol":{
+                if (goals.get(position).getAction().equals("reduce")){
+                    description = "Reduce " + value + " mm/dl in " + duration;
+                    ((TextView) view.findViewById(R.id.title_goals)).setText(description);
+                }else if (goals.get(position).getAction().equals("gain")){
+                    description = "Gain " + value + " mm/dl in " + duration;
+                    ((TextView) view.findViewById(R.id.title_goals)).setText(description);
+                }else {
+                    description = "Maintain " + value + " mm/dl in " + duration;
+                    ((TextView) view.findViewById(R.id.title_goals)).setText(description);
+                }
+            }
+            case "HDL":{
+                if (goals.get(position).getAction().equals("reduce")){
+                    description = "Reduce " + value + " mm/dl in " + duration;
+                    ((TextView) view.findViewById(R.id.title_goals)).setText(description);
+                }else if (goals.get(position).getAction().equals("gain")){
+                    description = "Gain " + value + " mm/dl in " + duration;
+                    ((TextView) view.findViewById(R.id.title_goals)).setText(description);
+                }else {
+                    description = "Maintain " + value + " mm/dl in " + duration;
+                    ((TextView) view.findViewById(R.id.title_goals)).setText(description);
+                }
+            }
 
-        ((TextView) view.findViewById(R.id.title_goals)).setText(goals.get(position).getGoals());
+        }
+
+        ((TextView) view.findViewById(R.id.duration_goals)).setText(goals.get(position).getDuration());
 
         return view;
     }
