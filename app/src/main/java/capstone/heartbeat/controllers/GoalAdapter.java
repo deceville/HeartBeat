@@ -66,7 +66,7 @@ public class GoalAdapter extends BaseAdapter{
                     description = "Maintain " + value + " kilograms in " + duration;
                     ((TextView) view.findViewById(R.id.title_goals)).setText(description);
                 }
-            }
+            }break;
             case "Total Cholesterol":{
                 if (goals.get(position).getAction().equals("reduce")){
                     description = "Reduce " + value + " mm/dl in " + duration;
@@ -78,7 +78,7 @@ public class GoalAdapter extends BaseAdapter{
                     description = "Maintain " + value + " mm/dl in " + duration;
                     ((TextView) view.findViewById(R.id.title_goals)).setText(description);
                 }
-            }
+            }break;
             case "HDL":{
                 if (goals.get(position).getAction().equals("reduce")){
                     description = "Reduce " + value + " mm/dl in " + duration;
@@ -90,7 +90,7 @@ public class GoalAdapter extends BaseAdapter{
                     description = "Maintain " + value + " mm/dl in " + duration;
                     ((TextView) view.findViewById(R.id.title_goals)).setText(description);
                 }
-            }
+            }break;
 
         }
 

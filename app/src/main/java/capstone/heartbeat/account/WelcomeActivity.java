@@ -147,8 +147,9 @@ public class WelcomeActivity extends AppCompatActivity {
 
     private boolean isCalculated(){
         boolean status = false;
-        boolean calculated = prefs.getBoolean("isCalculated",false);
         prefs =getSharedPreferences("login",MODE_PRIVATE);
+        boolean calculated = prefs.getBoolean("isCalculated",false);
+
         if (calculated==true){
             status = true;
             return status;

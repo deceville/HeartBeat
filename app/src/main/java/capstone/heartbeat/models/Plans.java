@@ -13,6 +13,34 @@ public class Plans {
     private String date;
     public int minutes;
     public boolean isDone;
+    public double totalWeightLoss;
+    public double progress;
+
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
+    }
+
+    public boolean isCompleted;
+
+    public double getProgress() {
+        return progress;
+    }
+
+    public void setProgress(double progress) {
+        this.progress = progress;
+    }
+
+    public double getTotalWeightLoss() {
+        return totalWeightLoss;
+    }
+
+    public void setTotalWeightLoss(double totalWeightLoss) {
+        this.totalWeightLoss = totalWeightLoss;
+    }
 
     public int getId() {
         return id;

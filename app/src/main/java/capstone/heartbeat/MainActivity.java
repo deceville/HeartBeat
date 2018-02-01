@@ -17,18 +17,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import capstone.heartbeat.account.LoginActivity;
 import capstone.heartbeat.account.ProfileActivity;
+import capstone.heartbeat.controllers.HeartBeatDB;
 import capstone.heartbeat.fragments.GoalsFragment;
 import capstone.heartbeat.fragments.PlansFragment;
 import capstone.heartbeat.fragments.ResultsFragment;
 import capstone.heartbeat.fragments.SuggestionsFragment;
+import capstone.heartbeat.models.User;
 import capstone.heartbeat.others.AboutActivity;
 
 public class MainActivity extends AppCompatActivity
@@ -47,6 +53,8 @@ public class MainActivity extends AppCompatActivity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         user = getSharedPreferences("login",MODE_PRIVATE);
+
+        int id = user.getInt("id", 1);
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +69,17 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        /*View headerView = findViewById(R.id.header_menu);
+        TextView header_name = (TextView) findViewById(R.id.header_name);
+        TextView header_email = (TextView) findViewById(R.id.header_email);
+
+        HeartBeatDB heartBeatDB = new HeartBeatDB(getApplicationContext());
+        heartBeatDB.open();
+        User markeh = heartBeatDB.getUserAssessData(id);
+        header_name.setText(markeh.getName());
+        header_email.setText(markeh.getEmail());
+        heartBeatDB.close();
+*/
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
@@ -183,9 +202,13 @@ public class MainActivity extends AppCompatActivity
             Intent i = new Intent(MainActivity.this, AboutActivity.class);
             startActivity(i);
         } else if (id == R.id.nav_logout) {
-            FirebaseAuth.getInstance().signOut();
+            SharedPreferences values = getSharedPreferences("values",MODE_PRIVATE);
+            SharedPreferences.Editor ed = values.edit();
+            ed.clear();
+            ed.commit();
             prefs = getSharedPreferences("login",MODE_PRIVATE);
             SharedPreferences.Editor editor = prefs.edit();
+            editor.clear();
             editor.putInt("session",0);
             editor.commit();
             startActivity(new Intent(MainActivity.this,LoginActivity.class));

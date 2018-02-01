@@ -221,17 +221,15 @@ public class PlansFragment extends Fragment{
 
                     HeartBeatDB db = new HeartBeatDB(getContext());
                     db.open();
-                    if (plan.get(planlist.get(groupPos)).size() <1) {
+                    if (plan.get(planlist.get(groupPos)).size() == 1) {
                     db.updatePlanList(planlist.get(groupPos),true);
                     plan.get(planlist.remove(groupPos));
                         listAdapter.notifyDataSetChanged();
                     }else {
                         db.updatePlan(planlist.get(groupPos), plan.get(planlist.get(groupPos)).get(childPos), true);
-                        plan.get(planlist.get(groupPos)).remove(childPos);
-                        listAdapter.notifyDataSetChanged();
+                        expListView.setBackgroundColor(getResources().getColor(R.color.com_facebook_blue));
                     }
 
-                    Toast.makeText(getContext(), "+1 coin",Toast.LENGTH_SHORT).show();
                     db.close();
                     return true;
                 }
@@ -482,10 +480,11 @@ public class PlansFragment extends Fragment{
                             HeartBeatDB plans = new HeartBeatDB(getContext());
                             plans.open();
                             plans.createEntry2(selected,title,false);
+                            listAdapter.notifyDataSetChanged();
                             plans.close();
 
                             dialog.hide();
-                            listAdapter.notifyDataSetChanged();
+
                         }
                     });
         btn_cancel = (Button) dialog.findViewById(R.id.btn_cancel);

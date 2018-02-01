@@ -37,6 +37,7 @@ public class GoalsFragment extends Fragment{
         super.onCreate(savedInstanceState);
 
         uid = prefs.getInt("id",0);
+        System.out.println(uid);
 
     }
 
@@ -79,10 +80,12 @@ public class GoalsFragment extends Fragment{
         User user = new User();
         user = myDb.getUserAssessData(uid);
 
-        double weight = user.getWeight();
+        System.out.println(user.weight);
+
+        double weight = user.weight;
         double height = user.height;
         Goal dece_goal = re.getBMIGoal(weight,height);
-        double loseWeight = 10;
+        double loseWeight = 0;
         double percent = Math.round((loseWeight/dece_goal.getValue())*100);
 
 
@@ -98,14 +101,15 @@ public class GoalsFragment extends Fragment{
 
         dece_goal = re.getCholGoal(user.chl);
 
-        double chol_progress = 10;
+        double chol_progress = 0;
         double chol_norm = 200;
         double chol_goal =user.chl - 200 ;
         double chol_percent = Math.round((chol_progress/chol_goal)*100);
-        double hdl_goal = 80 - user.hdl;
+       // double hdl_goal = 80 - user.hdl;
 
         if (dece_goal.getAction().equals("reduce")) {
             label2.setText("Reduce " + dece_goal.getValue() + " mm/dl of total cholesterol");
+            label3.setText("Reduce " + dece_goal.getValue() + " mm/dl of total cholesterol");
         }else {
             label2.setText("Gain " + dece_goal.getValue() + " mm/dl of total cholesterol");
         }
@@ -128,10 +132,68 @@ public class GoalsFragment extends Fragment{
         }
 
 
+        dece_goal = re.getHDLGoal(user.hdl);
+        double hdl_progress = 0;
+        double hdl_norm = 80;
+        double hdl_goal =hdl_norm -user.hdl  ;
+        double hdl_percent = Math.round((hdl_progress/hdl_goal)*100);
 
+
+        if (dece_goal.getAction().equals("reduce")) {
+            label3.setText("Reduce " + dece_goal.getValue() + " mm/dl of HDL");
+        }else {
+            label3.setText("Gain " + dece_goal.getValue() + " mm/dl of HDL");
+        }
+
+
+        percent_label3.setText(Double.toString(hdl_percent)+"%");
+        progress3.setMax((int)hdl_goal);
+        progress3.setProgress((int)hdl_progress);
+
+        if (chol_goal <= 0){
+            label3.setVisibility(View.GONE);
+            percent_label3.setVisibility(View.GONE);
+            progress3.setVisibility(View.GONE);
+
+        }else{
+            label3.setVisibility(View.VISIBLE);
+            percent_label3.setVisibility(View.VISIBLE);
+            progress3.setVisibility(View.VISIBLE);
+        }
 
 
         int sbp = user.sbp;
+        dece_goal = re.getBPGoal(user.sbp,user.dbp);
+        double sbp_progress = 0;
+        double sbp_norm = 120;
+        double sbp_goal =user.sbp-sbp_norm ;
+        double sbp_percent = Math.round((sbp_progress/sbp_goal)*100);
+
+
+        if (dece_goal.getAction().equals("reduce")) {
+            label4.setText("Reduce " + dece_goal.getValue() + " mmHg of SBP");
+        }else {
+            label4.setText("Gain " + dece_goal.getValue() + " mmHg of SBP");
+        }
+
+
+        percent_label4.setText(Double.toString(hdl_percent)+"%");
+        progress4.setMax((int)sbp_goal);
+        progress4.setProgress((int)sbp_progress);
+
+        if (chol_goal <= 0){
+            label4.setVisibility(View.GONE);
+            percent_label4.setVisibility(View.GONE);
+            progress4.setVisibility(View.GONE);
+
+        }else{
+            label4.setVisibility(View.VISIBLE);
+            percent_label4.setVisibility(View.VISIBLE);
+            progress4.setVisibility(View.VISIBLE);
+        }
+
+
+
         int dbp = user.dbp;
         myDb.close();
 

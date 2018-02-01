@@ -42,7 +42,7 @@ public class QStrokeFemale {
         this.bmi = weight/ pow(height/100,2);
         this.rati = totalchl/hdl;
         double surv = 0.994471669197083;
-        double town = 2.2;
+        double town = 1;
         double[] Iethrisk = {
                 0,
                 0,

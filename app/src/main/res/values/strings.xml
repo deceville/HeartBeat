@@ -140,7 +140,7 @@
     <!-- Strings related to goals and quest -->
     <string name="goals">Goals</string>
     <string name="quest">Quests</string>
-    <string name="instruction_goals">Complete all the goals to have a normal risk level and ear badges!</string>
+    <string name="instruction_goals">Complete all the goals to have a normal risk level and earn badges!</string>
     <string name="done">Done</string>
 
     <!-- Facebook App ID -->

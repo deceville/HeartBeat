@@ -1,19 +1,46 @@
 package capstone.heartbeat.account;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import capstone.heartbeat.R;
+import capstone.heartbeat.controllers.HeartBeatDB;
+import capstone.heartbeat.models.User;
 
 public class ProfileActivity extends AppCompatActivity {
+
+    private TextView prof_fullname,prof_email,prof_birth,prof_sleep;
+    private SharedPreferences prefs;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        prefs = getSharedPreferences("login",MODE_PRIVATE);
+        int id = prefs.getInt("id",0);
+
+        prof_fullname = (TextView) findViewById(R.id.profile_fullname);
+        prof_email = (TextView) findViewById(R.id.profile_email);
+        prof_birth = (TextView) findViewById(R.id.profile_birthday);
+        prof_sleep = (TextView) findViewById(R.id.profile_sleeptime);
+
+        HeartBeatDB mydb = new HeartBeatDB(getApplicationContext());
+        mydb.open();
+        User dece = new User();
+        dece = mydb.getUserAssessData(id);
+        prof_fullname.setText(dece.name);
+        prof_email.setText(dece.email);
+        prof_birth.setText(dece.birth);
+        prof_sleep.setText(dece.sleep);
+
     }
 
     @Override

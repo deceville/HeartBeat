@@ -20,6 +20,20 @@ public class Activity {
     public String Intensity;
     public boolean isDone;
 
+    public double getWeightLoss() {
+        return weightLoss;
+    }
+
+    public void setWeightLoss(double weightLoss) {
+        this.weightLoss = weightLoss;
+    }
+
+    public void setActivities(List<Activity> activities) {
+        this.activities = activities;
+    }
+
+    public double weightLoss;
+
     public int getMinutes() {
         return minutes;
     }
