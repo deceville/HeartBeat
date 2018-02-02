@@ -4,10 +4,225 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@id/label1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/shop_buy"
         android:layout_margin="@dimen/fab_margin"
         android:paddingStart="@dimen/fab_margin"
+        android:paddingEnd="@dimen/fab_margin"
         android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+    <LinearLayout
+        android:id="@+id/label"
+        android:layout_below="@id/label1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/fab_margin"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginBottom="@dimen/fab_margin"
+        android:paddingStart="@dimen/fab_margin"
+        android:paddingEnd="@dimen/fab_margin"
+        android:layout_gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_coin"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="5dp"
+            android:textSize="16sp"
+            android:text="You currently have 50 coins"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_below="@id/label"
+        android:id="@+id/time1"
+        android:layout_marginTop="-40dp"
+        android:layout_marginStart="@dimen/fab_margin"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:paddingStart="@dimen/fab_margin"
+        android:paddingEnd="@dimen/fab_margin"
+        android:paddingBottom="@dimen/fab_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/time_5mins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:src="@drawable/ic_5mins"
+                android:paddingBottom="-30dp"/>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="-40dp"
+                android:textSize="12sp"
+                android:text="BUY"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/time_10mins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:src="@drawable/ic_10mins"/>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="-40dp"
+                android:textSize="12sp"
+                android:text="BUY"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/time_15mins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:src="@drawable/ic_15mins"/>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="-40dp"
+                android:textSize="12sp"
+                android:text="BUY"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_below="@id/time1"
+        android:id="@+id/time2"
+        android:layout_marginTop="-40dp"
+        android:layout_marginStart="@dimen/fab_margin"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:paddingStart="@dimen/fab_margin"
+        android:paddingEnd="@dimen/fab_margin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/time_30mins"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:src="@drawable/ic_30mins"/>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="-40dp"
+                android:textSize="12sp"
+                android:text="BUY"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/time_1hr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:src="@drawable/ic_1hour"/>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="-40dp"
+                android:textSize="12sp"
+                android:text="BUY"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/time_2hrs"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:src="@drawable/ic_2hours"/>
+
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="-40dp"
+                android:textSize="12sp"
+                android:text="BUY"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginStart="@dimen/fab_margin"
+        android:layout_marginEnd="@dimen/fab_margin"
+        android:paddingStart="@dimen/fab_margin"
+        android:paddingEnd="@dimen/fab_margin"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/time2">
+
+        <Button
+            android:id="@+id/shop_cancel"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="18dp"
+            android:layout_marginBottom="30dp"
+            android:textSize="12sp"
+            android:text="CANCEL" />
+
+        <Button
+            android:id="@+id/shop_done"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="DONE" />
+    </LinearLayout>
+
 </RelativeLayout>

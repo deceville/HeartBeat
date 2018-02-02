@@ -76,17 +76,34 @@ public class AddPlanActivity extends AppCompatActivity {
 
         btn_buytime = (Button) findViewById(R.id.btn_buytime);
 
-        /*btn_buytime.setOnClickListener(new View.OnClickListener() {
+        btn_buytime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final AlertDialog dialog = new AlertDialog.Builder(AddPlanActivity.this)
-                        .setTitle("Buy Time")
-                        .setView(R.layout.shop_dialog)
-                        .create();
+                final Dialog dialog = new Dialog(AddPlanActivity.this, android.R.style.Theme_Holo_Light_Dialog);
+                dialog.setTitle("Buy Time");
+                dialog.setContentView(R.layout.shop_dialog);
+                dialog.create();
 
                 dialog.show();
+
+                Button shop_done = (Button) dialog.findViewById(R.id.shop_done);
+                Button shop_cancel = (Button) dialog.findViewById(R.id.shop_cancel);
+
+                shop_done.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                    }
+                });
+
+                shop_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
             }
-        });*/
+        });
 
         btn_addActivity = (FloatingActionButton) findViewById(R.id.btn_addActivity);
 

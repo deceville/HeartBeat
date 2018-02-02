@@ -46,17 +46,17 @@
         android:layout_marginBottom="@dimen/img_margin_top">
 
         <Button
-            android:id="@+id/birthday_set"
+            android:id="@+id/birthday_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="50dp"
             android:layout_marginRight="@dimen/img_margin_top"
-            android:text="Set" />
+            android:text="Cancel" />
 
         <Button
-            android:id="@+id/birthday_cancel"
+            android:id="@+id/birthday_set"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancel" />
+            android:text="Set" />
     </LinearLayout>
 </RelativeLayout>

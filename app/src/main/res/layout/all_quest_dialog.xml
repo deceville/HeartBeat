@@ -147,13 +147,15 @@
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="30dp"
-                android:text="Back" />
+                android:textSize="16sp"
+                android:text="BACK" />
 
             <Button
                 android:id="@+id/quest_done"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:text="Done all" />
+                android:textSize="16sp"
+                android:text="DONE ALL" />
         </LinearLayout>
 
     </LinearLayout>

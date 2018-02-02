@@ -36,18 +36,18 @@
         android:layout_marginTop="@dimen/img_margin_top">
 
         <Button
+            android:id="@+id/st_cancel"
+            android:layout_width="100dp"
+            android:layout_marginEnd="18dp"
+            android:layout_marginRight="@dimen/img_margin_top"
+            android:layout_height="wrap_content"
+            android:text="Cancel" />
+
+        <Button
             android:id="@+id/st_set"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="18dp"
-            android:layout_marginRight="@dimen/img_margin_top"
             android:text="Set" />
-
-        <Button
-            android:id="@+id/st_cancel"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="Cancel" />
     </LinearLayout>
 
 </RelativeLayout>

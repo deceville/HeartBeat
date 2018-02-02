@@ -28,6 +28,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
@@ -41,6 +42,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import capstone.heartbeat.assessment.DemographicsActivity;
 import capstone.heartbeat.controllers.ActivityDatabase;
 import capstone.heartbeat.controllers.HeartBeatDB;
 import capstone.heartbeat.others.AddPlanActivity;
@@ -142,14 +144,25 @@ public class PlansFragment extends Fragment{
                                         int groupPosition, int childPosition, long id) {
                 // TODO Auto-generated method stub
 
-                Toast.makeText(
-                        getContext(),
-                        planlist.get(groupPosition)
-                                + " : "
-                                + plan.get(
-                                planlist.get(groupPosition)).get(
-                                childPosition), Toast.LENGTH_SHORT)
-                        .show();
+                final Dialog dialog = new Dialog(getContext(), android.R.style.Theme_Holo_Light_Dialog);
+                dialog.setTitle("Activity Fact");
+                dialog.setContentView(R.layout.fact_dialog);
+
+                Button fact_okay = (Button) dialog.findViewById(R.id.fact_okay);
+                TextView desc_activity = (TextView) dialog.findViewById(R.id.desc_activity);
+
+                desc_activity.setText(plan.get(
+                        planlist.get(groupPosition)).get(
+                        childPosition) + " 15 minutes daily can lose of your weight");
+
+                fact_okay.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
                 return false;
             }
         });
@@ -217,8 +230,6 @@ public class PlansFragment extends Fragment{
             switch (menuItem.getTitle().toString()){
 
                 case "Done" : {
-
-
                     HeartBeatDB db = new HeartBeatDB(getContext());
                     db.open();
                     if (plan.get(planlist.get(groupPos)).size() == 1) {

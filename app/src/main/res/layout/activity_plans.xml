@@ -86,7 +86,6 @@
                 android:id="@+id/btn_buytime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clickable="false"
                 android:layout_gravity="end"
                 android:textAlignment="center"
                 android:text="Buy time" />

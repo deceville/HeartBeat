@@ -20,17 +20,17 @@
         android:layout_marginTop="30dp">
 
         <Button
-            android:id="@+id/sp_next"
+            android:id="@+id/sp_cancel"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="18dp"
             android:layout_marginRight="@dimen/img_margin_top"
-            android:text="Next" />
+            android:text="Cancel" />
 
         <Button
-            android:id="@+id/sp_cancel"
+            android:id="@+id/sp_next"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="Cancel" />
+            android:text="Next" />
     </LinearLayout>
 </LinearLayout>

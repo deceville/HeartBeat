@@ -271,12 +271,10 @@ public class RiskResultsActivity extends AppCompatActivity {
             //ADD TO DATABASE
 
 
-
-
-            final AlertDialog d = new AlertDialog.Builder(RiskResultsActivity.this)
-                    .setTitle("Goals")
-                    .setView(R.layout.goals_dialog)
-                    .create();
+            final Dialog d = new Dialog(RiskResultsActivity.this, android.R.style.Theme_Holo_Light_Dialog);
+            d.setTitle("Goals");
+            d.setContentView(R.layout.goals_dialog);
+            d.create();
 
             d.show();
 
