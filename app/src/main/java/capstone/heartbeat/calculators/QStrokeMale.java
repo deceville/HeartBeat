@@ -11,7 +11,7 @@ import static java.lang.Math.pow;
 public class QStrokeMale {
     private double age,sbp, totalchl, hdl, height,weight,bmi,rati,dbp;
     private int ethnic, smoke,af, diabType1,diabType2,fhcvd,ra,CKD,CHF, HA, VHD,bptreatment;
-    private double town = 2.2;
+    private double town = -0.99;
 
     public QStrokeMale() {
     }
@@ -73,7 +73,7 @@ public class QStrokeMale {
         dbmi=dbmi/10;
         double bmi_1 = Math.pow(dbmi,-2);
         double bmi_2 = Math.pow(dbmi,-2)*Math.log(dbmi);
-        double surv = 0.993128657341003;
+        double surv = 0.9949471413739138;
 
 	/* Centring the continuous variables */
 

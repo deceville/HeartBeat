@@ -1,6 +1,7 @@
 package capstone.heartbeat.assessment;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,8 +18,10 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -30,6 +33,9 @@ import capstone.heartbeat.R;
 import capstone.heartbeat.models.ScaleView;
 import capstone.heartbeat.onViewUpdateListener;
 import travel.ithaka.android.horizontalpickerlib.PickerLayoutManager;
+
+import static android.view.View.VISIBLE;
+import static android.view.View.GONE;
 
 public class DemographicsActivity extends AppCompatActivity {
     public Button btn_birthdate, btn_female, btn_male;
@@ -49,6 +55,10 @@ public class DemographicsActivity extends AppCompatActivity {
     public String weight;
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
+
+    private boolean quest_bp = false;
+    private boolean quest_total = false;
+    private boolean quest_hdl = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -193,10 +203,163 @@ public class DemographicsActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.next) {
-
             editor.commit();
-            startActivity(new Intent(getApplicationContext(),LaboratoryActivity.class));
-            finish();
+
+            //Display the dialog
+            final Dialog dialog = new Dialog(DemographicsActivity.this, android.R.style.Theme_Holo_Light_Dialog);
+            dialog.setTitle("Confirmation");
+            dialog.setContentView(R.layout.confirm_dialog);
+            Button confirm_proceed = (Button) dialog.findViewById(R.id.confirm_proceed);
+            Button confirm_cancel = (Button) dialog.findViewById(R.id.confirm_cancel);
+            Switch sw_bp = (Switch) dialog.findViewById(R.id.sw_bp) ;
+            Switch sw_hdl = (Switch) dialog.findViewById(R.id.sw_total) ;
+            Switch sw_total = (Switch) dialog.findViewById(R.id.sw_hdl) ;
+
+            sw_bp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    quest_bp = isChecked;
+                }
+            });
+
+            sw_total.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    quest_total = isChecked;
+                }
+            });
+
+            sw_hdl.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    quest_hdl = isChecked;
+                }
+            });
+
+            confirm_proceed.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+
+                    final Dialog d = new Dialog(DemographicsActivity.this, android.R.style.Theme_Holo_Light_Dialog);
+                    d.setTitle("Quests");
+                    d.setContentView(R.layout.all_quest_dialog);
+
+                    View viewGroup_bp = d.findViewById(R.id.viewGroup_bp);
+                    View viewGroup_total = d.findViewById(R.id.viewGroup_total);
+                    View viewGroup_hdl = d.findViewById(R.id.viewGroup_hdl);
+
+                    Button quest_done = (Button) d.findViewById(R.id.quest_done);
+                    Button quest_back = (Button) d.findViewById(R.id.quest_back);
+
+                    if(quest_hdl && quest_bp && quest_total){
+                        finish();
+                        d.dismiss();
+                        startActivity(new Intent(DemographicsActivity.this, LaboratoryActivity.class));
+                    }else{
+                        if(quest_bp){
+                            viewGroup_bp.setVisibility(GONE);
+                        }
+
+                        if(quest_total){
+                            viewGroup_total.setVisibility(GONE);
+                        }
+
+                        if(quest_hdl){
+                            viewGroup_hdl.setVisibility(GONE);
+                        }
+                    }
+
+                    viewGroup_bp.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            final Dialog dialog1 = new Dialog(DemographicsActivity.this, android.R.style.Theme_Holo_Light_Dialog);
+                            dialog1.setTitle("Blood Pressure Quest");
+                            dialog1.setContentView(R.layout.quest_bp);
+
+                            Button bp_okay = (Button) dialog1.findViewById(R.id.bp_okay);
+
+                            bp_okay.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog1.dismiss();
+                                }
+                            });
+
+                            dialog1.show();
+                        }
+                    });
+
+                    viewGroup_total.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            final Dialog dialog1 = new Dialog(DemographicsActivity.this, android.R.style.Theme_Holo_Light_Dialog);
+                            dialog1.setTitle("Total Cholesterol Quest");
+                            dialog1.setContentView(R.layout.quest_total);
+
+                            Button total_okay = (Button) dialog1.findViewById(R.id.total_okay);
+
+                            total_okay.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog1.dismiss();
+                                }
+                            });
+
+                            dialog1.show();
+                        }
+                    });
+
+                    viewGroup_hdl.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            final Dialog dialog1 = new Dialog(DemographicsActivity.this, android.R.style.Theme_Holo_Light_Dialog);
+                            dialog1.setTitle("HDL Cholesterol Quest");
+                            dialog1.setContentView(R.layout.quest_hdl);
+
+                            Button hdl_okay = (Button) dialog1.findViewById(R.id.hdl_okay);
+
+                            hdl_okay.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    dialog1.dismiss();
+                                }
+                            });
+
+                            dialog1.show();
+                        }
+                    });
+
+                    quest_done.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            d.dismiss();
+                            finish();
+                            startActivity(new Intent(DemographicsActivity.this, LaboratoryActivity.class));
+                        }
+                    });
+
+                    quest_back.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            d.dismiss();
+                            dialog.show();
+                        }
+                    });
+
+                    d.show();
+                }
+            });
+
+            confirm_cancel.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.show();
+
             return true;
         }
 
@@ -242,19 +405,19 @@ public class DemographicsActivity extends AppCompatActivity {
         avatar = (ImageView) findViewById(R.id.avatar);
 
         if(age >= 25 && age <= 35){
-            avatar.setVisibility(View.VISIBLE);
+            avatar.setVisibility(VISIBLE);
             avatar.setImageResource(R.drawable.char_male_01);
         }else if (age <= 45 && age >= 36){
-            avatar.setVisibility(View.VISIBLE);
+            avatar.setVisibility(VISIBLE);
             avatar.setImageResource(R.drawable.char_male_02);
         }else if (age <= 55 && age >= 46){
-            avatar.setVisibility(View.VISIBLE);
+            avatar.setVisibility(VISIBLE);
             avatar.setImageResource(R.drawable.char_male_03);
         }else if (age <= 70 && age >= 56){
-            avatar.setVisibility(View.VISIBLE);
+            avatar.setVisibility(VISIBLE);
             avatar.setImageResource(R.drawable.char_male_04);
         }else if (age <= 84 && age >= 71){
-            avatar.setVisibility(View.VISIBLE);
+            avatar.setVisibility(VISIBLE);
             avatar.setImageResource(R.drawable.char_male_05);
         }else{
             avatar.setVisibility(View.INVISIBLE);
@@ -266,19 +429,19 @@ public class DemographicsActivity extends AppCompatActivity {
 
         avatar = (ImageView) findViewById(R.id.avatar);
         if(age >= 25 && age <= 35){
-            avatar.setVisibility(View.VISIBLE);
+            avatar.setVisibility(VISIBLE);
             avatar.setImageResource(R.drawable.char_female_01);
         }else if (age <= 45 && age >= 36){
-            avatar.setVisibility(View.VISIBLE);
+            avatar.setVisibility(VISIBLE);
             avatar.setImageResource(R.drawable.char_female_02);
         }else if (age <= 55 && age >= 46){
-            avatar.setVisibility(View.VISIBLE);
+            avatar.setVisibility(VISIBLE);
             avatar.setImageResource(R.drawable.char_female_03);
         }else if (age <= 70 && age >= 56){
-            avatar.setVisibility(View.VISIBLE);
+            avatar.setVisibility(VISIBLE);
             avatar.setImageResource(R.drawable.char_female_04);
         }else if (age <= 84 && age >= 71){
-            avatar.setVisibility(View.VISIBLE);
+            avatar.setVisibility(VISIBLE);
             avatar.setImageResource(R.drawable.char_female_03);
         }else{
             avatar.setVisibility(View.INVISIBLE);

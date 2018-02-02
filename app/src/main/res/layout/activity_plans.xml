@@ -86,6 +86,7 @@
                 android:id="@+id/btn_buytime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="false"
                 android:layout_gravity="end"
                 android:textAlignment="center"
                 android:text="Buy time" />
@@ -116,14 +117,15 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
                     android:layout_marginEnd="10dp"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:text="Total calories burn:"/>
+                    android:textSize="14sp"
+                    android:text="Total weight loss:"/>
 
                 <TextView
-                    android:id="@+id/calories_total"
+                    android:id="@+id/weight_total"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
             </LinearLayout>
 
             <FrameLayout

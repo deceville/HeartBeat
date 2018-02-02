@@ -1,5 +1,6 @@
 package capstone.heartbeat.assessment;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,7 +17,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import abak.tr.com.boxedverticalseekbar.BoxedVertical;
@@ -38,59 +41,40 @@ public class LaboratoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_laboratory);
 
+        setContentView(R.layout.activity_laboratory);
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         btnPrev = (Button) findViewById(R.id.btn_prev);
         btnNext = (Button) findViewById(R.id.btn_next);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(LaboratoryActivity.this, R.style.Theme_AppCompat_Dialog_Alert);
+        // layouts of all welcome sliders
+        // add few more layouts if you want
+        layouts = new int[]{
+                R.layout.fragment_cholesterol,
+                R.layout.fragment_blood_pressure
+        };
+        // adding bottom dots
+        addBottomDots(0);
 
-        builder.setTitle("Oh no!")
-                .setMessage("Your current age is not allowed. Ages only between 25 and 84 are allowed to continue.")
-                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // layouts of all welcome sliders
-                        // add few more layouts if you want
-                        layouts = new int[]{
-                                R.layout.fragment_cholesterol,
-                                R.layout.fragment_blood_pressure
-                        };
-                        // adding bottom dots
-                        addBottomDots(0);
+        myViewPagerAdapter = new MyViewPagerAdapter();
+        viewPager.setAdapter(myViewPagerAdapter);
+        viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
 
-                        myViewPagerAdapter = new MyViewPagerAdapter();
-                        viewPager.setAdapter(myViewPagerAdapter);
-                        viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
+        btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // checking for last page
+                // if last page home screen will be launched
+                int current = getItem(+1);
+                if (current < layouts.length) {
+                    // move to next screen
+                    viewPager.setCurrentItem(current);
+                } else {
 
-                        btnNext.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                // checking for last page
-                                // if last page home screen will be launched
-                                int current = getItem(+1);
-                                if (current < layouts.length) {
-                                    // move to next screen
-                                    viewPager.setCurrentItem(current);
-                                } else {
-
-                                }
-                            }
-                        });
-                    }
-                })
-                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                })
-                .setIcon(android.R.drawable.ic_dialog_alert);
-
-        AlertDialog alert = builder.create();
-        alert.show();
-
+                }
+            }
+        });
 
     }
 

@@ -22,6 +22,8 @@ import android.widget.TextView;
 import com.github.lzyzsd.circleprogress.DonutProgress;
 
 import java.lang.reflect.Array;
+import java.text.DecimalFormat;
+import java.text.Format;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -47,6 +49,7 @@ public class RiskResultsActivity extends AppCompatActivity {
     public int smoke,af, diabType1,diabType2,fhcvd,ra,CKD,CHF, HA, VHD,bptreatment,gender ,sticks;
     public int ha, st,nha,nst,act,uid;
     public String sleep,birth;
+    private DecimalFormat df;
 
     ArrayList <String> goals;
     ListAdapter adapter;
@@ -66,6 +69,8 @@ public class RiskResultsActivity extends AppCompatActivity {
         prefs = getSharedPreferences("values",MODE_PRIVATE);
          use = getSharedPreferences("login",MODE_PRIVATE);
         SharedPreferences.Editor ed = prefs.edit();
+        df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
 
         heartattack =(DonutProgress)findViewById(R.id.progress_heartattack);
         stroke = (DonutProgress)findViewById(R.id.progress_stroke);
@@ -174,8 +179,9 @@ public class RiskResultsActivity extends AppCompatActivity {
         String desc;
 
                 ResultEvaluator assessor = new ResultEvaluator();
+
         double bmi = assessor.getBMI(weight,height);
-        String bmi_string = Double.toString(bmi);
+        String bmi_string = df.format(bmi);
         bmi_desc.setText(bmi_string);
         bmi_progress.setProgress((int)bmi);
 
@@ -195,7 +201,7 @@ public class RiskResultsActivity extends AppCompatActivity {
         sbp_progress.setProgress((int)sbp);
 
         smoke_progress.setMax(30);
-        desc = Integer.toString(sticks) + " sticks";
+        desc = Integer.toString(sticks+1) + " sticks";
         smoke_desc.setText(desc);
         smoke_progress.setProgress(sticks);
 

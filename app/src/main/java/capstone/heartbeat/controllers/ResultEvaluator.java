@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,9 +28,11 @@ public class ResultEvaluator extends AddPlanActivity {
     private double suggestedMet;
     private SharedPreferences pref;
     private int weight, height, sbp, dbp, chl, hdl;
-
+    DecimalFormat df;
 
     public ResultEvaluator() {
+        df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
     }
 
 
@@ -111,7 +114,7 @@ public class ResultEvaluator extends AddPlanActivity {
         BMIdescripancy = bmi - normal;
 
         myGoal.setDescription("BMI");
-        myGoal.setValue(goalWeight);
+        myGoal.setValue(Double.parseDouble(df.format(goalWeight)));
         myGoal.setCompleted(false);
         myGoal.setDuration("1 month");
 
@@ -120,7 +123,7 @@ public class ResultEvaluator extends AddPlanActivity {
             return myGoal;
         } else if (bmi < 18) {
            goalWeight = normal * (pow(height / 100, 2))- weight;
-           myGoal.setValue(goalWeight);
+           myGoal.setValue(Double.parseDouble(df.format(goalWeight)));
            myGoal.setAction("gain");
            return myGoal;
 
@@ -182,17 +185,29 @@ public class ResultEvaluator extends AddPlanActivity {
         arvi_goal.setDuration("1 month");
         arvi_goal.setDescription("BP");
         arvi_goal.setCompleted(false);
-        /*if (sbp > 120){
-            arvi_goal.setValue(chol - 200);
+         if(sbp > 120){
+            arvi_goal.setValue(sbp - 120);
             arvi_goal.setAction("reduce");
             return arvi_goal;
 
         }else  {
-            arvi_goal.setValue(chol);
+            arvi_goal.setValue(sbp);
             arvi_goal.setAction("maintain");
             return arvi_goal;
-        }*/
-        return arvi_goal;
+        }
+
+    }
+
+    public  double getCalorie(double weight,double mets){
+        double cal = ((mets*3.5*weight)/200)*15;
+        return cal;
+    }
+    public  double getWeightEquivalent(double mets,double weight){
+        double cal = getCalorie(weight,mets) * 15;
+        double cals =  (cal/3500);
+        double weigh = 453.59237*cals;
+        return weigh;
+
     }
 
 

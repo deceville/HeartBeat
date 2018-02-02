@@ -7,6 +7,16 @@ package capstone.heartbeat.models;
 public class User {
 
     public int id;
+
+    public double getMets() {
+        return mets;
+    }
+
+    public void setMets(double mets) {
+        this.mets = mets;
+    }
+
+    public double mets;
     public String username;
     public String email;
     public String name;
@@ -36,6 +46,16 @@ public class User {
     public int age;
     public double weight;
     public double height;
+    public boolean isCalculated;
+
+    public boolean isCalculated() {
+        return isCalculated;
+    }
+
+    public void setCalculated(boolean calculated) {
+        isCalculated = calculated;
+    }
+
     public User() {
     }
 
@@ -44,6 +64,10 @@ public class User {
         this.email = email;
         this.name = name;
         this.password = password;
+    }
+
+    public User(double mets){
+        this.mets = mets;
     }
 
     public User(String birth,String gender,int chl,int hdl,int sbp,int dbp,int smoke,int bptr,String sleep,int act,int diab1,int diab2,int chf,
