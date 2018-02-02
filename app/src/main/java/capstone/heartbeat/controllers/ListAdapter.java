@@ -4,6 +4,7 @@ package capstone.heartbeat.controllers;
  * Created by Lenevo on 12/8/2017.
  */
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,9 +65,13 @@ public class ListAdapter extends BaseAdapter {
         int weight = prefs.getInt("weight",0);
         double met = suggestions.get(position).getMETS();
         double cal = ((met*3.5*weight)/200)*15;
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
+
+
         int min = 15;
         ((TextView) view.findViewById(R.id.title_suggestions)).setText(suggestions.get(position).getActivities());
-        ((TextView) view.findViewById(R.id.desc_suggestions)).setText(Double.toString(cal)+" will burn every "+min+" minutes.");
+        ((TextView) view.findViewById(R.id.desc_suggestions)).setText(df.format(cal)+" cal will burn every "+min+" minutes.");
 
         CheckBox cbox = (CheckBox) view.findViewById(R.id.cbox_suggestions);
         cbox.setChecked(suggestions.get(position).checked);

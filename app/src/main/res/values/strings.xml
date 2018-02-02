@@ -18,6 +18,8 @@
     <string name="prev">PREVIOUS</string>
     <string name="save">SAVE</string>
     <string name="edit">EDIT</string>
+    <string name="lets">LET\'S DO IT</string>
+    <string name="cancel">CANCEL</string>
 
     <string name="slide_1_title">Beat Curiousity</string>
     <string name="slide_1_desc">Check your heart health status</string>
@@ -116,7 +118,7 @@
     <!-- Strings related to risk results -->
     <string name="results_risk">Probability of 10-Year Risk of Heart Attack and Stroke</string>
     <string name="instruction_result">Tap each graph to view details</string>
-    <string name="results_riskfactors">Risk Factors (Highest - Lowest)</string>
+    <string name="results_riskfactors">Risk Factors</string>
     <string name="progress_risk">Progress of risk results</string>
 
     <!-- Strings related to add to plan form -->
@@ -125,6 +127,7 @@
     <string name="plan_freetime">Free time</string>
     <string name="plan_activity">Activities</string>
     <string name="plan_calories">Date</string>
+    <string name="shop_buy">Want to buy more time?</string>
 
     <!-- Strings related to navigation drawer -->
     <string name="title_activity_menu">Menu</string>
@@ -137,6 +140,7 @@
     <!-- Strings related to goals and quest -->
     <string name="goals">Goals</string>
     <string name="quest">Quests</string>
+<<<<<<< HEAD
     <string name="title_activity_faq_">FAQ_Activity</string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
@@ -227,4 +231,11 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+=======
+    <string name="instruction_goals">Complete all the goals to have a normal risk level and earn badges!</string>
+    <string name="done">Done</string>
+
+    <!-- Facebook App ID -->
+    <string name="facebook_app_id">546187392404290</string>
+>>>>>>> 70e0754fff77be24e9f91194e7a5ff4ad5bf5501
 </resources>

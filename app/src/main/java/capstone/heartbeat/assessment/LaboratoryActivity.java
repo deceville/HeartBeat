@@ -1,10 +1,13 @@
 package capstone.heartbeat.assessment;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Html;
@@ -14,7 +17,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import abak.tr.com.boxedverticalseekbar.BoxedVertical;
@@ -36,8 +41,8 @@ public class LaboratoryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_laboratory);
 
+        setContentView(R.layout.activity_laboratory);
         viewPager = (ViewPager) findViewById(R.id.view_pager);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         btnPrev = (Button) findViewById(R.id.btn_prev);
@@ -70,6 +75,7 @@ public class LaboratoryActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     @Override
@@ -90,9 +96,6 @@ public class LaboratoryActivity extends AppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.next) {
             prefs = getSharedPreferences("values", MODE_PRIVATE);
-            System.out.println("CHL: " + prefs.getInt("chl",chl));
-            System.out.println("SBP: " + prefs.getInt("sbp",sbp));
-            System.out.println("HDL: " + prefs.getInt("hdl",hdl));
             startActivity(new Intent(getApplicationContext(),HabitsActivity.class));
             finish();
             return true;
@@ -188,6 +191,7 @@ public class LaboratoryActivity extends AppCompatActivity {
             BoxedVertical chol_total = (BoxedVertical)view.findViewById(R.id.chol_total);
             BoxedVertical chol_hdl = (BoxedVertical)view.findViewById(R.id.chol_hdl);
             BoxedVertical bp_systolic = (BoxedVertical)view.findViewById(R.id.bp_systolic);
+            BoxedVertical bp_diastolic = (BoxedVertical)view.findViewById(R.id.bp_diastolic);
 
 
             prefs = getSharedPreferences("values",MODE_PRIVATE);
@@ -199,6 +203,24 @@ public class LaboratoryActivity extends AppCompatActivity {
                     public void onPointsChanged(BoxedVertical boxedPoints, int value) {
                         sbp = value;
                         editor.putInt("sbp", sbp);
+                        editor.commit();
+                    }
+
+                    @Override
+                    public void onStartTrackingTouch(BoxedVertical boxedPoints) {
+
+                    }
+
+                    @Override
+                    public void onStopTrackingTouch(BoxedVertical boxedPoints) {
+
+                    }
+                });
+                bp_diastolic.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
+                    @Override
+                    public void onPointsChanged(BoxedVertical boxedPoints, int value) {
+                        dbp = value;
+                        editor.putInt("dbp", dbp);
                         editor.commit();
                     }
 

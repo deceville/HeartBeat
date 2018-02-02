@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/fab_margin"
+        android:paddingStart="@dimen/fab_margin"
+        android:paddingEnd="@dimen/fab_margin"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Take these quests to earn coins!"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+        <LinearLayout
+            android:id="@+id/viewGroup_bp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="30dp"
+            android:clickable="true"
+            android:orientation="horizontal"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_icon_bp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Know your blood pressure"
+                    android:layout_gravity="center_vertical"
+                    android:paddingStart="@dimen/fab_margin"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/fab_margin"
+                    android:text="Tap to view the quest!"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/viewGroup_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:clickable="true"
+            android:layout_gravity="start"
+            android:orientation="horizontal"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_icon_total"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Know your total cholesterol"
+                    android:layout_gravity="center_vertical"
+                    android:paddingStart="@dimen/fab_margin"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/fab_margin"
+                    android:text="Tap to view the quest!"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/viewGroup_hdl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:clickable="true"
+            android:layout_gravity="start"
+            android:orientation="horizontal"
+            android:focusable="true">
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_icon_hdl"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Know your HDL cholesterol"
+                    android:layout_gravity="center_vertical"
+                    android:paddingStart="@dimen/fab_margin"
+                    android:textSize="16sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/fab_margin"
+                    android:text="Tap to view the quest!"
+                    android:textSize="12sp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="20dp">
+
+            <Button
+                android:id="@+id/quest_back"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="30dp"
+                android:text="Back" />
+
+            <Button
+                android:id="@+id/quest_done"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:text="Done all" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

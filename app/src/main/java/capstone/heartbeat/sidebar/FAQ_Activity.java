@@ -32,12 +32,14 @@ public class FAQ_Activity extends AppCompatActivity {
         faqlist.add("What is a cardiovascular disease?");
         faqlist.add("What is Stroke?");
         faqlist.add("What is Heart Attack?");
+        faqlist.add("What is HDL?");
 
         String answer1 = "Heart Beat is an application developed to predict the user's risk of having heart attack and stroke and to suggest lifestyle change activities to lessen the risk.";
         String answer2 = "Anyone who is curious of their risk of having stroke and heart attack with ages 24 to 85 years old";
         String answer3 = "Cardiovascular disease or CVD is a type of heart disease that involves the heart";
         String answer4 = "Stroke is a disease in which a blood flow to your brain is interrupted";
         String answer5 = "Heart attack is a disease in which a supply or flow of blood to the heart is blocked";
+        String answer6 = "HDL or High Density Lipids is  type of cholesterol known good. The higher the value of HDL the better";
         faqs = new HashMap<>();
 
             List<String> answers1 = new ArrayList<>();
@@ -60,6 +62,9 @@ public class FAQ_Activity extends AppCompatActivity {
             answers5.add(answer5);
             faqs.put(faqlist.get(4),answers5);
 
+            List<String> answers6 = new ArrayList<>();
+            answers6.add(answer6);
+            faqs.put(faqlist.get(5),answers5);
 
 
 

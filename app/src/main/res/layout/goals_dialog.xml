@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/instruction_goals"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:padding="20dp"/>
+
+        <ListView
+            android:id="@+id/lv_goals"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="20dp">
+
+            <Button
+                android:id="@+id/goal_lets"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="18dp"
+                android:text="@string/lets" />
+
+            <Button
+                android:id="@+id/goal_cancel"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/cancel" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

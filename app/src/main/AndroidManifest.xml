@@ -17,6 +17,10 @@
         android:roundIcon="@mipmap/ic_heartbeat_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
+        <provider android:authorities="com.facebook.app.FacebookContentProvider546187392404290"
+            android:name="com.facebook.FacebookContentProvider"
+            android:exported="true" />
         <activity
             android:name=".account.WelcomeActivity"
             android:label="@string/app_name"
@@ -63,8 +67,13 @@
             android:label="@string/title_activity_profile" />
         <activity
             android:name=".account.EditProfileActivity"
+<<<<<<< HEAD
             android:label="@string/title_activity_editprofile" />
         <activity android:name=".sidebar.FAQ_Activity"></activity>
+=======
+            android:label="@string/title_activity_editprofile"/>
+
+>>>>>>> 70e0754fff77be24e9f91194e7a5ff4ad5bf5501
     </application>
 
 </manifest>

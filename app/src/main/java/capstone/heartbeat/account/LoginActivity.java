@@ -35,20 +35,16 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 
 import capstone.heartbeat.MainActivity;
 import capstone.heartbeat.R;
 import capstone.heartbeat.assessment.DemographicsActivity;
-import capstone.heartbeat.controllers.PlansDatabase;
+import capstone.heartbeat.controllers.HeartBeatDB;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -233,14 +229,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             //mAuthTask = new UserLoginTask(email, password);
            // mAuthTask.execute((Void) null);
 
-            PlansDatabase db = new PlansDatabase(getApplicationContext());
+            HeartBeatDB db = new HeartBeatDB(getApplicationContext());
             db.open();
             boolean exists = db.checkUser(email,password);
+            int id = db.getUserID(email);
             if (exists){
                 System.out.println(exists+"");
                 prefs = getSharedPreferences("login",MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putInt("session",1);
+                editor.putInt("id",id);
                 editor.commit();
                 boolean isCalculated = prefs.getBoolean("isCalculated",false);
                 if (isCalculated){
@@ -249,7 +247,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }else {
                     startActivity(new Intent(getApplicationContext(), DemographicsActivity.class));
                     finish();
-                }
+            }
             }else{
                 System.out.println(exists+"");
                 showProgress(false);

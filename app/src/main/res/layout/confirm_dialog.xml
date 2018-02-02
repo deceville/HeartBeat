@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/demo_question_padding"
+        android:paddingLeft="@dimen/demo_question_padding"
+        android:paddingRight="@dimen/demo_question_padding">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Before proceeding, select the item/s you already know."
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/demo_question_padding"
+            android:layout_gravity="start"
+            android:orientation="horizontal">
+
+            <Switch
+                android:id="@+id/sw_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/SwitchColor" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/fab_margin"
+                android:text="Total Cholesterol"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/demo_question_padding"
+            android:layout_gravity="start"
+            android:orientation="horizontal">
+
+            <Switch
+                android:id="@+id/sw_hdl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/SwitchColor" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/fab_margin"
+                android:text="HDL Cholesterol"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/demo_question_padding"
+            android:layout_gravity="start"
+            android:orientation="horizontal">
+
+            <Switch
+                android:id="@+id/sw_bp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/SwitchColor" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/fab_margin"
+                android:text="Blood Pressure"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="20dp">
+
+            <Button
+                android:id="@+id/confirm_cancel"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_marginEnd="30dp"
+                android:text="Cancel" />
+
+            <Button
+                android:id="@+id/confirm_proceed"
+                android:layout_width="120dp"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:text="Proceed" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

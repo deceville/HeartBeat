@@ -13,4 +13,11 @@
         android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
         android:textSize="20sp"/>
 
+
+
+    <TextView
+        android:id="@+id/listgroup_desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"/>
 </LinearLayout>

@@ -9,9 +9,9 @@ import static java.lang.Math.pow;
  */
 
 public class QStrokeMale {
-    private double age,sbp, totalchl, hdl, height,weight,bmi,rati;
+    private double age,sbp, totalchl, hdl, height,weight,bmi,rati,dbp;
     private int ethnic, smoke,af, diabType1,diabType2,fhcvd,ra,CKD,CHF, HA, VHD,bptreatment;
-    private double town = 1;
+    private double town = -0.99;
 
     public QStrokeMale() {
     }
@@ -19,10 +19,11 @@ public class QStrokeMale {
 
 
 
-    public double getResult(double[] continuous, int[] bool,int vhd,int ckd,int chf,int ha){
+    public double getResult(double[] continuous, int[] bool,int vhd,int chf,int ha){
         age= continuous[0];
        sbp = continuous[1];
-       totalchl = continuous[2];
+       totalchl = continuous[3];
+       dbp = continuous[2];
        af = bool[2];
        hdl = continuous[3];
        ethnic = bool[0];
@@ -31,13 +32,13 @@ public class QStrokeMale {
        ra = bool[6];
        smoke = bool[1];
        fhcvd = bool[5];
-       height = continuous[4];
-       weight = continuous[5];
+       height = continuous[5];
+       weight = continuous[6];
        bptreatment = bool[7];
        HA = ha;
        CHF = chf;
        VHD = vhd;
-       CKD = ckd;
+       CKD = bool[8];
         double[] Iethrisk = {
                 0,
                 0,
@@ -61,7 +62,8 @@ public class QStrokeMale {
 	/* Applying the fractional polynomial transforms */
 	/* (which includes scaling)                      */
 
-     this.bmi = weight/ pow(height/100,2);
+     this.bmi = weight/ pow((double)height/100,2);
+        System.out.println("bmi: "+bmi);
         this.rati = totalchl/hdl;
         double dage = age;
         dage=dage/10;
@@ -71,7 +73,7 @@ public class QStrokeMale {
         dbmi=dbmi/10;
         double bmi_1 = Math.pow(dbmi,-2);
         double bmi_2 = Math.pow(dbmi,-2)*Math.log(dbmi);
-        double surv = 9.2403842314780817000000000;
+        double surv = 0.9949471413739138;
 
 	/* Centring the continuous variables */
 

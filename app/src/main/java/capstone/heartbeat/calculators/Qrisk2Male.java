@@ -9,9 +9,9 @@ import static java.lang.Math.pow;
  */
 
 public class Qrisk2Male {
-    private double age,sbp, totalchl, hdl, height,weight,bmi,rati;
+    private double age,sbp, totalchl, hdl, height,weight,bmi,rati,dbp;
     private int ethnic, smoke,af, diabType1,diabType2,fhcvd,ra,CKD,CHF, HA, VHD,bptreatment;
-    private double town = 2.2;
+    private double town = -2.3;
 
     public Qrisk2Male() {
     }
@@ -39,7 +39,9 @@ public class Qrisk2Male {
     public double getResult(double[] continuous, int[] bool){
         this.age= continuous[0];
        this.sbp = continuous[1];
-      this.totalchl = continuous[2];
+      this.totalchl = continuous[3];
+        dbp = continuous[2];
+        this.CKD = bool[8];
         this.af = bool[2];
        this.hdl = continuous[3];
         this.ethnic = bool[0];
@@ -48,8 +50,8 @@ public class Qrisk2Male {
         this.ra = bool[6];
         this.smoke = bool[1];
         this.fhcvd = bool[5];
-        this.height = continuous[4];
-        this.weight = continuous[5];
+        this.height = continuous[5];
+        this.weight = continuous[6];
         this.bptreatment = bool[7];
        double surv = 0.978794217109680;
 

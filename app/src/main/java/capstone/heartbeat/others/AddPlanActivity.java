@@ -1,6 +1,7 @@
 package capstone.heartbeat.others;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -29,11 +30,11 @@ import capstone.heartbeat.MainActivity;
 import capstone.heartbeat.R;
 import capstone.heartbeat.controllers.ActivityDatabase;
 import capstone.heartbeat.controllers.ListAdapter;
-import capstone.heartbeat.controllers.PlanActivitiesDatabase;
-import capstone.heartbeat.controllers.PlansDatabase;
+import capstone.heartbeat.controllers.HeartBeatDB;
 import capstone.heartbeat.controllers.ResultEvaluator;
 import capstone.heartbeat.models.Activity;
 import capstone.heartbeat.models.Suggestions;
+import capstone.heartbeat.models.User;
 
 
 public class AddPlanActivity extends AppCompatActivity {
@@ -41,18 +42,21 @@ public class AddPlanActivity extends AppCompatActivity {
     public FloatingActionButton btn_addActivity;
     List<Suggestions> suggestions;
     ListAdapter adapter;
-    Button btn_addSuggestion, btn_cancel, btn_currentdate;
+    Button btn_addSuggestion, btn_cancel, btn_currentdate, btn_buytime;
     public int currYear, currMonth, currDay;
-    TextView text_plan_freetime;
+    TextView text_plan_freetime,txtWeight;
     private EditText plan_name;
 
-    public static SharedPreferences prefs;
+    public static SharedPreferences prefs,use;
     SharedPreferences.Editor editor;
     private DatabaseReference rootRef,actRef;
     ActivityDatabase myDb;
     ArrayList<Activity> myActivities;
     ArrayList <Activity> selectedActivities;
     private FirebaseDatabase database;
+    public int uid;
+    public double weight;
+    double totalWeight;
 
 
     @Override
@@ -61,21 +65,40 @@ public class AddPlanActivity extends AppCompatActivity {
         setContentView(R.layout.activity_plans);
 
         prefs = getSharedPreferences("values",MODE_PRIVATE);
+        use= getSharedPreferences("login",MODE_PRIVATE);
+        uid = use.getInt("id",0);
+        weight = prefs.getInt("weight",60);
 
         myDb = new ActivityDatabase(AddPlanActivity.this);
 
         // get plan name input
         plan_name = (EditText) findViewById(R.id.plan_name);
+        txtWeight = (TextView) findViewById(R.id.weight_total);
+
+        btn_buytime = (Button) findViewById(R.id.btn_buytime);
+
+        /*btn_buytime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final AlertDialog dialog = new AlertDialog.Builder(AddPlanActivity.this)
+                        .setTitle("Buy Time")
+                        .setView(R.layout.shop_dialog)
+                        .create();
+
+                dialog.show();
+            }
+        });*/
 
         btn_addActivity = (FloatingActionButton) findViewById(R.id.btn_addActivity);
 
         btn_addActivity.setOnClickListener(new View.OnClickListener() {
+             
             @Override
             public void onClick(View v) {
-                final AlertDialog dialog = new AlertDialog.Builder(AddPlanActivity.this)
-                        .setTitle("Suggestions")
-                        .setView(R.layout.fragment_suggestions)
-                        .create();
+                final Dialog dialog = new Dialog(AddPlanActivity.this, android.R.style.Theme_Holo_Light_Dialog);
+                dialog.setTitle("Suggestions");
+                dialog.setContentView(R.layout.fragment_suggestions);
+                dialog.create();
 
                 dialog.show();
 
@@ -88,6 +111,11 @@ public class AddPlanActivity extends AppCompatActivity {
                 double met = re.getSuggestedMet();
                 System.out.println("met:" +met);
                 myActivities =  myDb.getSuggestedActivities(met);
+                User dece = new User(met);
+                HeartBeatDB deceville = new HeartBeatDB(getApplicationContext());
+                deceville.open();
+              /*  deceville.insertUserMET(dece,uid);*/
+                deceville.close();
 
 
                 adapter = new ListAdapter (getApplicationContext(), myActivities);
@@ -96,10 +124,15 @@ public class AddPlanActivity extends AppCompatActivity {
                 lvMain.setAdapter(adapter);
 
                 lvMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
+                    int totalTime = 0;
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            int time = prefs.getInt("free",60);
+                            totalTime = totalTime + 15;
+                            if (totalTime > time) {
+                                Toast.makeText(getApplicationContext(),"You reached the maximum",Toast.LENGTH_SHORT).show();
 
+                            }
                     }
                 });
 
@@ -112,13 +145,25 @@ public class AddPlanActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         StringBuilder selected = new StringBuilder("Selected: \n");
+                        totalWeight = 0;
+                        ResultEvaluator e = new ResultEvaluator();
+
                         for (Activity acts:myActivities){
                             if(acts.isChecked()){
                                 selectedActivities.add(acts);
-                            }
-                        }
+                                totalWeight += e.getWeightEquivalent(acts.getMETS(),weight);
+                                totalWeight = Math.round(totalWeight);
 
-                        /*PlansDatabase plans = new PlansDatabase(getApplicationContext());
+                            }
+
+
+                        }
+                        txtWeight.setText(totalWeight + " g");
+                       /*SharedPreferences.Editor edit = prefs.edit();
+                       edit.putLong("totalWeight",(long)totalWeight);
+                       edit.commit();*/
+
+                        /*HeartBeatDB plans = new HeartBeatDB(getApplicationContext());
                         plans.open();
                         plans.createEntry2(selectedActivities,plan_name.getText().toString());
                         plans.close();*/
@@ -155,25 +200,21 @@ public class AddPlanActivity extends AppCompatActivity {
 
         btn_currentdate = (Button) findViewById(R.id.btn_currentdate);
 
-        btn_currentdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Calendar c = Calendar.getInstance();
-                currYear = c.get(Calendar.YEAR);
-                currMonth = c.get(Calendar.MONTH);
-                currDay = c.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog dialog = new DatePickerDialog(AddPlanActivity.this,
-                        android.R.style.Theme_Material_Light_Dialog,
-                        new mDateSetListener(), currYear, currMonth, currDay){
-                    @Override
-                    public void onCreate(Bundle savedInstanceState)
-                    {
-                        super.onCreate(savedInstanceState);
-                    }
-                };
-                dialog.show();
-            }
-        });
+        Calendar c = Calendar.getInstance();
+        currYear = c.get(Calendar.YEAR);
+        currMonth = c.get(Calendar.MONTH);
+        currDay = c.get(Calendar.DAY_OF_MONTH);
+
+        btn_currentdate.setText(new StringBuilder()
+                // Month is 0 based so add 1
+                .append(currMonth + 1).append("/").append(currDay).append("/")
+                .append(currYear).append(" "));
+        //initialize editor
+       
+        SharedPreferences.Editor editor = prefs.edit();
+        String plan_date = currMonth + 1 + "/" + currDay + "/" + currYear + " ";
+        editor.putString("plan_date", plan_date);
+        editor.commit();
 
         text_plan_freetime = (TextView) findViewById(R.id.text_plan_freetime);
         text_plan_freetime.setText(prefs.getString("freetime", ""));
@@ -206,20 +247,21 @@ public class AddPlanActivity extends AppCompatActivity {
             String title = prefs.getString("plan_name",null);
             String date = prefs.getString("plan_date",null);
             double cal = 100;
-            int initialMinutes = 15;
+            int initialMinutes = 0;
             int freeTime = prefs.getInt("free",0);
 
             List<String> selected = new ArrayList<>();
             for (Activity a:selectedActivities
                  ) {
                selected.add(a.Activities);
+               initialMinutes += 15;
             }
 
-            PlansDatabase plans = new PlansDatabase(getApplicationContext());
+            Toast.makeText(getApplicationContext(),uid+"",Toast.LENGTH_SHORT).show();
+            HeartBeatDB plans = new HeartBeatDB(getApplicationContext());
             plans.open();
-            plans.createEntry1(title,date,cal,initialMinutes,freeTime);
-            //plans.createEntry2(selectedActivities);
-            plans.createEntry2(selected,title);
+            plans.createEntry1(uid,title,date,cal,initialMinutes,freeTime,false,totalWeight);
+            plans.createEntry2(selected,title,false);
             plans.close();
 
             startActivity(new Intent(getApplicationContext(),MainActivity.class));
@@ -241,16 +283,7 @@ public class AddPlanActivity extends AppCompatActivity {
             int mMonth = monthOfYear;
             int mDay = dayOfMonth;
 
-            btn_currentdate.setText(new StringBuilder()
-                    // Month is 0 based so add 1
-                    .append(mMonth + 1).append("/").append(mDay).append("/")
-                    .append(mYear).append(" "));
-            //initialize editor
-            prefs = getSharedPreferences("values",MODE_PRIVATE);
-            SharedPreferences.Editor editor = prefs.edit();
-            String plan_date = mMonth + 1 + "/" + mDay + "/" + mYear + " ";
-            editor.putString("plan_date", plan_date);
-            editor.commit();
+
         }
     }
 }

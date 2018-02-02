@@ -9,9 +9,9 @@ import static java.lang.Math.pow;
  */
 
 public class Qrisk2Female {
-    private double age,sbp, totalchl, hdl, height,weight,bmi,rati;
+    private double age,sbp, totalchl, hdl, height,weight,bmi,rati,dbp;
     private int ethnic, smoke,af, diabType1,diabType2,fhcvd,ra,CKD,CHF, HA, VHD,bptreatment;
-    private double town = 2.09;
+    private double town = 1;
     public  void Qrisk2Female(double age,double sbp,double totalchl,double hdl,double height,double weight, int ethnic, int gender, int smoke
             ,int af,int diabType1, int diabType2, int fhcvd, int ra, int CKD, int CHF, int HA, int VHD,int bptreatment){
        this.age= age;
@@ -38,8 +38,10 @@ public class Qrisk2Female {
     public double getResult(double[] continuous, int[] bool){
 
         age= continuous[0];
+        CKD = bool[8];
         sbp = continuous[1];
-        totalchl = continuous[2];
+        totalchl = continuous[3];
+        dbp = continuous[2];
         af = bool[2];
         hdl = continuous[3];
         ethnic = bool[0];
@@ -48,8 +50,8 @@ public class Qrisk2Female {
         ra = bool[6];
         smoke = bool[1];
         fhcvd = bool[5];
-        height = continuous[4];
-        weight = continuous[5];
+        height = continuous[5];
+        weight = continuous[6];
         bptreatment = bool[7];
        double surv = 0.989747583866119;
 
@@ -84,7 +86,7 @@ public class Qrisk2Female {
         dage=dage/10;
         double age_1 = Math.pow(dage,.5);
         double age_2 = dage;
-        bmi = weight/ Math.pow(height/100,2);
+        bmi = weight/ Math.pow((double)height/100,2);
         double dbmi = bmi;
         dbmi=dbmi/10;
         double bmi_2 = Math.pow(dbmi,-2)* Math.log(dbmi);

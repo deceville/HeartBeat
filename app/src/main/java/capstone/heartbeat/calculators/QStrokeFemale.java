@@ -9,7 +9,7 @@ import static java.lang.Math.pow;
  */
 
 public class QStrokeFemale {
-    private double age,sbp, totalchl, hdl, height,weight,bmi,rati;
+    private double age,sbp, totalchl, hdl, height,weight,bmi,rati,dbp;
     private int ethnic, smoke,af, diabType1,diabType2,fhcvd,ra,CKD,CHF, HA, VHD,bptreatment;
    // private double town = 1;
 
@@ -19,25 +19,26 @@ public class QStrokeFemale {
 
 
 
-    public double getResult(double[] continuous, int[] bool,int vhd,int ckd,int chf,int ha){
+    public double getResult(double[] continuous, int[] bool,int vhd,int chf,int ha){
         this.age= continuous[0];
        this.sbp = continuous[1];
-      this.totalchl = continuous[2];
+       this.dbp = continuous[2];
+      this.totalchl = continuous[3];
         this.af = bool[2];
-       this.hdl = continuous[3];
+       this.hdl = continuous[4];
         this.ethnic = bool[0];
         this.diabType1 = bool[3];
         this.diabType2 = bool[4];
         this.ra = bool[6];
         this.smoke = bool[1];
         this.fhcvd = bool[5];
-        this.height = continuous[4];
-        this.weight = continuous[5];
+        this.height = continuous[5];
+        this.weight = continuous[6];
         this.bptreatment = bool[7];
         this.HA = ha;
         this.CHF = chf;
         this.VHD = vhd;
-        this.CKD = ckd;
+        this.CKD = bool[8];
         this.bmi = weight/ pow(height/100,2);
         this.rati = totalchl/hdl;
         double surv = 0.994471669197083;

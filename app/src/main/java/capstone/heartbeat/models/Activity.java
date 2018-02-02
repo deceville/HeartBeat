@@ -18,6 +18,21 @@ public class Activity {
     public String Activities;
     public double METS;
     public String Intensity;
+    public boolean isDone;
+
+    public double getWeightLoss() {
+        return weightLoss;
+    }
+
+    public void setWeightLoss(double weightLoss) {
+        this.weightLoss = weightLoss;
+    }
+
+    public void setActivities(List<Activity> activities) {
+        this.activities = activities;
+    }
+
+    public double weightLoss;
 
     public int getMinutes() {
         return minutes;
@@ -88,6 +103,24 @@ public class Activity {
 
     public void setEquipment(String equipment) {
         Equipment = equipment;
+    }
+
+    public Activity(int id, String Activities, double METS, String Intensity, String Equipment,boolean done, int min){
+        this.id = id;
+        this.Activities = Activities;
+        this.METS = METS;
+        this.Intensity = Intensity;
+        this.Equipment = Equipment;
+        this.isDone = done;
+        this.minutes = min;
+    }
+
+    public boolean isDone() {
+        return isDone;
+    }
+
+    public void setDone(boolean done) {
+        isDone = done;
     }
 
     public Activity(int id, String Activities, double METS, String Intensity, String Equipment){

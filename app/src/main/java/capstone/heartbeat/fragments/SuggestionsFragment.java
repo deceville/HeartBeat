@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -19,7 +20,7 @@ import capstone.heartbeat.controllers.ResultEvaluator;
 import capstone.heartbeat.models.Activity;
 
 
-public class SuggestionsFragment extends Fragment{
+public class SuggestionsFragment extends Fragment {
     ArrayList<Activity> suggestions;
     ListAdapter adapter;
     Button btn_addSuggestion, btn_cancel;
@@ -38,8 +39,8 @@ public class SuggestionsFragment extends Fragment{
         //suggestions = new ArrayList<Activity>();
         ResultEvaluator re = new ResultEvaluator();
         double met = re.getSuggestedMet();
-        System.out.println("met:" +met);
-        suggestions =  myDB.getSuggestedActivities((int)met);
+        System.out.println("met:" + met);
+        suggestions = myDB.getSuggestedActivities((int) met);
 
 
         adapter = new ListAdapter(getContext(), suggestions);
@@ -57,13 +58,17 @@ public class SuggestionsFragment extends Fragment{
 
         btn_addSuggestion = (Button) view.findViewById(R.id.btn_addSuggestion);
 
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        params.setMargins(0, 0, 0, 80);
+        btn_addSuggestion.setLayoutParams(params);
+
         btn_addSuggestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 StringBuilder selected = new StringBuilder("Selected: \n");
 
-                for (int i = 0; i < suggestions.size(); i++){
-                    if(suggestions.get(i).isChecked()){
+                for (int i = 0; i < suggestions.size(); i++) {
+                    if (suggestions.get(i).isChecked()) {
                         selected.append(i).append("\n");
                     }
                 }
