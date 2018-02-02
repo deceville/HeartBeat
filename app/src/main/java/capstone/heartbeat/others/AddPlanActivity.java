@@ -1,6 +1,7 @@
 package capstone.heartbeat.others;
 
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -92,10 +93,10 @@ public class AddPlanActivity extends AppCompatActivity {
         btn_addActivity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final AlertDialog dialog = new AlertDialog.Builder(AddPlanActivity.this)
-                        .setTitle("Suggestions")
-                        .setView(R.layout.fragment_suggestions)
-                        .create();
+                final Dialog dialog = new Dialog(AddPlanActivity.this, android.R.style.Theme_Holo_Light_Dialog);
+                dialog.setTitle("Suggestions");
+                dialog.setContentView(R.layout.fragment_suggestions);
+                dialog.create();
 
                 dialog.show();
 
