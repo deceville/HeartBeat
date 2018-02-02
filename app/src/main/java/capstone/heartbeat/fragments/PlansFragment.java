@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.content.SharedPreferences;
 
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -33,6 +34,7 @@ import android.widget.ExpandableListView.OnChildClickListener;
 import android.widget.ExpandableListView.OnGroupClickListener;
 import android.widget.ExpandableListView.OnGroupCollapseListener;
 import android.widget.ExpandableListView.OnGroupExpandListener;
+import android.annotation.SuppressLint;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
@@ -70,14 +72,23 @@ public class PlansFragment extends Fragment{
     ActivityDatabase myDB;
     ListAdapter adapter;
     Button btn_addSuggestion, btn_cancel;
+    private SharedPreferences pref;
 
     public PlansFragment() {
         // Required empty public constructor
     }
 
+     @SuppressLint("ValidFragment")
+    public PlansFragment(SharedPreferences pref){
+        this.pref = pref;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_plans_list, container, false);
 
@@ -227,7 +238,7 @@ public class PlansFragment extends Fragment{
                         listAdapter.notifyDataSetChanged();
                     }else {
                         db.updatePlan(planlist.get(groupPos), plan.get(planlist.get(groupPos)).get(childPos), true);
-                        expListView.setBackgroundColor(getResources().getColor(R.color.com_facebook_blue));
+                         //plan.get(planlist.remove(groupPos)).plan.get;
                     }
 
                     db.close();
@@ -274,11 +285,13 @@ public class PlansFragment extends Fragment{
         /*String res = db.getData();*/
 
 
-
+        int user = pref.getInt("id",1);
+        Toast.makeText(getContext(),user+"",Toast.LENGTH_SHORT).show();
 
 
         // adding title of plans
-        for (String title:db.getTitle()) {
+        for (String title:db.getTitle(user)) {
+             Toast.makeText(getContext(),title+"",Toast.LENGTH_SHORT).show();
             planlist.add(title);
         }
 
@@ -290,8 +303,6 @@ public class PlansFragment extends Fragment{
         List<String> activities = new ArrayList<>();
 
         Plans = db.getActivities(planlist);
-
-        System.out.println(db.getData());
 
        //replace with data from activities plan tables
         /*List<String> plans1 = new ArrayList<String>();
@@ -397,14 +408,14 @@ public class PlansFragment extends Fragment{
                     final Dialog d = new Dialog(getContext(), android.R.style.Theme_Holo_Light_Dialog);
                     d.setTitle("Choose a plan");
                     d.setContentView(R.layout.plan_dialog);
-
+                         int use = pref.getInt("id",1);   
                     final Spinner spinner = (Spinner) d.findViewById(R.id.spinner_plans);
                     Button b1 = (Button) d.findViewById(R.id.sp_next);
                     Button b2 = (Button) d.findViewById(R.id.sp_cancel);
 
                     HeartBeatDB DeceDB = new HeartBeatDB(getContext());
                     DeceDB.open();
-                    List<String> plans = DeceDB.getTitle();
+                    List<String> plans = DeceDB.getTitle(use);
 
 
                     ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
@@ -452,8 +463,10 @@ public class PlansFragment extends Fragment{
 
         lvMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
+
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
 
             }
         });

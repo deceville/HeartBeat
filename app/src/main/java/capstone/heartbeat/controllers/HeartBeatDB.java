@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 import java.util.List;
+import android.widget.Toast;
 
 import capstone.heartbeat.models.Activity;
 import capstone.heartbeat.models.Goal;
@@ -75,6 +76,7 @@ public class HeartBeatDB {
     public static final String KEY_ISCALCULATED = "calculated";
     public static final String KEY_TOTAL = "totalWeightLoss";
     public static final String KEY_PLANPROGRESS = "progress";
+    public static final String KEY_USERID = "userid";
 
 
 
@@ -94,7 +96,8 @@ public class HeartBeatDB {
         @Override
         public void onCreate(SQLiteDatabase db) {
             db.execSQL  ("CREATE TABLE IF NOT EXISTS " + DATABASE_TABLE + "( " + KEY_ROWID
-                    + " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_TITLE
+                    + " INTEGER PRIMARY KEY AUTOINCREMENT, "+ KEY_USERID
+                    + " INTEGER , " + KEY_TITLE
                     + " TEXT NOT NULL, " + KEY_DATE
                     + " TEXT NOT NULL, " + KEY_CALORIES
                     + " NUMERIC NOT NULL, " + KEY_MINUTES
@@ -160,8 +163,9 @@ public class HeartBeatDB {
         ourHelper.close();
     }
 
-    public long createEntry1(String title, String date, double calorie, int minutes, int freetime,boolean completed,double totalWeight){
+    public long createEntry1(int userID,String title, String date, double calorie, int minutes, int freetime,boolean completed,double totalWeight){
         ContentValues con = new ContentValues();
+        con.put(KEY_USERID,userID);
         con.put(KEY_TITLE,title);
         con.put(KEY_DATE,date);
         con.put(KEY_CALORIES,calorie);
@@ -478,17 +482,20 @@ public class HeartBeatDB {
         return result;
     }
 
-    public List<String> getTitle(){
-        String[] columns = new String[] {KEY_ROWID,KEY_TITLE,KEY_COMPLETED};
+    public List<String> getTitle(int userID){
+        String[] columns = new String[] {KEY_USERID,KEY_ROWID,KEY_TITLE,KEY_COMPLETED};
         Cursor c = ourDatabase.query(DATABASE_TABLE, columns, null, null, null, null,
                 null);
 
         List<String> titles = new ArrayList<>();
+        int user = c.getColumnIndex(KEY_USERID);
         int title = c.getColumnIndex(KEY_TITLE);
         int com = c.getColumnIndex(KEY_COMPLETED);
         for (c.moveToFirst();!c.isAfterLast () ;c.moveToNext()) {
-            if (!c.getString(com).equals("true"))
-            titles.add(c.getString(title));
+            if (!c.getString(com).equals("true") && c.getInt(user)==userID){
+                titles.add(c.getString(title));    
+            }
+            
         }
         return titles;
     }
