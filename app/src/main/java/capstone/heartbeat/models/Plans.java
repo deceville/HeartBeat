@@ -9,6 +9,7 @@ import java.util.List;
 public class Plans {
 
     public int id;
+    public int userID;
     private String title;
     private String date;
     public int minutes;
@@ -24,6 +25,12 @@ public class Plans {
         isCompleted = completed;
     }
 
+    public int getUserId(){
+        return userID;
+    }
+    public void setUserId(int usersID){
+        userID = usersID;
+    }
     public boolean isCompleted;
 
     public double getProgress() {

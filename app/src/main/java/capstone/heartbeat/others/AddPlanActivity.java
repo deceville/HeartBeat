@@ -17,6 +17,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -64,7 +65,7 @@ public class AddPlanActivity extends AppCompatActivity {
         setContentView(R.layout.activity_plans);
 
         prefs = getSharedPreferences("values",MODE_PRIVATE);
-        use= getSharedPreferences("session",MODE_PRIVATE);
+        use= getSharedPreferences("login",MODE_PRIVATE);
         uid = use.getInt("id",0);
         weight = prefs.getInt("weight",60);
 
@@ -108,6 +109,7 @@ public class AddPlanActivity extends AppCompatActivity {
         btn_addActivity = (FloatingActionButton) findViewById(R.id.btn_addActivity);
 
         btn_addActivity.setOnClickListener(new View.OnClickListener() {
+             
             @Override
             public void onClick(View v) {
                 final Dialog dialog = new Dialog(AddPlanActivity.this, android.R.style.Theme_Holo_Light_Dialog);
@@ -139,10 +141,15 @@ public class AddPlanActivity extends AppCompatActivity {
                 lvMain.setAdapter(adapter);
 
                 lvMain.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
+                    int totalTime = 0;
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            int time = prefs.getInt("free",60);
+                            totalTime = totalTime + 15;
+                            if (totalTime > time) {
+                                Toast.makeText(getApplicationContext(),"You reached the maximum",Toast.LENGTH_SHORT).show();
 
+                            }
                     }
                 });
 
@@ -220,7 +227,7 @@ public class AddPlanActivity extends AppCompatActivity {
                 .append(currMonth + 1).append("/").append(currDay).append("/")
                 .append(currYear).append(" "));
         //initialize editor
-        prefs = getSharedPreferences("values",MODE_PRIVATE);
+       
         SharedPreferences.Editor editor = prefs.edit();
         String plan_date = currMonth + 1 + "/" + currDay + "/" + currYear + " ";
         editor.putString("plan_date", plan_date);
@@ -267,9 +274,10 @@ public class AddPlanActivity extends AppCompatActivity {
                initialMinutes += 15;
             }
 
+            Toast.makeText(getApplicationContext(),uid+"",Toast.LENGTH_SHORT).show();
             HeartBeatDB plans = new HeartBeatDB(getApplicationContext());
             plans.open();
-            plans.createEntry1(title,date,cal,initialMinutes,freeTime,false,totalWeight);
+            plans.createEntry1(uid,title,date,cal,initialMinutes,freeTime,false,totalWeight);
             plans.createEntry2(selected,title,false);
             plans.close();
 
