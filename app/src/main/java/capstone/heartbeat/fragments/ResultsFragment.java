@@ -49,7 +49,7 @@ public class ResultsFragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_results, container, false);
-        int ha = pref.getInt("haResult",0);
+            int ha = pref.getInt("haResult",0);
         int st = pref.getInt("stResult",0);
 
         heartattack =(DonutProgress) view.findViewById(R.id.progress_heartattack);

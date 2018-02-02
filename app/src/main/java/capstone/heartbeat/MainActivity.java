@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,6 +19,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -45,7 +47,7 @@ public class MainActivity extends AppCompatActivity
     private ViewPager viewPager;
     private SharedPreferences prefs;
     public SharedPreferences user;
-
+    RelativeLayout coinCount, heartCount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +67,9 @@ public class MainActivity extends AppCompatActivity
         });*/
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        coinCount = (RelativeLayout) findViewById(R.id.badge_coin);
+        heartCount = (RelativeLayout) findViewById(R.id.badge_heart);
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -148,22 +153,13 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up next_button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        MenuItem item1 = menu.findItem(R.id.action_coins);
+        MenuItem item2 = menu.findItem(R.id.action_hearts);
+        MenuItemCompat.setActionView(item1, R.layout.badge_layout);
+        coinCount = (RelativeLayout) MenuItemCompat.getActionView(item1);
+        heartCount = (RelativeLayout) MenuItemCompat.getActionView(item2);
+        return super.onCreateOptionsMenu(menu);
     }
 
     @SuppressWarnings("StatementWithEmptyBody")

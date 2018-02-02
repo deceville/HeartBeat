@@ -446,10 +446,12 @@ public class PlansFragment extends Fragment{
     };
 
     public void displaySuggestionDialog(final String title){
-        final AlertDialog dialog = new AlertDialog.Builder(getContext())
-                .setTitle("Suggestions")
-                .setView(R.layout.fragment_suggestions)
-                .create();
+        final Dialog dialog = new Dialog(getContext(), android.R.style.Theme_Holo_Light_Dialog);
+        dialog.setTitle("Suggestions");
+        dialog.setContentView(R.layout.fragment_suggestions);
+        dialog.create();
+
+        dialog.show();
 
         dialog.show();
         suggestions = new ArrayList<Activity>();
