@@ -73,7 +73,7 @@ public class QStrokeMale {
         dbmi=dbmi/10;
         double bmi_1 = Math.pow(dbmi,-2);
         double bmi_2 = Math.pow(dbmi,-2)*Math.log(dbmi);
-        double surv = 9.2403842314780817000000000;
+        double surv = 0.993128657341003;
 
 	/* Centring the continuous variables */
 
