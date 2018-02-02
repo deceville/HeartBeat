@@ -35,4 +35,5 @@
     <dimen name="yellow_line_stroke_width">8dp</dimen>
     <dimen name="label_margin_top">10dp</dimen>
     <dimen name="textview_ruler">100dp</dimen>
+    <dimen name="app_bar_height">180dp</dimen>
 </resources>
