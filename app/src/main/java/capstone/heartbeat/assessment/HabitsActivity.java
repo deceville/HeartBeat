@@ -1,8 +1,11 @@
 package capstone.heartbeat.assessment;
 
+import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +16,10 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.NumberPicker;
 
+import java.util.Calendar;
+
 import capstone.heartbeat.R;
+import capstone.heartbeat.controllers.NotificationReceiver;
 
 public class HabitsActivity extends AppCompatActivity implements NumberPicker.OnValueChangeListener {
     ImageButton btn_smoking_yes, btn_smoking_no, btn_smoker, btn_nonsmoker;
@@ -241,7 +247,7 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
 
     public void showFreeTime() {
 
-        final Dialog d = new Dialog(HabitsActivity.this, android.R.style.Theme_Holo_Light_Dialog);
+        final Dialog d = new Dialog(HabitsActivity.this, android.R.style.Theme_Material_Light_Dialog);
         d.setTitle("Set your free time");
         d.setContentView(R.layout.ft_dialog);
         Button b1 = (Button) d.findViewById(R.id.ft_set);
@@ -308,7 +314,7 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
 
     public void showSleepTime() {
 
-        final Dialog d = new Dialog(HabitsActivity.this, android.R.style.Theme_Holo_Light_Dialog);
+        final Dialog d = new Dialog(HabitsActivity.this, android.R.style.Theme_Material_Light_Dialog);
         d.setTitle("Set your sleeping time");
         d.setContentView(R.layout.st_dialog);
         Button b1 = (Button) d.findViewById(R.id.st_set);
@@ -358,6 +364,16 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
             }
         });
         d.show();
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.HOUR_OF_DAY,21); //(12+(np.getValue()-1))
+        calendar.set(Calendar.MINUTE,48); //np1.getValue()
+
+        Intent intent = new Intent(getApplicationContext(), NotificationReceiver.class);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 100, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
 
@@ -421,6 +437,7 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
         super.onCreateOptionsMenu(menu);
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.next_button, menu);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         return true;
     }
 
@@ -432,10 +449,12 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.next) {
-
-            startActivity(new Intent(getApplicationContext(),HistoryActivity.class));
-            finish();
+        switch(id){
+            case R.id.next:
+                startActivity(new Intent(getApplicationContext(),HistoryActivity.class));
+                return true;
+            case android.R.id.home:
+                onBackPressed();
             return true;
         }
 

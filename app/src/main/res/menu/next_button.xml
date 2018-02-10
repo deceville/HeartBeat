@@ -6,7 +6,7 @@
         android:id="@+id/next"
         android:title="@string/next"
         android:icon="@drawable/ic_done"
-        app:showAsAction="always"
+        app:showAsAction="always|withText"
         />
 
 </menu>

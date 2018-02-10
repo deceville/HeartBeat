@@ -11,10 +11,13 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.util.List;
+
 import capstone.heartbeat.R;
 import capstone.heartbeat.controllers.HeartBeatDB;
 import capstone.heartbeat.controllers.ResultEvaluator;
 import capstone.heartbeat.models.Goal;
+import capstone.heartbeat.models.Progress;
 import capstone.heartbeat.models.User;
 
 
@@ -76,7 +79,7 @@ public class GoalsFragment extends Fragment{
 
         HeartBeatDB myDb = new HeartBeatDB(getContext());
         myDb.open();
-        ResultEvaluator re = new ResultEvaluator();
+        ResultEvaluator re = new ResultEvaluator(getContext());
         User user = new User();
         user = myDb.getUserAssessData(uid);
 
@@ -86,6 +89,15 @@ public class GoalsFragment extends Fragment{
         double height = user.height;
         Goal dece_goal = re.getBMIGoal(weight,height);
         double loseWeight = 0;
+
+        List<Progress> lp = myDb.getweightProg(uid,"weight");
+        for (Progress pr:lp
+             ) {
+            loseWeight += pr.getProgress();
+        }
+
+
+
         double percent = Math.round((loseWeight/dece_goal.getValue())*100);
 
 
@@ -150,7 +162,7 @@ public class GoalsFragment extends Fragment{
         progress3.setMax((int)hdl_goal);
         progress3.setProgress((int)hdl_progress);
 
-        if (chol_goal <= 0){
+        if (hdl_goal <= 0){
             label3.setVisibility(View.GONE);
             percent_label3.setVisibility(View.GONE);
             progress3.setVisibility(View.GONE);
@@ -181,7 +193,7 @@ public class GoalsFragment extends Fragment{
         progress4.setMax((int)sbp_goal);
         progress4.setProgress((int)sbp_progress);
 
-        if (chol_goal <= 0){
+        if (sbp_goal <= 0){
             label4.setVisibility(View.GONE);
             percent_label4.setVisibility(View.GONE);
             progress4.setVisibility(View.GONE);

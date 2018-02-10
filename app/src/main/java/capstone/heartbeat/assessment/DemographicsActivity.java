@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import capstone.heartbeat.controllers.HeartBeatDB;
 import capstone.heartbeat.controllers.PickerAdapter;
 import capstone.heartbeat.R;
 import capstone.heartbeat.models.ScaleView;
@@ -51,14 +52,19 @@ public class DemographicsActivity extends AppCompatActivity {
     boolean selected = false;
     int male = 0;
     int female = 0;
-    int gender ;
+    int gender ,uid,free;
     public String weight;
     SharedPreferences prefs;
     SharedPreferences.Editor editor;
 
+    int check = 3;
+    boolean alldone = false;
     private boolean quest_bp = false;
     private boolean quest_total = false;
     private boolean quest_hdl = false;
+
+    int singleQuest = 30;
+    int allQuest = 90;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,10 +72,14 @@ public class DemographicsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_demographics);
 
         prefs = getSharedPreferences("values",MODE_PRIVATE);
+        SharedPreferences pref = getSharedPreferences("login",MODE_PRIVATE);
         editor = prefs.edit();
         btn_birthdate = (Button)findViewById(R.id.btn_birthdate);
         btn_female = (Button)findViewById(R.id.btn_female);
         btn_male = (Button)findViewById(R.id.btn_male);
+        avatar = (ImageView) findViewById(R.id.avatar);
+
+        uid=pref.getInt("id",1);
 
         btn_female.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,16 +89,24 @@ public class DemographicsActivity extends AppCompatActivity {
                 male = 0;
                 gender = 0;
                 editor.putInt("Gender", gender);
+                avatar.setImageResource(R.drawable.char_undefined);
 
                 if(selected && (male == 1 || female == 0)){
+                    btn_female.setTextColor(getResources().getColor(android.R.color.black));
+                    btn_male.setTextColor(getResources().getColor(android.R.color.white));
                     btn_male.setBackgroundColor(getResources().getColor(R.color.bg_screen2));
                     btn_female.setBackgroundColor(getResources().getColor(R.color.progress_gray));
                 }else if(selected && (female == 1 || male == 0)){
+                    btn_female.setTextColor(getResources().getColor(android.R.color.white));
+                    btn_male.setTextColor(getResources().getColor(android.R.color.black));
                     btn_female.setBackgroundColor(getResources().getColor(R.color.bg_screen3));
                     btn_male.setBackgroundColor(getResources().getColor(R.color.progress_gray));
                 }
-
-                setFemaleCharacter(age);
+                if(age != 0){
+                    setFemaleCharacter(age);
+                }else{
+                    avatar.setImageResource(R.drawable.char_undefined);
+                }
             }
         });
 
@@ -104,14 +122,21 @@ public class DemographicsActivity extends AppCompatActivity {
                 editor.putInt("Gender", gender);
 
                 if(selected && (male == 1 || female == 0)){
+                    btn_female.setTextColor(getResources().getColor(android.R.color.black));
+                    btn_male.setTextColor(getResources().getColor(android.R.color.white));
                     btn_male.setBackgroundColor(getResources().getColor(R.color.bg_screen2));
                     btn_female.setBackgroundColor(getResources().getColor(R.color.progress_gray));
                 }else if(selected && (female == 1 || male == 0)){
+                    btn_female.setTextColor(getResources().getColor(android.R.color.white));
+                    btn_male.setTextColor(getResources().getColor(android.R.color.black));
                     btn_female.setBackgroundColor(getResources().getColor(R.color.bg_screen3));
                     btn_male.setBackgroundColor(getResources().getColor(R.color.progress_gray));
                 }
-
-                setMaleCharacter(age);
+                if(age != 0){
+                    setMaleCharacter(age);
+                }else{
+                    avatar.setImageResource(R.drawable.char_undefined);
+                }
             }
         });
 
@@ -120,9 +145,17 @@ public class DemographicsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Calendar c = Calendar.getInstance();
-                currYear = c.get(Calendar.YEAR);
-                currMonth = c.get(Calendar.MONTH);
                 currDay = c.get(Calendar.DAY_OF_MONTH);
+                currMonth = c.get(Calendar.MONTH);
+                currYear = c.get(Calendar.YEAR);
+                Calendar maxDate = Calendar.getInstance();
+                maxDate.set(Calendar.YEAR, 1993);
+                maxDate.set(Calendar.MONTH, 11);
+                maxDate.set(Calendar.DAY_OF_MONTH, 31);
+                Calendar minDate = Calendar.getInstance();
+                minDate.set(Calendar.YEAR, 1934);
+                minDate.set(Calendar.MONTH, 0);
+                minDate.set(Calendar.DAY_OF_MONTH, 1);
                 DatePickerDialog dialog = new DatePickerDialog(DemographicsActivity.this,
                         android.R.style.Theme_Holo_Light_Dialog,
                         new mDateSetListener(), currYear, currMonth, currDay){
@@ -133,6 +166,8 @@ public class DemographicsActivity extends AppCompatActivity {
                         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                     }
                 };
+                dialog.getDatePicker().setMinDate(minDate.getTimeInMillis());
+                dialog.getDatePicker().setMaxDate(maxDate.getTimeInMillis());
                 dialog.show();
             }
         });
@@ -141,7 +176,7 @@ public class DemographicsActivity extends AppCompatActivity {
 
         final ScaleView rulerViewMm = (ScaleView) findViewById(R.id.my_scale);
         txtValue = (TextView) findViewById(R.id.txt_height);
-        rulerViewMm.setStartingPoint(160f);
+        rulerViewMm.setStartingPoint(150f);
         rulerViewMm.setUpdateListener(new onViewUpdateListener() {
 
             @Override
@@ -206,19 +241,34 @@ public class DemographicsActivity extends AppCompatActivity {
             editor.commit();
 
             //Display the dialog
-            final Dialog dialog = new Dialog(DemographicsActivity.this, android.R.style.Theme_Holo_Light_Dialog);
+            final Dialog dialog = new Dialog(DemographicsActivity.this, android.R.style.Theme_Material_Light_Dialog);
             dialog.setTitle("Confirmation");
             dialog.setContentView(R.layout.confirm_dialog);
+
+            dialog.show();
+
             Button confirm_proceed = (Button) dialog.findViewById(R.id.confirm_proceed);
             Button confirm_cancel = (Button) dialog.findViewById(R.id.confirm_cancel);
             Switch sw_bp = (Switch) dialog.findViewById(R.id.sw_bp) ;
             Switch sw_hdl = (Switch) dialog.findViewById(R.id.sw_total) ;
             Switch sw_total = (Switch) dialog.findViewById(R.id.sw_hdl) ;
+            final int[] coins = {0};
+
+            final int coin = prefs.getInt("coin",0);
 
             sw_bp.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     quest_bp = isChecked;
+                    if (isChecked) {
+                        coins[0] = coins[0] + singleQuest;
+                        editor.putInt("coin",coins[0]);
+                        editor.commit();
+                    }
+                    else{ coins[0] = coin -singleQuest;
+                        editor.putInt("coin",coins[0]);
+                        editor.commit();
+                    }
                 }
             });
 
@@ -226,6 +276,15 @@ public class DemographicsActivity extends AppCompatActivity {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     quest_total = isChecked;
+                    if (isChecked) {
+                        coins[0] = coins[0] + singleQuest;
+                        editor.putInt("coin",coins[0]);
+                        editor.commit();
+                    }
+                    else{ coins[0] = coin -singleQuest;
+                        editor.putInt("coin",coins[0]);
+                        editor.commit();
+                    }
                 }
             });
 
@@ -233,6 +292,15 @@ public class DemographicsActivity extends AppCompatActivity {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     quest_hdl = isChecked;
+                    if (isChecked) {
+                        coins[0] = coins[0] + singleQuest;
+                        editor.putInt("coin",coins[0]);
+                        editor.commit();
+                    }
+                    else{ coins[0] = coin -singleQuest;
+                        editor.putInt("coin",coins[0]);
+                        editor.commit();
+                    }
                 }
             });
 
@@ -241,19 +309,25 @@ public class DemographicsActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     dialog.dismiss();
 
-                    final Dialog d = new Dialog(DemographicsActivity.this, android.R.style.Theme_Holo_Light_Dialog);
+                    final Dialog d = new Dialog(DemographicsActivity.this, android.R.style.Theme_Material_Light_Dialog);
                     d.setTitle("Quests");
                     d.setContentView(R.layout.all_quest_dialog);
 
-                    View viewGroup_bp = d.findViewById(R.id.viewGroup_bp);
-                    View viewGroup_total = d.findViewById(R.id.viewGroup_total);
-                    View viewGroup_hdl = d.findViewById(R.id.viewGroup_hdl);
+                    d.show();
 
+                    final View viewGroup_bp = d.findViewById(R.id.viewGroup_bp);
+                    final View viewGroup_total = d.findViewById(R.id.viewGroup_total);
+                    final View viewGroup_hdl = d.findViewById(R.id.viewGroup_hdl);
+
+                    System.out.println(uid);
                     Button quest_done = (Button) d.findViewById(R.id.quest_done);
                     Button quest_back = (Button) d.findViewById(R.id.quest_back);
 
                     if(quest_hdl && quest_bp && quest_total){
-                        finish();
+                        HeartBeatDB db = new HeartBeatDB(getApplicationContext());
+                        db.open();
+                        db.setInitialPoints(uid,0,90, 0);
+                        db.close();
                         d.dismiss();
                         startActivity(new Intent(DemographicsActivity.this, LaboratoryActivity.class));
                     }else{
@@ -273,69 +347,95 @@ public class DemographicsActivity extends AppCompatActivity {
                     viewGroup_bp.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            final Dialog dialog1 = new Dialog(DemographicsActivity.this, android.R.style.Theme_Holo_Light_Dialog);
+                            final Dialog dialog1 = new Dialog(DemographicsActivity.this, android.R.style.Theme_Material_Light_Dialog);
                             dialog1.setTitle("Blood Pressure Quest");
                             dialog1.setContentView(R.layout.quest_bp);
 
+                            dialog1.show();
+
                             Button bp_okay = (Button) dialog1.findViewById(R.id.bp_okay);
+                            Button bp_cancel = (Button) dialog1.findViewById(R.id.bp_cancel);
 
                             bp_okay.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    showCoinDialog(dialog1, singleQuest);
+                                    viewGroup_bp.setVisibility(GONE);
+                                }
+                            });
+
+                            bp_cancel.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     dialog1.dismiss();
                                 }
                             });
-
-                            dialog1.show();
                         }
                     });
 
                     viewGroup_total.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            final Dialog dialog1 = new Dialog(DemographicsActivity.this, android.R.style.Theme_Holo_Light_Dialog);
+                            final Dialog dialog1 = new Dialog(DemographicsActivity.this, android.R.style.Theme_Material_Light_Dialog);
                             dialog1.setTitle("Total Cholesterol Quest");
                             dialog1.setContentView(R.layout.quest_total);
 
+                            dialog1.show();
+
                             Button total_okay = (Button) dialog1.findViewById(R.id.total_okay);
+                            Button total_cancel = (Button) dialog1.findViewById(R.id.total_cancel);
 
                             total_okay.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    showCoinDialog(dialog1, singleQuest);
+                                    viewGroup_total.setVisibility(GONE);
+                                }
+                            });
+
+                            total_cancel.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     dialog1.dismiss();
                                 }
                             });
-
-                            dialog1.show();
                         }
                     });
 
                     viewGroup_hdl.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            final Dialog dialog1 = new Dialog(DemographicsActivity.this, android.R.style.Theme_Holo_Light_Dialog);
+                            final Dialog dialog1 = new Dialog(DemographicsActivity.this, android.R.style.Theme_Material_Light_Dialog);
                             dialog1.setTitle("HDL Cholesterol Quest");
                             dialog1.setContentView(R.layout.quest_hdl);
 
+                            dialog1.show();
+
                             Button hdl_okay = (Button) dialog1.findViewById(R.id.hdl_okay);
+                            Button hdl_cancel = (Button) dialog1.findViewById(R.id.hdl_cancel);
 
                             hdl_okay.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    showCoinDialog(dialog1, singleQuest);
+                                    viewGroup_hdl.setVisibility(GONE);
+                                }
+                            });
+
+                            hdl_cancel.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     dialog1.dismiss();
                                 }
                             });
-
-                            dialog1.show();
                         }
                     });
 
                     quest_done.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            d.dismiss();
-                            finish();
-                            startActivity(new Intent(DemographicsActivity.this, LaboratoryActivity.class));
+                            alldone = true;
+                            showCoinDialog(d, allQuest);
                         }
                     });
 
@@ -346,8 +446,6 @@ public class DemographicsActivity extends AppCompatActivity {
                             dialog.show();
                         }
                     });
-
-                    d.show();
                 }
             });
 
@@ -357,8 +455,6 @@ public class DemographicsActivity extends AppCompatActivity {
                     dialog.dismiss();
                 }
             });
-
-            dialog.show();
 
             return true;
         }
@@ -481,5 +577,36 @@ public class DemographicsActivity extends AppCompatActivity {
         AlertDialog alert = builder.create();
         alert.show();
         return true;
+    }
+
+    public void showCoinDialog(final Dialog d, int coins){
+        final Dialog dialog2 = new Dialog(DemographicsActivity.this);
+        dialog2.setContentView(R.layout.coins_dialog);
+
+        Button btn_thank = (Button) dialog2.findViewById(R.id.btn_thank);
+        TextView txt_coin = (TextView) dialog2.findViewById(R.id.txt_coin);
+        TextView txt_coin_desc = (TextView) dialog2.findViewById(R.id.txt_coin_desc);
+
+        txt_coin.setText(String.format("%d", coins));
+        txt_coin_desc.setText("You have earned " + coins + " coins for completing this quest!");
+        dialog2.show();
+
+        btn_thank.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                d.dismiss();
+                dialog2.dismiss();
+                check -= 1;
+                if(check == 0){
+                    finish();
+                    startActivity(new Intent(DemographicsActivity.this, LaboratoryActivity.class));
+                }
+
+                if(alldone){
+                    finish();
+                    startActivity(new Intent(DemographicsActivity.this, LaboratoryActivity.class));
+                }
+            }
+        });
     }
 }

@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SET_ALARM"/>
 
     <application
         android:allowBackup="true"
@@ -39,18 +40,23 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".assessment.DemographicsActivity"
+            android:launchMode="singleTop"
             android:label="@string/title_activity_demo" />
         <activity
             android:name=".assessment.LaboratoryActivity"
+            android:launchMode="singleTop"
             android:label="@string/title_activity_lab" />
         <activity
             android:name=".assessment.HistoryActivity"
+            android:launchMode="singleTop"
             android:label="@string/title_activity_history" />
         <activity
             android:name=".assessment.HabitsActivity"
+            android:launchMode="singleTop"
             android:label="@string/title_activity_habits" />
         <activity
             android:name=".assessment.RiskResultsActivity"
+            android:launchMode="singleTop"
             android:label="@string/title_activity_results" />
         <activity
             android:name=".others.AddPlanActivity"
@@ -67,13 +73,12 @@
             android:label="@string/title_activity_profile" />
         <activity
             android:name=".account.EditProfileActivity"
-<<<<<<< HEAD
             android:label="@string/title_activity_editprofile" />
-        <activity android:name=".sidebar.FAQ_Activity"></activity>
-=======
-            android:label="@string/title_activity_editprofile"/>
+        <activity
+            android:name=".sidebar.FAQ_Activity"
+            android:label="@string/title_activity_faq_"/>
 
->>>>>>> 70e0754fff77be24e9f91194e7a5ff4ad5bf5501
+        <receiver android:name=".controllers.NotificationReceiver"/>
     </application>
 
 </manifest>

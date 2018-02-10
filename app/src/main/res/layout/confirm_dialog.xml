@@ -7,55 +7,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingTop="@dimen/demo_question_padding"
-        android:paddingLeft="@dimen/demo_question_padding"
-        android:paddingRight="@dimen/demo_question_padding">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Before proceeding, select the item/s you already know."
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+        android:paddingTop="@dimen/fab_margin"
+        android:paddingStart="@dimen/fab_margin"
+        android:paddingEnd="@dimen/fab_margin">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="@dimen/demo_question_padding"
-            android:layout_gravity="start"
             android:orientation="horizontal">
 
-            <Switch
-                android:id="@+id/sw_total"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:theme="@style/SwitchColor" />
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/ic_info"
+                android:layout_marginEnd="10dp"
+                android:backgroundTint="@color/bg_screen2"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/fab_margin"
-                android:text="Total Cholesterol"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/demo_question_padding"
-            android:layout_gravity="start"
-            android:orientation="horizontal">
-
-            <Switch
-                android:id="@+id/sw_hdl"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:theme="@style/SwitchColor" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/fab_margin"
-                android:text="HDL Cholesterol"
+                android:text="Before proceeding, select the item/s you already know."
+                android:textSize="18sp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
         </LinearLayout>
 
@@ -77,7 +49,52 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/fab_margin"
                 android:text="Blood Pressure"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+                android:textColor="@android:color/black"
+                android:textSize="18sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/demo_question_padding"
+            android:layout_gravity="start"
+            android:orientation="horizontal">
+
+            <Switch
+                android:id="@+id/sw_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/SwitchColor" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/fab_margin"
+                android:text="Total Cholesterol"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/demo_question_padding"
+            android:layout_gravity="start"
+            android:orientation="horizontal">
+
+            <Switch
+                android:id="@+id/sw_hdl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:theme="@style/SwitchColor" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/fab_margin"
+                android:text="HDL Cholesterol"
+                android:textColor="@android:color/black"
+                android:textSize="18sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -86,21 +103,30 @@
             android:orientation="horizontal"
             android:gravity="center_horizontal"
             android:layout_marginTop="40dp"
-            android:layout_marginBottom="20dp">
+            android:layout_marginBottom="20dp"
+            android:weightSum="2">
 
             <Button
                 android:id="@+id/confirm_cancel"
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginEnd="30dp"
+                android:layout_weight="1"
+                android:background="@color/circle_red"
+                android:textColor="@color/standardWhite"
                 android:text="Cancel" />
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent" />
 
             <Button
                 android:id="@+id/confirm_proceed"
-                android:layout_width="120dp"
-                android:gravity="center"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/circle_green"
+                android:textColor="@color/standardWhite"
                 android:text="Proceed" />
         </LinearLayout>
 

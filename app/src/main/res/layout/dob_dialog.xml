@@ -2,6 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="@dimen/fab_margin"
+    android:paddingStart="@dimen/fab_margin"
+    android:paddingEnd="@dimen/fab_margin"
     android:gravity="center_horizontal">
 
     <LinearLayout
@@ -15,7 +18,7 @@
             android:id="@+id/bday_month"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/img_margin_top"
+            android:layout_marginEnd="@dimen/fab_margin"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"/>
 
@@ -23,7 +26,7 @@
             android:id="@+id/bday_day"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/img_margin_top"
+            android:layout_marginEnd="@dimen/fab_margin"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"/>
 
@@ -40,23 +43,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_below="@+id/np"
         android:gravity="center_horizontal"
-        android:layout_marginTop="@dimen/img_margin_top"
-        android:layout_marginBottom="@dimen/img_margin_top">
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/np"
+        android:layout_marginBottom="20dp"
+        android:weightSum="2">
 
         <Button
             android:id="@+id/birthday_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="50dp"
-            android:layout_marginRight="@dimen/img_margin_top"
+            android:layout_weight="1"
+            android:background="@color/circle_red"
+            android:textColor="@color/standardWhite"
             android:text="Cancel" />
+
+        <View
+            android:layout_width="4dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent" />
 
         <Button
             android:id="@+id/birthday_set"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/circle_green"
+            android:textColor="@color/standardWhite"
             android:text="Set" />
     </LinearLayout>
 </RelativeLayout>

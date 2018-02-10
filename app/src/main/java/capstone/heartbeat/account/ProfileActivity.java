@@ -14,7 +14,7 @@ import capstone.heartbeat.models.User;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    private TextView prof_fullname,prof_email,prof_birth,prof_sleep;
+    private TextView prof_fullname,prof_username,prof_birth,prof_sleep;
     private SharedPreferences prefs;
 
 
@@ -28,7 +28,7 @@ public class ProfileActivity extends AppCompatActivity {
         int id = prefs.getInt("id",0);
 
         prof_fullname = (TextView) findViewById(R.id.profile_fullname);
-        prof_email = (TextView) findViewById(R.id.profile_email);
+        prof_username = (TextView) findViewById(R.id.profile_username);
         prof_birth = (TextView) findViewById(R.id.profile_birthday);
         prof_sleep = (TextView) findViewById(R.id.profile_sleeptime);
 
@@ -37,7 +37,7 @@ public class ProfileActivity extends AppCompatActivity {
         User dece = new User();
         dece = mydb.getUserAssessData(id);
         prof_fullname.setText(dece.name);
-        prof_email.setText(dece.email);
+        prof_username.setText(dece.username);
         prof_birth.setText(dece.birth);
         prof_sleep.setText(dece.sleep);
 

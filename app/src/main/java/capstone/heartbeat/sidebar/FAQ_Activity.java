@@ -64,12 +64,11 @@ public class FAQ_Activity extends AppCompatActivity {
 
             List<String> answers6 = new ArrayList<>();
             answers6.add(answer6);
-            faqs.put(faqlist.get(5),answers5);
-
-
-
+            faqs.put(faqlist.get(5),answers6);
 
 
         listAdapter = new ExpandableListAdapter(getApplicationContext(), faqlist, faqs);
+
+        expListView.setAdapter(listAdapter);
     }
 }

@@ -1,27 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/progress_gray">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/title_goals"
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/progress_gray"/>
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="start"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:paddingBottom="10dp"
-        android:textSize="16sp"/>
+        android:paddingTop="10dp"
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:layout_gravity="start"
+        android:orientation="horizontal"
+        android:focusable="true">
 
-    <TextView
-        android:id="@+id/duration_goals"
-        android:layout_below="@id/title_goals"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="start"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
-        android:paddingBottom="10dp"
-        android:textSize="16sp" />
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="5dp"
+            android:backgroundTint="@color/bg_screen2"
+            android:background="@drawable/ic_explore"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title_goals"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
+                android:paddingStart="@dimen/fab_margin"
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/duration_goals"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingStart="@dimen/fab_margin"
+                android:textSize="14sp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
 </RelativeLayout>

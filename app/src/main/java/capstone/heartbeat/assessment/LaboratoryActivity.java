@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -83,6 +84,7 @@ public class LaboratoryActivity extends AppCompatActivity {
         super.onCreateOptionsMenu(menu);
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.next_button, menu);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         return true;
     }
 
@@ -94,12 +96,21 @@ public class LaboratoryActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.next) {
+        switch(id){
+            case R.id.next:
+                prefs = getSharedPreferences("values", MODE_PRIVATE);
+                startActivity(new Intent(getApplicationContext(),HabitsActivity.class));
+                return true;
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        /*if (id == R.id.next) {
             prefs = getSharedPreferences("values", MODE_PRIVATE);
             startActivity(new Intent(getApplicationContext(),HabitsActivity.class));
             finish();
             return true;
-        }
+        }*/
 
         return super.onOptionsItemSelected(item);
     }

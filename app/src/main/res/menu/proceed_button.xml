@@ -5,5 +5,6 @@
     <item
         android:id="@+id/proceed"
         android:title="@string/proceed"
+        android:icon="@drawable/ic_done"
         app:showAsAction="always"/>
 </menu>

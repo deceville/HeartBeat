@@ -1,5 +1,6 @@
 package capstone.heartbeat.assessment;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
@@ -11,8 +12,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import capstone.heartbeat.R;
+import capstone.heartbeat.account.LoginActivity;
+import capstone.heartbeat.account.SignupActivity;
 
 public class HistoryActivity extends AppCompatActivity {
     private Button diabetes_t1no,diabetes_t1yes,famhistory_yes,famhistoy_no;
@@ -239,6 +243,7 @@ public class HistoryActivity extends AppCompatActivity {
         super.onCreateOptionsMenu(menu);
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.next_button, menu);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         return true;
     }
 
@@ -250,10 +255,26 @@ public class HistoryActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.next) {
-            startActivity(new Intent(getApplicationContext(),RiskResultsActivity.class));
-            finish();
-            return true;
+        switch(id){
+            case R.id.next:
+                final Dialog dialog2 = new Dialog(HistoryActivity.this);
+                dialog2.setContentView(R.layout.badge_profile);
+
+                Button btn_thank = (Button) dialog2.findViewById(R.id.btn_thank);
+
+                dialog2.show();
+
+                btn_thank.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog2.dismiss();
+                        startActivity(new Intent(getApplicationContext(),RiskResultsActivity.class));
+                    }
+                });
+                return true;
+            case android.R.id.home:
+                onBackPressed();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);

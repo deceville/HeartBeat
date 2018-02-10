@@ -18,7 +18,6 @@ public class User {
 
     public double mets;
     public String username;
-    public String email;
     public String name;
     public String password;
 
@@ -59,9 +58,8 @@ public class User {
     public User() {
     }
 
-    public User(String username,String email,String name,String password){
+    public User(String username,String name,String password){
         this.username = username;
-        this.email = email;
         this.name = name;
         this.password = password;
     }
@@ -127,14 +125,6 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getName() {

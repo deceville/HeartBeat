@@ -29,16 +29,18 @@ public class ResultEvaluator extends AddPlanActivity {
     private SharedPreferences pref;
     private int weight, height, sbp, dbp, chl, hdl;
     DecimalFormat df;
+    Context c;
 
-    public ResultEvaluator() {
+    public ResultEvaluator(Context c) {
         df = new DecimalFormat();
         df.setMaximumFractionDigits(2);
+        this.c = c;
     }
 
 
     public double getSuggestedMet() {
         boolean giveSuggestion = false;
-        pref = AddPlanActivity.prefs;
+        pref = c.getSharedPreferences("values",MODE_PRIVATE);
         int h = pref.getInt("normalHA", 0);
         int s = pref.getInt("normalST", 0);
         int ha = pref.getInt("haResult", 0);

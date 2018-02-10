@@ -22,7 +22,9 @@ import android.widget.TextView;
 import capstone.heartbeat.MainActivity;
 import capstone.heartbeat.R;
 import capstone.heartbeat.assessment.DemographicsActivity;
+import capstone.heartbeat.controllers.HeartBeatDB;
 import capstone.heartbeat.controllers.PreferenceManager;
+import capstone.heartbeat.models.User;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -149,7 +151,12 @@ public class WelcomeActivity extends AppCompatActivity {
         boolean status = false;
         prefs =getSharedPreferences("login",MODE_PRIVATE);
         boolean calculated = prefs.getBoolean("isCalculated",false);
-
+        int id = prefs.getInt("id",0);
+       /* HeartBeatDB db = new HeartBeatDB(getApplicationContext());
+        db.open();
+        User a = new User();
+        a= db.getUserAssessData(id);
+        calculated = a.isCalculated();*/
         if (calculated==true){
             status = true;
             return status;

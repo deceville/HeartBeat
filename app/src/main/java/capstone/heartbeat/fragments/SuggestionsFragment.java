@@ -1,5 +1,6 @@
 package capstone.heartbeat.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,12 +13,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import capstone.heartbeat.controllers.ActivityDatabase;
 import capstone.heartbeat.controllers.ListAdapter;
 import capstone.heartbeat.R;
 import capstone.heartbeat.controllers.ResultEvaluator;
 import capstone.heartbeat.models.Activity;
+import capstone.heartbeat.others.AddPlanActivity;
 
 
 public class SuggestionsFragment extends Fragment {
@@ -37,7 +40,7 @@ public class SuggestionsFragment extends Fragment {
         ActivityDatabase myDB = new ActivityDatabase(getContext());
         btn_cancel.setVisibility(View.GONE);
         //suggestions = new ArrayList<Activity>();
-        ResultEvaluator re = new ResultEvaluator();
+        ResultEvaluator re = new ResultEvaluator(getContext());
         double met = re.getSuggestedMet();
         System.out.println("met:" + met);
         suggestions = myDB.getSuggestedActivities((int) met);
@@ -66,13 +69,13 @@ public class SuggestionsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 StringBuilder selected = new StringBuilder("Selected: \n");
-
+                List<Activity> select = new ArrayList<>();
                 for (int i = 0; i < suggestions.size(); i++) {
                     if (suggestions.get(i).isChecked()) {
-                        selected.append(i).append("\n");
+                        select.add(suggestions.get(i));
                     }
                 }
-                Toast.makeText(getContext(), selected.toString(), Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(getContext(), AddPlanActivity.class));
             }
         });
 

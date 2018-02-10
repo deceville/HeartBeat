@@ -6,64 +6,104 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/fab_margin"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="@dimen/fab_margin">
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Don't know your blood pressure?"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/ic_help"
+                android:backgroundTint="@color/bg_screen2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Don't know your blood pressure?"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textSize="18sp" />
+        </LinearLayout>
 
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:paddingTop="@dimen/fab_margin"
             android:layout_gravity="center"
-            android:src="@drawable/ic_icon_bp"/>
+            android:paddingTop="@dimen/fab_margin"
+            android:src="@drawable/ic_icon_bp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
             android:paddingTop="@dimen/fab_margin"
             android:text="Check your blood pressure at medical clinic or use a home blood pressure monitor."
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:paddingTop="30dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingTop="20dp">
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/ic_coin"/>
+                android:src="@drawable/ic_coin" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingStart="5dp"
-                android:textSize="16sp"
-                android:text="Earn 50 coins after completing this quest!"/>
+                android:text="Earn 50 coins after completing this quest!"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/fab_margin"
-            android:textSize="14sp"
-            android:text="Note: If you don't know your blood pressure, the results won't be as accurate and as personal as to you."/>
+            android:text="Note: If you don't know your blood pressure, the results won't be as accurate and as personal as to you."
+            android:textSize="14sp" />
 
-        <Button
-            android:id="@+id/bp_okay"
-            android:layout_width="100dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="@dimen/fab_margin"
-            android:text="Okay"/>
+            android:layout_marginTop="30dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <Button
+                android:id="@+id/bp_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/circle_red"
+                android:text="Cancel"
+                android:textColor="@color/standardWhite" />
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent" />
+
+            <Button
+                android:id="@+id/bp_okay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/circle_green"
+                android:text="Done quest"
+                android:textColor="@color/standardWhite" />
+        </LinearLayout>
+
     </LinearLayout>
 
 

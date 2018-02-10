@@ -46,7 +46,7 @@
     </array>
 
     <!-- circular button colors -->
-    <color name="circle_green">#8BC34A</color>
+    <color name="circle_green">#30AD50</color>
     <color name="circle_red">#FF5722</color>
     <color name="circle_orange">#FF9800</color>
     <color name="circle_yellow">#FFC107</color>

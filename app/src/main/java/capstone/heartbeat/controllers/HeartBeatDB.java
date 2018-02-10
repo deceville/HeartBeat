@@ -8,12 +8,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import android.widget.Toast;
 
 import capstone.heartbeat.models.Activity;
+import capstone.heartbeat.models.Bank;
 import capstone.heartbeat.models.Goal;
 import capstone.heartbeat.models.Plans;
+import capstone.heartbeat.models.Progress;
 import capstone.heartbeat.models.User;
 
 /**
@@ -28,6 +31,8 @@ public class HeartBeatDB {
     private static final String DATABASE_TABLE2 ="Activity";
     private static final String DATABASE_TABLE3 ="Users";
     private static final String DATABASE_TABLE4 ="Goals";
+    private static final String DATABASE_TABLE5 ="Bank";
+    private static final String DATABASE_TABLE6 ="Progress";
     public static final String KEY_ROWID = "_id";
     public static final String KEY_PLANID = "plan_id";
     public static final String KEY_ACTIVITYID = "activity_id";
@@ -39,7 +44,6 @@ public class HeartBeatDB {
     public static final String KEY_ACTIVITY = "activities";
     public static final String KEY_USERNAME = "username";
     public static final String KEY_NAME = "name";
-    public static final String KEY_EMAIL = "email";
     public static final String KEY_PASSWORD = "password";
     public static final String KEY_WEIGHT = "weight";
     public static final String KEY_HEIGHT = "height";
@@ -75,8 +79,19 @@ public class HeartBeatDB {
     public static final String KEY_MET = "mets";
     public static final String KEY_ISCALCULATED = "calculated";
     public static final String KEY_TOTAL = "totalWeightLoss";
+    public static final String KEY_WEIGHTLOSS = "WeightLoss";
     public static final String KEY_PLANPROGRESS = "progress";
     public static final String KEY_USERID = "userid";
+
+    public static final String KEY_BANKID = "bankid";
+    public static final String KEY_HEARTS = "hearts";
+    public static final String KEY_COINS = "coins";
+    public static final String KEY_TOTALTIME = "timetotal";
+
+    public static final String KEY_DATES = "trans_date";
+    public static final String KEY_PROG = "progress";
+    public static final String KEY_TYPE = "TYPE";
+
 
 
 
@@ -110,12 +125,12 @@ public class HeartBeatDB {
                     + " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_TITLE
                     + " TEXT NOT NULL, " + KEY_ACTIVITY
                     + " TEXT NOT NULL, "+KEY_COMPLETED
-                    + " TEXT , " + KEY_DURATION
+                    + " TEXT , " +KEY_WEIGHTLOSS
+                    + " NUMERIC , "+ KEY_DURATION
                     + " INTEGER )");
             db.execSQL  ("CREATE TABLE IF NOT EXISTS " + DATABASE_TABLE3 + "( " + KEY_ROWID
                     + " INTEGER PRIMARY KEY AUTOINCREMENT, " + KEY_USERNAME
-                    + " TEXT NOT NULL, " + KEY_NAME + " TEXT NOT NULL, "+KEY_EMAIL
-                    + " TEXT NOT NULL, " + KEY_PASSWORD + " TEXT , "+KEY_BIRTH
+                    + " TEXT NOT NULL, " + KEY_NAME + " TEXT NOT NULL, " + KEY_PASSWORD + " TEXT , "+KEY_BIRTH
                     + " TEXT , " + KEY_GENDER + " TEXT , "+KEY_CHL
                     + " INTEGER , " + KEY_HDL + " INTEGER , "+KEY_SBP
                     + " INTEGER , " + KEY_DBP + " INTEGER , "+KEY_SMOKE
@@ -127,7 +142,8 @@ public class HeartBeatDB {
                     + " INTEGER , " + KEY_CKD + " INTEGER , "+KEY_FHCVD
                     + " INTEGER , " + KEY_HEARTATTACK
                     + " INTEGER , " + KEY_WEIGHT
-                    + " INTEGER , "+KEY_HEIGHT
+                    + " INTEGER , " + KEY_ISCALCULATED
+                    + " TEXT , "+ KEY_HEIGHT
                     + " NUMERIC , " + KEY_MET
                     + " NUMERIC , " + KEY_STROKE+" INTEGER )");
             db.execSQL  ("CREATE TABLE IF NOT EXISTS " + DATABASE_TABLE4 + "( " + KEY_GOALID
@@ -137,6 +153,18 @@ public class HeartBeatDB {
                     + " NUMERIC NOT NULL, " + KEY_ACTIONS
                     + " TEXT NOT NULL, " + KEY_COMPLETED+" TEXT NOT NULL )");
 
+            db.execSQL  ("CREATE TABLE IF NOT EXISTS " + DATABASE_TABLE5 + "( " + KEY_BANKID
+                    + " INTEGER , " + KEY_HEARTS
+                    + " INTEGER , " + KEY_COINS + " INTEGER , "+KEY_TOTALTIME
+                    + " INTEGER  )");
+
+            db.execSQL  ("CREATE TABLE IF NOT EXISTS " + DATABASE_TABLE6 + "( " + KEY_ROWID
+                    + " INTEGER , " + KEY_USERID
+                    + " INTEGER , "+ KEY_DATES
+                    + " TEXT , " + KEY_TYPE + " TEXT , "+KEY_PROG
+                    + " NUMERIC  )");
+
+
         }
 
         @Override
@@ -145,6 +173,8 @@ public class HeartBeatDB {
             db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE2);
             db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE3);
             db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE4);
+            db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE5);
+            db.execSQL("DROP TABLE IF EXISTS " + DATABASE_TABLE6);
             onCreate(db);
         }
     }
@@ -163,6 +193,36 @@ public class HeartBeatDB {
         ourHelper.close();
     }
 
+    public long newProgress(int user,String date,double pr,String type){
+        ContentValues cv = new ContentValues();
+        cv.put(KEY_USERID,user);
+        cv.put(KEY_DATES,date);
+        cv.put(KEY_PROG,pr);
+        cv.put(KEY_TYPE,type);
+        return ourDatabase.insert(DATABASE_TABLE6,null,cv);
+
+    }
+
+    public List<Progress> getweightProg(int user, String type){
+        String[] col = new String[]{KEY_USERID,KEY_DATES,KEY_PROG,KEY_TYPE};
+        Cursor c = ourDatabase.query(DATABASE_TABLE6,col,KEY_TYPE +"= '"+type +"' AND "+KEY_USERID+"="+user,null,null,null,null);
+        Progress p = new Progress();
+        List<Progress> lp = new ArrayList<>();
+        int date = c.getColumnIndex(KEY_DATES);
+        int prog = c.getColumnIndex(KEY_PROG);
+        int types = c.getColumnIndex(KEY_TYPE);
+
+        while (c.moveToNext()){
+            p.setDate(c.getString(date));
+            p.setProgress(c.getDouble(prog));
+            p.setType(c.getString(types));
+            lp.add(p);
+        }
+        return lp;
+
+
+    }
+
     public long createEntry1(int userID,String title, String date, double calorie, int minutes, int freetime,boolean completed,double totalWeight){
         ContentValues con = new ContentValues();
         con.put(KEY_USERID,userID);
@@ -178,27 +238,34 @@ public class HeartBeatDB {
 
     }
 
-    public boolean createEntry2(List<String> activity,String PlanName,boolean completed){
+    public boolean createEntry2(List<String> activity,String PlanName,boolean completed,List<Double> weightloss){
         ContentValues con = new ContentValues();
-        for (String a:activity) {
+
+        for (int i=0;i<activity.size();i++){
             con.put(KEY_TITLE,PlanName);
-            con.put(KEY_ACTIVITY,a);
+            con.put(KEY_ACTIVITY,activity.get(i));
             String done = Boolean.toString(completed);
             con.put(KEY_COMPLETED,done);
             con.put(KEY_DURATION,0);
+            con.put(KEY_WEIGHTLOSS,weightloss.get(i));
             ourDatabase.insert(DATABASE_TABLE2,null,con);
         }
         return true;
     }
 
-    public long insertUser(String username,String name,String email,String password){
+    public long insertUser(String username,String name,String password){
         ContentValues con = new ContentValues();
             con.put(KEY_USERNAME,username);
             con.put(KEY_NAME,name);
-            con.put(KEY_EMAIL,email);
             con.put(KEY_PASSWORD,password);
         System.out.println("success");
             return ourDatabase.insert(DATABASE_TABLE3,null,con);
+    }
+
+    public long updateWeight(int user,double weight){
+        ContentValues cv = new ContentValues();
+        cv.put(KEY_WEIGHT,weight);
+        return ourDatabase.update(DATABASE_TABLE3,cv,KEY_ROWID + " = "+user,null);
     }
 
     public long insertUserData(User user,int userID){
@@ -226,6 +293,7 @@ public class HeartBeatDB {
         con.put(KEY_HEARTATTACK,user.heart_attack);
         con.put(KEY_WEIGHT,user.weight);
         con.put(KEY_HEIGHT,user.height);
+        con.put(KEY_ISCALCULATED,Boolean.toString(user.isCalculated));
         System.out.println(userID);
         return ourDatabase.update(DATABASE_TABLE3,con,KEY_ROWID+" = "+ userID,null);
     }
@@ -347,7 +415,7 @@ public class HeartBeatDB {
 //TODO Auto-generated method stub
         String[] columns = new String[] {KEY_ROWID,KEY_BIRTH,KEY_ACT,KEY_ACT,KEY_BPTR,KEY_CHF,KEY_CHL,
         KEY_HDL,KEY_SBP,KEY_DBP,KEY_CKD,KEY_RHA,KEY_VHD,KEY_RA,KEY_DIABETES1,KEY_DIABETES2,KEY_FHCVD,KEY_GENDER,
-        KEY_SLEEP,KEY_SMOKE,KEY_STROKE,KEY_HEARTATTACK,KEY_WEIGHT,KEY_HEIGHT,KEY_NAME,KEY_EMAIL};
+        KEY_SLEEP,KEY_SMOKE,KEY_STROKE,KEY_HEARTATTACK,KEY_WEIGHT,KEY_HEIGHT,KEY_NAME,KEY_ISCALCULATED};
         int uid = userID;
         System.out.println("UID: "+uid);
         Cursor c = ourDatabase.query(DATABASE_TABLE3, columns,null
@@ -379,7 +447,7 @@ public class HeartBeatDB {
         int iWeight = c.getColumnIndex(KEY_WEIGHT);
         int iHeight = c.getColumnIndex(KEY_HEIGHT);
         int iName = c.getColumnIndex(KEY_NAME);
-        int iemail = c.getColumnIndex(KEY_EMAIL);
+        int calc = c.getColumnIndex(KEY_ISCALCULATED);
 
 
         User user = new User();
@@ -411,7 +479,7 @@ public class HeartBeatDB {
             user.setHeight((double)c.getInt(iHeight));
                 System.out.println(user.getChl());
             user.setName(c.getString(iName));
-            user.setEmail(c.getString(iemail));
+            user.setCalculated(Boolean.parseBoolean(c.getString(calc)));
 
             return user;
             }
@@ -420,20 +488,23 @@ public class HeartBeatDB {
         return null;
     }
 
+    public long deleteAct(String plan, String activity){
 
-    public boolean checkUser(String email,String pass){
-        String[] columns = new String[] {KEY_ROWID,KEY_EMAIL,KEY_PASSWORD};
+        return ourDatabase.delete(DATABASE_TABLE2,KEY_TITLE+" = '"+plan+"' AND " + KEY_ACTIVITY +"= '"+activity+"';",null);
+    }
+    public boolean checkUser(String username,String pass){
+        String[] columns = new String[] {KEY_ROWID,KEY_USERNAME,KEY_PASSWORD};
         Cursor c = ourDatabase.query(DATABASE_TABLE3, columns, null, null, null, null,
                 null);
 
         boolean exist = false;
 
-        int user = c.getColumnIndex(KEY_EMAIL);
+        int user = c.getColumnIndex(KEY_USERNAME);
         int password = c.getColumnIndex(KEY_PASSWORD);
 
         while (c.moveToNext()){
             System.out.println(c.getString(user)+":"+c.getString(password));
-            if (email.equals(c.getString(user))){
+            if (username.equals(c.getString(user))){
                 if (pass.equals(c.getString(password))){
 
                     exist = true;
@@ -444,18 +515,18 @@ public class HeartBeatDB {
         return exist;
     }
 
-    public int getUserID(String email){
-        String[] columns = new String[] {KEY_ROWID,KEY_EMAIL};
+    public int getUserID(String username){
+        String[] columns = new String[] {KEY_ROWID,KEY_USERNAME};
         Cursor c = ourDatabase.query(DATABASE_TABLE3, columns, null, null, null, null,
                 null);
 
         boolean exist = false;
         int id = 0;
-        int user = c.getColumnIndex(KEY_EMAIL);
+        int user = c.getColumnIndex(KEY_USERNAME);
         int userID = c.getColumnIndex(KEY_ROWID);
 
         while (c.moveToNext()){
-            if (email.equals(c.getString(user))){
+            if (username.equals(c.getString(user))){
 
                 id = c.getInt(userID);
                 return id;
@@ -506,6 +577,7 @@ public class HeartBeatDB {
                 ) {
             Cursor c = ourDatabase.rawQuery("SELECT * FROM "+DATABASE_TABLE2+" WHERE  "+KEY_TITLE+" = '"+plan+"';",null);
             List<String> activity = new ArrayList<>();
+            List<Double> weight = new ArrayList<>();
             int title = c.getColumnIndex(HeartBeatDB.KEY_ACTIVITY);
             int com = c.getColumnIndex(KEY_COMPLETED);
 
@@ -520,6 +592,72 @@ public class HeartBeatDB {
         }
 
         return Plans;
+    }
+
+    public List<Plans> getActivity(List<String> planName){
+        List<Plans> Plans = new ArrayList<>();
+        Plans myPlan = new Plans();
+        for (String plan:planName
+                ) {
+            Cursor c = ourDatabase.rawQuery("SELECT * FROM "+DATABASE_TABLE2+" WHERE  "+KEY_TITLE+" = '"+plan+"';",null);
+            List<Activity> activity = new ArrayList<>();
+            List<List<Activity>> acc = new ArrayList<>();
+            List<Double> weight = new ArrayList<>();
+            myPlan.setTitle(plan);
+            Activity act = new Activity();
+            int title = c.getColumnIndex(HeartBeatDB.KEY_ACTIVITY);
+            int com = c.getColumnIndex(KEY_COMPLETED);
+            int weightloss = c.getColumnIndex(KEY_WEIGHTLOSS);
+
+            while (c.moveToNext()) {
+                if (!c.getString(com).equals("true")) {
+                    String acts = c.getString(title);
+                    act.setActivities(acts);
+                    act.setWeightLoss(c.getDouble(weightloss));
+                    activity.add(act);
+                }
+            }
+            myPlan.setActivities(activity);
+            Plans.add(myPlan);
+
+        }
+
+        return Plans;
+    }
+
+    public long setInitialPoints(int userID,int hearts,int coins, int time){
+        ContentValues con = new ContentValues();
+        con.put(KEY_BANKID,userID);
+        con.put(KEY_HEARTS,hearts);
+        con.put(KEY_COINS,coins);
+        con.put(KEY_TOTALTIME,time);
+        System.out.println("success");
+        return ourDatabase.insert(DATABASE_TABLE5,null,con);
+    }
+
+    public long addCoins(int userID,int coins){
+        ContentValues con = new ContentValues();
+        con.put(KEY_BANKID,userID);
+        con.put(KEY_COINS,coins);
+        System.out.println("success");
+        return ourDatabase.insert(DATABASE_TABLE5,null,con);
+    }
+
+    public Bank getPoints(int userID){
+        String[] cols = new String[]{KEY_BANKID,KEY_HEARTS,KEY_COINS,KEY_TOTALTIME};
+        Cursor c = ourDatabase.query(DATABASE_TABLE5,cols,null,null,null,null,null);
+        Bank HBBank = new Bank();
+        int hearts= c.getColumnIndex(KEY_HEARTS);
+        int coins = c.getColumnIndex(KEY_COINS);
+        int time = c.getColumnIndex(KEY_TOTALTIME);
+
+        while (c.moveToNext()){
+            HBBank.setHearts(c.getInt(hearts));
+            HBBank.setCoins(c.getInt(coins));
+            HBBank.setTotaltime(c.getInt(time));
+            return HBBank;
+        }
+            return HBBank;
     }
 
 

@@ -10,9 +10,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +30,7 @@ import android.widget.ExpandableListView;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,41 +43,96 @@ import android.annotation.SuppressLint;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import capstone.heartbeat.MainActivity;
 import capstone.heartbeat.assessment.DemographicsActivity;
 import capstone.heartbeat.controllers.ActivityDatabase;
 import capstone.heartbeat.controllers.HeartBeatDB;
+import capstone.heartbeat.controllers.ResultEvaluator;
+import capstone.heartbeat.models.Bank;
+import capstone.heartbeat.models.Plans;
 import capstone.heartbeat.others.AddPlanActivity;
 import capstone.heartbeat.controllers.ExpandableListAdapter;
 import capstone.heartbeat.controllers.ListAdapter;
 import capstone.heartbeat.R;
 import capstone.heartbeat.models.Activity;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 public class PlansFragment extends Fragment{
-    private ListView mListView;
-    private FloatingActionButton mFab;
-    private int mPreviousVisibleItem;
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
     List<String> planlist;
     HashMap<String, List<String>> plan;
-
-    private FloatingActionMenu menuRed;
-
-    private FloatingActionButton menu_createPlan;
-    private FloatingActionButton menu_addActivity;
-
-    private List<FloatingActionMenu> menus = new ArrayList<>();
-    private Handler mUiHandler = new Handler();
-
     ArrayList<Activity> suggestions;
     ActivityDatabase myDB;
     ListAdapter adapter;
     Button btn_addSuggestion, btn_cancel;
+    private ListView mListView;
+    private FloatingActionButton mFab;
+    private int mPreviousVisibleItem;
+    private FloatingActionMenu menuRed;
+    private FloatingActionButton menu_createPlan;
+    private FloatingActionButton menu_addActivity;
+    private List<FloatingActionMenu> menus = new ArrayList<>();
+    private Handler mUiHandler = new Handler();
     private SharedPreferences pref;
+    private double weight;
+    private int user;
+    private View.OnClickListener clickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.menu_createPlan:
+                    startActivity(new Intent(getContext(), AddPlanActivity.class));
+                    break;
+                case R.id.menu_addActivity:
+                    final Dialog d = new Dialog(getContext(), android.R.style.Theme_Holo_Light_Dialog);
+                    d.setTitle("Choose a plan");
+                    d.setContentView(R.layout.plan_dialog);
+                         int use = pref.getInt("id",1);
+                    final Spinner spinner = (Spinner) d.findViewById(R.id.spinner_plans);
+                    Button b1 = (Button) d.findViewById(R.id.sp_next);
+                    Button b2 = (Button) d.findViewById(R.id.sp_cancel);
+
+                    HeartBeatDB DeceDB = new HeartBeatDB(getContext());
+                    DeceDB.open();
+                    List<String> plans = DeceDB.getTitle(use);
+
+
+                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
+                            android.R.layout.simple_spinner_item, plans);
+                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    spinner.setAdapter(dataAdapter);
+
+
+                    b1.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String titles = spinner.getSelectedItem().toString();
+                            displaySuggestionDialog(titles);
+                            d.dismiss();
+                        }
+                    });
+                    b2.setOnClickListener(new View.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(View v) {
+                            d.dismiss();
+                        }
+                    });
+                    d.show();
+                    break;
+            }
+        }
+    };
 
     public PlansFragment() {
         // Required empty public constructor
@@ -129,9 +187,6 @@ public class PlansFragment extends Fragment{
 
             @Override
             public void onGroupExpand(int groupPosition) {
-                Toast.makeText(getContext(),
-                        planlist.get(groupPosition) + " Expanded",
-                        Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -140,9 +195,7 @@ public class PlansFragment extends Fragment{
 
             @Override
             public void onGroupCollapse(int groupPosition) {
-                Toast.makeText(getContext(),
-                        planlist.get(groupPosition) + " Collapsed",
-                        Toast.LENGTH_SHORT).show();
+
 
             }
         });
@@ -162,9 +215,13 @@ public class PlansFragment extends Fragment{
                 Button fact_okay = (Button) dialog.findViewById(R.id.fact_okay);
                 TextView desc_activity = (TextView) dialog.findViewById(R.id.desc_activity);
 
-                desc_activity.setText(plan.get(
-                        planlist.get(groupPosition)).get(
-                        childPosition) + " 15 minutes daily can lose of your weight");
+
+                                desc_activity.setText(plan.get(
+                                        planlist.get(groupPosition)).get(
+                                        childPosition) + " 15 minutes daily can lose  g of your weight");
+
+
+
 
                 fact_okay.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -237,24 +294,49 @@ public class PlansFragment extends Fragment{
 
             childPos = ExpandableListView.getPackedPositionChild(info.packedPosition);
 
+            Calendar c = Calendar.getInstance();
+            SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+            String date = df.format(c.getTime());
 
+            HashMap<String,Double> prog = new HashMap<>();
+            List<Double> dob = new ArrayList<>();
             switch (menuItem.getTitle().toString()){
 
                 case "Done" : {
+                    /*prog.put(date,dob);*/
                     HeartBeatDB db = new HeartBeatDB(getContext());
                     db.open();
-                    if (plan.get(planlist.get(groupPos)).size() == 1) {
+                    int use = pref.getInt("id",1);
+                    if (plan.get(planlist.get(groupPos)).size() <= 1) {
+                        plan.get(planlist.remove(groupPos));
                     db.updatePlanList(planlist.get(groupPos),true);
-                    plan.get(planlist.remove(groupPos));
+                    db.updateWeight(use,weight - .70);
+                    db.newProgress(use,date,.70,"weight");
+                        Intent intent = getActivity().getIntent();
+                        startActivity(intent);
                         listAdapter.notifyDataSetChanged();
                     }else {
                         db.updatePlan(planlist.get(groupPos), plan.get(planlist.get(groupPos)).get(childPos), true);
-                         //plan.get(planlist.remove(groupPos)).plan.get;
+                        db.addCoins(use,1);
+                        db.updateWeight(use,weight - .70);
+                        db.newProgress(use,date,.70,"weight");
+                        Toast.makeText(getContext(),"+1 coin",Toast.LENGTH_SHORT).show();
+
                     }
 
-                    db.close();
-                    return true;
-                }
+                   db.close();
+                    //return true;
+                }break;
+                case "Delete":{
+                    HeartBeatDB d = new HeartBeatDB(getContext());
+                    d.open();
+                    String pl =planlist.get(groupPos);
+                    String ac = plan.get(planlist.get(groupPos)).get(childPos);
+                    plan.get(planlist.get(groupPos)).remove(childPos);
+                    d.deleteAct(pl,ac);
+                    d.close();
+                    listAdapter.notifyDataSetChanged();
+                }break;
         }
 
 
@@ -287,6 +369,25 @@ public class PlansFragment extends Fragment{
         return false;
     }
 
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+
+        MenuItem item1 = menu.findItem(R.id.action_coins);
+        MenuItem item2 = menu.findItem(R.id.action_hearts);
+        MenuItemCompat.setActionView(item1, R.layout.badge_layout);
+        RelativeLayout coinCount = (RelativeLayout) MenuItemCompat.getActionView(item1);
+        RelativeLayout heartCount = (RelativeLayout) MenuItemCompat.getActionView(item2);
+        TextView coin = (TextView)coinCount.findViewById(R.id.badge_coin_text);
+        HeartBeatDB db = new HeartBeatDB(getApplicationContext());
+        db.open();
+        Bank b = new Bank();
+        b= db.getPoints(pref.getInt("id",1));
+        int coins = b.getCoins();
+        System.out.println(coins+"");
+        coin.setText(coins+"");
+        super.onPrepareOptionsMenu(menu);
+    }
+
     private void prepareListData() {
         planlist = new ArrayList<String>();
         plan = new HashMap<String, List<String>>();
@@ -297,12 +398,10 @@ public class PlansFragment extends Fragment{
 
 
         int user = pref.getInt("id",1);
-        Toast.makeText(getContext(),user+"",Toast.LENGTH_SHORT).show();
 
 
         // adding title of plans
         for (String title:db.getTitle(user)) {
-             Toast.makeText(getContext(),title+"",Toast.LENGTH_SHORT).show();
             planlist.add(title);
         }
 
@@ -311,15 +410,11 @@ public class PlansFragment extends Fragment{
       /*  PlanActivitiesDatabase db1 = new PlanActivitiesDatabase(getContext());
         db1.open();*/
        List<List<String>> Plans = new ArrayList<>();
-        List<String> activities = new ArrayList<>();
 
         Plans = db.getActivities(planlist);
+        db.close();
+        //extract List of activity name
 
-       //replace with data from activities plan tables
-        /*List<String> plans1 = new ArrayList<String>();
-        for (String title:db.getTitle()) {
-            plans1.add(title);
-        }*/
 
         for(int i = 0; i < planlist.size(); i++){
             plan.put(planlist.get(i), Plans.get(i)); // Header, Child data
@@ -408,55 +503,8 @@ public class PlansFragment extends Fragment{
         menuRed.setIconToggleAnimatorSet(set);
     }
 
-    private View.OnClickListener clickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.menu_createPlan:
-                    startActivity(new Intent(getContext(), AddPlanActivity.class));
-                    break;
-                case R.id.menu_addActivity:
-                    final Dialog d = new Dialog(getContext(), android.R.style.Theme_Holo_Light_Dialog);
-                    d.setTitle("Choose a plan");
-                    d.setContentView(R.layout.plan_dialog);
-                         int use = pref.getInt("id",1);   
-                    final Spinner spinner = (Spinner) d.findViewById(R.id.spinner_plans);
-                    Button b1 = (Button) d.findViewById(R.id.sp_next);
-                    Button b2 = (Button) d.findViewById(R.id.sp_cancel);
-
-                    HeartBeatDB DeceDB = new HeartBeatDB(getContext());
-                    DeceDB.open();
-                    List<String> plans = DeceDB.getTitle(use);
-
-
-                    ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(getActivity(),
-                            android.R.layout.simple_spinner_item, plans);
-                    dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    spinner.setAdapter(dataAdapter);
-
-
-                    b1.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            String titles = spinner.getSelectedItem().toString();
-                            displaySuggestionDialog(titles);
-                            d.dismiss();
-                        }
-                    });
-                    b2.setOnClickListener(new View.OnClickListener()
-                    {
-                        @Override
-                        public void onClick(View v) {
-                            d.dismiss();
-                        }
-                    });
-                    d.show();
-                    break;
-            }
-        }
-    };
-
     public void displaySuggestionDialog(final String title){
+        weight = pref.getInt("weight",0);
         final Dialog dialog = new Dialog(getContext(), android.R.style.Theme_Holo_Light_Dialog);
         dialog.setTitle("Suggestions");
         dialog.setContentView(R.layout.fragment_suggestions);
@@ -498,14 +546,17 @@ public class PlansFragment extends Fragment{
                             }
 
                             List<String> selected = new ArrayList<>();
+                            List<Double> weights = new ArrayList<>();
+                            ResultEvaluator re = new ResultEvaluator(getContext());
                             for (Activity a:selectedActivities
                                     ) {
                                 selected.add(a.Activities);
+                                weights.add(re.getWeightEquivalent(a.getMETS(),weight));
                             }
                             //add here
                             HeartBeatDB plans = new HeartBeatDB(getContext());
                             plans.open();
-                            plans.createEntry2(selected,title,false);
+                            plans.createEntry2(selected,title,false,weights);
                             listAdapter.notifyDataSetChanged();
                             plans.close();
 

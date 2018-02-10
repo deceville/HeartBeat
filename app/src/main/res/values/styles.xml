@@ -20,6 +20,11 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="AppTheme.Button" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/colorPrimary</item>
+        <item name="android:textColor">@color/standardWhite</item>
+    </style>
+
     <style name="SwitchColor" parent="Theme.AppCompat.Light">
         <item name="colorAccent">@color/colorPrimary</item>
     </style>

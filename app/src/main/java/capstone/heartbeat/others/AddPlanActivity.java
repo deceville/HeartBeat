@@ -54,7 +54,7 @@ public class AddPlanActivity extends AppCompatActivity {
     ArrayList<Activity> myActivities;
     ArrayList <Activity> selectedActivities;
     private FirebaseDatabase database;
-    public int uid;
+    public int uid,free,count;
     public double weight;
     double totalWeight;
 
@@ -68,6 +68,8 @@ public class AddPlanActivity extends AppCompatActivity {
         use= getSharedPreferences("login",MODE_PRIVATE);
         uid = use.getInt("id",0);
         weight = prefs.getInt("weight",60);
+        free = prefs.getInt("free",60);
+
 
         myDb = new ActivityDatabase(AddPlanActivity.this);
 
@@ -112,7 +114,7 @@ public class AddPlanActivity extends AppCompatActivity {
              
             @Override
             public void onClick(View v) {
-                final Dialog dialog = new Dialog(AddPlanActivity.this, android.R.style.Theme_Holo_Light_Dialog);
+                final Dialog dialog = new Dialog(getApplicationContext(), android.R.style.Theme_Holo_Light_Dialog);
                 dialog.setTitle("Suggestions");
                 dialog.setContentView(R.layout.fragment_suggestions);
                 dialog.create();
@@ -124,7 +126,7 @@ public class AddPlanActivity extends AppCompatActivity {
                 //suggestions = new ArrayList<Suggestions>();
 
 
-                ResultEvaluator re = new ResultEvaluator();
+                ResultEvaluator re = new ResultEvaluator(getApplicationContext());
                 double met = re.getSuggestedMet();
                 System.out.println("met:" +met);
                 myActivities =  myDb.getSuggestedActivities(met);
@@ -144,27 +146,29 @@ public class AddPlanActivity extends AppCompatActivity {
                     int totalTime = 0;
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            int time = prefs.getInt("free",60);
-                            totalTime = totalTime + 15;
-                            if (totalTime > time) {
-                                Toast.makeText(getApplicationContext(),"You reached the maximum",Toast.LENGTH_SHORT).show();
 
-                            }
                     }
                 });
 
-                btn_addSuggestion = (Button) dialog.findViewById(R.id.btn_addSuggestion);
 
+
+                btn_addSuggestion = (Button) dialog.findViewById(R.id.btn_addSuggestion);
+                btn_addSuggestion.setEnabled(true);
                 // selected list of activities on add plan form
                 selectedActivities = new ArrayList<>();
-
+                count = prefs.getInt("count",1);
+                if ((count*15)<free){
+                    btn_addSuggestion.setEnabled(true);
+                }else btn_addSuggestion.setEnabled(false);
                 btn_addSuggestion.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         StringBuilder selected = new StringBuilder("Selected: \n");
                         totalWeight = 0;
-                        ResultEvaluator e = new ResultEvaluator();
-
+                        ResultEvaluator e = new ResultEvaluator(getApplicationContext());
+                        SharedPreferences.Editor ed = prefs.edit();
+                        ed.putInt("count",0);
+                        ed.apply();
                         for (Activity acts:myActivities){
                             if(acts.isChecked()){
                                 selectedActivities.add(acts);
@@ -208,6 +212,9 @@ public class AddPlanActivity extends AppCompatActivity {
                 btn_cancel.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        SharedPreferences.Editor ed = prefs.edit();
+                        ed.putInt("count",0);
+                        ed.apply();
                         dialog.dismiss();
                     }
                 });
@@ -268,9 +275,14 @@ public class AddPlanActivity extends AppCompatActivity {
             int freeTime = prefs.getInt("free",0);
 
             List<String> selected = new ArrayList<>();
+            List<Double> selectedMets = new ArrayList<>();
+            ResultEvaluator e = new ResultEvaluator(getApplicationContext());
             for (Activity a:selectedActivities
                  ) {
                selected.add(a.Activities);
+               double b = e.getWeightEquivalent( a.getMETS(),weight);
+                System.out.println("b: "+b);
+               selectedMets.add(b);
                initialMinutes += 15;
             }
 
@@ -278,7 +290,7 @@ public class AddPlanActivity extends AppCompatActivity {
             HeartBeatDB plans = new HeartBeatDB(getApplicationContext());
             plans.open();
             plans.createEntry1(uid,title,date,cal,initialMinutes,freeTime,false,totalWeight);
-            plans.createEntry2(selected,title,false);
+            plans.createEntry2(selected,title,false,selectedMets);
             plans.close();
 
             startActivity(new Intent(getApplicationContext(),MainActivity.class));

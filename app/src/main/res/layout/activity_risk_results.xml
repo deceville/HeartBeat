@@ -17,9 +17,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="@dimen/demo_question_padding"
-            android:paddingLeft="@dimen/demo_question_padding"
-            android:paddingRight="@dimen/demo_question_padding">
+            android:paddingTop="@dimen/fab_margin"
+            android:paddingLeft="@dimen/fab_margin"
+            android:paddingRight="@dimen/fab_margin">
 
             <TextView
                 android:layout_width="wrap_content"

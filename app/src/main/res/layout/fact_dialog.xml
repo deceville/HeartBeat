@@ -51,13 +51,23 @@
                 android:text="Earn 10 coins after doing this activity!"/>
         </LinearLayout>
 
-        <Button
-            android:id="@+id/fact_okay"
-            android:layout_width="100dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="@dimen/fab_margin"
-            android:text="Okay"/>
+            android:layout_marginTop="30dp"
+            android:background="@android:color/white"
+            android:weightSum="1">
+
+            <Button
+                android:id="@+id/fact_okay"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/bg_screen2"
+                android:text="Okay"
+                android:textColor="#FFFFFF" />
+
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

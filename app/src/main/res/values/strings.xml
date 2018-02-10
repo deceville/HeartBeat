@@ -47,11 +47,11 @@
     <string name="verify_asian_age">I am Asian and I am between 24 to 85 years old.</string>
     <string name="action_sign_in">LOGIN</string>
     <string name="action_sign_up">SIGN UP</string>
-    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_username">This username is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
+    <string name="permission_rationale">"Contacts permissions are needed for providing username
         completions."
     </string>
     <string name="title_activity_main">Home</string>
@@ -71,13 +71,13 @@
 
     <!-- Strings related to laboratory values -->
     <string name="lab_bp">Set your Systolic and Diastolic Blood Pressure</string>
-    <string name="instruction_bp">Hold/pump the bulb to set the blood pressure</string>
+    <string name="instruction_bp">Slide up and down to adjust blood pressure</string>
     <string name="lab_systolic">Systolic</string>
     <string name="lab_diastolic">Diastolic</string>
     <string name="lab_firstnum">First number</string>
     <string name="lab_secondnum">Second number</string>
     <string name="lab_chol">Set your Total Cholesterol and HDL</string>
-    <string name="instruction_chol">Slide up and down to adjust</string>
+    <string name="instruction_chol">Slide up and down to adjust total and HDL cholesterol</string>
     <string name="lab_totalchol">Total Cholesterol</string>
     <string name="lab_hdl">High-density Lipids</string>
 
@@ -85,7 +85,7 @@
     <string name="history_diabetes">Do you have a Diabetes? (Present)</string>
     <string name="history_disease">Do you have any of these diseases? (Previous or Present)</string>
     <string name="instruction_disease">Please select all of the diseases you have/had:</string>
-    <string name="history_family">Do you have a first degree relative ages 60 years old and below who has/had heart attack? (Previous/Present)</string>
+    <string name="history_family">Do you have a first degree relative ages 60 years old or below who has/had heart attack?</string>
     <string name="btn_yes">Yes</string>
     <string name="btn_no">No</string>
     <string name="diabetes_type1">Type 1</string>
@@ -104,10 +104,10 @@
     <string name="habits_smoke">Do you smoke?</string>
     <string name="habits_smoker">How many sticks do you consume daily?</string>
     <string name="habits_nonsmoker">Have you smoked before?</string>
-    <string name="habits_bptreatment">Are you on blood pressure treatment?</string>
+    <string name="habits_bptreatment">Are you taking medication for blood pressure treatment?</string>
     <string name="habits_physical">How physically active are you?</string>
-    <string name="habits_freetime">Set your free time:</string>
-    <string name="habits_sleeptime">Set your sleeping time:</string>
+    <string name="habits_freetime">Average free hours everyday?</string>
+    <string name="habits_sleeptime">What time do you usually sleep?</string>
 
     <string name="btn_sedentary">Sedentary</string>
     <string name="btn_light">Lightly active</string>
@@ -116,7 +116,7 @@
     <string name="btn_extreme">Extremely active</string>
 
     <!-- Strings related to risk results -->
-    <string name="results_risk">Probability of 10-Year Risk of Heart Attack and Stroke</string>
+    <string name="results_risk">This shows your probability of having Heart Attack and Stroke in 10 years!</string>
     <string name="instruction_result">Tap each graph to view details</string>
     <string name="results_riskfactors">Risk Factors</string>
     <string name="progress_risk">Progress of risk results</string>
@@ -140,102 +140,10 @@
     <!-- Strings related to goals and quest -->
     <string name="goals">Goals</string>
     <string name="quest">Quests</string>
-<<<<<<< HEAD
     <string name="title_activity_faq_">FAQ_Activity</string>
-    <string name="large_text">
-        "Material is the metaphor.\n\n"
-
-        "A material metaphor is the unifying theory of a rationalized space and a system of motion."
-        "The material is grounded in tactile reality, inspired by the study of paper and ink, yet "
-        "technologically advanced and open to imagination and magic.\n"
-        "Surfaces and edges of the material provide visual cues that are grounded in reality. The "
-        "use of familiar tactile attributes helps users quickly understand affordances. Yet the "
-        "flexibility of the material creates new affordances that supercede those in the physical "
-        "world, without breaking the rules of physics.\n"
-        "The fundamentals of light, surface, and movement are key to conveying how objects move, "
-        "interact, and exist in space and in relation to each other. Realistic lighting shows "
-        "seams, divides space, and indicates moving parts.\n\n"
-
-        "Bold, graphic, intentional.\n\n"
-
-        "The foundational elements of print based design typography, grids, space, scale, color, "
-        "and use of imagery guide visual treatments. These elements do far more than please the "
-        "eye. They create hierarchy, meaning, and focus. Deliberate color choices, edge to edge "
-        "imagery, large scale typography, and intentional white space create a bold and graphic "
-        "interface that immerse the user in the experience.\n"
-        "An emphasis on user actions makes core functionality immediately apparent and provides "
-        "waypoints for the user.\n\n"
-
-        "Motion provides meaning.\n\n"
-
-        "Motion respects and reinforces the user as the prime mover. Primary user actions are "
-        "inflection points that initiate motion, transforming the whole design.\n"
-        "All action takes place in a single environment. Objects are presented to the user without "
-        "breaking the continuity of experience even as they transform and reorganize.\n"
-        "Motion is meaningful and appropriate, serving to focus attention and maintain continuity. "
-        "Feedback is subtle yet clear. Transitions are efﬁcient yet coherent.\n\n"
-
-        "3D world.\n\n"
-
-        "The material environment is a 3D space, which means all objects have x, y, and z "
-        "dimensions. The z-axis is perpendicularly aligned to the plane of the display, with the "
-        "positive z-axis extending towards the viewer. Every sheet of material occupies a single "
-        "position along the z-axis and has a standard 1dp thickness.\n"
-        "On the web, the z-axis is used for layering and not for perspective. The 3D world is "
-        "emulated by manipulating the y-axis.\n\n"
-
-        "Light and shadow.\n\n"
-
-        "Within the material environment, virtual lights illuminate the scene. Key lights create "
-        "directional shadows, while ambient light creates soft shadows from all angles.\n"
-        "Shadows in the material environment are cast by these two light sources. In Android "
-        "development, shadows occur when light sources are blocked by sheets of material at "
-        "various positions along the z-axis. On the web, shadows are depicted by manipulating the "
-        "y-axis only. The following example shows the card with a height of 6dp.\n\n"
-
-        "Resting elevation.\n\n"
-
-        "All material objects, regardless of size, have a resting elevation, or default elevation "
-        "that does not change. If an object changes elevation, it should return to its resting "
-        "elevation as soon as possible.\n\n"
-
-        "Component elevations.\n\n"
-
-        "The resting elevation for a component type is consistent across apps (e.g., FAB elevation "
-        "does not vary from 6dp in one app to 16dp in another app).\n"
-        "Components may have different resting elevations across platforms, depending on the depth "
-        "of the environment (e.g., TV has a greater depth than mobile or desktop).\n\n"
-
-        "Responsive elevation and dynamic elevation offsets.\n\n"
-
-        "Some component types have responsive elevation, meaning they change elevation in response "
-        "to user input (e.g., normal, focused, and pressed) or system events. These elevation "
-        "changes are consistently implemented using dynamic elevation offsets.\n"
-        "Dynamic elevation offsets are the goal elevation that a component moves towards, relative "
-        "to the component’s resting state. They ensure that elevation changes are consistent "
-        "across actions and component types. For example, all components that lift on press have "
-        "the same elevation change relative to their resting elevation.\n"
-        "Once the input event is completed or cancelled, the component will return to its resting "
-        "elevation.\n\n"
-
-        "Avoiding elevation interference.\n\n"
-
-        "Components with responsive elevations may encounter other components as they move between "
-        "their resting elevations and dynamic elevation offsets. Because material cannot pass "
-        "through other material, components avoid interfering with one another any number of ways, "
-        "whether on a per component basis or using the entire app layout.\n"
-        "On a component level, components can move or be removed before they cause interference. "
-        "For example, a floating action button (FAB) can disappear or move off screen before a "
-        "user picks up a card, or it can move if a snackbar appears.\n"
-        "On the layout level, design your app layout to minimize opportunities for interference. "
-        "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
-        "when a user tries to pick up one of cards.\n\n"
-    </string>
-=======
     <string name="instruction_goals">Complete all the goals to have a normal risk level and earn badges!</string>
     <string name="done">Done</string>
 
     <!-- Facebook App ID -->
     <string name="facebook_app_id">546187392404290</string>
->>>>>>> 70e0754fff77be24e9f91194e7a5ff4ad5bf5501
 </resources>

@@ -12,17 +12,31 @@
         android:paddingEnd="@dimen/fab_margin"
         android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Take these quests to earn coins!"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/ic_menu_goals"
+                android:layout_marginEnd="10dp"
+                android:backgroundTint="@color/bg_screen2"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Take these quests to earn coins!"
+                android:textSize="18sp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/viewGroup_bp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="30dp"
+            android:paddingTop="20dp"
             android:clickable="true"
             android:orientation="horizontal"
             android:focusable="true">
@@ -41,6 +55,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Know your blood pressure"
+                    android:textStyle="bold"
                     android:layout_gravity="center_vertical"
                     android:paddingStart="@dimen/fab_margin"
                     android:textSize="16sp"/>
@@ -56,11 +71,17 @@
 
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/progress_gray"/>
+
         <LinearLayout
             android:id="@+id/viewGroup_total"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="20dp"
+            android:paddingTop="10dp"
             android:clickable="true"
             android:layout_gravity="start"
             android:orientation="horizontal"
@@ -80,6 +101,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Know your total cholesterol"
+                    android:textStyle="bold"
                     android:layout_gravity="center_vertical"
                     android:paddingStart="@dimen/fab_margin"
                     android:textSize="16sp"/>
@@ -95,11 +117,17 @@
 
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/progress_gray"/>
+
         <LinearLayout
             android:id="@+id/viewGroup_hdl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="20dp"
+            android:paddingTop="10dp"
             android:clickable="true"
             android:layout_gravity="start"
             android:orientation="horizontal"
@@ -121,6 +149,7 @@
                     android:text="Know your HDL cholesterol"
                     android:layout_gravity="center_vertical"
                     android:paddingStart="@dimen/fab_margin"
+                    android:textStyle="bold"
                     android:textSize="16sp"/>
 
                 <TextView
@@ -140,21 +169,30 @@
             android:orientation="horizontal"
             android:gravity="center_horizontal"
             android:layout_marginTop="40dp"
-            android:layout_marginBottom="20dp">
+            android:layout_marginBottom="20dp"
+            android:weightSum="2">
 
             <Button
                 android:id="@+id/quest_back"
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="30dp"
-                android:textSize="16sp"
+                android:layout_weight="1"
+                android:background="@color/circle_red"
+                android:textColor="@color/standardWhite"
                 android:text="BACK" />
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent" />
 
             <Button
                 android:id="@+id/quest_done"
-                android:layout_width="120dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
+                android:layout_weight="1"
+                android:background="@color/circle_green"
+                android:textColor="@color/standardWhite"
                 android:text="DONE ALL" />
         </LinearLayout>
 

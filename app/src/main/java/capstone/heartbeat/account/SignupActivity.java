@@ -1,5 +1,6 @@
 package capstone.heartbeat.account;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -36,7 +37,7 @@ public class SignupActivity extends AppCompatActivity {
     private CheckBox cbCondition;
     private AutoCompleteTextView txtUsername;
     private FirebaseAuth mAuth;
-    private String username,name,email,pass,passconfirm;
+    private String username,name,pass,passconfirm;
     private DatabaseReference rootRef, userRef,account;
     private int counter;
     private TextView login;
@@ -53,7 +54,6 @@ public class SignupActivity extends AppCompatActivity {
         //binding views
         txtUsername = (AutoCompleteTextView) findViewById(R.id.username);
         txtName = (EditText)findViewById(R.id.fullname);
-        txtEmail = (EditText)findViewById(R.id.email);
         txtPassword =(EditText)findViewById(R.id.password);
         txtPassConfirm =(EditText)findViewById(R.id.confirmPassowrd);
         btnSignup = (Button)findViewById(R.id.email_sign_up_button);
@@ -78,13 +78,12 @@ public class SignupActivity extends AppCompatActivity {
 
                 username = txtUsername.getText().toString();
                 name = txtName.getText().toString();
-                email = txtEmail.getText().toString();
                 pass = txtPassword.getText().toString();
                 passconfirm = txtPassConfirm.getText().toString();
 
 
-                if(TextUtils.isEmpty(email)){
-                    Toast.makeText(getApplicationContext(),"Enter email address!",Toast.LENGTH_SHORT).show();
+                if(TextUtils.isEmpty(username)){
+                    Toast.makeText(getApplicationContext(),"Enter username!",Toast.LENGTH_SHORT).show();
                 }
                 if(TextUtils.isEmpty(pass)){
                     Toast.makeText(getApplicationContext(),"Enter password!",Toast.LENGTH_SHORT).show();
@@ -111,12 +110,29 @@ public class SignupActivity extends AppCompatActivity {
 */
                 HeartBeatDB db = new HeartBeatDB(getApplicationContext());
                 db.open();
-                db.insertUser(username,name,email,pass);
+                db.insertUser(username,name,pass);
                 getDatabaseCount();
-                startActivity(new Intent(getApplicationContext(),LoginActivity.class));
-                finish();
                 System.out.println("Success");
                 db.close();
+                final Dialog dialog2 = new Dialog(SignupActivity.this);
+                dialog2.setContentView(R.layout.coins_dialog);
+
+                Button btn_thank = (Button) dialog2.findViewById(R.id.btn_thank);
+                TextView txt_coin = (TextView) dialog2.findViewById(R.id.txt_coin);
+                TextView txt_coin_desc = (TextView) dialog2.findViewById(R.id.txt_coin_desc);
+
+                txt_coin.setText(String.format("%d", 20));
+                txt_coin_desc.setText("You have earned 20 coins for signing up!");
+                dialog2.show();
+
+                btn_thank.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog2.dismiss();
+                        startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+                        finish();
+                    }
+                });
             }
         });
 

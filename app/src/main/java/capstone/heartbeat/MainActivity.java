@@ -36,8 +36,10 @@ import capstone.heartbeat.fragments.GoalsFragment;
 import capstone.heartbeat.fragments.PlansFragment;
 import capstone.heartbeat.fragments.ResultsFragment;
 import capstone.heartbeat.fragments.SuggestionsFragment;
+import capstone.heartbeat.models.Bank;
 import capstone.heartbeat.models.User;
 import capstone.heartbeat.others.AboutActivity;
+import capstone.heartbeat.sidebar.FAQ_Activity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -48,6 +50,7 @@ public class MainActivity extends AppCompatActivity
     private SharedPreferences prefs;
     public SharedPreferences user;
     RelativeLayout coinCount, heartCount;
+    int id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +59,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         user = getSharedPreferences("login",MODE_PRIVATE);
 
-        int id = user.getInt("id", 1);
+        id = user.getInt("id", 1);
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -159,6 +162,13 @@ public class MainActivity extends AppCompatActivity
         MenuItemCompat.setActionView(item1, R.layout.badge_layout);
         coinCount = (RelativeLayout) MenuItemCompat.getActionView(item1);
         heartCount = (RelativeLayout) MenuItemCompat.getActionView(item2);
+        TextView coin = (TextView)coinCount.findViewById(R.id.badge_coin_text);
+        HeartBeatDB db = new HeartBeatDB(getApplicationContext());
+        db.open();
+        Bank b = new Bank();
+        b= db.getPoints(id);
+        int coins = b.getCoins();
+        coin.setText(coins+"");
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -193,7 +203,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_goals) {
 
         } else if (id == R.id.nav_help) {
-
+            Intent i = new Intent(MainActivity.this, FAQ_Activity.class);
+            startActivity(i);
         } else if (id == R.id.nav_about) {
             Intent i = new Intent(MainActivity.this, AboutActivity.class);
             startActivity(i);

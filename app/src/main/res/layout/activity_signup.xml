@@ -24,7 +24,7 @@
         android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/email_signup_form"
+            android:id="@+id/username_signup_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
@@ -63,25 +63,6 @@
                     android:inputType="textPersonName"
                     android:maxLines="1"
                     android:singleLine="true"/>
-            </android.support.design.widget.TextInputLayout>
-
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="@dimen/login_signup_width"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center">
-
-                <EditText
-                    android:id="@+id/email"
-                    android:layout_width="@dimen/login_signup_width"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_email"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:textColor="@color/colorAccent"
-                    android:textColorHint="@color/colorAccent"
-                    android:backgroundTint="@color/standardWhite"
-                    android:singleLine="true" />
-
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
