@@ -308,6 +308,7 @@ public class PlansFragment extends Fragment{
                     db.open();
                     int use = pref.getInt("id",1);
                     if (plan.get(planlist.get(groupPos)).size() <= 1) {
+
                         plan.get(planlist.remove(groupPos));
                     db.updatePlanList(planlist.get(groupPos),true);
                     db.updateWeight(use,weight - .70);
@@ -317,10 +318,10 @@ public class PlansFragment extends Fragment{
                         listAdapter.notifyDataSetChanged();
                     }else {
                         db.updatePlan(planlist.get(groupPos), plan.get(planlist.get(groupPos)).get(childPos), true);
-                        db.addCoins(use,1);
+                        db.addCoins(use,3);
                         db.updateWeight(use,weight - .70);
                         db.newProgress(use,date,.70,"weight");
-                        Toast.makeText(getContext(),"+1 coin",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),"+3 coin",Toast.LENGTH_SHORT).show();
 
                     }
 

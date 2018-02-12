@@ -53,7 +53,7 @@
                 android:layout_weight="1"
                 android:background="@color/circle_red"
                 android:textColor="@color/standardWhite"
-                android:text="Cancel" />
+                android:text="@string/cancel" />
 
             <View
                 android:layout_width="4dp"
@@ -67,7 +67,7 @@
                 android:layout_weight="1"
                 android:background="@color/circle_green"
                 android:textColor="@color/standardWhite"
-                android:text="Set" />
+                android:text="@string/lets" />
         </LinearLayout>
     </LinearLayout>
 

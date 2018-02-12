@@ -54,19 +54,48 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:background="@android:color/white"
-            android:weightSum="1">
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="20dp"
+            android:weightSum="3">
+
+            <Button
+                android:id="@+id/fact_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/circle_red"
+                android:textColor="@color/standardWhite"
+                android:text="@string/cancel" />
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent" />
+
+            <Button
+                android:id="@+id/fact_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/standardWhite"
+                android:text="Delete" />
+
+            <View
+                android:layout_width="4dp"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent" />
 
             <Button
                 android:id="@+id/fact_okay"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@color/bg_screen2"
-                android:text="Okay"
-                android:textColor="#FFFFFF" />
-
+                android:background="@color/circle_green"
+                android:textColor="@color/standardWhite"
+                android:text="@string/done" />
         </LinearLayout>
     </LinearLayout>
 

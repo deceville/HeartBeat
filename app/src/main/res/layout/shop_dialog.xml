@@ -70,8 +70,10 @@
 
             <Button
                 android:layout_width="fill_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="-40dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="-30dp"
+                android:background="@color/bg_screen2"
+                android:textColor="@color/standardWhite"
                 android:textSize="12sp"
                 android:text="BUY"/>
         </LinearLayout>
@@ -91,8 +93,10 @@
 
             <Button
                 android:layout_width="fill_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="-40dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="-30dp"
+                android:background="@color/bg_screen2"
+                android:textColor="@color/standardWhite"
                 android:textSize="12sp"
                 android:text="BUY"/>
         </LinearLayout>
@@ -111,8 +115,10 @@
 
             <Button
                 android:layout_width="fill_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="-40dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="-30dp"
+                android:background="@color/bg_screen2"
+                android:textColor="@color/standardWhite"
                 android:textSize="12sp"
                 android:text="BUY"/>
         </LinearLayout>
@@ -147,8 +153,10 @@
 
             <Button
                 android:layout_width="fill_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="-40dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="-30dp"
+                android:background="@color/bg_screen2"
+                android:textColor="@color/standardWhite"
                 android:textSize="12sp"
                 android:text="BUY"/>
         </LinearLayout>
@@ -168,8 +176,10 @@
 
             <Button
                 android:layout_width="fill_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="-40dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="-30dp"
+                android:background="@color/bg_screen2"
+                android:textColor="@color/standardWhite"
                 android:textSize="12sp"
                 android:text="BUY"/>
         </LinearLayout>
@@ -188,8 +198,10 @@
 
             <Button
                 android:layout_width="fill_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="-40dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="-30dp"
+                android:background="@color/bg_screen2"
+                android:textColor="@color/standardWhite"
                 android:textSize="12sp"
                 android:text="BUY"/>
         </LinearLayout>
@@ -197,32 +209,39 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_below="@+id/time2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_horizontal"
-        android:layout_marginStart="@dimen/fab_margin"
-        android:layout_marginEnd="@dimen/fab_margin"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="20dp"
         android:paddingStart="@dimen/fab_margin"
         android:paddingEnd="@dimen/fab_margin"
-        android:layout_marginTop="30dp"
-        android:layout_below="@id/time2">
+        android:weightSum="2">
 
         <Button
             android:id="@+id/shop_cancel"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="18dp"
-            android:layout_marginBottom="30dp"
-            android:textSize="12sp"
-            android:text="CANCEL" />
+            android:layout_weight="1"
+            android:background="@color/circle_red"
+            android:textColor="@color/standardWhite"
+            android:text="@string/cancel" />
+
+        <View
+            android:layout_width="4dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent" />
 
         <Button
             android:id="@+id/shop_done"
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:text="DONE" />
+            android:layout_weight="1"
+            android:background="@color/circle_green"
+            android:textColor="@color/standardWhite"
+            android:text="@string/done" />
     </LinearLayout>
 
 </RelativeLayout>

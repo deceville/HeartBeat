@@ -82,7 +82,7 @@ public class AddPlanActivity extends AppCompatActivity {
         btn_buytime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Dialog dialog = new Dialog(AddPlanActivity.this, android.R.style.Theme_Holo_Light_Dialog);
+                final Dialog dialog = new Dialog(AddPlanActivity.this, android.R.style.Theme_Material_Light_Dialog);
                 dialog.setTitle("Buy Time");
                 dialog.setContentView(R.layout.shop_dialog);
                 dialog.create();
@@ -114,7 +114,7 @@ public class AddPlanActivity extends AppCompatActivity {
              
             @Override
             public void onClick(View v) {
-                final Dialog dialog = new Dialog(getApplicationContext(), android.R.style.Theme_Holo_Light_Dialog);
+                final Dialog dialog = new Dialog(AddPlanActivity.this, android.R.style.Theme_Material_Light_Dialog);
                 dialog.setTitle("Suggestions");
                 dialog.setContentView(R.layout.fragment_suggestions);
                 dialog.create();

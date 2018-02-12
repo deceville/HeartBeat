@@ -63,8 +63,8 @@ public class DemographicsActivity extends AppCompatActivity {
     private boolean quest_total = false;
     private boolean quest_hdl = false;
 
-    int singleQuest = 30;
-    int allQuest = 90;
+    int singleQuest = 10;
+    int allQuest = singleQuest*3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -326,7 +326,7 @@ public class DemographicsActivity extends AppCompatActivity {
                     if(quest_hdl && quest_bp && quest_total){
                         HeartBeatDB db = new HeartBeatDB(getApplicationContext());
                         db.open();
-                        db.setInitialPoints(uid,0,90, 0);
+                        db.setInitialPoints(uid,0,allQuest, 0);
                         db.close();
                         d.dismiss();
                         startActivity(new Intent(DemographicsActivity.this, LaboratoryActivity.class));
@@ -598,12 +598,10 @@ public class DemographicsActivity extends AppCompatActivity {
                 dialog2.dismiss();
                 check -= 1;
                 if(check == 0){
-                    finish();
                     startActivity(new Intent(DemographicsActivity.this, LaboratoryActivity.class));
                 }
 
                 if(alldone){
-                    finish();
                     startActivity(new Intent(DemographicsActivity.this, LaboratoryActivity.class));
                 }
             }
