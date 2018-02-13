@@ -2,6 +2,7 @@ package capstone.heartbeat.others;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -124,7 +125,6 @@ public class AddPlanActivity extends AppCompatActivity {
                 //myActivities =  myDb.getActivities();
 
                 //suggestions = new ArrayList<Suggestions>();
-
 
                 ResultEvaluator re = new ResultEvaluator(getApplicationContext());
                 double met = re.getSuggestedMet();

@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,8 @@ public class ListAdapter extends BaseAdapter {
     LayoutInflater lInflater;
     List<Activity> suggestions = null;
     SharedPreferences prefs;
+    int finalCount = 0;
+    boolean newState = false;
 
     public ListAdapter(Context context, ArrayList<Activity> suggestions) {
         ctx = context;
@@ -76,38 +79,44 @@ public class ListAdapter extends BaseAdapter {
         ((TextView) view.findViewById(R.id.desc_suggestions)).setText(df.format(cal)+" cal will burn every "+min+" minutes.");
 
         final CheckBox cbox = (CheckBox) view.findViewById(R.id.cbox_suggestions);
-        cbox.setChecked(suggestions.get(position).checked);
+        cbox.setChecked(suggestions.get(position).checked); //false
         cbox.setTag(position);
         final View finalView = view;
         final SharedPreferences.Editor ed = prefs.edit();
         ed.putInt("count",0);
         ed.apply();
+
+
+        newState = !suggestions.get(position).isChecked();
+
         cbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int count = prefs.getInt("count",0);
-                boolean newState = !suggestions.get(position).isChecked();
-                suggestions.get(position).checked = newState;
+                int count = prefs.getInt("count",finalCount);
                 String sugg = suggestions.get(position).Activities;
 
-                if (newState == true){
-                    if (count*15< total) {
-                        count++;
+                if (newState){//if not checked
+                    if (finalCount*15< total) {
+                        suggestions.get(position).checked = newState; // true
+                        finalCount++;
+                        System.out.println(finalCount);
                         ed.putInt("count", count);
                         ed.apply();
-                    }else {
-
-                        Toast.makeText(ctx,"Sobra!",Toast.LENGTH_SHORT).show();
+                    }else{
+                        cbox.setClickable(false);
+                        cbox.setChecked(false);
+                        System.out.println("Count:" +count);
+                        Toast.makeText(ctx,"Limited time only!",Toast.LENGTH_SHORT).show();
                     }
-                }else {
-                    count--;
-                    ed.putInt("count",count);
+                }else{//if checked
+                    finalCount--;
+                    System.out.println(finalCount);
+                    ed.putInt("count", count);
                     ed.apply();
                 }
-
-
             }
         });
+
 
         //Save suggestion id to tag
         view.setTag(suggestions.get(position).getId());
