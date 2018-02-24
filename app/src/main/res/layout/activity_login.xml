@@ -17,7 +17,9 @@
         android:layout_marginTop="@dimen/img_margin_top"
         android:layout_width="@dimen/logo_width_height"
         android:layout_height="@dimen/logo_width_height"
+        android:layout_marginBottom="@dimen/img_margin_top"
         app:srcCompat="@drawable/ic_heartbeat_white" />
+
 
     <!-- Login progress -->
     <ProgressBar
@@ -28,6 +30,16 @@
         android:layout_marginTop="120dp"
         android:visibility="gone" />
 
+    <TextView
+        android:id="@+id/error_userpass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/standardWhite"
+        android:textAlignment="center"
+        android:visibility="gone"
+        android:layout_marginBottom="30dp"
+        android:textSize="16sp"/>
+
     <ScrollView
         android:id="@+id/login_form"
         android:layout_width="match_parent"
@@ -37,8 +49,7 @@
             android:id="@+id/username_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="@dimen/img_margin_top">
+            android:orientation="vertical">
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="@dimen/login_signup_width"

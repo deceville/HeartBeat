@@ -47,6 +47,7 @@ import capstone.heartbeat.MainActivity;
 import capstone.heartbeat.R;
 import capstone.heartbeat.assessment.DemographicsActivity;
 import capstone.heartbeat.controllers.HeartBeatDB;
+import capstone.heartbeat.models.User;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -56,6 +57,9 @@ import static android.Manifest.permission.READ_CONTACTS;
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
 
     SharedPreferences prefs;
+    HeartBeatDB db;
+    User user;
+    int id;
     /**
      * Id to identity READ_CONTACTS permission request.
      */
@@ -79,12 +83,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mProgressView;
     private View mLoginFormView;
     private FirebaseAuth mAuth;
-    private TextView signup;
+    private TextView signup, error_userpass;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         // Set up the login form.
         mUsernameView = (AutoCompleteTextView) findViewById(R.id.username);
         populateAutoComplete();
@@ -109,6 +114,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
         });
+
+        error_userpass = (TextView) findViewById(R.id.error_userpass);
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
@@ -202,8 +209,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         View focusView = null;
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
+        if(TextUtils.isEmpty(password)){
+            mPasswordView.setError(getString(R.string.error_field_required));
+            focusView = mPasswordView;
+            cancel = true;
+        }
+        if (!isPasswordValid(password)) {
+            mPasswordView.setError(getString(R.string.error_incorrect_password));
             focusView = mPasswordView;
             cancel = true;
         }
@@ -214,7 +226,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             focusView = mUsernameView;
             cancel = true;
         } else if (!isUsernameValid(username)) {
-            mUsernameView.setError(getString(R.string.error_invalid_username));
+            mUsernameView.setError(getString(R.string.error_incorrect_username));
             focusView = mUsernameView;
             cancel = true;
         }
@@ -234,8 +246,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             HeartBeatDB db = new HeartBeatDB(getApplicationContext());
             db.open();
             boolean exists = db.checkUser(username,password);
+            boolean usernameCheck = db.checkUsername(username);
+            boolean passwordCheck = db.checkPassword(password);
+
             int id = db.getUserID(username);
-            if (exists){
+            if (usernameCheck && passwordCheck){
+                error_userpass.setVisibility(View.GONE);
                 System.out.println(exists+"");
                 prefs = getSharedPreferences("login",MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefs.edit();
@@ -249,11 +265,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }else {
                     startActivity(new Intent(getApplicationContext(), DemographicsActivity.class));
                     finish();
-            }
+                }
+            }else if(!passwordCheck && usernameCheck){
+                error_userpass.setVisibility(View.VISIBLE);
+                error_userpass.setText("The password is incorrect");
+                mPasswordView.setText("");
+                showProgress(false);
             }else{
+                error_userpass.setVisibility(View.VISIBLE);
+                error_userpass.setText("The username could not be found.");
                 System.out.println(exists+"");
                 showProgress(false);
-
             }
             db.close();
            /* mAuth = FirebaseAuth.getInstance();

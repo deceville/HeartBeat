@@ -12,6 +12,9 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -55,8 +58,10 @@ import capstone.heartbeat.MainActivity;
 import capstone.heartbeat.assessment.DemographicsActivity;
 import capstone.heartbeat.controllers.ActivityDatabase;
 import capstone.heartbeat.controllers.HeartBeatDB;
+import capstone.heartbeat.controllers.PlanAdapter;
 import capstone.heartbeat.controllers.ResultEvaluator;
 import capstone.heartbeat.models.Bank;
+import capstone.heartbeat.models.Plan;
 import capstone.heartbeat.models.Plans;
 import capstone.heartbeat.others.AddPlanActivity;
 import capstone.heartbeat.controllers.ExpandableListAdapter;
@@ -69,12 +74,15 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 public class PlansFragment extends Fragment{
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
+    CardView cardview;
+    List<Plan> planList;
     List<String> planlist;
     HashMap<String, List<String>> plan;
     ArrayList<Activity> suggestions;
     ActivityDatabase myDB;
     ListAdapter adapter;
     Button btn_addSuggestion, btn_cancel;
+    private RecyclerView recyclerView;
     private ListView mListView;
     private FloatingActionButton mFab;
     private int mPreviousVisibleItem;
@@ -94,7 +102,7 @@ public class PlansFragment extends Fragment{
                     startActivity(new Intent(getContext(), AddPlanActivity.class));
                     break;
                 case R.id.menu_addActivity:
-                    final Dialog d = new Dialog(getContext(), android.R.style.Theme_Holo_Light_Dialog);
+                    final Dialog d = new Dialog(getContext(), android.R.style.Theme_Material_Light_Dialog);
                     d.setTitle("Choose a plan");
                     d.setContentView(R.layout.plan_dialog);
                          int use = pref.getInt("id",1);
@@ -144,16 +152,35 @@ public class PlansFragment extends Fragment{
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
 
 
-
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_plans_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_plans, container, false);
+
+
+        recyclerView = (RecyclerView)view.findViewById(R.id.rv_plans);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        planList = new ArrayList<>();
+
+
+        // preparing list data
+        prepareListData();
+
+        planList.add(new Plan("My Plan","Good",100,50,1));
+        planList.add(new Plan("My Plan2","Good",80,50,2));
+        planList.add(new Plan("My Plan3","Good",90,50,3));
+        planList.add(new Plan("My Plan4","Good",50,50,4));
+        planList.add(new Plan("My Plan5","Good",60,50,5));
+
+        PlanAdapter adapter = new PlanAdapter(getApplicationContext(), planList);
+        recyclerView.setAdapter(adapter);
 
         // get the listview
-        expListView = (ExpandableListView) view.findViewById(R.id.lv_plans);
+        /*expListView = (ExpandableListView) view.findViewById(R.id.lv_plans);
 
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
         params.setMargins(0, 0, 0, 80);
@@ -233,7 +260,7 @@ public class PlansFragment extends Fragment{
                 dialog.show();
                 return false;
             }
-        });
+        });*/
 
         /*expListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
@@ -425,7 +452,7 @@ public class PlansFragment extends Fragment{
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mListView = (ListView) view.findViewById(R.id.lv_plans);
+        cardview = (CardView) view.findViewById(R.id.cardView);
 
         menuRed = (FloatingActionMenu) view.findViewById(R.id.menu_red);
 

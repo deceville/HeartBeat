@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.SET_ALARM"/>
+    <uses-permission android:name="android.permission.SET_ALARM" />
 
     <application
         android:allowBackup="true"
@@ -18,10 +18,15 @@
         android:roundIcon="@mipmap/ic_heartbeat_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
-        <provider android:authorities="com.facebook.app.FacebookContentProvider546187392404290"
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <provider
             android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider546187392404290"
             android:exported="true" />
+
         <activity
             android:name=".account.WelcomeActivity"
             android:label="@string/app_name"
@@ -40,24 +45,24 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".assessment.DemographicsActivity"
-            android:launchMode="singleTop"
-            android:label="@string/title_activity_demo" />
+            android:label="@string/title_activity_demo"
+            android:launchMode="singleTop" />
         <activity
             android:name=".assessment.LaboratoryActivity"
-            android:launchMode="singleTop"
-            android:label="@string/title_activity_lab" />
+            android:label="@string/title_activity_lab"
+            android:launchMode="singleTop" />
         <activity
             android:name=".assessment.HistoryActivity"
-            android:launchMode="singleTop"
-            android:label="@string/title_activity_history" />
+            android:label="@string/title_activity_history"
+            android:launchMode="singleTop" />
         <activity
             android:name=".assessment.HabitsActivity"
-            android:launchMode="singleTop"
-            android:label="@string/title_activity_habits" />
+            android:label="@string/title_activity_habits"
+            android:launchMode="singleTop" />
         <activity
             android:name=".assessment.RiskResultsActivity"
-            android:launchMode="singleTop"
-            android:label="@string/title_activity_results" />
+            android:label="@string/title_activity_results"
+            android:launchMode="singleTop" />
         <activity
             android:name=".others.AddPlanActivity"
             android:label="@string/title_activity_addplan" />
@@ -76,9 +81,11 @@
             android:label="@string/title_activity_editprofile" />
         <activity
             android:name=".sidebar.FAQ_Activity"
-            android:label="@string/title_activity_faq_"/>
+            android:label="@string/title_activity_faq_" />
 
-        <receiver android:name=".controllers.NotificationReceiver"/>
+        <receiver android:name=".controllers.NotificationReceiver" />
+
+        <activity android:name=".others.PlanActivitiesActivity"></activity>
     </application>
 
 </manifest>

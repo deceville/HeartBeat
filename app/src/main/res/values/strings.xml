@@ -47,9 +47,12 @@
     <string name="verify_asian_age">I am Asian and I am between 24 to 85 years old.</string>
     <string name="action_sign_in">LOGIN</string>
     <string name="action_sign_up">SIGN UP</string>
-    <string name="error_invalid_username">This username is invalid</string>
-    <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_invalid_username">The username should contain at least 4 characters with no white spaces.</string>
+    <string name="error_invalid_password">The password should contain at least 6 characters with letters and numbers.</string>
+    <string name="error_invalid_fullname">The full name should not contain any numbers.</string>
+    <string name="error_password_confirm">This field does not match the password.</string>
+    <string name="error_incorrect_password">This password is incorrect!</string>
+    <string name="error_incorrect_username">This username is incorrect!</string>
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing username
         completions."
@@ -67,7 +70,7 @@
 
     <!-- Strings related to demographics -->
     <string name="demo_birthday">Date of Birth</string>
-    <string name="demo_gender">Gender</string>
+    <string name="demo_gender">Sex</string>
 
     <!-- Strings related to laboratory values -->
     <string name="lab_bp">Set your Systolic and Diastolic Blood Pressure</string>
@@ -146,4 +149,7 @@
 
     <!-- Facebook App ID -->
     <string name="facebook_app_id">546187392404290</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -37,6 +37,7 @@
                 android:layout_height="match_parent"
                 android:textStyle="bold"
                 android:layout_gravity="center_vertical"
+                android:textColor="@android:color/black"
                 android:paddingStart="@dimen/fab_margin"
                 android:textSize="16sp"/>
 
@@ -44,6 +45,7 @@
                 android:id="@+id/duration_goals"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:textColor="@android:color/black"
                 android:paddingStart="@dimen/fab_margin"
                 android:textSize="14sp"/>
 

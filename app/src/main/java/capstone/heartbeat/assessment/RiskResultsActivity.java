@@ -98,7 +98,7 @@ public class RiskResultsActivity extends AppCompatActivity {
         sleep = prefs.getString("sleep", "10:00 PM");
         birth = prefs.getString("birth", null);
         act = prefs.getInt("physical_type", 1);
-        uid = prefs.getInt("id", 0);
+        uid = use.getInt("id", 0);
 
 
         final int bool[] = {5, smoke, af, diabType1, diabType2, fhcvd, ra, bptreatment, CKD};
@@ -197,7 +197,11 @@ public class RiskResultsActivity extends AppCompatActivity {
         sbp_progress.setProgress((int) sbp);
 
         smoke_progress.setMax(30);
-        desc = Integer.toString(sticks + 1) + " sticks";
+        if(sticks==0){
+            desc = Integer.toString(sticks) + " sticks";
+        }else{
+            desc = Integer.toString(sticks + 1) + " sticks";
+        }
         smoke_desc.setText(desc);
         smoke_progress.setProgress(sticks);
 
@@ -248,6 +252,7 @@ public class RiskResultsActivity extends AppCompatActivity {
         SharedPreferences.Editor e = prefs.edit();
         e.putBoolean("isCalculated", true);
         e.commit();
+        System.out.println("insert success!");
 
     }
 
@@ -322,6 +327,8 @@ public class RiskResultsActivity extends AppCompatActivity {
                 btn_lets.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        d.dismiss();
+                        finish();
                         startActivity(new Intent(getApplicationContext(), AddPlanActivity.class));
                     }
                 });

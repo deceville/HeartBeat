@@ -62,7 +62,7 @@ public class SuggestionsFragment extends Fragment {
         btn_addSuggestion = (Button) view.findViewById(R.id.btn_addSuggestion);
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        params.setMargins(0, 0, 0, 80);
+        params.setMargins(0, 0, 0, 0);
         btn_addSuggestion.setLayoutParams(params);
 
         btn_addSuggestion.setOnClickListener(new View.OnClickListener() {

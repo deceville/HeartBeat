@@ -33,14 +33,14 @@ public class GoalsFragment extends Fragment{
     }
 
     @SuppressLint("ValidFragment")
-    public GoalsFragment(SharedPreferences pref){this.prefs = pref;}
+    public GoalsFragment(SharedPreferences pref, int id){this.prefs = pref;this.uid=id;}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        uid = prefs.getInt("id",0);
-        System.out.println(uid);
+            uid = prefs.getInt("id",0);
+        System.out.println("check:" +uid);
 
     }
 
@@ -74,8 +74,8 @@ public class GoalsFragment extends Fragment{
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onResume() {
+        super.onResume();
 
         HeartBeatDB myDb = new HeartBeatDB(getContext());
         myDb.open();
@@ -87,6 +87,7 @@ public class GoalsFragment extends Fragment{
 
         double weight = user.weight;
         double height = user.height;
+        System.out.println(weight);
         Goal dece_goal = re.getBMIGoal(weight,height);
         double loseWeight = 0;
 
@@ -102,6 +103,7 @@ public class GoalsFragment extends Fragment{
 
 
          if (dece_goal.getAction().equals("reduce")) {
+             System.out.println("action:" +dece_goal.getAction());
         label1.setText("Reduce " + dece_goal.getValue() + " kg of weight");
         }else {
              label1.setText("Gain " + dece_goal.getValue() + " kg of weight");

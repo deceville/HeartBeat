@@ -379,7 +379,7 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
 
     public void showNumOfSticks() {
 
-        final Dialog d = new Dialog(HabitsActivity.this, android.R.style.Theme_Holo_Light_Dialog);
+        final Dialog d = new Dialog(HabitsActivity.this, android.R.style.Theme_Material_Light_Dialog);
         d.setTitle("Sticks per day");
         d.setContentView(R.layout.sticks_dialog);
         Button b1 = (Button) d.findViewById(R.id.sticks_set);

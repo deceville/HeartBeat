@@ -294,7 +294,7 @@ public class HeartBeatDB {
         con.put(KEY_WEIGHT,user.weight);
         con.put(KEY_HEIGHT,user.height);
         con.put(KEY_ISCALCULATED,Boolean.toString(user.isCalculated));
-        System.out.println(userID);
+        System.out.println("insert user check: "+userID);
         return ourDatabase.update(DATABASE_TABLE3,con,KEY_ROWID+" = "+ userID,null);
     }
 
@@ -413,9 +413,9 @@ public class HeartBeatDB {
 
     public User getUserAssessData(int userID) {
 //TODO Auto-generated method stub
-        String[] columns = new String[] {KEY_ROWID,KEY_BIRTH,KEY_ACT,KEY_ACT,KEY_BPTR,KEY_CHF,KEY_CHL,
+        String[] columns = new String[] {KEY_ROWID,KEY_BIRTH,KEY_ACT,KEY_BPTR,KEY_CHF,KEY_CHL,
         KEY_HDL,KEY_SBP,KEY_DBP,KEY_CKD,KEY_RHA,KEY_VHD,KEY_RA,KEY_DIABETES1,KEY_DIABETES2,KEY_FHCVD,KEY_GENDER,
-        KEY_SLEEP,KEY_SMOKE,KEY_STROKE,KEY_HEARTATTACK,KEY_WEIGHT,KEY_HEIGHT,KEY_NAME,KEY_ISCALCULATED};
+        KEY_SLEEP,KEY_SMOKE,KEY_STROKE,KEY_HEARTATTACK,KEY_WEIGHT,KEY_HEIGHT,KEY_NAME,KEY_USERNAME,KEY_ISCALCULATED};
         int uid = userID;
         System.out.println("UID: "+uid);
         Cursor c = ourDatabase.query(DATABASE_TABLE3, columns,null
@@ -447,6 +447,7 @@ public class HeartBeatDB {
         int iWeight = c.getColumnIndex(KEY_WEIGHT);
         int iHeight = c.getColumnIndex(KEY_HEIGHT);
         int iName = c.getColumnIndex(KEY_NAME);
+        int iUsername = c.getColumnIndex(KEY_USERNAME);
         int calc = c.getColumnIndex(KEY_ISCALCULATED);
 
 
@@ -479,6 +480,7 @@ public class HeartBeatDB {
             user.setHeight((double)c.getInt(iHeight));
                 System.out.println(user.getChl());
             user.setName(c.getString(iName));
+            user.setUsername(c.getString(iUsername));
             user.setCalculated(Boolean.parseBoolean(c.getString(calc)));
 
             return user;
@@ -515,6 +517,42 @@ public class HeartBeatDB {
         return exist;
     }
 
+    public boolean checkUsername(String username){
+        String[] columns = new String[] {KEY_ROWID,KEY_USERNAME};
+        Cursor c = ourDatabase.query(DATABASE_TABLE3, columns, null, null, null, null,
+                null);
+
+        boolean exist = false;
+
+        int user = c.getColumnIndex(KEY_USERNAME);
+
+        while(c.moveToNext()){
+            if(username.equals(c.getString(user))){
+                exist = true;
+            }
+        }
+
+        return exist;
+    }
+
+    public boolean checkPassword(String password){
+        String[] columns = new String[] {KEY_ROWID,KEY_PASSWORD};
+        Cursor c = ourDatabase.query(DATABASE_TABLE3, columns, null, null, null, null,
+                null);
+
+        boolean exist = false;
+
+        int pass = c.getColumnIndex(KEY_PASSWORD);
+
+        while(c.moveToNext()){
+            if(password.equals(c.getString(pass))){
+                exist = true;
+            }
+        }
+
+        return exist;
+    }
+
     public int getUserID(String username){
         String[] columns = new String[] {KEY_ROWID,KEY_USERNAME};
         Cursor c = ourDatabase.query(DATABASE_TABLE3, columns, null, null, null, null,
@@ -529,7 +567,6 @@ public class HeartBeatDB {
             if (username.equals(c.getString(user))){
 
                 id = c.getInt(userID);
-                return id;
 
             }
         }

@@ -2,6 +2,7 @@ package capstone.heartbeat.account;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -23,8 +24,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import capstone.heartbeat.MainActivity;
 import capstone.heartbeat.R;
+import capstone.heartbeat.assessment.DemographicsActivity;
 import capstone.heartbeat.controllers.HeartBeatDB;
+import capstone.heartbeat.models.Bank;
 
 /**
  * Created by Lenevo on 11/2/2017.
@@ -32,7 +39,7 @@ import capstone.heartbeat.controllers.HeartBeatDB;
 
 public class SignupActivity extends AppCompatActivity {
 
-    private EditText txtName,txtEmail,txtPassword,txtPassConfirm;
+    private EditText txtName,txtPassword,txtPassConfirm;
     private Button btnSignup;
     private CheckBox cbCondition;
     private AutoCompleteTextView txtUsername;
@@ -40,7 +47,9 @@ public class SignupActivity extends AppCompatActivity {
     private String username,name,pass,passconfirm;
     private DatabaseReference rootRef, userRef,account;
     private int counter;
+    private boolean conditionCheck;
     private TextView login;
+    private int id;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,20 +66,7 @@ public class SignupActivity extends AppCompatActivity {
         txtPassword =(EditText)findViewById(R.id.password);
         txtPassConfirm =(EditText)findViewById(R.id.confirmPassowrd);
         btnSignup = (Button)findViewById(R.id.email_sign_up_button);
-        cbCondition =(CheckBox)findViewById(R.id.check);
 
-        btnSignup.setEnabled(false);
-
-
-
-        cbCondition.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b){
-                    btnSignup.setEnabled(true);
-                }else btnSignup.setEnabled(false);
-            }
-        });
 
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,15 +77,64 @@ public class SignupActivity extends AppCompatActivity {
                 pass = txtPassword.getText().toString();
                 passconfirm = txtPassConfirm.getText().toString();
 
+                attemptSignup();
 
-                if(TextUtils.isEmpty(username)){
-                    Toast.makeText(getApplicationContext(),"Enter username!",Toast.LENGTH_SHORT).show();
-                }
-                if(TextUtils.isEmpty(pass)){
-                    Toast.makeText(getApplicationContext(),"Enter password!",Toast.LENGTH_SHORT).show();
-                }
 
-                /*mAuth = FirebaseAuth.getInstance();
+            }
+        });
+
+        login = (TextView) findViewById(R.id.login_frmSignUp);
+
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+                finish();
+            }
+        });
+
+
+    }
+
+    private void attemptSignup() {
+
+        /*if (mAuthTask != null) {
+            return;
+
+        }*/
+
+        // Reset errors.
+        txtName.setError(null);
+        txtUsername.setError(null);
+        txtPassConfirm.setError(null);
+        txtPassword.setError(null);
+
+        // Store values at the time of the login attempt.
+        String username = txtUsername.getText().toString();
+        String password = txtPassword.getText().toString();
+        String confirmPass = txtPassConfirm.getText().toString();
+        String fullname = txtName.getText().toString();
+        cbCondition = (CheckBox)findViewById(R.id.check);
+
+        boolean cancel = false;
+        View focusView = null;
+
+        boolean usernameCheck = !TextUtils.isEmpty(username) && isUsernameValid(username);
+        boolean passwordCheck = !TextUtils.isEmpty(password) && isPasswordValid(password);
+        boolean confirmPassCheck = !TextUtils.isEmpty(confirmPass) && isPasswordMatched(password,confirmPass);
+        boolean fullnameCheck = !TextUtils.isEmpty(fullname) && isFullNameValid(fullname);
+        conditionCheck = false;
+
+
+        if (cbCondition.isChecked()){
+            conditionCheck = true;
+        }else{
+            conditionCheck = false;
+        }
+
+
+        if(usernameCheck && confirmPassCheck && passwordCheck && fullnameCheck && conditionCheck){
+            /*mAuth = FirebaseAuth.getInstance();
                 mAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -108,43 +153,145 @@ public class SignupActivity extends AppCompatActivity {
                     }
                 });
 */
-                HeartBeatDB db = new HeartBeatDB(getApplicationContext());
-                db.open();
-                db.insertUser(username,name,pass);
-                getDatabaseCount();
-                System.out.println("Success");
-                db.close();
-                final Dialog dialog2 = new Dialog(SignupActivity.this);
-                dialog2.setContentView(R.layout.coins_dialog);
+            HeartBeatDB db = new HeartBeatDB(getApplicationContext());
+            db.open();
+            db.insertUser(username,name,pass);
+            getDatabaseCount();
+            System.out.println("Success");
+            id = db.getUserID(username);
 
-                Button btn_thank = (Button) dialog2.findViewById(R.id.btn_thank);
-                TextView txt_coin = (TextView) dialog2.findViewById(R.id.txt_coin);
-                TextView txt_coin_desc = (TextView) dialog2.findViewById(R.id.txt_coin_desc);
+            final Dialog dialog2 = new Dialog(SignupActivity.this);
+            dialog2.setContentView(R.layout.coins_dialog);
 
-                txt_coin.setText(String.format("%d", 20));
-                txt_coin_desc.setText("You have earned 20 coins for signing up!");
-                dialog2.show();
+            Button btn_thank = (Button) dialog2.findViewById(R.id.btn_thank);
+            TextView txt_coin = (TextView) dialog2.findViewById(R.id.txt_coin);
+            TextView txt_coin_desc = (TextView) dialog2.findViewById(R.id.txt_coin_desc);
 
-                btn_thank.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog2.dismiss();
-                        startActivity(new Intent(getApplicationContext(),LoginActivity.class));
-                        finish();
+            txt_coin.setText(String.format("%d", 20));
+            txt_coin_desc.setText("You have earned 20 coins for signing up!");
+            db.addCoins(id,20);
+            db.close();
+            dialog2.show();
+
+            btn_thank.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog2.dismiss();
+                    startActivity(new Intent(getApplicationContext(),LoginActivity.class));
+                    finish();
+                }
+            });
+        }else{
+
+            if(TextUtils.isEmpty(confirmPass)){
+                txtPassConfirm.setError(getString(R.string.error_field_required));
+                focusView = txtPassConfirm;
+                cancel = true;
+            }else if (!isPasswordMatched(password, confirmPass)) {
+                txtPassConfirm.setError(getString(R.string.error_password_confirm));
+                focusView = txtPassConfirm;
+                cancel = true;
+            }
+
+            // Check for a valid password, if the user entered one.
+            if(TextUtils.isEmpty(password)){
+                txtPassword.setError(getString(R.string.error_field_required));
+                focusView = txtPassword;
+                cancel = true;
+            }else if (!isPasswordValid(password)) {
+                txtPassword.setError(getString(R.string.error_invalid_password));
+                focusView = txtPassword;
+                cancel = true;
+            }
+
+            if (TextUtils.isEmpty(fullname)) {
+                txtName.setError(getString(R.string.error_field_required));
+                focusView = txtName;
+                cancel = true;
+            } else if (!isFullNameValid(name)) {
+                txtName.setError(getString(R.string.error_invalid_fullname));
+                focusView = txtName;
+                cancel = true;
+            }
+
+            // Check for a valid username
+            if (TextUtils.isEmpty(username)) {
+                txtUsername.setError(getString(R.string.error_field_required));
+                focusView = txtUsername;
+                cancel = true;
+            } else if (!isUsernameValid(username)) {
+                txtUsername.setError(getString(R.string.error_invalid_username));
+                focusView = txtUsername;
+                cancel = true;
+            }
+
+            if (cancel) {
+                // There was an error; don't attempt login and focus the first
+                // form field with an error.
+                focusView.requestFocus();
+            } /*else {
+            // Show a progress spinner, and kick off a background task to
+            // perform the user login attempt.
+
+            showProgress(true);
+            //mAuthTask = new UserLoginTask(email, password);
+            // mAuthTask.execute((Void) null);
+
+            HeartBeatDB db = new HeartBeatDB(getApplicationContext());
+            db.open();
+            boolean exists = db.checkUser(username,password);
+            int id = db.getUserID(username);
+            if (exists){
+                System.out.println(exists+"");
+                prefs = getSharedPreferences("login",MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putInt("session",1);
+                editor.putInt("id",id);
+                editor.commit();
+                boolean isCalculated = prefs.getBoolean("isCalculated",false);
+                if (isCalculated){
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    finish();
+                }else {
+                    startActivity(new Intent(getApplicationContext(), DemographicsActivity.class));
+                    finish();
+                }
+            }else{
+                System.out.println(exists+"");
+                showProgress(false);
+
+            }
+            db.close();
+            mAuth = FirebaseAuth.getInstance();
+
+            mAuth.signInWithEmailAndPassword(email,password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+
+
+
+                    if (task.isSuccessful()){
+                        prefs = getSharedPreferences("login",MODE_PRIVATE);
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putInt("session",1);
+                        editor.commit();
+                        boolean isCalculated = prefs.getBoolean("isCalculated",false);
+                        if (isCalculated){
+                            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                            finish();
+                        }else {
+                            startActivity(new Intent(getApplicationContext(), DemographicsActivity.class));
+                            finish();
+                        }
+                    }else{
+                        showProgress(false);
+
                     }
-                });
-            }
-        });
+                }
+            });
 
-        login = (TextView) findViewById(R.id.login_frmSignUp);
-
-        login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(SignupActivity.this, LoginActivity.class));
-                finish();
-            }
-        });
+        }*/
+        }
 
 
     }
@@ -172,19 +319,34 @@ public class SignupActivity extends AppCompatActivity {
         //return count[0];
     }
 
-    private boolean isEmailValid(String email) {
+    private boolean isUsernameValid(String username) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+        return username.length() > 4 && !username.contains(" ");
     }
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        Pattern pattern;
+        Matcher matcher;
+
+        final String PASSWORD_PATTERN = "^(?=.*[0-9])(?=.*[a-z]).{6,}$";
+
+        pattern = Pattern.compile(PASSWORD_PATTERN);
+        matcher = pattern.matcher(password);
+
+        return matcher.matches();
     }
 
-   public void attemptSignup(){
+    private boolean isPasswordMatched(String password, String confirmPass){
+        if(password.equals(confirmPass)){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
-   }
-
+    private boolean isFullNameValid(String fullname){
+        return fullname.matches("^([A-Za-z]+)(\\s[A-Za-z]+)*\\s?$");
+    }
 
 }

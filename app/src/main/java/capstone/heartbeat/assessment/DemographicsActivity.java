@@ -265,7 +265,7 @@ public class DemographicsActivity extends AppCompatActivity {
                         editor.putInt("coin",coins[0]);
                         editor.commit();
                     }
-                    else{ coins[0] = coin -singleQuest;
+                    else{ coins[0] = coins[0] -singleQuest;
                         editor.putInt("coin",coins[0]);
                         editor.commit();
                     }
@@ -281,7 +281,7 @@ public class DemographicsActivity extends AppCompatActivity {
                         editor.putInt("coin",coins[0]);
                         editor.commit();
                     }
-                    else{ coins[0] = coin -singleQuest;
+                    else{ coins[0] = coins[0] -singleQuest;
                         editor.putInt("coin",coins[0]);
                         editor.commit();
                     }
@@ -297,7 +297,7 @@ public class DemographicsActivity extends AppCompatActivity {
                         editor.putInt("coin",coins[0]);
                         editor.commit();
                     }
-                    else{ coins[0] = coin -singleQuest;
+                    else{ coins[0] = coins[0] -singleQuest;
                         editor.putInt("coin",coins[0]);
                         editor.commit();
                     }

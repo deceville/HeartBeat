@@ -131,6 +131,11 @@ public class Activity {
         this.Equipment = Equipment;
     }
 
+    public Activity( String Activities, double calories){
+        this.Activities = Activities;
+        this.calories = calories;
+    }
+
 
     public Activity(){}
 }
