@@ -107,7 +107,7 @@
     <string name="habits_smoke">Do you smoke?</string>
     <string name="habits_smoker">How many sticks do you consume daily?</string>
     <string name="habits_nonsmoker">Have you smoked before?</string>
-    <string name="habits_bptreatment">Are you taking medication for blood pressure treatment?</string>
+    <string name="habits_bptreatment">Are you taking medication for blood pressure?</string>
     <string name="habits_physical">How physically active are you?</string>
     <string name="habits_freetime">Average free hours everyday?</string>
     <string name="habits_sleeptime">What time do you usually sleep?</string>

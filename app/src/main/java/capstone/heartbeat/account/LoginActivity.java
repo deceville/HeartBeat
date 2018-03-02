@@ -1,5 +1,6 @@
 package capstone.heartbeat.account;
 
+import android.Manifest;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
@@ -8,7 +9,10 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
@@ -38,18 +42,25 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import capstone.heartbeat.MainActivity;
 import capstone.heartbeat.R;
 import capstone.heartbeat.assessment.DemographicsActivity;
+import capstone.heartbeat.controllers.FileHelper;
 import capstone.heartbeat.controllers.HeartBeatDB;
 import capstone.heartbeat.models.User;
 
 import static android.Manifest.permission.READ_CONTACTS;
+import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 /**
  * A login screen that offers login via email/password.
@@ -104,6 +115,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
 
@@ -119,6 +131,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
 
@@ -149,6 +162,27 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         getLoaderManager().initLoader(0, null, this);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private boolean requestFile(){
+        if (ContextCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.WRITE_EXTERNAL_STORAGE)==PackageManager.PERMISSION_GRANTED){
+           return true;
+        }
+
+        if (shouldShowRequestPermissionRationale(WRITE_EXTERNAL_STORAGE)) {
+            Snackbar.make(mUsernameView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
+                    .setAction(android.R.string.ok, new View.OnClickListener() {
+                        @Override
+                        @TargetApi(Build.VERSION_CODES.M)
+                        public void onClick(View v) {
+                            requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE}, 0);
+                        }
+                    });
+        }else {
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},0);
+        }
+        return false;
+    }
+
     private boolean mayRequestContacts() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             return true;
@@ -171,15 +205,23 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         return false;
     }
 
+
+
+
     /**
      * Callback received when a permissions request has been completed.
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_READ_CONTACTS) {
+        if (requestCode == REQUEST_READ_CONTACTS  ) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 populateAutoComplete();
+            }
+        }
+        if (requestCode == 0){
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
             }
         }
     }
@@ -190,11 +232,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private void attemptLogin() {
 
         if (mAuthTask != null) {
            return;
 
+        }
+        if (!requestFile()){
+            return;
         }
 
         // Reset errors.
@@ -250,9 +296,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             boolean passwordCheck = db.checkPassword(password);
 
             int id = db.getUserID(username);
+
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+            String time = sdf.format(new Date());
             if (usernameCheck && passwordCheck){
+                requestFile();
+                    FileHelper.saveToFile(username,time);
+                System.out.println("saved");
                 error_userpass.setVisibility(View.GONE);
-                System.out.println(exists+"");
+
                 prefs = getSharedPreferences("login",MODE_PRIVATE);
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putInt("session",1);
@@ -267,11 +320,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     finish();
                 }
             }else if(!passwordCheck && usernameCheck){
+                requestFile();
+                FileHelper.saveErrorToFile(username,time,"The password is incorrect");
                 error_userpass.setVisibility(View.VISIBLE);
                 error_userpass.setText("The password is incorrect");
                 mPasswordView.setText("");
                 showProgress(false);
             }else{
+                requestFile();
+                FileHelper.saveErrorToFile(username,time,"The username could not be found.");
                 error_userpass.setVisibility(View.VISIBLE);
                 error_userpass.setText("The username could not be found.");
                 System.out.println(exists+"");

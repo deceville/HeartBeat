@@ -11,6 +11,7 @@
         android:layout_margin="8dp"
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
+        app:cardBackgroundColor="@color/standardWhite"
         android:focusable="true">
 
         <LinearLayout
@@ -27,6 +28,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
+                android:textColor="@color/standardBlack"
                 android:textSize="17sp" />
 
             <TextView

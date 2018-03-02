@@ -53,7 +53,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder
             @Override
             public void onClick(View view) {
                 Toast.makeText(ctx,holder.title.getText(),Toast.LENGTH_SHORT).show();
-                ctx.startActivity(new Intent(ctx, PlanActivitiesActivity.class));
+                ctx.startActivity(new Intent(ctx, PlanActivitiesActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
             }
         });
 

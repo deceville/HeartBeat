@@ -261,6 +261,14 @@ public class HeartBeatDB {
         System.out.println("success");
             return ourDatabase.insert(DATABASE_TABLE3,null,con);
     }
+    public long updateUser(String username,String name,String birth,String sleep,int uid){
+        ContentValues con = new ContentValues();
+        con.put(KEY_USERNAME,username);
+        con.put(KEY_NAME,name);
+        con.put(KEY_BIRTH,birth);
+        con.put(KEY_SLEEP,sleep);
+        return ourDatabase.update(DATABASE_TABLE3,con,KEY_ROWID + " = "+uid,null);
+    }
 
     public long updateWeight(int user,double weight){
         ContentValues cv = new ContentValues();

@@ -7,15 +7,16 @@
     android:layout_margin="8dp">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardUseCompatPadding="true"
-        android:padding="5dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:clickable="true"
-        android:id="@+id/cardView">
+        android:padding="5dp"
+        app:cardBackgroundColor="@color/standardWhite"
+        app:cardUseCompatPadding="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,6 +38,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.6"
+                    android:textColor="@color/standardBlack"
                     android:text="Title" />
 
                 <TextView
@@ -44,6 +46,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.3"
+                    android:textColor="@color/progress_gray_dark_teans"
                     android:text="Title" />
 
                 <ImageButton
@@ -52,9 +55,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.10"
                     android:background="@android:color/transparent"
+                    android:clickable="true"
                     android:src="@drawable/ic_more_vert"
-                    android:textAlignment="textEnd"
-                    android:clickable="true"/>
+                    android:textAlignment="textEnd" />
             </LinearLayout>
 
             <LinearLayout

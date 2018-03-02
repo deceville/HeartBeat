@@ -2,6 +2,7 @@ package capstone.heartbeat;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -36,13 +37,17 @@ import capstone.heartbeat.fragments.GoalsFragment;
 import capstone.heartbeat.fragments.PlansFragment;
 import capstone.heartbeat.fragments.ResultsFragment;
 import capstone.heartbeat.fragments.SuggestionsFragment;
+import capstone.heartbeat.fragments.tabfragments.BMIFragment;
+import capstone.heartbeat.fragments.tabfragments.BloodPressureFragment;
+import capstone.heartbeat.fragments.tabfragments.CholesterolFragment;
 import capstone.heartbeat.models.Bank;
 import capstone.heartbeat.models.User;
 import capstone.heartbeat.others.AboutActivity;
 import capstone.heartbeat.sidebar.FAQ_Activity;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, BMIFragment.OnFragmentInteractionListener,
+        CholesterolFragment.OnFragmentInteractionListener, BloodPressureFragment.OnFragmentInteractionListener {
 
     private Toolbar toolbar;
     private TabLayout tabLayout;
@@ -112,6 +117,11 @@ public class MainActivity extends AppCompatActivity
         adapter.addFragment(new PlansFragment(user), "Plans");
         adapter.addFragment(new GoalsFragment(user,id), "Goals & Quests");
         viewPager.setAdapter(adapter);
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
