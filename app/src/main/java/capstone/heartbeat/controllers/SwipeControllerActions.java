@@ -1,4 +1,4 @@
-package capstone.heartbeat;
+package capstone.heartbeat.controllers;
 
 /**
  * Created by Lenevo on 2/25/2018.

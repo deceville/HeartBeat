@@ -9,8 +9,6 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.MotionEvent;
 import android.view.View;
 
-import capstone.heartbeat.SwipeControllerActions;
-
 import static android.support.v7.widget.helper.ItemTouchHelper.*;
 
 /**

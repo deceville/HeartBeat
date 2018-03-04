@@ -171,6 +171,7 @@ public class AddPlanActivity extends AppCompatActivity {
                         ed.apply();
                         for (Activity acts:myActivities){
                             if(acts.isChecked()){
+
                                 selectedActivities.add(acts);
                                 totalWeight += e.getWeightEquivalent(acts.getMETS(),weight);
                                 totalWeight = Math.round(totalWeight);

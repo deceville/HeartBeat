@@ -110,6 +110,7 @@ public class ListAdapter extends BaseAdapter {
                     }
                 }else{//if checked
                     finalCount--;
+                    suggestions.get(position).checked = newState;
                     System.out.println(finalCount);
                     ed.putInt("count", count);
                     ed.apply();

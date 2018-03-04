@@ -55,12 +55,21 @@
                     android:layout_gravity="center_horizontal"
                     android:text="@string/lab_firstnum"/>
 
+                <ImageButton
+                    android:id="@+id/add_sbp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_add_circle"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/circle_green"
+                    android:layout_marginTop="20dp"/>
+
                 <abak.tr.com.boxedverticalseekbar.BoxedVertical
                     android:id="@+id/bp_systolic"
                     android:layout_width="60dp"
                     android:layout_height="250dp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     app:progressColor="@color/colorPrimary"
                     app:textColor="#FFF"
@@ -73,6 +82,15 @@
                     app:textBottomPadding="20"
                     app:textSize="12sp"
                     app:touchDisabled="true" />
+
+                <ImageButton
+                    android:id="@+id/minus_sbp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_remove_circle"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/circle_red"
+                    android:layout_marginTop="5dp"/>
 
             </LinearLayout>
 
@@ -94,12 +112,21 @@
                     android:layout_gravity="center_horizontal"
                     android:text="@string/lab_firstnum"/>
 
+                <ImageButton
+                    android:id="@+id/add_dbp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_add_circle"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/circle_green"
+                    android:layout_marginTop="20dp"/>
+
                 <abak.tr.com.boxedverticalseekbar.BoxedVertical
                     android:id="@+id/bp_diastolic"
                     android:layout_width="60dp"
                     android:layout_height="250dp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="30dp"
+                    android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     app:progressColor="@color/bg_screen2"
                     app:textColor="#FFF"
@@ -112,6 +139,15 @@
                     app:textBottomPadding="20"
                     app:textSize="12sp"
                     app:touchDisabled="true" />
+
+                <ImageButton
+                    android:id="@+id/minus_dbp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_remove_circle"
+                    android:layout_gravity="center"
+                    android:backgroundTint="@color/circle_red"
+                    android:layout_marginTop="5dp"/>
 
             </LinearLayout>
         </LinearLayout>

@@ -1,6 +1,5 @@
 package capstone.heartbeat.others;
 
-import android.content.Intent;
 import android.graphics.Canvas;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import capstone.heartbeat.R;
-import capstone.heartbeat.SwipeControllerActions;
+import capstone.heartbeat.controllers.SwipeControllerActions;
 import capstone.heartbeat.controllers.ActivityAdapter;
 import capstone.heartbeat.controllers.SwipeController;
 import capstone.heartbeat.models.Activity;
