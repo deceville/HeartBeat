@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -187,6 +188,7 @@ public class LaboratoryActivity extends AppCompatActivity {
      */
     public class MyViewPagerAdapter extends PagerAdapter {
         private LayoutInflater layoutInflater;
+        private ImageButton add_chol, add_hdl, add_sbp, add_dbp, minus_chol, minus_hdl, minus_sbp, minus_dbp;
 
         public MyViewPagerAdapter() {
         }
@@ -199,16 +201,49 @@ public class LaboratoryActivity extends AppCompatActivity {
             container.addView(view);
 
 
-            BoxedVertical chol_total = (BoxedVertical)view.findViewById(R.id.chol_total);
-            BoxedVertical chol_hdl = (BoxedVertical)view.findViewById(R.id.chol_hdl);
-            BoxedVertical bp_systolic = (BoxedVertical)view.findViewById(R.id.bp_systolic);
-            BoxedVertical bp_diastolic = (BoxedVertical)view.findViewById(R.id.bp_diastolic);
+            final BoxedVertical chol_total = (BoxedVertical)view.findViewById(R.id.chol_total);
+            final BoxedVertical chol_hdl = (BoxedVertical)view.findViewById(R.id.chol_hdl);
+            final BoxedVertical bp_systolic = (BoxedVertical)view.findViewById(R.id.bp_systolic);
+            final BoxedVertical bp_diastolic = (BoxedVertical)view.findViewById(R.id.bp_diastolic);
+            add_chol = (ImageButton) view.findViewById(R.id.add_chol);
+            add_hdl = (ImageButton) view.findViewById(R.id.add_hdl);
+            add_sbp = (ImageButton) view.findViewById(R.id.add_sbp);
+            add_dbp = (ImageButton) view.findViewById(R.id.add_dbp);
+            minus_chol = (ImageButton) view.findViewById(R.id.minus_chol);
+            minus_hdl = (ImageButton) view.findViewById(R.id.minus_hdl);
+            minus_sbp = (ImageButton) view.findViewById(R.id.minus_sbp);
+            minus_dbp = (ImageButton) view.findViewById(R.id.minus_dbp);
 
 
             prefs = getSharedPreferences("values",MODE_PRIVATE);
             editor = prefs.edit();
 
             if(position == layouts.length - 1){
+                add_sbp.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        bp_systolic.setValue(bp_systolic.getValue()+1);
+                    }
+                });
+                minus_sbp.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        bp_systolic.setValue(bp_systolic.getValue()-1);
+                    }
+                });
+
+                add_dbp.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        bp_diastolic.setValue(bp_diastolic.getValue()+1);
+                    }
+                });
+                minus_dbp.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        bp_diastolic.setValue(bp_diastolic.getValue()-1);
+                    }
+                });
                 bp_systolic.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
                     @Override
                     public void onPointsChanged(BoxedVertical boxedPoints, int value) {
@@ -246,6 +281,31 @@ public class LaboratoryActivity extends AppCompatActivity {
                     }
                 });
             }else{
+                add_chol.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        chol_total.setValue(chol_total.getValue()+1);
+                    }
+                });
+                minus_chol.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        chol_total.setValue(chol_total.getValue()-1);
+                    }
+                });
+
+                add_hdl.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        chol_hdl.setValue(chol_hdl.getValue()+1);
+                    }
+                });
+                minus_hdl.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        chol_hdl.setValue(chol_hdl.getValue()-1);
+                    }
+                });
                 chol_total.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
                     @Override
                     public void onPointsChanged(BoxedVertical boxedPoints, int value) {

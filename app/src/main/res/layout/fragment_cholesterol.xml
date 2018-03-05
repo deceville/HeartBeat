@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="@dimen/demo_question_padding"
+            android:paddingTop="@dimen/fab_margin"
             android:paddingLeft="@dimen/demo_question_padding"
             android:paddingRight="@dimen/demo_question_padding">
 
@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="@dimen/demo_question_padding">
+                android:padding="@dimen/fab_margin">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -53,8 +53,10 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/ic_add_circle"
                     android:layout_gravity="center"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:backgroundTint="@color/bg_screen2"
-                    android:layout_marginTop="20dp"/>
+                    android:layout_marginTop="10dp" />
 
                 <abak.tr.com.boxedverticalseekbar.BoxedVertical
                     android:id="@+id/chol_total"
@@ -90,7 +92,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="@dimen/demo_question_padding">
+                android:padding="@dimen/fab_margin">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -104,7 +106,7 @@
                     android:background="@drawable/ic_add_circle"
                     android:layout_gravity="center"
                     android:backgroundTint="@color/bg_screen2"
-                    android:layout_marginTop="20dp"/>
+                    android:layout_marginTop="10dp"/>
 
                 <abak.tr.com.boxedverticalseekbar.BoxedVertical
                     android:id="@+id/chol_hdl"

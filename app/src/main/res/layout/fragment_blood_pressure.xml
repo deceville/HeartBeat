@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="@dimen/demo_question_padding"
+            android:paddingTop="@dimen/fab_margin"
             android:paddingLeft="@dimen/demo_question_padding"
             android:paddingRight="@dimen/demo_question_padding">
 
@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="@dimen/demo_question_padding"
+                android:padding="@dimen/fab_margin"
                 android:gravity="start">
 
                 <TextView
@@ -49,12 +49,6 @@
                     android:layout_gravity="center_horizontal"
                     android:text="@string/lab_systolic"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="@string/lab_firstnum"/>
-
                 <ImageButton
                     android:id="@+id/add_sbp"
                     android:layout_width="wrap_content"
@@ -62,7 +56,7 @@
                     android:background="@drawable/ic_add_circle"
                     android:layout_gravity="center"
                     android:backgroundTint="@color/circle_green"
-                    android:layout_marginTop="20dp"/>
+                    android:layout_marginTop="10dp"/>
 
                 <abak.tr.com.boxedverticalseekbar.BoxedVertical
                     android:id="@+id/bp_systolic"
@@ -98,19 +92,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="@dimen/demo_question_padding">
+                android:padding="@dimen/fab_margin">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:text="@string/lab_diastolic"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="@string/lab_firstnum"/>
 
                 <ImageButton
                     android:id="@+id/add_dbp"
@@ -119,7 +107,7 @@
                     android:background="@drawable/ic_add_circle"
                     android:layout_gravity="center"
                     android:backgroundTint="@color/circle_green"
-                    android:layout_marginTop="20dp"/>
+                    android:layout_marginTop="10dp"/>
 
                 <abak.tr.com.boxedverticalseekbar.BoxedVertical
                     android:id="@+id/bp_diastolic"

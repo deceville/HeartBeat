@@ -533,7 +533,7 @@ public class PlansFragment extends Fragment{
 
     public void displaySuggestionDialog(final String title){
         weight = pref.getInt("weight",0);
-        final Dialog dialog = new Dialog(getContext(), android.R.style.Theme_Holo_Light_Dialog);
+        final Dialog dialog = new Dialog(getContext(), android.R.style.Theme_Material_Light_Dialog);
         dialog.setTitle("Suggestions");
         dialog.setContentView(R.layout.fragment_suggestions);
         dialog.create();
