@@ -2,18 +2,16 @@ package capstone.heartbeat.others;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.support.design.widget.FloatingActionButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -23,7 +21,6 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -31,16 +28,15 @@ import java.util.List;
 import capstone.heartbeat.MainActivity;
 import capstone.heartbeat.R;
 import capstone.heartbeat.controllers.ActivityDatabase;
-import capstone.heartbeat.controllers.ListAdapter;
 import capstone.heartbeat.controllers.HeartBeatDB;
+import capstone.heartbeat.controllers.ListAdapter;
 import capstone.heartbeat.controllers.ResultEvaluator;
 import capstone.heartbeat.models.Activity;
-import capstone.heartbeat.models.Bank;
 import capstone.heartbeat.models.Suggestions;
 import capstone.heartbeat.models.User;
 
 
-public class AddPlanActivity extends AppCompatActivity {
+public class AddPlanSActivity extends AppCompatActivity {
 
     public FloatingActionButton btn_addActivity;
     List<Suggestions> suggestions;
@@ -57,12 +53,9 @@ public class AddPlanActivity extends AppCompatActivity {
     ArrayList<Activity> myActivities;
     ArrayList<Activity> selectedActivities;
     private FirebaseDatabase database;
-    public int uid, free, count, coins, total, current, fee, time, hours, minutes;
+    public int uid, free, count;
     public double weight;
     double totalWeight;
-    private String freetime;
-    private TextView shop_coin;
-    private Bank coin;
 
 
     @Override
@@ -75,18 +68,19 @@ public class AddPlanActivity extends AppCompatActivity {
         uid = use.getInt("id", 0);
         weight = prefs.getInt("weight", 60);
         free = prefs.getInt("free", 60);
-        freetime = prefs.getString("freetime", "");
 
-        editor = prefs.edit();
+        Bundle b = getIntent().getExtras();
+        ArrayList<Activity> acts = b.getParcelableArrayList("acts");
+        double weight = b.getDouble("weight");
 
        /* cat_age = (TextView) findViewById(R.id.cat_age);
         cat_BMI = (TextView) findViewById(R.id.cat_BMI);
         cat_SUGGEST = (TextView) findViewById(R.id.cat_SUGGEST);
         btn_gotit = (Button) findViewById(R.id.btn_gotit);*/
 
-        displayActivityGuide();
 
-        myDb = new ActivityDatabase(AddPlanActivity.this);
+
+        myDb = new ActivityDatabase(AddPlanSActivity.this);
 
         //displaySuggestions();
 
@@ -95,11 +89,15 @@ public class AddPlanActivity extends AppCompatActivity {
         txtWeight = (TextView) findViewById(R.id.weight_total);
 
         btn_buytime = (Button) findViewById(R.id.btn_buytime);
+        txtWeight.setText(weight + " g");
+        adapter = new ListAdapter(getApplicationContext(), acts);
 
+        ListView lvPlan = (ListView) findViewById(R.id.plans_suggestions);
+        lvPlan.setAdapter(adapter);
         btn_buytime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Dialog dialog = new Dialog(AddPlanActivity.this, android.R.style.Theme_Material_Light_Dialog);
+                final Dialog dialog = new Dialog(AddPlanSActivity.this, android.R.style.Theme_Material_Light_Dialog);
                 dialog.setTitle("Buy Time");
                 dialog.setContentView(R.layout.shop_dialog);
                 dialog.create();
@@ -108,106 +106,11 @@ public class AddPlanActivity extends AppCompatActivity {
 
                 Button shop_done = (Button) dialog.findViewById(R.id.shop_done);
                 Button shop_cancel = (Button) dialog.findViewById(R.id.shop_cancel);
-                shop_coin = (TextView) dialog.findViewById(R.id.shop_coin);
-                Button btn_5mins = (Button) dialog.findViewById(R.id.btn_5mins);
-                Button btn_10mins = (Button) dialog.findViewById(R.id.btn_10mins);
-                Button btn_15mins = (Button) dialog.findViewById(R.id.btn_15mins);
-                Button btn_30mins = (Button) dialog.findViewById(R.id.btn_30mins);
-                Button btn_1hr = (Button) dialog.findViewById(R.id.btn_1hr);
-                Button btn_2hr = (Button) dialog.findViewById(R.id.btn_2hr);
-
-
-                HeartBeatDB db = new HeartBeatDB(getApplicationContext());
-                db.open();
-                coin = db.getPoints(uid);
-                current = 0;
-                total = coin.getCoins();
-                shop_coin.setText("You currently have " + total + " coins and " + String.format("%02d:%02d", hours, minutes) + "hour available time.");
-
-                btn_5mins.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        fee = 5;
-                        time = 5;
-                        confirmBuy(fee,total,"5 minutes",time);
-                        editor.putInt("free",free);
-                        coin.setCoins(total);
-                        invalidateOptionsMenu();
-                        editor.commit();
-                    }
-                });
-
-                btn_10mins.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        fee = 10;
-                        time = 10;
-                        confirmBuy(fee,total,"10 minutes",time);
-                        editor.putInt("free",free);
-                        coin.setCoins(total);
-                        invalidateOptionsMenu();
-                        editor.commit();
-                    }
-                });
-
-                btn_15mins.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        fee = 15;
-                        time = 15;
-                        confirmBuy(fee,total,"15 minutes",time);
-                        editor.putInt("free",free);
-                        coin.setCoins(total);
-                        invalidateOptionsMenu();
-                        editor.commit();
-                    }
-                });
-
-                btn_30mins.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        fee = 30;
-                        time = 30;
-                        confirmBuy(fee,total,"30 minutes",time);
-                        editor.putInt("free",free);
-                        coin.setCoins(total);
-                        invalidateOptionsMenu();
-                        editor.commit();
-                    }
-                });
-
-                btn_1hr.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        fee = 60;
-                        time = 60;
-                        confirmBuy(fee,total,"1 hour",time);
-                        editor.putInt("free",free);
-                        coin.setCoins(total);
-                        invalidateOptionsMenu();
-                        editor.commit();
-                    }
-                });
-
-                btn_2hr.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        fee = 120;
-                        time = 120;
-                        confirmBuy(fee,total,"2 hours",time);
-                        editor.putInt("free",free);
-                        coin.setCoins(total);
-                        invalidateOptionsMenu();
-                        editor.commit();
-                    }
-                });
-
-
 
                 shop_done.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        dialog.dismiss();
+
                     }
                 });
 
@@ -250,49 +153,11 @@ public class AddPlanActivity extends AppCompatActivity {
         editor.commit();
 
         text_plan_freetime = (TextView) findViewById(R.id.text_plan_freetime);
-        hours = free/60;
-        minutes = free%60;
-        text_plan_freetime.setText(String.format("%02d:%02d", hours, minutes) + "hour");
-    }
-
-    public void confirmBuy(final int fee, final int coins, String time, final int freetime){
-        AlertDialog.Builder builder = new AlertDialog.Builder(AddPlanActivity.this, R.style.Theme_AppCompat_Dialog_Alert);
-        if(fee <= coins){
-            builder.setTitle("Hmm, wait..")
-                    .setMessage("Are you sure you want to buy " + time + "?")
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            total -= fee;
-                            free += freetime;
-                            Toast.makeText(getApplicationContext(),"Successfully bought!", Toast.LENGTH_SHORT).show();
-                            shop_coin.setText("You currently have " +total+ " coins and "+String.format("%02d:%02d", hours, minutes)+ "hour available time.");
-                            System.out.println("total:"+total +"free:"+free);
-                            System.out.println("Shopped successfully");
-                        }
-                    })
-                    .setIcon(android.R.drawable.ic_dialog_alert);
-
-
-            AlertDialog alert = builder.create();
-            alert.show();
-        }else{
-            builder.setTitle("Oh bummer!")
-                    .setMessage("You don't have enough coins to buy " + time + "!")
-                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            //
-                        }
-                    })
-                    .setIcon(android.R.drawable.ic_dialog_alert);
-
-            AlertDialog alert = builder.create();
-            alert.show();
-        }
-
+        text_plan_freetime.setText(prefs.getString("freetime", ""));
     }
 
     public void displaySuggestions() {
-        final Dialog dialog = new Dialog(AddPlanActivity.this, android.R.style.Theme_Material_Light_Dialog);
+        final Dialog dialog = new Dialog(AddPlanSActivity.this, android.R.style.Theme_Material_Light_Dialog);
         dialog.setTitle("Suggestions");
         dialog.setContentView(R.layout.fragment_suggestions);
         dialog.create();
@@ -357,7 +222,7 @@ public class AddPlanActivity extends AppCompatActivity {
 
 
                 }
-                txtWeight.setText(totalWeight + " g");
+
                        /*SharedPreferences.Editor edit = prefs.edit();
                        edit.putLong("totalWeight",(long)totalWeight);
                        edit.commit();*/
@@ -399,7 +264,7 @@ public class AddPlanActivity extends AppCompatActivity {
     }
 
     public void displayActivityGuide() {
-        final Dialog dialog = new Dialog(AddPlanActivity.this, android.R.style.Theme_Material_Light_Dialog);
+        final Dialog dialog = new Dialog(AddPlanSActivity.this, android.R.style.Theme_Material_Light_Dialog);
         dialog.setTitle("Guide");
         dialog.setContentView(R.layout.category_dialog);
         dialog.create();

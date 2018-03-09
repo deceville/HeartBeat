@@ -31,6 +31,7 @@ public class ListAdapter extends BaseAdapter {
     SharedPreferences prefs;
     int finalCount = 0;
     boolean newState = false;
+    boolean unchecked;
 
     public ListAdapter(Context context, ArrayList<Activity> suggestions) {
         ctx = context;
@@ -86,34 +87,38 @@ public class ListAdapter extends BaseAdapter {
         ed.putInt("count",0);
         ed.apply();
 
-
         newState = !suggestions.get(position).isChecked();
 
         cbox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                unchecked = false;
                 int count = prefs.getInt("count",finalCount);
                 String sugg = suggestions.get(position).Activities;
 
-                if (newState){//if not checked
-                    if (finalCount*15< total) {
+                if (cbox.isChecked()){//if not checked
+                    if (finalCount * 15 < total) {
                         suggestions.get(position).checked = newState; // true
                         finalCount++;
-                        System.out.println(finalCount);
+                        System.out.println("Checked: "+finalCount);
                         ed.putInt("count", count);
                         ed.apply();
                     }else{
-                        cbox.setClickable(false);
                         cbox.setChecked(false);
-                        System.out.println("Count:" +count);
+                        unchecked = true;
+                        System.out.println("Count:" +finalCount);
                         Toast.makeText(ctx,"Limited time only!",Toast.LENGTH_SHORT).show();
                     }
                 }else{//if checked
-                    finalCount--;
-                    suggestions.get(position).checked = newState;
-                    System.out.println(finalCount);
-                    ed.putInt("count", count);
-                    ed.apply();
+                    if(!unchecked){
+                        finalCount--;
+                        cbox.setChecked(false);
+                        suggestions.get(position).checked = !newState;
+                        System.out.println("Deleted: "+finalCount);
+                        ed.putInt("count", count);
+                        ed.apply();
+                    }
+
                 }
             }
         });

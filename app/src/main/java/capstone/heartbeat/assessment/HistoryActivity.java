@@ -17,6 +17,7 @@ import android.widget.TextView;
 import capstone.heartbeat.R;
 import capstone.heartbeat.account.LoginActivity;
 import capstone.heartbeat.account.SignupActivity;
+import capstone.heartbeat.controllers.Effects;
 
 public class HistoryActivity extends AppCompatActivity {
     private Button diabetes_t1no,diabetes_t1yes,famhistory_yes,famhistoy_no;
@@ -38,6 +39,8 @@ public class HistoryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
+        // init Effects class
+        Effects.getInstance().init(this);
         prefs = getSharedPreferences("values",MODE_PRIVATE);
         editor = prefs.edit();
 
@@ -259,6 +262,8 @@ public class HistoryActivity extends AppCompatActivity {
             case R.id.next:
                 final Dialog dialog2 = new Dialog(HistoryActivity.this);
                 dialog2.setContentView(R.layout.badge_profile);
+
+                Effects.getInstance().playSound(Effects.badge_SOUND);
 
                 Button btn_thank = (Button) dialog2.findViewById(R.id.btn_thank);
 

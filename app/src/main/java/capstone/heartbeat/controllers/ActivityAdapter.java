@@ -2,6 +2,8 @@ package capstone.heartbeat.controllers;
 
 import capstone.heartbeat.models.Activity;
 import android.content.Context;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -39,12 +41,20 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.Activi
         return new ActivityViewHolder(view);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public void onBindViewHolder(final ActivityViewHolder holder, int position) {
         Activity activity = activities.get(position);
 
-        holder.title.setText(activity.getActivities());
-        holder.calories.setText(new StringBuilder().append("").append(activity.getCalories()).toString());
+        if (!activity.isDone()) {
+            holder.title.setText(activity.getActivities());
+            holder.calories.setText(new StringBuilder().append("").append(activity.getCalories()).toString());
+        }/*else {
+            holder.title.setText(activity.getActivities());
+            holder.calories.setText(new StringBuilder().append("").append(activity.getCalories()).toString());
+            holder.cardView.setCardBackgroundColor(ctx.getColor(R.color.cardview_dark_background));
+            holder.cardView.setActivated(false);
+        }*/
 
     }
 

@@ -79,9 +79,9 @@
     <string name="lab_diastolic">Diastolic (Second)</string>
     <string name="lab_firstnum">First number</string>
     <string name="lab_secondnum">Second number</string>
-    <string name="lab_chol">Set your Total Cholesterol and HDL</string>
-    <string name="instruction_chol">Slide up and down to adjust total and HDL cholesterol</string>
-    <string name="lab_totalchol">Total Cholesterol</string>
+    <string name="lab_chol">Set your LDL and HDL</string>
+    <string name="instruction_chol">Slide up and down to adjust LDL and HDL cholesterol</string>
+    <string name="lab_totalchol">Low-density Lipids</string>
     <string name="lab_hdl">High-density Lipids</string>
 
     <!-- Strings related to history -->
@@ -149,5 +149,6 @@
 
     <!-- Facebook App ID -->
     <string name="facebook_app_id">546187392404290</string>
+    <string name="title_activity_main2">Main2Activity</string>
 
 </resources>

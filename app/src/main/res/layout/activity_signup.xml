@@ -32,6 +32,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="@dimen/login_signup_width"
                 android:layout_height="wrap_content"
+                android:textColorHint="@color/standardWhite"
                 android:layout_gravity="center">
 
                 <AutoCompleteTextView
@@ -50,6 +51,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="@dimen/login_signup_width"
                 android:layout_height="wrap_content"
+                android:textColorHint="@color/standardWhite"
                 android:layout_gravity="center">
 
                 <EditText
@@ -68,6 +70,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="@dimen/login_signup_width"
                 android:layout_height="wrap_content"
+                android:textColorHint="@color/standardWhite"
                 android:layout_gravity="center">
 
                 <EditText
@@ -89,6 +92,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="@dimen/login_signup_width"
                 android:layout_height="wrap_content"
+                android:textColorHint="@color/standardWhite"
                 android:layout_gravity="center">
 
                 <EditText
@@ -108,6 +112,7 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="@dimen/login_signup_width"
                 android:layout_height="wrap_content"
+                android:textColorHint="@color/standardWhite"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp">
 

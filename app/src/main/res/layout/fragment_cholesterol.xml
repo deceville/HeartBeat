@@ -59,7 +59,7 @@
                     android:layout_marginTop="10dp" />
 
                 <abak.tr.com.boxedverticalseekbar.BoxedVertical
-                    android:id="@+id/chol_total"
+                    android:id="@+id/chol_ldl"
                     android:layout_width="60dp"
                     android:layout_height="250dp"
                     android:layout_gravity="center"
@@ -68,7 +68,7 @@
                     app:progressColor="@color/circle_red"
                     app:textColor="#FFF"
                     app:cornerRadius="20"
-                    app:defaultValue="140"
+                    app:defaultValue="100"
                     app:imageEnabled="false"
                     app:textEnabled="true"
                     app:max="300"

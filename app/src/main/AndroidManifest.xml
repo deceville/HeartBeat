@@ -41,8 +41,7 @@
         </activity>
         <activity
             android:name=".account.LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            />
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".account.SignupActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -70,6 +69,9 @@
             android:name=".others.AddPlanActivity"
             android:label="@string/title_activity_addplan" />
         <activity
+            android:name=".others.AddPlanSActivity"
+            android:label="@string/title_activity_addplan" />
+        <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -88,7 +90,7 @@
 
         <receiver android:name=".controllers.NotificationReceiver" />
 
-        <activity android:name=".others.PlanActivitiesActivity"></activity>
+        <activity android:name=".others.PlanActivitiesActivity" />
     </application>
 
 </manifest>

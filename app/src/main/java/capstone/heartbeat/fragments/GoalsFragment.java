@@ -113,7 +113,7 @@ public class GoalsFragment extends Fragment{
         progress1.setProgress((int)loseWeight);
 
 
-        dece_goal = re.getCholGoal(user.chl);
+        dece_goal = re.getLDLGoal(user.ldl);
 
         double chol_progress = 0;
         double chol_norm = 200;
@@ -177,7 +177,7 @@ public class GoalsFragment extends Fragment{
 
 
         int sbp = user.sbp;
-        dece_goal = re.getBPGoal(user.sbp,user.dbp);
+        dece_goal = re.getSBPGoal(user.sbp);
         double sbp_progress = 0;
         double sbp_norm = 120;
         double sbp_goal =user.sbp-sbp_norm ;
@@ -191,9 +191,9 @@ public class GoalsFragment extends Fragment{
         }
 
 
-        percent_label4.setText(Double.toString(hdl_percent)+"%");
+        /*percent_label4.setText(Double.toString(hdl_percent)+"%");
         progress4.setMax((int)sbp_goal);
-        progress4.setProgress((int)sbp_progress);
+        progress4.setProgress((int)sbp_progress);*/
 
         if (sbp_goal <= 0){
             label4.setVisibility(View.GONE);

@@ -49,15 +49,7 @@
                     android:textColor="@color/progress_gray_dark_teans"
                     android:text="Title" />
 
-                <ImageButton
-                    android:id="@+id/more_button"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.10"
-                    android:background="@android:color/transparent"
-                    android:clickable="true"
-                    android:src="@drawable/ic_more_vert"
-                    android:textAlignment="textEnd" />
+
             </LinearLayout>
 
             <LinearLayout

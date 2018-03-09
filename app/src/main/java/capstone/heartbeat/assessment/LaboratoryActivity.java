@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -23,6 +24,10 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetSequence;
+import com.getkeepsafe.taptargetview.TapTargetView;
 
 import abak.tr.com.boxedverticalseekbar.BoxedVertical;
 import capstone.heartbeat.controllers.PreferenceManager;
@@ -201,7 +206,7 @@ public class LaboratoryActivity extends AppCompatActivity {
             container.addView(view);
 
 
-            final BoxedVertical chol_total = (BoxedVertical)view.findViewById(R.id.chol_total);
+            final BoxedVertical chol_ldl = (BoxedVertical)view.findViewById(R.id.chol_ldl);
             final BoxedVertical chol_hdl = (BoxedVertical)view.findViewById(R.id.chol_hdl);
             final BoxedVertical bp_systolic = (BoxedVertical)view.findViewById(R.id.bp_systolic);
             final BoxedVertical bp_diastolic = (BoxedVertical)view.findViewById(R.id.bp_diastolic);
@@ -284,13 +289,13 @@ public class LaboratoryActivity extends AppCompatActivity {
                 add_chol.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        chol_total.setValue(chol_total.getValue()+1);
+                        chol_ldl.setValue(chol_ldl.getValue()+1);
                     }
                 });
                 minus_chol.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        chol_total.setValue(chol_total.getValue()-1);
+                        chol_ldl.setValue(chol_ldl.getValue()-1);
                     }
                 });
 
@@ -306,11 +311,12 @@ public class LaboratoryActivity extends AppCompatActivity {
                         chol_hdl.setValue(chol_hdl.getValue()-1);
                     }
                 });
-                chol_total.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
+                chol_ldl.setOnBoxedPointsChangeListener(new BoxedVertical.OnValuesChangeListener() {
                     @Override
                     public void onPointsChanged(BoxedVertical boxedPoints, int value) {
                         chl = value;
-                        editor.putInt("chl", chl);
+                        editor.putInt("ldl", chl);
+                        editor.putInt("chl", chl+hdl);
                         editor.commit();
                     }
 

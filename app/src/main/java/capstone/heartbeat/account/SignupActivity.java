@@ -30,6 +30,7 @@ import java.util.regex.Pattern;
 import capstone.heartbeat.MainActivity;
 import capstone.heartbeat.R;
 import capstone.heartbeat.assessment.DemographicsActivity;
+import capstone.heartbeat.controllers.Effects;
 import capstone.heartbeat.controllers.HeartBeatDB;
 import capstone.heartbeat.models.Bank;
 
@@ -54,7 +55,11 @@ public class SignupActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_signup);
+
+        // init Effects class
+        Effects.getInstance().init(this);
 
         //database reference
         rootRef  = FirebaseDatabase.getInstance().getReference();
@@ -163,13 +168,16 @@ public class SignupActivity extends AppCompatActivity {
             final Dialog dialog2 = new Dialog(SignupActivity.this);
             dialog2.setContentView(R.layout.coins_dialog);
 
+            Effects.getInstance().playSound(Effects.coin_SOUND);
+
             Button btn_thank = (Button) dialog2.findViewById(R.id.btn_thank);
             TextView txt_coin = (TextView) dialog2.findViewById(R.id.txt_coin);
             TextView txt_coin_desc = (TextView) dialog2.findViewById(R.id.txt_coin_desc);
 
             txt_coin.setText(String.format("%d", 20));
             txt_coin_desc.setText("You have earned 20 coins for signing up!");
-            db.addCoins(id,20);
+            db.setInitialPoints(id,0,20,60);
+            System.out.println("id: " +id);
             db.close();
             dialog2.show();
 

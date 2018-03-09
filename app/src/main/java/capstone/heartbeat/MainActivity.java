@@ -1,14 +1,16 @@
 package capstone.heartbeat;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.design.widget.NavigationView;
@@ -20,12 +22,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.google.firebase.auth.FirebaseAuth;
-
-import org.w3c.dom.Text;
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +43,6 @@ import capstone.heartbeat.fragments.tabfragments.BMIFragment;
 import capstone.heartbeat.fragments.tabfragments.BloodPressureFragment;
 import capstone.heartbeat.fragments.tabfragments.CholesterolFragment;
 import capstone.heartbeat.models.Bank;
-import capstone.heartbeat.models.User;
 import capstone.heartbeat.others.AboutActivity;
 import capstone.heartbeat.sidebar.FAQ_Activity;
 
@@ -113,10 +114,28 @@ public class MainActivity extends AppCompatActivity
 
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new ResultsFragment(prefs), "Results");
-        adapter.addFragment(new SuggestionsFragment(), "Suggestions");
+        adapter.addFragment(new SuggestionsFragment(prefs), "Suggestions");
         adapter.addFragment(new PlansFragment(user), "Plans");
         adapter.addFragment(new GoalsFragment(user,id), "Goals & Quests");
         viewPager.setAdapter(adapter);
+    }
+
+    public void displayTutorial(Activity act, View view){
+        TapTargetView.showFor(act,
+                TapTarget.forView(view, "Add selected suggestions", "Select and add suggestions to a new plan")
+                        .outerCircleColor(R.color.bg_screen2)      // Specify a color for the outer circle
+                        .outerCircleAlpha(0.96f)
+                        .titleTextSize(20)
+                        .descriptionTextSize(16)
+                        .textColor(R.color.standardWhite) // Specify a color for both the title and description text
+                        .textTypeface(Typeface.SANS_SERIF)  // Specify a typeface for the text
+                        .dimColor(R.color.standardBlack)            // If set, will dim behind the view with 30% opacity of the given color
+                        .drawShadow(true)                   // Whether to draw a drop shadow or not
+                        .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
+                        .tintTarget(false)                   // Whether to tint the target view's color
+                        .transparentTarget(false)            // Specify a custom drawable to draw as the target
+                        .targetRadius(60)
+        );
     }
 
     @Override
@@ -169,18 +188,52 @@ public class MainActivity extends AppCompatActivity
         getMenuInflater().inflate(R.menu.menu, menu);
 
         MenuItem item1 = menu.findItem(R.id.action_coins);
-        MenuItem item2 = menu.findItem(R.id.action_hearts);
-        MenuItemCompat.setActionView(item1, R.layout.badge_layout);
+        MenuItemCompat.setActionView(item1, R.layout.badge_coin);
         coinCount = (RelativeLayout) MenuItemCompat.getActionView(item1);
-        heartCount = (RelativeLayout) MenuItemCompat.getActionView(item2);
         TextView coin = (TextView)coinCount.findViewById(R.id.badge_coin_text);
         HeartBeatDB db = new HeartBeatDB(getApplicationContext());
         db.open();
         Bank b = new Bank();
         b= db.getPoints(id);
+
         int coins = b.getCoins();
+        System.out.println(coins);
         coin.setText(coins+"");
+
+        item1.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                MainActivity.this.displayShop();
+                return true;
+            }
+        });
         return super.onCreateOptionsMenu(menu);
+    }
+
+    public void displayShop(){
+        final Dialog dialog = new Dialog(MainActivity.this, android.R.style.Theme_Material_Light_Dialog);
+        dialog.setTitle("Buy Time");
+        dialog.setContentView(R.layout.shop_dialog);
+        dialog.create();
+
+        dialog.show();
+
+        Button shop_done = (Button) dialog.findViewById(R.id.shop_done);
+        Button shop_cancel = (Button) dialog.findViewById(R.id.shop_cancel);
+
+        shop_done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        shop_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -188,7 +241,7 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        Fragment fragment = null;
 
         if (id == R.id.nav_home) {
 
@@ -202,6 +255,7 @@ public class MainActivity extends AppCompatActivity
             ft.addToBackStack(null);
             ft.commit();*/
 
+            fragment = new ResultsFragment();
         } else if (id == R.id.nav_plans) {
             /*FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.fragment_plans, new PlansFragment());
@@ -209,10 +263,15 @@ public class MainActivity extends AppCompatActivity
             ft.addToBackStack(null);
             ft.commit();*/
 
+            PlansFragment plansFragment = new PlansFragment();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.content_frame, plansFragment)
+                    .addToBackStack(null)
+                    .commit();
         } else if (id == R.id.nav_suggestions) {
-
+            fragment = new SuggestionsFragment(prefs);
         } else if (id == R.id.nav_goals) {
-
+            fragment = new GoalsFragment();
         } else if (id == R.id.nav_help) {
             Intent i = new Intent(MainActivity.this, FAQ_Activity.class);
             startActivity(i);
@@ -220,20 +279,22 @@ public class MainActivity extends AppCompatActivity
             Intent i = new Intent(MainActivity.this, AboutActivity.class);
             startActivity(i);
         } else if (id == R.id.nav_logout) {
-            SharedPreferences values = getSharedPreferences("values",MODE_PRIVATE);
+            SharedPreferences values = getSharedPreferences("values", MODE_PRIVATE);
             SharedPreferences.Editor ed = values.edit();
             ed.clear();
             ed.commit();
-            prefs = getSharedPreferences("login",MODE_PRIVATE);
+            prefs = getSharedPreferences("login", MODE_PRIVATE);
             SharedPreferences.Editor editor = prefs.edit();
             editor.clear();
-            editor.putInt("session",0);
+            editor.putInt("session", 0);
             editor.commit();
-            startActivity(new Intent(MainActivity.this,LoginActivity.class));
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
             finish();
 
 
         }
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

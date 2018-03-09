@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" 
+    android:layout_height="match_parent"
+    style="@android:style/Widget.ActionButton">
+
+    <RelativeLayout
+        android:id="@+id/badge_coin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/coin_item_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btn_coin"
+                android:layout_width="30dip"
+                android:layout_height="30dip"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/ic_coin" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/badge_coin_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@id/coin_item_count"
+            android:background="@android:drawable/ic_notification_overlay"
+            android:backgroundTint="@color/circle_green"
+            android:text="0"
+            android:textColor="#FFF"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+</RelativeLayout>

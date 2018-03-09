@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/demo_question_padding">
+
+        <TextView
+            android:id="@+id/cat_age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Your current age"
+            android:textSize="16sp"
+            android:textColor="@color/standardBlack"/>
+
+        <TextView
+            android:id="@+id/cat_BMI"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Your current BMI"
+            android:textSize="16sp"
+            android:layout_marginTop="@dimen/fab_margin"
+            android:textColor="@color/standardBlack"/>
+
+        <TextView
+            android:id="@+id/cat_SUGGEST"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="The suggested activities given"
+            android:layout_marginTop="@dimen/fab_margin"
+            android:textColor="@color/standardBlack" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@android:color/white"
+            android:weightSum="1">
+
+            <Button
+                android:id="@+id/btn_gotit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/bg_screen2"
+                android:text="Got it!"
+                android:textColor="#FFFFFF" />
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

@@ -20,6 +20,9 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.github.lzyzsd.circleprogress.DonutProgress;
+import com.jaredrummler.materialspinner.MaterialSpinner;
+
+import org.w3c.dom.Text;
 
 import java.lang.reflect.Array;
 import java.text.DecimalFormat;
@@ -45,26 +48,34 @@ public class RiskResultsActivity extends AppCompatActivity {
 
     private DonutProgress heartattack, stroke;
     private SharedPreferences prefs, use;
-    public double age, sbp, dbp, totalchl, hdl, height, weight;
+    public double age, sbp, dbp, totalchl, ldl, hdl, height, weight;
     public int smoke, af, diabType1, diabType2, fhcvd, ra, CKD, CHF, HA, VHD, bptreatment, gender, sticks;
     public int ha, st, nha, nst, act, uid;
     public String sleep, birth;
     private DecimalFormat df;
-
+    private TextView cat_age,cat_BMI, cat_SUGGEST;
     ArrayList<String> goals;
     ListAdapter adapter;
-    Button btn_lets, btn_cancel;
+    Button btn_lets, btn_cancel, btn_gotit;
+
+    private static final String[] YEARS = {
+            "10 years",
+            "5 years",
+            "3 years"
+    };
 
 
     ArrayAdapter<String> arrayAdapter;
 
-    private ProgressBar bmi_progress, chol_progress, hdl_progress, sbp_progress, smoke_progress;
+    private ProgressBar bmi_progress, ldl_progress, hdl_progress, sbp_progress, dbp_progress, smoke_progress;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_risk_results);
+
+        MaterialSpinner spinner_years = (MaterialSpinner) findViewById(R.id.spinner_years);
 
         prefs = getSharedPreferences("values", MODE_PRIVATE);
         use = getSharedPreferences("login", MODE_PRIVATE);
@@ -79,6 +90,7 @@ public class RiskResultsActivity extends AppCompatActivity {
         sbp = (double) prefs.getInt("sbp", 0);
         dbp = (double) prefs.getInt("dbp", 0);
         totalchl = (double) prefs.getInt("chl", 0);
+        ldl = (double) prefs.getInt("ldl", 0);
         hdl = (double) prefs.getInt("hdl", 0);
         height = (double) prefs.getInt("height", 0);
         weight = (double) prefs.getInt("weight", 0);
@@ -102,7 +114,7 @@ public class RiskResultsActivity extends AppCompatActivity {
 
 
         final int bool[] = {5, smoke, af, diabType1, diabType2, fhcvd, ra, bptreatment, CKD};
-        final double continuous[] = {age, sbp, dbp, totalchl, hdl, height, weight};
+        final double continuous[] = {age, sbp, dbp, totalchl, ldl, hdl, height, weight};
 
         final int normalBool[] = {5, 0, af, diabType1, diabType2, fhcvd, ra, 0, CKD};
         final double normalContinuous[] = {age, 120, 80, 200, 60, 170, 65};
@@ -152,6 +164,20 @@ public class RiskResultsActivity extends AppCompatActivity {
         }
 
 
+        spinner_years.setItems(YEARS);
+        spinner_years.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
+
+            @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
+                //
+            }
+        });
+        spinner_years.setOnNothingSelectedListener(new MaterialSpinner.OnNothingSelectedListener() {
+
+            @Override public void onNothingSelected(MaterialSpinner spinner) {
+                //
+            }
+        });
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -160,14 +186,16 @@ public class RiskResultsActivity extends AppCompatActivity {
         super.onStart();
 
         bmi_progress = (ProgressBar) findViewById(R.id.bmi_progress);
-        chol_progress = (ProgressBar) findViewById(R.id.total_progress);
+        ldl_progress = (ProgressBar) findViewById(R.id.ldl_progress);
         hdl_progress = (ProgressBar) findViewById(R.id.hdl_progress);
         sbp_progress = (ProgressBar) findViewById(R.id.systolic_progress);
+        dbp_progress = (ProgressBar) findViewById(R.id.diastolic_progress);
         smoke_progress = (ProgressBar) findViewById(R.id.sticks_progress);
         TextView bmi_desc = (TextView) findViewById(R.id.bmi_description);
-        TextView chl_desc = (TextView) findViewById(R.id.chol_description);
+        TextView ldl_desc = (TextView) findViewById(R.id.ldl_description);
         TextView hdl_desc = (TextView) findViewById(R.id.hdl_description);
         TextView sbp_desc = (TextView) findViewById(R.id.sbp_description);
+        TextView dbp_desc = (TextView) findViewById(R.id.dbp_description);
         TextView smoke_desc = (TextView) findViewById(R.id.smoke_description);
 
         bmi_progress.setMax(50);
@@ -181,10 +209,10 @@ public class RiskResultsActivity extends AppCompatActivity {
         bmi_desc.setText(bmi_string);
         bmi_progress.setProgress((int) bmi);
 
-        chol_progress.setMax(300);
-        desc = Double.toString(totalchl) + " mm/dl";
-        chl_desc.setText(desc);
-        chol_progress.setProgress((int) totalchl);
+        ldl_progress.setMax((int) totalchl);
+        desc = Double.toString(ldl) + " mm/dl";
+        ldl_desc.setText(desc);
+        ldl_progress.setProgress((int) ldl);
 
         hdl_progress.setMax((int) totalchl);
         desc = Double.toString(hdl) + " mm/dl";
@@ -195,6 +223,11 @@ public class RiskResultsActivity extends AppCompatActivity {
         desc = Double.toString(sbp) + " mm/Hg";
         sbp_desc.setText(desc);
         sbp_progress.setProgress((int) sbp);
+
+        dbp_progress.setMax(240);
+        desc = Double.toString(dbp) + " mm/Hg";
+        dbp_desc.setText(desc);
+        dbp_progress.setProgress((int) dbp);
 
         smoke_progress.setMax(30);
         if(sticks==0){
@@ -235,6 +268,7 @@ public class RiskResultsActivity extends AppCompatActivity {
         user.setDbp((int) dbp);
         user.setSbp((int) sbp);
         user.setHdl((int) hdl);
+        user.setLdl((int) ldl);
         user.setChl((int) totalchl);
         user.setChf(CHF);
         user.setBptr(bptreatment);
@@ -296,7 +330,7 @@ public class RiskResultsActivity extends AppCompatActivity {
                 List<Goal> everyones_goal = new ArrayList<>();
                 Goal Dece_goal = e.getBMIGoal(weight, height);
                 everyones_goal.add(Dece_goal);
-                Dece_goal = e.getCholGoal(totalchl);
+                Dece_goal = e.getLDLGoal(ldl);
                 everyones_goal.add(Dece_goal);
                 Dece_goal = e.getHDLGoal(hdl);
                 everyones_goal.add(Dece_goal);

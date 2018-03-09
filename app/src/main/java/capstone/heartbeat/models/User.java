@@ -24,6 +24,7 @@ public class User {
     public String birth;
     public String gender;
     public int chl;
+    public int ldl;
     public int hdl;
     public int sbp;
     public int dbp;
@@ -201,6 +202,14 @@ public class User {
 
     public int getBptr() {
         return bptr;
+    }
+
+    public int getLdl() {
+        return ldl;
+    }
+
+    public void setLdl(int ldl) {
+        this.ldl = ldl;
     }
 
     public void setBptr(int bptr) {

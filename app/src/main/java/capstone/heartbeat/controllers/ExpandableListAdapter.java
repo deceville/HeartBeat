@@ -53,6 +53,8 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         TextView txtListChild = (TextView) convertView
                 .findViewById(R.id.title_plans1);
 
+        txtListChild.setTextColor(convertView.getResources().getColor(R.color.standardBlack));
+
         txtListChild.setText(childText);
         return convertView;
     }

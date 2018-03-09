@@ -15,8 +15,10 @@ import com.akexorcist.roundcornerprogressbar.RoundCornerProgressBar;
 
 import java.util.List;
 
+import capstone.heartbeat.MainActivity;
 import capstone.heartbeat.R;
 import capstone.heartbeat.models.Plan;
+import capstone.heartbeat.models.Plans;
 import capstone.heartbeat.others.PlanActivitiesActivity;
 
 /**
@@ -26,9 +28,9 @@ import capstone.heartbeat.others.PlanActivitiesActivity;
 public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder>{
 
     private Context ctx;
-    private List<Plan> plans;
+    private List<Plans> plans;
 
-    public PlanAdapter(Context ctx, List<Plan> plans) {
+    public PlanAdapter(Context ctx, List<Plans> plans) {
         this.ctx = ctx;
         this.plans = plans;
     }
@@ -43,32 +45,20 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder
 
     @Override
     public void onBindViewHolder(final PlanViewHolder holder, int position) {
-        Plan plan = plans.get(position);
+        final Plans plan = plans.get(position);
 
         holder.title.setText(plan.getTitle());
-        holder.description.setText(plan.getProgress()+"/"+plan.getMax());
-        holder.progBar.setMax((float)plan.getMax());
+        holder.description.setText(Math.round(plan.getProgress())+"/"+ ((int)plan.getTotalWeightLoss()) + " grams");
+        holder.progBar.setMax((float)plan.getTotalWeightLoss());
         holder.progBar.setProgress((float)plan.getProgress());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(ctx,holder.title.getText(),Toast.LENGTH_SHORT).show();
-                ctx.startActivity(new Intent(ctx, PlanActivitiesActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-            }
-        });
-
-        holder.more.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(ctx,"Menu clicked!",Toast.LENGTH_SHORT).show();
+                ctx.startActivity(new Intent(ctx, PlanActivitiesActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra("name",plan.getTitle()));
 
             }
         });
-
-
-
-
-
     }
 
     @Override
@@ -90,7 +80,6 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder
 
             title = (TextView) itemView.findViewById(R.id.card_title);
             description = (TextView) itemView.findViewById(R.id.prog_desc);
-            more = (ImageButton) itemView.findViewById(R.id.more_button);
             progBar = (RoundCornerProgressBar) itemView.findViewById(R.id.progress);
             cardView = (CardView) itemView.findViewById(R.id.cardView);
 

@@ -148,18 +148,18 @@ public class ResultEvaluator extends AddPlanActivity {
         return  bmi;
     }
 
-    public Goal getCholGoal(double chol){
+    public Goal getLDLGoal(double ldl){
         Goal arvi_goal = new Goal();
         arvi_goal.setDuration("1 month");
-        arvi_goal.setDescription("Total Cholesterol");
+        arvi_goal.setDescription("LDL");
         arvi_goal.setCompleted(false);
-        if (chol > 200){
-            arvi_goal.setValue(chol - 200);
+        if (ldl > 100){
+            arvi_goal.setValue(ldl - 100);
             arvi_goal.setAction("reduce");
             return arvi_goal;
 
         }else  {
-            arvi_goal.setValue(chol);
+            arvi_goal.setValue(ldl);
             arvi_goal.setAction("maintain");
             return arvi_goal;
         }
@@ -182,10 +182,10 @@ public class ResultEvaluator extends AddPlanActivity {
         }
     }
 
-    public Goal getBPGoal(double sbp,double dbp){
+    public Goal getSBPGoal(double sbp){
         Goal arvi_goal = new Goal();
         arvi_goal.setDuration("1 month");
-        arvi_goal.setDescription("BP");
+        arvi_goal.setDescription("SBP");
         arvi_goal.setCompleted(false);
          if(sbp > 120){
             arvi_goal.setValue(sbp - 120);
@@ -194,6 +194,24 @@ public class ResultEvaluator extends AddPlanActivity {
 
         }else  {
             arvi_goal.setValue(sbp);
+            arvi_goal.setAction("maintain");
+            return arvi_goal;
+        }
+
+    }
+
+    public Goal getDBPGoal(double dbp){
+        Goal arvi_goal = new Goal();
+        arvi_goal.setDuration("1 month");
+        arvi_goal.setDescription("DBP");
+        arvi_goal.setCompleted(false);
+        if(dbp > 80){
+            arvi_goal.setValue(dbp - 80);
+            arvi_goal.setAction("reduce");
+            return arvi_goal;
+
+        }else  {
+            arvi_goal.setValue(dbp);
             arvi_goal.setAction("maintain");
             return arvi_goal;
         }
@@ -220,4 +238,26 @@ public class ResultEvaluator extends AddPlanActivity {
         return  weight;
     }
 
+    public int getAge(String birth){
+        return 0;
+    }
+
+    public String getBMICat(double bmi){
+        String category= null;
+
+        if(bmi>=18.5&&bmi<25){
+            category = "healthy";
+        }else if(bmi<18.5){
+            category = "underweight";
+        }else if(bmi>=25 && bmi <30){
+            category = "overweight";
+        }else if(bmi>30){
+            category = "Obese";
+        }
+        return  category;
+    }
+
+    /*public String getSuggestDescription(){
+
+    }*/
 }

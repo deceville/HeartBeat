@@ -6,12 +6,12 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,33 +30,26 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListView;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ExpandableListView.OnChildClickListener;
-import android.widget.ExpandableListView.OnGroupClickListener;
-import android.widget.ExpandableListView.OnGroupCollapseListener;
-import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.annotation.SuppressLint;
 
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetView;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-import capstone.heartbeat.MainActivity;
-import capstone.heartbeat.assessment.DemographicsActivity;
 import capstone.heartbeat.controllers.ActivityDatabase;
+import capstone.heartbeat.controllers.Effects;
 import capstone.heartbeat.controllers.HeartBeatDB;
 import capstone.heartbeat.controllers.PlanAdapter;
 import capstone.heartbeat.controllers.ResultEvaluator;
@@ -68,6 +61,7 @@ import capstone.heartbeat.controllers.ExpandableListAdapter;
 import capstone.heartbeat.controllers.ListAdapter;
 import capstone.heartbeat.R;
 import capstone.heartbeat.models.Activity;
+import capstone.heartbeat.others.PlanActivitiesActivity;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
@@ -82,7 +76,7 @@ public class PlansFragment extends Fragment{
     ActivityDatabase myDB;
     ListAdapter adapter;
     Button btn_addSuggestion, btn_cancel;
-    private RecyclerView recyclerView;
+    public RecyclerView recyclerView;
     private ListView mListView;
     private FloatingActionButton mFab;
     private int mPreviousVisibleItem;
@@ -156,6 +150,9 @@ public class PlansFragment extends Fragment{
                              Bundle savedInstanceState) {
 
 
+        // init Effects class
+        Effects.getInstance().init(getContext());
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_plans, container, false);
 
@@ -164,19 +161,25 @@ public class PlansFragment extends Fragment{
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        planList = new ArrayList<>();
-
 
         // preparing list data
         prepareListData();
 
+        List<Plans> plans = new ArrayList<>();
+        HeartBeatDB db = new HeartBeatDB(getContext());
+        db.open();
+        int user = pref.getInt("id",1);
+        plans = db.getPlans(user);
+
+
+       /*planList = new ArrayList<>();
         planList.add(new Plan("My Plan","Good",100,50,1));
         planList.add(new Plan("My Plan2","Good",80,50,2));
         planList.add(new Plan("My Plan3","Good",90,50,3));
         planList.add(new Plan("My Plan4","Good",50,50,4));
-        planList.add(new Plan("My Plan5","Good",60,50,5));
+        planList.add(new Plan("My Plan5","Good",60,50,5));*/
 
-        PlanAdapter adapter = new PlanAdapter(getApplicationContext(), planList);
+        PlanAdapter adapter = new PlanAdapter(getApplicationContext(), plans);
         recyclerView.setAdapter(adapter);
 
         // get the listview
@@ -331,6 +334,8 @@ public class PlansFragment extends Fragment{
 
                 case "Done" : {
                     /*prog.put(date,dob);*/
+                    Effects.getInstance().playSound(Effects.coin_SOUND);
+
                     HeartBeatDB db = new HeartBeatDB(getContext());
                     db.open();
                     int use = pref.getInt("id",1);
@@ -373,26 +378,6 @@ public class PlansFragment extends Fragment{
 
 
 
-//        // Pull values from the array we built when we created the list
-//        String author = mListStringArray[groupPos][0];
-//        String page = mListStringArray[groupPos][childPos * 3 + 1];
-//        rowId = Integer.parseInt(mListStringArray[groupPos][childPos * 3 + 3]);
-//
-//        switch (menuItem.getItemId())
-//        {
-//            case MENU_READ:
-//                readNote(rowId);
-//                return true;
-//
-//            case MENU_EDIT:
-//                editNote(rowId);
-//                return true;
-//
-//            // etc..
-//
-//            default:
-//                return super.onContextItemSelected(menuItem);
-//        }
 
         return false;
     }
@@ -401,10 +386,8 @@ public class PlansFragment extends Fragment{
     public void onPrepareOptionsMenu(Menu menu) {
 
         MenuItem item1 = menu.findItem(R.id.action_coins);
-        MenuItem item2 = menu.findItem(R.id.action_hearts);
-        MenuItemCompat.setActionView(item1, R.layout.badge_layout);
+        MenuItemCompat.setActionView(item1, R.layout.badge_coin);
         RelativeLayout coinCount = (RelativeLayout) MenuItemCompat.getActionView(item1);
-        RelativeLayout heartCount = (RelativeLayout) MenuItemCompat.getActionView(item2);
         TextView coin = (TextView)coinCount.findViewById(R.id.badge_coin_text);
         HeartBeatDB db = new HeartBeatDB(getApplicationContext());
         db.open();
@@ -455,6 +438,28 @@ public class PlansFragment extends Fragment{
         cardview = (CardView) view.findViewById(R.id.cardView);
 
         menuRed = (FloatingActionMenu) view.findViewById(R.id.menu_red);
+
+        /*TapTargetView.showFor(getActivity(),
+                TapTarget.forView(cardview, "This is your plan", "Tap to view the activities")
+                        .outerCircleColor(R.color.bg_screen2)      // Specify a color for the outer circle
+                        .outerCircleAlpha(0.96f)
+                        .titleTextSize(20)
+                        .descriptionTextSize(20)
+                        .textColor(R.color.standardWhite) // Specify a color for both the title and description text
+                        .textTypeface(Typeface.SANS_SERIF)  // Specify a typeface for the text
+                        .dimColor(R.color.standardBlack)            // If set, will dim behind the view with 30% opacity of the given color
+                        .drawShadow(true)                   // Whether to draw a drop shadow or not
+                        .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
+                        .tintTarget(false)                   // Whether to tint the target view's color
+                        .transparentTarget(false)            // Specify a custom drawable to draw as the target
+                        .targetRadius(60),
+        new TapTargetView.Listener() {          // The listener can listen for regular clicks, long clicks or cancels
+            @Override
+            public void onTargetClick(TapTargetView view) {
+                super.onTargetClick(view);      // This call is optional
+                startActivity(new Intent(getApplicationContext(), PlanActivitiesActivity.class));
+            }
+        });*/
 
         menu_createPlan = (FloatingActionButton) view.findViewById(R.id.menu_createPlan);
         menu_addActivity = (FloatingActionButton) view.findViewById(R.id.menu_addActivity);

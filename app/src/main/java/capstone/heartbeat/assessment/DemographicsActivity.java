@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -24,10 +25,15 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.getkeepsafe.taptargetview.TapTarget;
+import com.getkeepsafe.taptargetview.TapTargetSequence;
+import com.getkeepsafe.taptargetview.TapTargetView;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import capstone.heartbeat.controllers.Effects;
 import capstone.heartbeat.controllers.HeartBeatDB;
 import capstone.heartbeat.controllers.PickerAdapter;
 import capstone.heartbeat.R;
@@ -71,6 +77,9 @@ public class DemographicsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_demographics);
 
+        // init Effects class
+        Effects.getInstance().init(this);
+
         prefs = getSharedPreferences("values",MODE_PRIVATE);
         SharedPreferences pref = getSharedPreferences("login",MODE_PRIVATE);
         editor = prefs.edit();
@@ -78,6 +87,39 @@ public class DemographicsActivity extends AppCompatActivity {
         btn_female = (Button)findViewById(R.id.btn_female);
         btn_male = (Button)findViewById(R.id.btn_male);
         avatar = (ImageView) findViewById(R.id.avatar);
+        final ScaleView rulerViewMm = (ScaleView) findViewById(R.id.my_scale);
+        txtValue = (TextView) findViewById(R.id.txt_height);
+        rv = (RecyclerView) findViewById(R.id.rv);
+
+        new TapTargetSequence(this)
+                .targets(
+                        TapTarget.forView(findViewById(R.id.my_scale), "Set your height!", "You can slide your finger from top or bottom")
+                                .outerCircleColor(R.color.bg_screen2)      // Specify a color for the outer circle
+                                .outerCircleAlpha(0.96f)
+                                .titleTextSize(20)
+                                .descriptionTextSize(20)
+                                .textColor(R.color.standardWhite) // Specify a color for both the title and description text
+                                .textTypeface(Typeface.SANS_SERIF)  // Specify a typeface for the text
+                                .dimColor(R.color.standardBlack)            // If set, will dim behind the view with 30% opacity of the given color
+                                .drawShadow(true)                   // Whether to draw a drop shadow or not
+                                .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
+                                .tintTarget(false)                   // Whether to tint the target view's color
+                                .transparentTarget(true)            // Specify a custom drawable to draw as the target
+                                .targetRadius(60),
+                        TapTarget.forView(findViewById(R.id.rv), "Set your weight!", "You can slide your finger from left or right")
+                                .outerCircleColor(R.color.bg_screen3)      // Specify a color for the outer circle
+                                .outerCircleAlpha(0.96f)
+                                .titleTextSize(20)
+                                .descriptionTextSize(20)
+                                .textColor(R.color.standardWhite) // Specify a color for both the title and description text
+                                .textTypeface(Typeface.SANS_SERIF)  // Specify a typeface for the text
+                                .dimColor(R.color.standardBlack)            // If set, will dim behind the view with 30% opacity of the given color
+                                .drawShadow(true)                   // Whether to draw a drop shadow or not
+                                .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
+                                .tintTarget(false)                   // Whether to tint the target view's color
+                                .transparentTarget(false)            // Specify a custom drawable to draw as the target
+                                .targetRadius(60))
+                .start();
 
         uid=pref.getInt("id",1);
 
@@ -174,8 +216,6 @@ public class DemographicsActivity extends AppCompatActivity {
 
 
 
-        final ScaleView rulerViewMm = (ScaleView) findViewById(R.id.my_scale);
-        txtValue = (TextView) findViewById(R.id.txt_height);
         rulerViewMm.setStartingPoint(150f);
         rulerViewMm.setUpdateListener(new onViewUpdateListener() {
 
@@ -187,7 +227,6 @@ public class DemographicsActivity extends AppCompatActivity {
             }
         });
 
-        rv = (RecyclerView) findViewById(R.id.rv);
 
         PickerLayoutManager pickerLayoutManager = new PickerLayoutManager(this, PickerLayoutManager.HORIZONTAL, false);
         pickerLayoutManager.setChangeAlpha(true);
@@ -324,12 +363,12 @@ public class DemographicsActivity extends AppCompatActivity {
                     Button quest_back = (Button) d.findViewById(R.id.quest_back);
 
                     if(quest_hdl && quest_bp && quest_total){
+                        alldone = true;
+                        showCoinDialog(d, allQuest);
                         HeartBeatDB db = new HeartBeatDB(getApplicationContext());
                         db.open();
-                        db.setInitialPoints(uid,0,allQuest, 0);
+                        db.updateCoins(uid,allQuest);
                         db.close();
-                        d.dismiss();
-                        startActivity(new Intent(DemographicsActivity.this, LaboratoryActivity.class));
                     }else{
                         if(quest_bp){
                             viewGroup_bp.setVisibility(GONE);
@@ -582,6 +621,8 @@ public class DemographicsActivity extends AppCompatActivity {
     public void showCoinDialog(final Dialog d, int coins){
         final Dialog dialog2 = new Dialog(DemographicsActivity.this);
         dialog2.setContentView(R.layout.coins_dialog);
+
+        Effects.getInstance().playSound(Effects.coin_SOUND);
 
         Button btn_thank = (Button) dialog2.findViewById(R.id.btn_thank);
         TextView txt_coin = (TextView) dialog2.findViewById(R.id.txt_coin);

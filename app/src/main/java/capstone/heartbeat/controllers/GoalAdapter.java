@@ -67,31 +67,30 @@ public class GoalAdapter extends BaseAdapter{
                     ((TextView) view.findViewById(R.id.title_goals)).setText(description);
                 }
             }break;
-            case "Total Cholesterol":{
+            case "LDL":{
                 if (goals.get(position).getAction().equals("reduce")){
-                    description = "Reduce " + value + " mm/dl in " + duration;
+                    description = "Reduce " + value + " mm/dl of LDL in " + duration;
                     ((TextView) view.findViewById(R.id.title_goals)).setText(description);
                 }else if (goals.get(position).getAction().equals("gain")){
-                    description = "Gain " + value + " mm/dl in " + duration;
+                    description = "Gain " + value + " mm/dl of LDL in " + duration;
                     ((TextView) view.findViewById(R.id.title_goals)).setText(description);
                 }else {
-                    description = "Maintain " + value + " mm/dl in " + duration;
+                    description = "Maintain " + value + " mm/dl of LDL in " + duration;
                     ((TextView) view.findViewById(R.id.title_goals)).setText(description);
                 }
             }break;
             case "HDL":{
                 if (goals.get(position).getAction().equals("reduce")){
-                    description = "Reduce " + value + " mm/dl in " + duration;
+                    description = "Reduce " + value + " mm/dl of HDL in " + duration;
                     ((TextView) view.findViewById(R.id.title_goals)).setText(description);
                 }else if (goals.get(position).getAction().equals("gain")){
-                    description = "Gain " + value + " mm/dl in " + duration;
+                    description = "Gain " + value + " mm/dl of HDL in " + duration;
                     ((TextView) view.findViewById(R.id.title_goals)).setText(description);
                 }else {
-                    description = "Maintain " + value + " mm/dl in " + duration;
+                    description = "Maintain " + value + " mm/dl of HDL in " + duration;
                     ((TextView) view.findViewById(R.id.title_goals)).setText(description);
                 }
             }break;
-
         }
 
         return view;

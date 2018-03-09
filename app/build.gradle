@@ -43,7 +43,10 @@ dependencies {
     compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:+'
     implementation 'com.facebook.android:facebook-share:4.28.0'
     compile 'com.akexorcist:RoundCornerProgressBar:2.0.3'
+    compile 'com.jaredrummler:material-spinner:1.2.4'
+    compile 'com.getkeepsafe.taptargetview:taptargetview:1.11.0'
 }
+
 
 
 
