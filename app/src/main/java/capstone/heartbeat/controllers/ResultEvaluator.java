@@ -14,6 +14,7 @@ import capstone.heartbeat.calculators.QStrokeFemale;
 import capstone.heartbeat.calculators.QStrokeMale;
 import capstone.heartbeat.calculators.Qrisk2Female;
 import capstone.heartbeat.calculators.Qrisk2Male;
+import capstone.heartbeat.models.Activity;
 import capstone.heartbeat.models.Goal;
 import capstone.heartbeat.others.AddPlanActivity;
 
@@ -276,7 +277,18 @@ public class ResultEvaluator extends AddPlanActivity {
         return  category;
     }
 
-    /*public String getSuggestDescription(){
+    //getDays
+    public double getGoalDays(List<Activity> activities){
+         double days =0 ;
+         double total = 0;
+         Goal g = getBMIGoal(weight,height);
+         double goal=g.getValue()*1000;
+        for (Activity a:activities
+             ) {
+            total = total + getWeightEquivalent(a.getWeightLoss(),weight)*15;
+        }
 
-    }*/
+        days = goal/total;
+        return days;
+    }
 }
