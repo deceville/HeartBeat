@@ -23,9 +23,12 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DateFormat;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import capstone.heartbeat.MainActivity;
@@ -122,7 +125,7 @@ public class AddPlanActivity extends AppCompatActivity {
                 coin = db.getPoints(uid);
                 current = 0;
                 total = coin.getCoins();
-                shop_coin.setText("You currently have " + total + " coins and " + String.format("%02d:%02d", hours, minutes) + "hour available time.");
+                shop_coin.setText("You currently have " + total + " coins and " + String.format("%02d:%02d", hours, minutes) + " hour available time.");
 
                 btn_5mins.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -130,10 +133,7 @@ public class AddPlanActivity extends AppCompatActivity {
                         fee = 5;
                         time = 5;
                         confirmBuy(fee,total,"5 minutes",time);
-                        editor.putInt("free",free);
-                        coin.setCoins(total);
                         invalidateOptionsMenu();
-                        editor.commit();
                     }
                 });
 
@@ -143,10 +143,7 @@ public class AddPlanActivity extends AppCompatActivity {
                         fee = 10;
                         time = 10;
                         confirmBuy(fee,total,"10 minutes",time);
-                        editor.putInt("free",free);
-                        coin.setCoins(total);
                         invalidateOptionsMenu();
-                        editor.commit();
                     }
                 });
 
@@ -156,10 +153,7 @@ public class AddPlanActivity extends AppCompatActivity {
                         fee = 15;
                         time = 15;
                         confirmBuy(fee,total,"15 minutes",time);
-                        editor.putInt("free",free);
-                        coin.setCoins(total);
                         invalidateOptionsMenu();
-                        editor.commit();
                     }
                 });
 
@@ -169,10 +163,7 @@ public class AddPlanActivity extends AppCompatActivity {
                         fee = 30;
                         time = 30;
                         confirmBuy(fee,total,"30 minutes",time);
-                        editor.putInt("free",free);
-                        coin.setCoins(total);
                         invalidateOptionsMenu();
-                        editor.commit();
                     }
                 });
 
@@ -182,10 +173,7 @@ public class AddPlanActivity extends AppCompatActivity {
                         fee = 60;
                         time = 60;
                         confirmBuy(fee,total,"1 hour",time);
-                        editor.putInt("free",free);
-                        coin.setCoins(total);
                         invalidateOptionsMenu();
-                        editor.commit();
                     }
                 });
 
@@ -195,10 +183,7 @@ public class AddPlanActivity extends AppCompatActivity {
                         fee = 120;
                         time = 120;
                         confirmBuy(fee,total,"2 hours",time);
-                        editor.putInt("free",free);
-                        coin.setCoins(total);
                         invalidateOptionsMenu();
-                        editor.commit();
                     }
                 });
 
@@ -265,8 +250,13 @@ public class AddPlanActivity extends AppCompatActivity {
                             total -= fee;
                             free += freetime;
                             Toast.makeText(getApplicationContext(),"Successfully bought!", Toast.LENGTH_SHORT).show();
-                            shop_coin.setText("You currently have " +total+ " coins and "+String.format("%02d:%02d", hours, minutes)+ "hour available time.");
+                            shop_coin.setText("You currently have " +total+ " coins and "+String.format("%02d:%02d", hours, minutes)+ " hour available time.");
                             System.out.println("total:"+total +"free:"+free);
+                            editor.putInt("coin", total);
+                            editor.putInt("free",free);
+                            coin.setCoins(total);
+                            invalidateOptionsMenu();
+                            editor.commit();
                             System.out.println("Shopped successfully");
                         }
                     })
@@ -413,15 +403,16 @@ public class AddPlanActivity extends AppCompatActivity {
         User user = db.getUserAssessData(uid);
         ResultEvaluator re = new ResultEvaluator(getApplicationContext());
 
-
-        String age = user.birth;
+        int age = prefs.getInt("age",25);
+        //String age = user.birth;
         double bmi = re.getBMI(user.weight, user.height);
         bmi = Math.round(bmi);
 
-        System.out.println(age);
-        cat_age.setText("Your age is " + age);
-        cat_BMI.setText("and your BMI is " + bmi + " which is normal.");
-        cat_SUGGEST.setText("You should do ");
+        String bmiCat = new ResultEvaluator(getApplicationContext()).getBMICat(bmi);
+        String actCat = new ResultEvaluator(getApplicationContext()).getActCategory();
+        cat_age.setText("Your age is " + age + " years old");
+        cat_BMI.setText("and your BMI is " + bmi + " which is "+ bmiCat+".");
+        cat_SUGGEST.setText("You should do "+ actCat+" activities.");
 
         btn_gotit.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -219,6 +219,7 @@ public class HeartBeatDB {
             p.setProgress(c.getDouble(prog));
             p.setType(c.getString(types));
             lp.add(p);
+            System.out.println(p);
         }
         return lp;
 
@@ -610,21 +611,25 @@ public class HeartBeatDB {
                 null);
 
         List<Plans> titles = new ArrayList<>();
-        Plans plan = new Plans();
         int user = c.getColumnIndex(KEY_USERID);
         int title = c.getColumnIndex(KEY_TITLE);
         int com = c.getColumnIndex(KEY_COMPLETED);
         int total = c.getColumnIndex(KEY_TOTAL);
         int progress= c.getColumnIndex(KEY_PLANPROGRESS);
-        for (c.moveToFirst();!c.isAfterLast () ;c.moveToNext()) {
+       while (c.moveToNext()) {
+           System.out.println("id: "+c.getInt(user));
             if (c.getInt(user)==userID){
+                Plans plan = new Plans();
                 plan.setTitle(c.getString(title));
+                System.out.println("dbpl: "+c.getString(title));
                 plan.setCompleted(Boolean.parseBoolean(c.getString(com)));
                 plan.setTotalWeightLoss(c.getDouble(total));
                 plan.setProgress(c.getDouble(progress));
+
+                titles.add(plan);
             }
+
         }
-        titles.add(plan);
 
         return titles;
     }
@@ -768,6 +773,8 @@ public class HeartBeatDB {
         }
             return HBBank;
     }
+
+
 
 
 

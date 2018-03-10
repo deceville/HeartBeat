@@ -38,6 +38,7 @@ public class ResultEvaluator extends AddPlanActivity {
     }
 
 
+
     public double getSuggestedMet() {
         boolean giveSuggestion = false;
         pref = c.getSharedPreferences("values",MODE_PRIVATE);
@@ -102,6 +103,24 @@ public class ResultEvaluator extends AddPlanActivity {
 
         return suggestedMet;
     }
+
+    public String getActCategory(){
+        double met = getSuggestedMet();
+        String cat = null;
+
+        if (met <= 3  ){
+            cat = "light";
+            return cat;
+        }else if (met <= 6 ){
+            cat = "light to moderate";
+            return cat;
+        }else{
+            cat = "light to vigorous";
+            return cat;
+        }
+
+
+    };
 
     public Goal getBMIGoal(double weight,double height){
 

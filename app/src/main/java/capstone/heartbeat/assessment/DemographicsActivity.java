@@ -68,6 +68,7 @@ public class DemographicsActivity extends AppCompatActivity {
     private boolean quest_bp = false;
     private boolean quest_total = false;
     private boolean quest_hdl = false;
+    private boolean done_height, done_weight;
 
     int singleQuest = 10;
     int allQuest = singleQuest*3;
@@ -93,7 +94,7 @@ public class DemographicsActivity extends AppCompatActivity {
 
         new TapTargetSequence(this)
                 .targets(
-                        TapTarget.forView(findViewById(R.id.my_scale), "Set your height!", "You can slide your finger from top or bottom")
+                        TapTarget.forView(findViewById(R.id.my_scale), "Tap and set your height!", "You can slide your finger from top or bottom")
                                 .outerCircleColor(R.color.bg_screen2)      // Specify a color for the outer circle
                                 .outerCircleAlpha(0.96f)
                                 .titleTextSize(20)
@@ -106,7 +107,7 @@ public class DemographicsActivity extends AppCompatActivity {
                                 .tintTarget(false)                   // Whether to tint the target view's color
                                 .transparentTarget(true)            // Specify a custom drawable to draw as the target
                                 .targetRadius(60),
-                        TapTarget.forView(findViewById(R.id.rv), "Set your weight!", "You can slide your finger from left or right")
+                        TapTarget.forView(findViewById(R.id.rv), "Tap and set your weight!", "You can slide your finger from left or right")
                                 .outerCircleColor(R.color.bg_screen3)      // Specify a color for the outer circle
                                 .outerCircleAlpha(0.96f)
                                 .titleTextSize(20)

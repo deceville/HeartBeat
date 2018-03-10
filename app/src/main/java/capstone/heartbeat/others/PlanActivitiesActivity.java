@@ -86,7 +86,12 @@ public class PlanActivitiesActivity extends AppCompatActivity {
                 int total = coin.getCoins() + 10;
                 System.out.println(total);
                 db.updateCoins(userId,total);
+
+                double weight = db.getUserAssessData(userId).getWeight();
+                double po = activityAdapter.activities.get(position).getWeightLoss()/1000;
+
                 db.updatePlan(title,activityAdapter.activities.get(position).getWeightLoss());
+                db.updateWeight(userId,weight - po);
                 DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = new Date();
                 db.newProgress(userId,df.format(date),activityAdapter.activities.get(position).getWeightLoss(),"BMI");

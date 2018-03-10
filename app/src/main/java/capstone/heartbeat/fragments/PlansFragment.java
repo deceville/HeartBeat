@@ -163,7 +163,7 @@ public class PlansFragment extends Fragment{
 
 
         // preparing list data
-        prepareListData();
+        //prepareListData();
 
         List<Plans> plans = new ArrayList<>();
         HeartBeatDB db = new HeartBeatDB(getContext());
@@ -172,12 +172,6 @@ public class PlansFragment extends Fragment{
         plans = db.getPlans(user);
 
 
-       /*planList = new ArrayList<>();
-        planList.add(new Plan("My Plan","Good",100,50,1));
-        planList.add(new Plan("My Plan2","Good",80,50,2));
-        planList.add(new Plan("My Plan3","Good",90,50,3));
-        planList.add(new Plan("My Plan4","Good",50,50,4));
-        planList.add(new Plan("My Plan5","Good",60,50,5));*/
 
         PlanAdapter adapter = new PlanAdapter(getApplicationContext(), plans);
         recyclerView.setAdapter(adapter);

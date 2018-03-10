@@ -53,7 +53,7 @@ public class RiskResultsActivity extends AppCompatActivity {
     public int ha, st, nha, nst, act, uid;
     public String sleep, birth;
     private DecimalFormat df;
-    private TextView cat_age,cat_BMI, cat_SUGGEST;
+    private TextView cat_age,cat_BMI, cat_SUGGEST, risk_desc;
     ArrayList<String> goals;
     ListAdapter adapter;
     Button btn_lets, btn_cancel, btn_gotit;
@@ -75,7 +75,7 @@ public class RiskResultsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_risk_results);
 
-        MaterialSpinner spinner_years = (MaterialSpinner) findViewById(R.id.spinner_years);
+
 
         prefs = getSharedPreferences("values", MODE_PRIVATE);
         use = getSharedPreferences("login", MODE_PRIVATE);
@@ -164,19 +164,8 @@ public class RiskResultsActivity extends AppCompatActivity {
         }
 
 
-        spinner_years.setItems(YEARS);
-        spinner_years.setOnItemSelectedListener(new MaterialSpinner.OnItemSelectedListener<String>() {
 
-            @Override public void onItemSelected(MaterialSpinner view, int position, long id, String item) {
-                //
-            }
-        });
-        spinner_years.setOnNothingSelectedListener(new MaterialSpinner.OnNothingSelectedListener() {
 
-            @Override public void onNothingSelected(MaterialSpinner spinner) {
-                //
-            }
-        });
 
     }
 
