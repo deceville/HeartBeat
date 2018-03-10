@@ -6,6 +6,7 @@
     <color name="colorPrimary">#D12F2F</color>
     <color name="colorPrimaryDark">#9A0007</color>
     <color name="colorAccent">#ffffff</color>
+    <color name="colorAccent02">#f98da5</color>
 
     <!-- Screens background color-->
     <color name="bg_screen1">#D12F2F</color>

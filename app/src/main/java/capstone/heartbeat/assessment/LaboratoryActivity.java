@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.os.Handler;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -44,6 +45,7 @@ public class LaboratoryActivity extends AppCompatActivity {
     private int sbp,dbp,chl,hdl;
     private SharedPreferences prefs;
     private SharedPreferences.Editor editor;
+    private boolean complete = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +97,23 @@ public class LaboratoryActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+        if(updateProceedButton()){
+            menu.getItem(0).setEnabled(true);
+            menu.getItem(0).getIcon().setAlpha(255);
+        }else{
+            menu.getItem(0).setEnabled(false);
+            menu.getItem(0).getIcon().setAlpha(130);
+        }
+        invalidateOptionsMenu();
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    public boolean updateProceedButton(){
+        return chl != 0 && hdl != 0 && sbp != 0 && dbp != 0 && complete;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up next_button, so long
@@ -132,12 +151,12 @@ public class LaboratoryActivity extends AppCompatActivity {
             dots[i] = new TextView(this);
             dots[i].setText(Html.fromHtml("&#8226;"));
             dots[i].setTextSize(35);
-            dots[i].setTextColor(colorsInactive[currentPage]);
+            dots[i].setTextColor(getResources().getColor(R.color.colorAccent02));
             dotsLayout.addView(dots[i]);
         }
 
         if (dots.length > 0)
-            dots[currentPage].setTextColor(colorsActive[currentPage]);
+            dots[currentPage].setTextColor(getResources().getColor(R.color.colorPrimaryDark));
     }
 
     private int getItem(int i) {
@@ -153,6 +172,8 @@ public class LaboratoryActivity extends AppCompatActivity {
 
             // changing the next to prev
             if (position == layouts.length - 1) {
+                complete = true;
+                invalidateOptionsMenu();
                 // last page. make next_button text to prev
                 btnPrev.setText(getString(R.string.prev));
                 btnNext.setVisibility(View.GONE);
@@ -255,6 +276,7 @@ public class LaboratoryActivity extends AppCompatActivity {
                         sbp = value;
                         editor.putInt("sbp", sbp);
                         editor.commit();
+                        invalidateOptionsMenu();
                     }
 
                     @Override
@@ -273,6 +295,7 @@ public class LaboratoryActivity extends AppCompatActivity {
                         dbp = value;
                         editor.putInt("dbp", dbp);
                         editor.commit();
+                        invalidateOptionsMenu();
                     }
 
                     @Override
@@ -286,6 +309,7 @@ public class LaboratoryActivity extends AppCompatActivity {
                     }
                 });
             }else{
+                invalidateOptionsMenu();
                 add_chol.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -318,6 +342,7 @@ public class LaboratoryActivity extends AppCompatActivity {
                         editor.putInt("ldl", chl);
                         editor.putInt("chl", chl+hdl);
                         editor.commit();
+                        invalidateOptionsMenu();
                     }
 
                     @Override
@@ -336,6 +361,7 @@ public class LaboratoryActivity extends AppCompatActivity {
                         hdl = value;
                         editor.putInt("hdl", hdl);
                         editor.commit();
+                        invalidateOptionsMenu();
                     }
 
                     @Override

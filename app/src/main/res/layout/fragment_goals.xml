@@ -102,7 +102,7 @@
                         android:scaleY="2" />
                 </LinearLayout>
 
-                <LinearLayout
+                <!--<LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -169,7 +169,7 @@
                         android:progress="68"
                         android:progressTint="@color/circle_green"
                         android:scaleY="2" />
-                </LinearLayout>
+                </LinearLayout>-->
 
             </LinearLayout>
 

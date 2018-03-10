@@ -33,6 +33,9 @@ public class HistoryActivity extends AppCompatActivity {
 
 
     private boolean viewGroupIsVisible = false;
+    private boolean diab_selected = false;
+    private boolean disease_selected = false;
+    private boolean fam_selected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +74,8 @@ public class HistoryActivity extends AppCompatActivity {
                 }
                 editor.putInt("dia",dia);
                 editor.commit();
+                diab_selected = true;
+                invalidateOptionsMenu();
             }
         });
 
@@ -81,10 +86,14 @@ public class HistoryActivity extends AppCompatActivity {
                     type2 = 1;
                     editor.putInt("type2",type2);
                     editor.commit();
+                    sw_diabetes_type2.setChecked(true);
+                    sw_diabetes_type1.setChecked(false);
                 }else{
                     type2 = 0;
                     editor.putInt("type2",type2);
                     editor.commit();
+                    sw_diabetes_type1.setChecked(true);
+                    sw_diabetes_type2.setChecked(false);
                 }
             }
         });
@@ -96,10 +105,14 @@ public class HistoryActivity extends AppCompatActivity {
                     type1 = 1;
                     editor.putInt("type1",type1);
                     editor.commit();
+                    sw_diabetes_type1.setChecked(true);
+                    sw_diabetes_type2.setChecked(false);
                 }else{
                     type1 = 0;
                     editor.putInt("type1",type1);
                     editor.commit();
+                    sw_diabetes_type2.setChecked(true);
+                    sw_diabetes_type1.setChecked(false);
                 }
             }
         });
@@ -116,6 +129,8 @@ public class HistoryActivity extends AppCompatActivity {
                 }
                 editor.putInt("dia",dia);
                 editor.commit();
+                diab_selected = true;
+                invalidateOptionsMenu();
             }
         });
 
@@ -127,6 +142,8 @@ public class HistoryActivity extends AppCompatActivity {
                 btn_famhistory_no.setSelected(false);
                 editor.putInt("fhcvd",fhcvd);
                 editor.commit();
+                fam_selected  = true;
+                invalidateOptionsMenu();
             }
         });
 
@@ -138,6 +155,8 @@ public class HistoryActivity extends AppCompatActivity {
                 btn_famhistory_no.setSelected(true);
                 editor.putInt("fhcvd",fhcvd);
                 editor.commit();
+                fam_selected  = true;
+                invalidateOptionsMenu();
             }
         });
     }
@@ -157,6 +176,8 @@ public class HistoryActivity extends AppCompatActivity {
                     chr = 1;
                     editor.putInt("chronic",chr);
                     editor.commit();
+                    disease_selected = true;
+                    invalidateOptionsMenu();
                 }else {
                     chr = 0;
                     editor.putInt("chronic",chr);
@@ -172,6 +193,8 @@ public class HistoryActivity extends AppCompatActivity {
                     cong = 1;
                     editor.putInt("congestive",cong);
                     editor.commit();
+                    disease_selected = true;
+                    invalidateOptionsMenu();
                 }else {
                     cong = 0;
                     editor.putInt("congestive",cong);
@@ -187,6 +210,8 @@ public class HistoryActivity extends AppCompatActivity {
                     val = 1;
                     editor.putInt("valvular",val);
                     editor.commit();
+                    disease_selected = true;
+                    invalidateOptionsMenu();
                 }else {
                     val = 0;
                     editor.putInt("valvular",val);
@@ -202,6 +227,8 @@ public class HistoryActivity extends AppCompatActivity {
                     rhe = 1;
                     editor.putInt("rheumatoid",rhe);
                     editor.commit();
+                    disease_selected = true;
+                    invalidateOptionsMenu();
                 }else {
                     rhe = 0;
                     editor.putInt("rheumatoid",rhe);
@@ -217,6 +244,8 @@ public class HistoryActivity extends AppCompatActivity {
                     irr = 1;
                     editor.putInt("irregular",irr);
                     editor.commit();
+                    disease_selected = true;
+                    invalidateOptionsMenu();
                 }else {
                     irr = 0;
                     editor.putInt("irregular",irr);
@@ -232,6 +261,8 @@ public class HistoryActivity extends AppCompatActivity {
                     ha = 1;
                     editor.putInt("heartattack",ha);
                     editor.commit();
+                    disease_selected = true;
+                    invalidateOptionsMenu();
                 }else {
                     ha = 0;
                     editor.putInt("heartattack",ha);
@@ -248,6 +279,23 @@ public class HistoryActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.next_button, menu);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+        if(updateProceedButton()){
+            menu.getItem(0).setEnabled(true);
+            menu.getItem(0).getIcon().setAlpha(255);
+        }else{
+            menu.getItem(0).setEnabled(false);
+            menu.getItem(0).getIcon().setAlpha(130);
+        }
+        invalidateOptionsMenu();
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    public boolean updateProceedButton(){
+        return diab_selected && disease_selected && fam_selected;
     }
 
     @Override

@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/instruction_goals"
                 android:textSize="18sp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
         </LinearLayout>
 
         <ListView

@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:text="Before proceeding, select the item/s you already know."
                 android:textSize="18sp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
         </LinearLayout>
 
         <LinearLayout

@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.getkeepsafe.taptargetview.TapTarget;
 import com.getkeepsafe.taptargetview.TapTargetSequence;
@@ -54,7 +56,7 @@ public class DemographicsActivity extends AppCompatActivity {
 
     public float height;
 
-    public int age, currYear, currMonth, currDay;
+    public int age, currYear, currMonth, currDay, weigh;
     boolean selected = false;
     int male = 0;
     int female = 0;
@@ -93,7 +95,7 @@ public class DemographicsActivity extends AppCompatActivity {
 
         new TapTargetSequence(this)
                 .targets(
-                        TapTarget.forView(findViewById(R.id.my_scale), "You can set your height here", "Tap to continue tutorial!")
+                        TapTarget.forView(findViewById(R.id.my_scale), "You can set your height here", "Tap to continue tutorial")
                                 .outerCircleColor(R.color.bg_screen2)      // Specify a color for the outer circle
                                 .outerCircleAlpha(0.96f)
                                 .titleTextSize(20)
@@ -150,6 +152,7 @@ public class DemographicsActivity extends AppCompatActivity {
                 }else{
                     avatar.setImageResource(R.drawable.char_undefined);
                 }
+                invalidateOptionsMenu();
             }
         });
 
@@ -180,6 +183,7 @@ public class DemographicsActivity extends AppCompatActivity {
                 }else{
                     avatar.setImageResource(R.drawable.char_undefined);
                 }
+                invalidateOptionsMenu();
             }
         });
 
@@ -223,6 +227,7 @@ public class DemographicsActivity extends AppCompatActivity {
                 height = (float) Math.round(result * 10f) / 10f;
                 editor.putInt("height",(int)height);
                 txtValue.setText(height + " cm");
+                invalidateOptionsMenu();
             }
         });
         rulerViewMm.setOnClickListener(new View.OnClickListener() {
@@ -248,9 +253,9 @@ public class DemographicsActivity extends AppCompatActivity {
             public void selectedView(View view) {
                 weight = ((TextView)view).getText().toString();
                 weight = weight.substring(0,weight.length()-3);
-                int weigh = Integer.parseInt(weight);
+                weigh = Integer.parseInt(weight);
                 editor.putInt("weight", weigh);
-
+                invalidateOptionsMenu();
             }
         });
     }
@@ -261,6 +266,45 @@ public class DemographicsActivity extends AppCompatActivity {
             data.add(String.valueOf(i));
         }
         return data;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+        if(updateProceedButton()){
+            menu.getItem(0).setEnabled(true);
+            menu.getItem(0).getIcon().setAlpha(255);
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    TapTargetView.showFor(DemographicsActivity.this,
+                            TapTarget.forView(findViewById(R.id.next), "Well done!", "Tap check button to proceed")
+                                    .outerCircleColor(R.color.bg_screen2)      // Specify a color for the outer circle
+                                    .outerCircleAlpha(0.96f)
+                                    .titleTextSize(20)
+                                    .descriptionTextSize(20)
+                                    .textColor(R.color.standardWhite) // Specify a color for both the title and description text
+                                    .textTypeface(Typeface.SANS_SERIF)  // Specify a typeface for the text
+                                    .dimColor(R.color.standardBlack)            // If set, will dim behind the view with 30% opacity of the given color
+                                    .drawShadow(true)                   // Whether to draw a drop shadow or not
+                                    .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
+                                    .tintTarget(false)                   // Whether to tint the target view's color
+                                    .transparentTarget(true)            // Specify a custom drawable to draw as the target
+                                    .targetRadius(60)
+                    );
+                }
+            }, 1000);
+
+        }else{
+            menu.getItem(0).setEnabled(false);
+            menu.getItem(0).getIcon().setAlpha(130);
+        }
+        invalidateOptionsMenu();
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    public boolean updateProceedButton(){
+        return selected && age != 0 && height != 0 && weigh != 0;
     }
 
 
@@ -402,8 +446,15 @@ public class DemographicsActivity extends AppCompatActivity {
                             bp_okay.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    showCoinDialog(dialog1, singleQuest);
+                                    quest_bp = true;
                                     viewGroup_bp.setVisibility(GONE);
+                                    if(quest_total&&quest_hdl){
+                                        alldone = true;
+                                        showCoinDialog(d, allQuest);
+                                    }else{
+                                        alldone = false;
+                                        showCoinDialog(dialog1, singleQuest);
+                                    }
                                 }
                             });
 
@@ -420,7 +471,7 @@ public class DemographicsActivity extends AppCompatActivity {
                         @Override
                         public void onClick(View v) {
                             final Dialog dialog1 = new Dialog(DemographicsActivity.this, android.R.style.Theme_Material_Light_Dialog);
-                            dialog1.setTitle("Total Cholesterol Quest");
+                            dialog1.setTitle("LDL Cholesterol Quest");
                             dialog1.setContentView(R.layout.quest_total);
 
                             dialog1.show();
@@ -431,7 +482,14 @@ public class DemographicsActivity extends AppCompatActivity {
                             total_okay.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    showCoinDialog(dialog1, singleQuest);
+                                    quest_total = true;
+                                    if(quest_bp&&quest_hdl){
+                                        alldone = true;
+                                        showCoinDialog(d, allQuest);
+                                    }else{
+                                        alldone = false;
+                                        showCoinDialog(dialog1, singleQuest);
+                                    }
                                     viewGroup_total.setVisibility(GONE);
                                 }
                             });
@@ -460,7 +518,14 @@ public class DemographicsActivity extends AppCompatActivity {
                             hdl_okay.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
-                                    showCoinDialog(dialog1, singleQuest);
+                                    quest_hdl = true;
+                                    if(quest_bp&&quest_total){
+                                        alldone = true;
+                                        showCoinDialog(d, allQuest);
+                                    }else{
+                                        alldone = false;
+                                        showCoinDialog(dialog1, singleQuest);
+                                    }
                                     viewGroup_hdl.setVisibility(GONE);
                                 }
                             });
@@ -526,6 +591,7 @@ public class DemographicsActivity extends AppCompatActivity {
             editor.putString("birth",birthday);
             editor.putInt("age",age);
             editor.commit();
+            invalidateOptionsMenu();
             System.out.println(btn_birthdate.getText().toString() + "Age: " + age);
             if(age > 84 || age < 25){
                 alertAgeLimit();
