@@ -50,6 +50,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             convertView = infalInflater.inflate(R.layout.list_plans, null);
         }
 
+
         TextView txtListChild = (TextView) convertView
                 .findViewById(R.id.title_plans1);
 
@@ -93,6 +94,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         TextView lblListHeader = (TextView) convertView
                 .findViewById(R.id.listgroup_plans);
         lblListHeader.setTypeface(null, Typeface.BOLD);
+        lblListHeader.setTextColor(convertView.getResources().getColor(R.color.standardBlack));
         lblListHeader.setText(headerTitle);
 
         return convertView;

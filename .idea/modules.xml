@@ -11,6 +11,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/libs/MPChartLib/MPChartLib.iml" filepath="$PROJECT_DIR$/app/libs/MPChartLib/MPChartLib.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/facebook-share/facebook-share.iml" filepath="$PROJECT_DIR$/facebook-share/facebook-share.iml" />
+      <module fileurl="file://C:\Users\Acer\Documents\Personal files\HeartBeat\facebook-share\facebook-share.iml" filepath="C:\Users\Acer\Documents\Personal files\HeartBeat\facebook-share\facebook-share.iml" />
     </modules>
   </component>
 </project>
