@@ -2,10 +2,12 @@ package capstone.heartbeat.others;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,6 +34,7 @@ import capstone.heartbeat.controllers.HeartBeatDB;
 import capstone.heartbeat.controllers.ListAdapter;
 import capstone.heartbeat.controllers.ResultEvaluator;
 import capstone.heartbeat.models.Activity;
+import capstone.heartbeat.models.Bank;
 import capstone.heartbeat.models.Suggestions;
 import capstone.heartbeat.models.User;
 
@@ -43,7 +46,7 @@ public class AddPlanSActivity extends AppCompatActivity {
     ListAdapter adapter;
     Button btn_addSuggestion, btn_cancel, btn_currentdate, btn_buytime, btn_gotit;
     public int currYear, currMonth, currDay;
-    TextView text_plan_freetime, txtWeight, cat_age, cat_BMI, cat_SUGGEST;
+    TextView text_plan_freetime, txtWeight, cat_age, cat_BMI, cat_SUGGEST,shop_coin;
     private EditText plan_name;
 
     public static SharedPreferences prefs, use;
@@ -53,9 +56,10 @@ public class AddPlanSActivity extends AppCompatActivity {
     ArrayList<Activity> myActivities;
     ArrayList<Activity> selectedActivities;
     private FirebaseDatabase database;
-    public int uid, free, count;
+    public int uid, free, count, coins, total, current, fee, time, hours, minutes;
     public double weight;
     double totalWeight;
+    private Bank coin;
 
 
     @Override
@@ -106,6 +110,81 @@ public class AddPlanSActivity extends AppCompatActivity {
 
                 Button shop_done = (Button) dialog.findViewById(R.id.shop_done);
                 Button shop_cancel = (Button) dialog.findViewById(R.id.shop_cancel);
+                shop_coin = (TextView) dialog.findViewById(R.id.shop_coin);
+                Button btn_5mins = (Button) dialog.findViewById(R.id.btn_5mins);
+                Button btn_10mins = (Button) dialog.findViewById(R.id.btn_10mins);
+                Button btn_15mins = (Button) dialog.findViewById(R.id.btn_15mins);
+                Button btn_30mins = (Button) dialog.findViewById(R.id.btn_30mins);
+                Button btn_1hr = (Button) dialog.findViewById(R.id.btn_1hr);
+                Button btn_2hr = (Button) dialog.findViewById(R.id.btn_2hr);
+
+
+                HeartBeatDB db = new HeartBeatDB(getApplicationContext());
+                db.open();
+                coin = db.getPoints(uid);
+                current = 0;
+                total = coin.getCoins();
+                shop_coin.setText("You currently have " + total + " coins and " + String.format("%02d:%02d", hours, minutes) + " hour available time.");
+
+                btn_5mins.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fee = 5;
+                        time = 5;
+                        confirmBuy(fee,total,"5 minutes",time);
+                        invalidateOptionsMenu();
+                    }
+                });
+
+                btn_10mins.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fee = 10;
+                        time = 10;
+                        confirmBuy(fee,total,"10 minutes",time);
+                        invalidateOptionsMenu();
+                    }
+                });
+
+                btn_15mins.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fee = 15;
+                        time = 15;
+                        confirmBuy(fee,total,"15 minutes",time);
+                        invalidateOptionsMenu();
+                    }
+                });
+
+                btn_30mins.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fee = 30;
+                        time = 30;
+                        confirmBuy(fee,total,"30 minutes",time);
+                        invalidateOptionsMenu();
+                    }
+                });
+
+                btn_1hr.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fee = 60;
+                        time = 60;
+                        confirmBuy(fee,total,"1 hour",time);
+                        invalidateOptionsMenu();
+                    }
+                });
+
+                btn_2hr.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        fee = 120;
+                        time = 120;
+                        confirmBuy(fee,total,"2 hours",time);
+                        invalidateOptionsMenu();
+                    }
+                });
 
                 shop_done.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -154,6 +233,47 @@ public class AddPlanSActivity extends AppCompatActivity {
 
         text_plan_freetime = (TextView) findViewById(R.id.text_plan_freetime);
         text_plan_freetime.setText(prefs.getString("freetime", ""));
+    }
+
+    public void confirmBuy(final int fee, final int coins, String time, final int freetime){
+        AlertDialog.Builder builder = new AlertDialog.Builder(AddPlanSActivity.this, R.style.Theme_AppCompat_Dialog_Alert);
+        if(fee <= coins){
+            builder.setTitle("Hmm, wait..")
+                    .setMessage("Are you sure you want to buy " + time + "?")
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            total -= fee;
+                            free += freetime;
+                            Toast.makeText(getApplicationContext(),"Successfully bought!", Toast.LENGTH_SHORT).show();
+                            shop_coin.setText("You currently have " +total+ " coins and "+String.format("%02d:%02d", hours, minutes)+ " hour available time.");
+                            System.out.println("total:"+total +"free:"+free);
+                            editor.putInt("coin", total);
+                            editor.putInt("free",free);
+                            coin.setCoins(total);
+                            invalidateOptionsMenu();
+                            editor.commit();
+                            System.out.println("Shopped successfully");
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert);
+
+
+            AlertDialog alert = builder.create();
+            alert.show();
+        }else{
+            builder.setTitle("Oh bummer!")
+                    .setMessage("You don't have enough coins to buy " + time + "!")
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            //
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert);
+
+            AlertDialog alert = builder.create();
+            alert.show();
+        }
+
     }
 
     public void displaySuggestions() {

@@ -91,10 +91,10 @@ public class GoalsFragment extends Fragment{
         Goal dece_goal = re.getBMIGoal(weight,height);
         double loseWeight = 0;
 
-        List<Progress> lp = myDb.getweightProg(uid,"weight");
+        List<Progress> lp = myDb.getweightProg(uid,"BMI");
         for (Progress pr:lp
              ) {
-            loseWeight += pr.getProgress();
+            loseWeight += pr.getProgress()/1000;
         }
 
 
@@ -176,7 +176,7 @@ public class GoalsFragment extends Fragment{
         }
 
 
-        int sbp = user.sbp;
+        /*int sbp = user.sbp;
         dece_goal = re.getSBPGoal(user.sbp);
         double sbp_progress = 0;
         double sbp_norm = 120;
@@ -188,14 +188,14 @@ public class GoalsFragment extends Fragment{
             label4.setText("Reduce " + dece_goal.getValue() + " mmHg of SBP");
         }else {
             label4.setText("Gain " + dece_goal.getValue() + " mmHg of SBP");
-        }
+        }*/
 
 
         /*percent_label4.setText(Double.toString(hdl_percent)+"%");
         progress4.setMax((int)sbp_goal);
         progress4.setProgress((int)sbp_progress);*/
 
-        if (sbp_goal <= 0){
+        /*if (sbp_goal <= 0){
             label4.setVisibility(View.GONE);
             percent_label4.setVisibility(View.GONE);
             progress4.setVisibility(View.GONE);
@@ -204,7 +204,7 @@ public class GoalsFragment extends Fragment{
             label4.setVisibility(View.VISIBLE);
             percent_label4.setVisibility(View.VISIBLE);
             progress4.setVisibility(View.VISIBLE);
-        }
+        }*/
 
 
 

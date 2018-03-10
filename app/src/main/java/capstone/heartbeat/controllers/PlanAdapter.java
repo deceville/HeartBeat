@@ -46,6 +46,7 @@ public class PlanAdapter extends RecyclerView.Adapter<PlanAdapter.PlanViewHolder
     @Override
     public void onBindViewHolder(final PlanViewHolder holder, int position) {
         final Plans plan = plans.get(position);
+        System.out.println("plan: "+plan.getTitle());
 
         holder.title.setText(plan.getTitle());
         holder.description.setText(Math.round(plan.getProgress())+"/"+ ((int)plan.getTotalWeightLoss()) + " grams");

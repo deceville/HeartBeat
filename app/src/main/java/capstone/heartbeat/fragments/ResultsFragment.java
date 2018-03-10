@@ -31,9 +31,11 @@ import java.util.Collections;
 import java.util.List;
 
 import capstone.heartbeat.R;
+import capstone.heartbeat.controllers.HeartBeatDB;
 import capstone.heartbeat.fragments.tabfragments.BMIFragment;
 import capstone.heartbeat.fragments.tabfragments.BloodPressureFragment;
 import capstone.heartbeat.fragments.tabfragments.CholesterolFragment;
+import capstone.heartbeat.models.Progress;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -42,14 +44,18 @@ public class ResultsFragment extends Fragment {
     private DonutProgress heartattack, stroke;
     private SharedPreferences pref;
     private FragmentTabHost mTabHost;
+    int user;
+    int id;
 
     public ResultsFragment() {
         // Required empty public constructor
     }
 
     @SuppressLint("ValidFragment")
-    public ResultsFragment(SharedPreferences pref) {
+    public ResultsFragment(SharedPreferences pref ,int id) {
         this.pref = pref;
+        this.id = id;
+
     }
 
     @Override
@@ -60,6 +66,7 @@ public class ResultsFragment extends Fragment {
 
         int ha = pref.getInt("haResult", 0);
         int st = pref.getInt("stResult", 0);
+        user = id;
 
         heartattack = (DonutProgress) view.findViewById(R.id.progress_heartattack);
         stroke = (DonutProgress) view.findViewById(R.id.progress_stroke);
@@ -71,7 +78,9 @@ public class ResultsFragment extends Fragment {
         mTabHost.setup(getActivity(), getChildFragmentManager(), android.R.id.tabcontent);
 
         mTabHost.addTab(mTabHost.newTabSpec("fragmentb").setIndicator("BMI"),
-                BMIFragment.class, null);
+                BMIFragment.class, null);/*
+        BMIFragment.newInstance("one","two",getDailyProg(),getDays());*/
+
         mTabHost.addTab(mTabHost.newTabSpec("fragmentc").setIndicator("Cholesterol"),
                 CholesterolFragment.class, null);
 
@@ -92,6 +101,31 @@ public class ResultsFragment extends Fragment {
                 MyNestedFragment2.class, arg2);*/
 
         return view;
+    }
+
+    private ArrayList<Double> getDailyProg(){
+        HeartBeatDB db = new HeartBeatDB(getContext());
+        db.open();
+        List<Progress> prog = db.getweightProg(user,"BMI");
+        ArrayList<Double> values = new ArrayList<>();
+        for (Progress p: prog
+             ) {
+
+            values.add(p.getProgress());
+        }
+        return values;
+    }
+    private ArrayList<String> getDays(){
+        HeartBeatDB db = new HeartBeatDB(getContext());
+        db.open();
+        List<Progress> prog = db.getweightProg(user,"BMI");
+        ArrayList<String> values = new ArrayList<>();
+        for (Progress p: prog
+                ) {
+
+            values.add(p.getDate());
+        }
+        return values;
     }
 
     private void setBackgroundColor() {

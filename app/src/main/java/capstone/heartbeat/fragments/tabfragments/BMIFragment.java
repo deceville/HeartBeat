@@ -1,5 +1,6 @@
 package capstone.heartbeat.fragments.tabfragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
@@ -21,6 +22,7 @@ import com.github.mikephil.charting.utils.EntryXComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import capstone.heartbeat.R;
 
@@ -37,12 +39,18 @@ public class BMIFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static ArrayList<Double> vals;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    @SuppressLint("ValidFragment")
+    public BMIFragment(ArrayList<Double> val) {
+       this.vals = val;
+    }
 
     public BMIFragment() {
         // Required empty public constructor
@@ -57,11 +65,12 @@ public class BMIFragment extends Fragment {
      * @return A new instance of fragment BMIFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BMIFragment newInstance(String param1, String param2) {
+    public static BMIFragment newInstance(String param1, String param2,ArrayList<Double> val) {
         BMIFragment fragment = new BMIFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
+        vals = val;
         fragment.setArguments(args);
         return fragment;
     }
@@ -83,12 +92,18 @@ public class BMIFragment extends Fragment {
 
         LineChart chart = (LineChart) view.findViewById(R.id.chart_BMI);
 
+     /* int count = vals.size();*/
+
         // creating list of entry (y-axis)
         ArrayList<Entry> entries = new ArrayList<>();
         entries.add(new Entry(4, 0));
         entries.add(new Entry(8, 1));
         entries.add(new Entry(6, 2));
         entries.add(new Entry(2, 3));
+
+       /* for (int i =  0;i<count;i++){
+            entries.add(new Entry((Float.parseFloat(vals.get(i).toString())), i));
+        }*/
 
         Collections.sort(entries, new EntryXComparator());
 
@@ -99,7 +114,10 @@ public class BMIFragment extends Fragment {
         labels.add("30");
         labels.add("40");
         labels.add("50");
-
+        /*for (int i =  0;i<count;i++){
+            entries.add(new Entry((Float.parseFloat(vals.get(i).toString())), i));
+        }
+*/
 
         LineDataSet dataSet = new LineDataSet(entries, "Dataset 1"); // add entries to dataset
         dataSet.setColor(Color.BLACK);

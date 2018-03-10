@@ -27,24 +27,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/results_risk"
                 android:textAppearance="@android:style/TextAppearance.Material.Medium"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:layout_marginTop="10dp"
-                android:text="Choose different years"/>
-
-            <com.jaredrummler.materialspinner.MaterialSpinner
-                android:id="@+id/spinner_years"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:textSize="12sp"
-                android:text="Note: The probability of risk in 3 or 5 years may not be as accurate as of 10 years."/>
         </LinearLayout>
 
         <LinearLayout

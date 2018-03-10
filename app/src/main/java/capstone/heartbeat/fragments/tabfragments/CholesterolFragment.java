@@ -85,10 +85,10 @@ public class CholesterolFragment extends Fragment {
 
         // creating list of entry (y-axis)
         ArrayList<Entry> entries = new ArrayList<>();
-        entries.add(new Entry(4, 0));
-        entries.add(new Entry(8, 1));
-        entries.add(new Entry(6, 2));
-        entries.add(new Entry(2, 3));
+        entries.add(new Entry(0, 0));
+        entries.add(new Entry(0, 1));
+        entries.add(new Entry(0, 2));
+        entries.add(new Entry(0, 3));
 
         Collections.sort(entries, new EntryXComparator());
 

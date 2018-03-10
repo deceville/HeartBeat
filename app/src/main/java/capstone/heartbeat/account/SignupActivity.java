@@ -51,6 +51,8 @@ public class SignupActivity extends AppCompatActivity {
     private boolean conditionCheck;
     private TextView login;
     private int id;
+    private SharedPreferences prefs;
+    private SharedPreferences.Editor ed;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,6 +60,8 @@ public class SignupActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_signup);
 
+        prefs = getSharedPreferences("values",MODE_PRIVATE);
+        ed = prefs.edit();
         // init Effects class
         Effects.getInstance().init(this);
 
@@ -177,6 +181,8 @@ public class SignupActivity extends AppCompatActivity {
             txt_coin.setText(String.format("%d", 20));
             txt_coin_desc.setText("You have earned 20 coins for signing up!");
             db.setInitialPoints(id,0,20,60);
+            ed.putInt("coin", 20);
+            ed.commit();
             System.out.println("id: " +id);
             db.close();
             dialog2.show();
