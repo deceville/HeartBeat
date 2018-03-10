@@ -57,13 +57,25 @@ public class GoalAdapter extends BaseAdapter{
         switch (goals.get(position).getDescription()){
             case "BMI": {
                 if (goals.get(position).getAction().equals("reduce")){
-                    description = "Reduce " + value + " kilograms in " + duration;
+                    description = "Reduce " + value + " kilograms";
                     ((TextView) view.findViewById(R.id.title_goals)).setText(description);
                 }else if (goals.get(position).getAction().equals("gain")){
-                    description = "Gain " + value + " kilograms in " + duration;
+                    description = "Gain " + value + " kilograms";
                     ((TextView) view.findViewById(R.id.title_goals)).setText(description);
                 }else {
-                    description = "Maintain " + value + " kilograms in " + duration;
+                    description = "Maintain " + value + " kilograms";
+                    ((TextView) view.findViewById(R.id.title_goals)).setText(description);
+                }
+            }break;
+            case "Total Cholesterol":{
+                if (goals.get(position).getAction().equals("reduce")){
+                    description = "Reduce " + value + " mm/dl of total cholesterol";
+                    ((TextView) view.findViewById(R.id.title_goals)).setText(description);
+                }else if (goals.get(position).getAction().equals("gain")){
+                    description = "Gain " + value + " mm/dl of total cholesterol";
+                    ((TextView) view.findViewById(R.id.title_goals)).setText(description);
+                }else {
+                    description = "Maintain " + value + " mm/dl of total cholesterol";
                     ((TextView) view.findViewById(R.id.title_goals)).setText(description);
                 }
             }break;

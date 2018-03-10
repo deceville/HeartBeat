@@ -25,7 +25,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Don't know your HDL cholesterol?"
+                android:text="Don't know your High-Density Lipids cholesterol?"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textSize="18sp" />
         </LinearLayout>

@@ -208,6 +208,7 @@ public class RiskResultsActivity extends AppCompatActivity {
         hdl_desc.setText(desc);
         hdl_progress.setProgress((int) hdl);
 
+
         sbp_progress.setMax(240);
         desc = Double.toString(sbp) + " mm/Hg";
         sbp_desc.setText(desc);
@@ -319,10 +320,13 @@ public class RiskResultsActivity extends AppCompatActivity {
                 List<Goal> everyones_goal = new ArrayList<>();
                 Goal Dece_goal = e.getBMIGoal(weight, height);
                 everyones_goal.add(Dece_goal);
-                Dece_goal = e.getLDLGoal(ldl);
+                Dece_goal = e.getTotalGoal(ldl,hdl);
+                everyones_goal.add(Dece_goal);
+
+                /*Dece_goal = e.getLDLGoal(ldl);
                 everyones_goal.add(Dece_goal);
                 Dece_goal = e.getHDLGoal(hdl);
-                everyones_goal.add(Dece_goal);
+                everyones_goal.add(Dece_goal);*/
 
                 heDB.close();
 

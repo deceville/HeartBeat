@@ -68,7 +68,6 @@ public class DemographicsActivity extends AppCompatActivity {
     private boolean quest_bp = false;
     private boolean quest_total = false;
     private boolean quest_hdl = false;
-    private boolean done_height, done_weight;
 
     int singleQuest = 10;
     int allQuest = singleQuest*3;
@@ -94,7 +93,7 @@ public class DemographicsActivity extends AppCompatActivity {
 
         new TapTargetSequence(this)
                 .targets(
-                        TapTarget.forView(findViewById(R.id.my_scale), "Tap and set your height!", "You can slide your finger from top or bottom")
+                        TapTarget.forView(findViewById(R.id.my_scale), "You can set your height here", "Tap to continue tutorial!")
                                 .outerCircleColor(R.color.bg_screen2)      // Specify a color for the outer circle
                                 .outerCircleAlpha(0.96f)
                                 .titleTextSize(20)
@@ -107,7 +106,7 @@ public class DemographicsActivity extends AppCompatActivity {
                                 .tintTarget(false)                   // Whether to tint the target view's color
                                 .transparentTarget(true)            // Specify a custom drawable to draw as the target
                                 .targetRadius(60),
-                        TapTarget.forView(findViewById(R.id.rv), "Tap and set your weight!", "You can slide your finger from left or right")
+                        TapTarget.forView(findViewById(R.id.rv), "You can set your weight here", "Tap to try!")
                                 .outerCircleColor(R.color.bg_screen3)      // Specify a color for the outer circle
                                 .outerCircleAlpha(0.96f)
                                 .titleTextSize(20)
@@ -121,6 +120,7 @@ public class DemographicsActivity extends AppCompatActivity {
                                 .transparentTarget(false)            // Specify a custom drawable to draw as the target
                                 .targetRadius(60))
                 .start();
+
 
         uid=pref.getInt("id",1);
 
@@ -215,8 +215,6 @@ public class DemographicsActivity extends AppCompatActivity {
             }
         });
 
-
-
         rulerViewMm.setStartingPoint(150f);
         rulerViewMm.setUpdateListener(new onViewUpdateListener() {
 
@@ -227,7 +225,12 @@ public class DemographicsActivity extends AppCompatActivity {
                 txtValue.setText(height + " cm");
             }
         });
+        rulerViewMm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+            }
+        });
 
         PickerLayoutManager pickerLayoutManager = new PickerLayoutManager(this, PickerLayoutManager.HORIZONTAL, false);
         pickerLayoutManager.setChangeAlpha(true);
@@ -630,7 +633,11 @@ public class DemographicsActivity extends AppCompatActivity {
         TextView txt_coin_desc = (TextView) dialog2.findViewById(R.id.txt_coin_desc);
 
         txt_coin.setText(String.format("%d", coins));
-        txt_coin_desc.setText("You have earned " + coins + " coins for completing this quest!");
+        if(alldone){
+            txt_coin_desc.setText("You have earned " + coins + " coins for completing all quests!");
+        }else{
+            txt_coin_desc.setText("You have earned " + coins + " coins for completing this quest!");
+        }
         dialog2.show();
 
         btn_thank.setOnClickListener(new View.OnClickListener() {

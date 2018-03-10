@@ -76,7 +76,7 @@ public class ListAdapter extends BaseAdapter {
 
         final double total = prefs.getInt("free",60);
         int min = 15;
-        ((TextView) view.findViewById(R.id.title_suggestions)).setText(suggestions.get(position).getActivities());
+        ((TextView) view.findViewById(R.id.title_suggestions)).setText(suggestions.get(position).getActivities() + " (" + suggestions.get(position).getIntensity()+" intensity)");
         ((TextView) view.findViewById(R.id.desc_suggestions)).setText(df.format(cal)+" cal will burn every "+min+" minutes.");
 
         final CheckBox cbox = (CheckBox) view.findViewById(R.id.cbox_suggestions);

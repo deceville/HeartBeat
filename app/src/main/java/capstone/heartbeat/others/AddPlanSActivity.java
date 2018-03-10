@@ -91,6 +91,7 @@ public class AddPlanSActivity extends AppCompatActivity {
         // get plan name input
         plan_name = (EditText) findViewById(R.id.plan_name);
         txtWeight = (TextView) findViewById(R.id.weight_total);
+        text_plan_freetime = (TextView) findViewById(R.id.text_plan_freetime);
 
         btn_buytime = (Button) findViewById(R.id.btn_buytime);
         txtWeight.setText(weight + " g");
@@ -231,8 +232,10 @@ public class AddPlanSActivity extends AppCompatActivity {
         editor.putString("plan_date", plan_date);
         editor.commit();
 
-        text_plan_freetime = (TextView) findViewById(R.id.text_plan_freetime);
-        text_plan_freetime.setText(prefs.getString("freetime", ""));
+        hours = free/60;
+        minutes = free%60;
+        System.out.println("initial:"+String.format("%02d:%02d", hours, minutes) + "hour");
+        text_plan_freetime.setText(String.format("%02d:%02d", hours, minutes) + "hour");
     }
 
     public void confirmBuy(final int fee, final int coins, String time, final int freetime){
@@ -244,15 +247,24 @@ public class AddPlanSActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialog, int which) {
                             total -= fee;
                             free += freetime;
+
+                            hours = free/60;
+                            minutes = free%60;
+
                             Toast.makeText(getApplicationContext(),"Successfully bought!", Toast.LENGTH_SHORT).show();
                             shop_coin.setText("You currently have " +total+ " coins and "+String.format("%02d:%02d", hours, minutes)+ " hour available time.");
                             System.out.println("total:"+total +"free:"+free);
                             editor.putInt("coin", total);
                             editor.putInt("free",free);
-                            coin.setCoins(total);
+                            HeartBeatDB db = new HeartBeatDB(getApplicationContext());
+                            db.open();
+                            db.updateCoins(uid,total);
+                            db.close();
                             invalidateOptionsMenu();
                             editor.commit();
                             System.out.println("Shopped successfully");
+                            System.out.println("after:"+String.format("%02d:%02d", hours, minutes) + "hour");
+                            text_plan_freetime.setText(String.format("%02d:%02d", hours, minutes) + "hour");
                         }
                     })
                     .setIcon(android.R.drawable.ic_dialog_alert);
