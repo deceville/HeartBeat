@@ -48,6 +48,7 @@ import capstone.heartbeat.fragments.tabfragments.BMIFragment;
 import capstone.heartbeat.fragments.tabfragments.BloodPressureFragment;
 import capstone.heartbeat.fragments.tabfragments.CholesterolFragment;
 import capstone.heartbeat.models.Bank;
+import capstone.heartbeat.models.User;
 import capstone.heartbeat.others.AboutActivity;
 import capstone.heartbeat.sidebar.FAQ_Activity;
 
@@ -72,6 +73,7 @@ public class MainActivity extends AppCompatActivity
         prefs = getSharedPreferences("values",MODE_PRIVATE);
 
         id = user.getInt("id", 1);
+
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +90,17 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        HeartBeatDB myDB = new HeartBeatDB(getApplicationContext());
+        myDB.open();
+        User user = new User();
+        user = myDB.getUserAssessData(id);
+        View hView =  navigationView.getHeaderView(0);
+        TextView header_name = (TextView)hView.findViewById(R.id.header_name);
+        header_name.setText(user.name);
+        TextView header_username = (TextView)hView.findViewById(R.id.header_username);
+        header_username.setText(user.username);
+        myDB.close();
 
         /*View headerView = findViewById(R.id.header_menu);
         TextView header_name = (TextView) findViewById(R.id.header_name);
