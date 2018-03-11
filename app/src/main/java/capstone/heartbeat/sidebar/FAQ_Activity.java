@@ -72,6 +72,7 @@ public class FAQ_Activity extends AppCompatActivity {
         answers6.add(answer6);
         faqs.put(faqlist.get(5),answers6);
 
+
         List<String> answers7 = new ArrayList<>();
         answers7.add(answer7);
         faqs.put(faqlist.get(6),answers7);
