@@ -28,6 +28,7 @@ import capstone.heartbeat.controllers.ActivityAdapter;
 import capstone.heartbeat.controllers.SwipeController;
 import capstone.heartbeat.models.Activity;
 import capstone.heartbeat.models.Bank;
+import capstone.heartbeat.models.Plans;
 import capstone.heartbeat.models.Progress;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -69,10 +70,13 @@ public class PlanActivitiesActivity extends AppCompatActivity {
         activityAdapter = new ActivityAdapter(getApplicationContext(),list);
         rv_activities.setAdapter(activityAdapter);
 
+
+
         swipeController = new SwipeController(new SwipeControllerActions() {
             @Override
             public void onRightClicked(int position) {
                 super.onRightClicked(position);
+                activityList.remove(position);
                 activityAdapter.activities.remove(position);
                 activityAdapter.notifyDataSetChanged();
                 activityAdapter.notifyItemRangeChanged(position, activityAdapter.getItemCount());
@@ -97,9 +101,11 @@ public class PlanActivitiesActivity extends AppCompatActivity {
 
                 double weight = db.getUserAssessData(userId).getWeight();
                 double po = activityAdapter.activities.get(position).getWeightLoss()/1000;
-
-                db.updatePlan(title,activityAdapter.activities.get(position).getWeightLoss());
-                db.updateWeight(userId,weight - po);
+                Plans plan = db.getPlanProgress(title);
+                double prog = plan.getProgress()+activityAdapter.activities.get(position).getWeightLoss();
+                System.out.println("Plan: "+prog);
+                db.updatePlan(title,prog);
+                //db.updateWeight(userId,weight - po);
                 DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
                 Date date = new Date();
                 db.newProgress(userId,df.format(date),activityAdapter.activities.get(position).getWeightLoss(),"BMI");
@@ -109,8 +115,10 @@ public class PlanActivitiesActivity extends AppCompatActivity {
                     System.out.println(p.getDate()+" : "+p.getProgress());
                 }
 
+
                 invalidateOptionsMenu();
-                db.updatePlanList(activityAdapter.activities.get(position).getActivities(),true);
+
+                db.updatePlan(title,activityAdapter.activities.get(position).getActivities(),true);
                 activityAdapter.notifyDataSetChanged();
             }
         });

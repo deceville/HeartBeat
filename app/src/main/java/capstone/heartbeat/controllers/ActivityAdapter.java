@@ -49,12 +49,13 @@ public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.Activi
         if (!activity.isDone()) {
             holder.title.setText(activity.getActivities());
             holder.calories.setText(new StringBuilder().append("").append(activity.getCalories()).toString());
-        }/*else {
+        }else {
             holder.title.setText(activity.getActivities());
             holder.calories.setText(new StringBuilder().append("").append(activity.getCalories()).toString());
             holder.cardView.setCardBackgroundColor(ctx.getColor(R.color.cardview_dark_background));
             holder.cardView.setActivated(false);
-        }*/
+            holder.cardView.setEnabled(false);
+        }
 
     }
 

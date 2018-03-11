@@ -101,16 +101,24 @@ public class GoalsFragment extends Fragment{
 
         double percent = Math.round((loseWeight/dece_goal.getValue())*100);
 
-
-         if (dece_goal.getAction().equals("reduce")) {
-             System.out.println("action:" +dece_goal.getAction());
+if (dece_goal.getValue()> 0){
+    if (dece_goal.getAction().equals("reduce")) {
+        System.out.println("action:" +dece_goal.getAction());
         label1.setText("Reduce " + dece_goal.getValue() + " kg of weight");
-        }else {
-             label1.setText("Gain " + dece_goal.getValue() + " kg of weight");
-         }
-        percentLabel.setText(percent+ "%");
-        progress1.setMax((int)dece_goal.getValue());
-        progress1.setProgress((int)loseWeight);
+    }else {
+        label1.setText("Gain " + dece_goal.getValue() + " kg of weight");
+    }
+    percentLabel.setText(percent+ "%");
+    progress1.setMax((int)dece_goal.getValue());
+    progress1.setProgress((int)loseWeight);
+}else if(dece_goal.getValue() <=0 ) {
+    label1.setText("Completed");
+    percentLabel.setText("100%");
+    progress1.setMax((int)dece_goal.getValue());
+    progress1.setProgress((int)dece_goal.getValue());
+
+}
+
 
 
         dece_goal = re.getTotalGoal(user.ldl, user.hdl);

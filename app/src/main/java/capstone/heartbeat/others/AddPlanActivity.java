@@ -41,6 +41,7 @@ import capstone.heartbeat.controllers.HeartBeatDB;
 import capstone.heartbeat.controllers.ResultEvaluator;
 import capstone.heartbeat.models.Activity;
 import capstone.heartbeat.models.Bank;
+import capstone.heartbeat.models.Goal;
 import capstone.heartbeat.models.Suggestions;
 import capstone.heartbeat.models.User;
 
@@ -63,7 +64,7 @@ public class AddPlanActivity extends AppCompatActivity {
     ArrayList<Activity> selectedActivities;
     private FirebaseDatabase database;
     public int uid, free, count, coins, total, current, fee, time, hours, minutes;
-    public double weight;
+    public double weight,height;
     double totalWeight;
     private String freetime;
     private TextView shop_coin;
@@ -425,6 +426,7 @@ public class AddPlanActivity extends AppCompatActivity {
 
         int age = prefs.getInt("age",25);
         //String age = user.birth;
+        height = user.height;
         double bmi = re.getBMI(user.weight, user.height);
         bmi = Math.round(bmi);
 
@@ -512,13 +514,29 @@ public class AddPlanActivity extends AppCompatActivity {
                 plans.createEntry2(selected, title, false, selectedMets);
                 plans.close();
 
+                ResultEvaluator re = new ResultEvaluator(this);
+                double days = re.getGoalDays(selectedActivities);
+
                 final Dialog dialog = new Dialog(AddPlanActivity.this, android.R.style.Theme_Material_Light_Dialog);
                 dialog.setTitle("Program guide");
                 dialog.setContentView(R.layout.program_dialog);
                 dialog.create();
 
+
+                Goal dece_goal = re.getBMIGoal(weight,height);
+
                 TextView program_goal = (TextView) dialog.findViewById(R.id.program_goal);
                 TextView program_days = (TextView) dialog.findViewById(R.id.program_days);
+                if (dece_goal.getValue()>0){
+                    program_goal.setText("You will need to reduce "+dece_goal.getValue()+" kilograms of your weight and with this paln, you can reduce "+totalWeight+" g.");
+
+                    program_days.setText("You can complete your goal in "+ Math.floor(days)+" days. \n Hint: You can achieve your goals faster if you add more activities.");
+
+                }else {
+                    program_goal.setText("You just need to maintain your lifestyle.");
+                  //  program_days.setText("You can complete your goal in "+ Math.floor(days)+" days. \n Hint: You can achieve your goals faster if you add more activities.");
+
+                }
                 Button program_cancel = (Button) dialog.findViewById(R.id.program_cancel);
                 Button program_lets = (Button) dialog.findViewById(R.id.program_lets);
 
