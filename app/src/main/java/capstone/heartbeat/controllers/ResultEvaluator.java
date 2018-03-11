@@ -185,6 +185,22 @@ public class ResultEvaluator extends AddPlanActivity {
         }
     }
 
+    public Goal getTotalGoal(double ldl, double hdl){
+        Goal mark_goal = new Goal();
+        mark_goal.setDescription("Total Cholesterol");
+        mark_goal.setCompleted(false);
+        double total = ldl + hdl;
+        if(total > 200){
+            mark_goal.setValue(total - 200);
+            mark_goal.setAction("reduce");
+            return mark_goal;
+        }else{
+           mark_goal.setValue(total);
+           mark_goal.setAction("maintain");
+           return mark_goal;
+        }
+    }
+
     public Goal getHDLGoal(double hdl){
         Goal arvi_goal = new Goal();
         arvi_goal.setDuration("1 month");

@@ -38,6 +38,12 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
     SharedPreferences prefs;
     SharedPreferences.Editor editor ;
 
+    private boolean bptr_selected = false;
+    private boolean smoke_selected = false;
+    private boolean phys_selected = false;
+    private boolean ft_selected = false;
+    private boolean st_selected = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +76,8 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
                 int bptrs = Integer.parseInt(bptr);
                 editor.putInt("bptr",bptrs);
                 editor.commit();
+                bptr_selected = true;
+                invalidateOptionsMenu();
             }
         });
 
@@ -82,6 +90,8 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
                 int bptrs = Integer.parseInt(bptr);
                 editor.putInt("bptr",bptrs);
                 editor.commit();
+                bptr_selected = true;
+                invalidateOptionsMenu();
             }
         });
 
@@ -98,6 +108,8 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
                     viewGroup_notsmoking.setVisibility(View.GONE);
                     btn_smoking_no.setSelected(false);
                 }
+                smoke_selected = true;
+                invalidateOptionsMenu();
             }
         });
 
@@ -113,6 +125,8 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
                     viewGroup_sticks.setVisibility(View.GONE);
                     btn_smoking_yes.setSelected(false);
                 }
+                smoke_selected = true;
+                invalidateOptionsMenu();
             }
         });
         btn_smoker.setOnClickListener(new View.OnClickListener() {
@@ -159,6 +173,8 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
                 sedentary = "1";
                 editor.putInt("physical_type",1);
                 editor.commit();
+                phys_selected = true;
+                invalidateOptionsMenu();
             }
         });
 
@@ -173,6 +189,8 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
                 light = "2";
                 editor.putInt("physical_type",2);
                 editor.commit();
+                phys_selected = true;
+                invalidateOptionsMenu();
             }
         });
 
@@ -187,6 +205,8 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
                 moderate = "3";
                 editor.putInt("physical_type",3);
                 editor.commit();
+                phys_selected = true;
+                invalidateOptionsMenu();
             }
         });
 
@@ -201,6 +221,8 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
                 very = "4";
                 editor.putInt("physical_type",4);
                 editor.commit();
+                phys_selected = true;
+                invalidateOptionsMenu();
             }
         });
 
@@ -215,6 +237,8 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
                 extreme = "5";
                 editor.putInt("physical_type",5);
                 editor.commit();
+                phys_selected = true;
+                invalidateOptionsMenu();
             }
         });
 
@@ -298,6 +322,8 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
                     editor.putInt("free",free);
                     editor.commit();
                 }
+                ft_selected = true;
+                invalidateOptionsMenu();
                 d.dismiss();
             }
         });
@@ -352,7 +378,8 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
                 Button btn_freetime = (Button) findViewById(R.id.sleeptime);
                 String sleep = String.format("%02d:%02d", np.getValue(), np1.getValue()) + " PM";
                 btn_freetime.setText(sleep);
-                prefs.edit().putString("sleep",sleep);
+                prefs.edit().putString("sleep",sleep);st_selected = true;
+                invalidateOptionsMenu();
                 d.dismiss();
             }
         });
@@ -439,6 +466,23 @@ public class HabitsActivity extends AppCompatActivity implements NumberPicker.On
         getMenuInflater().inflate(R.menu.next_button, menu);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+        if(updateProceedButton()){
+            menu.getItem(0).setEnabled(true);
+            menu.getItem(0).getIcon().setAlpha(255);
+        }else{
+            menu.getItem(0).setEnabled(false);
+            menu.getItem(0).getIcon().setAlpha(130);
+        }
+        invalidateOptionsMenu();
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    public boolean updateProceedButton(){
+        return smoke_selected && bptr_selected && phys_selected && ft_selected && st_selected;
     }
 
     @Override

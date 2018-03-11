@@ -14,11 +14,11 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/header_avatar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:srcCompat="@android:drawable/sym_def_app_icon" />
+        android:paddingTop="@dimen/nav_header_vertical_spacing"/>
+        <!--app:srcCompat="@drawable/avi_male_head_01"-->
 
     <TextView
         android:id="@+id/header_name"
@@ -29,9 +29,9 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
     <TextView
-        android:id="@+id/header_email"
+        android:id="@+id/header_username"
         android:layout_width="wrap_content"
-        android:layout_height="29dp"
-        android:text="decebill@gmail.com" />
+        android:layout_height="20dp"
+        android:text="decebill" />
 
 </LinearLayout>

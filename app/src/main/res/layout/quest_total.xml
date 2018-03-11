@@ -25,7 +25,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Don't know your LDL?"
+                android:text="Don't know your LDL cholesterol?"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                 android:textSize="18sp" />
         </LinearLayout>
@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/fab_margin"
-            android:text="See your healthcare provider to find out your LDL cholesterol number."
+            android:text="See your healthcare provider to find out your Low-Density Lipids cholesterol number."
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
@@ -69,7 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/fab_margin"
-            android:text="Note: If you don't know your total cholesterol number, the results won't be as accurate and as personal as to you."
+            android:text="Note: If you don't know your LDL cholesterol number, the results won't be as accurate and as personal as to you."
             android:textSize="14sp" />
 
         <LinearLayout

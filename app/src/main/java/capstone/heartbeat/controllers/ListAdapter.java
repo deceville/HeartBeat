@@ -11,6 +11,7 @@ import java.util.List;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,7 +77,7 @@ public class ListAdapter extends BaseAdapter {
 
         final double total = prefs.getInt("free",60);
         int min = 15;
-        ((TextView) view.findViewById(R.id.title_suggestions)).setText(suggestions.get(position).getActivities());
+        ((TextView) view.findViewById(R.id.title_suggestions)).setText(suggestions.get(position).getActivities() + " (" + suggestions.get(position).getIntensity()+" intensity)");
         ((TextView) view.findViewById(R.id.desc_suggestions)).setText(df.format(cal)+" cal will burn every "+min+" minutes.");
 
         final CheckBox cbox = (CheckBox) view.findViewById(R.id.cbox_suggestions);
@@ -107,7 +108,10 @@ public class ListAdapter extends BaseAdapter {
                         cbox.setChecked(false);
                         unchecked = true;
                         System.out.println("Count:" +finalCount);
-                        Toast.makeText(ctx,"Limited time only!",Toast.LENGTH_SHORT).show();
+                        Toast errorToast = new Toast(ctx);
+                        errorToast.setView(lInflater.inflate(R.layout.toast_error, null));
+                        errorToast.setDuration(Toast.LENGTH_LONG);
+                        errorToast.show();
                     }
                 }else{//if checked
                     if(!unchecked){

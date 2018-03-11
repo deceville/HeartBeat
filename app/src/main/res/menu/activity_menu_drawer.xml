@@ -3,10 +3,6 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_home"
-            android:title="Home" />
-        <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_menu_profile"
             android:title="Profile" />
@@ -25,7 +21,7 @@
         <item
             android:id="@+id/nav_goals"
             android:icon="@drawable/ic_menu_goals"
-            android:title="Goals and Quests" />
+            android:title="Goals" />
         <item
             android:id="@+id/nav_help"
             android:icon="@drawable/ic_menu_help"
