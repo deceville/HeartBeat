@@ -26,6 +26,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -95,11 +96,16 @@ public class MainActivity extends AppCompatActivity
         myDB.open();
         User user = new User();
         user = myDB.getUserAssessData(id);
+        int age = prefs.getInt("age",25);
+        String sex = user.gender;
+
         View hView =  navigationView.getHeaderView(0);
         TextView header_name = (TextView)hView.findViewById(R.id.header_name);
-        header_name.setText(user.name);
         TextView header_username = (TextView)hView.findViewById(R.id.header_username);
+        ImageView header_avatar = (ImageView)hView.findViewById(R.id.header_avatar);
+        header_name.setText(user.name);
         header_username.setText(user.username);
+        setHeaderAvatar(sex, age, header_avatar);
         myDB.close();
 
         /*View headerView = findViewById(R.id.header_menu);
@@ -126,6 +132,34 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
 
+    }
+
+    private void setHeaderAvatar(String gender, int age, ImageView avatar){
+        if(gender.equals("Female")){
+            if(age >= 25 && age <= 35){
+                avatar.setImageResource(R.drawable.avi_female_head_01);
+            }else if (age <= 45 && age >= 36){
+                avatar.setImageResource(R.drawable.avi_female_head_02);
+            }else if (age <= 55 && age >= 46){
+                avatar.setImageResource(R.drawable.avi_female_head_03);
+            }else if (age <= 70 && age >= 56){
+                avatar.setImageResource(R.drawable.avi_female_head_04);
+            }else if (age <= 84 && age >= 71){
+                avatar.setImageResource(R.drawable.avi_female_head_05);
+            }
+        }else{
+            if(age >= 25 && age <= 35){
+                avatar.setImageResource(R.drawable.avi_male_head_01);
+            }else if (age <= 45 && age >= 36){
+                avatar.setImageResource(R.drawable.avi_male_head_02);
+            }else if (age <= 55 && age >= 46){
+                avatar.setImageResource(R.drawable.avi_female_head_03);
+            }else if (age <= 70 && age >= 56){
+                avatar.setImageResource(R.drawable.avi_male_head_04);
+            }else if (age <= 84 && age >= 71){
+                avatar.setImageResource(R.drawable.avi_male_head_05);
+            }
+        }
     }
 
     private void setupViewPager(ViewPager viewPager) {
