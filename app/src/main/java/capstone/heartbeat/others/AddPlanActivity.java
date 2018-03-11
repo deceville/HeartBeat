@@ -512,8 +512,32 @@ public class AddPlanActivity extends AppCompatActivity {
                 plans.createEntry2(selected, title, false, selectedMets);
                 plans.close();
 
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                finish();
+                final Dialog dialog = new Dialog(AddPlanActivity.this, android.R.style.Theme_Material_Light_Dialog);
+                dialog.setTitle("Program guide");
+                dialog.setContentView(R.layout.program_dialog);
+                dialog.create();
+
+                TextView program_goal = (TextView) dialog.findViewById(R.id.program_goal);
+                TextView program_days = (TextView) dialog.findViewById(R.id.program_days);
+                Button program_cancel = (Button) dialog.findViewById(R.id.program_cancel);
+                Button program_lets = (Button) dialog.findViewById(R.id.program_lets);
+
+                program_lets.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        finish();
+                    }
+                });
+                program_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
                 return true;
             }else{
                 if(TextUtils.isEmpty(plan_name.getText())){
