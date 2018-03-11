@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -60,6 +62,8 @@ public class AddPlanSActivity extends AppCompatActivity {
     public double weight;
     double totalWeight;
     private Bank coin;
+    ArrayList<Activity> acts;
+    private boolean suggestion = false;
 
 
     @Override
@@ -73,8 +77,10 @@ public class AddPlanSActivity extends AppCompatActivity {
         weight = prefs.getInt("weight", 60);
         free = prefs.getInt("free", 60);
 
+        editor = prefs.edit();
+
         Bundle b = getIntent().getExtras();
-        ArrayList<Activity> acts = b.getParcelableArrayList("acts");
+        acts = b.getParcelableArrayList("acts");
         double weight = b.getDouble("weight");
 
        /* cat_age = (TextView) findViewById(R.id.cat_age);
@@ -190,7 +196,7 @@ public class AddPlanSActivity extends AppCompatActivity {
                 shop_done.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
+                        dialog.dismiss();
                     }
                 });
 
@@ -251,7 +257,11 @@ public class AddPlanSActivity extends AppCompatActivity {
                             hours = free/60;
                             minutes = free%60;
 
-                            Toast.makeText(getApplicationContext(),"Successfully bought!", Toast.LENGTH_SHORT).show();
+                            LayoutInflater inflater = getLayoutInflater();
+                            Toast successToast = new Toast(getApplication());
+                            successToast.setView(inflater.inflate(R.layout.toast_success, null));
+                            successToast.setDuration(Toast.LENGTH_LONG);
+                            successToast.show();
                             shop_coin.setText("You currently have " +total+ " coins and "+String.format("%02d:%02d", hours, minutes)+ " hour available time.");
                             System.out.println("total:"+total +"free:"+free);
                             editor.putInt("coin", total);
@@ -345,7 +355,6 @@ public class AddPlanSActivity extends AppCompatActivity {
                 ed.apply();
                 for (Activity acts : myActivities) {
                     if (acts.isChecked()) {
-
                         selectedActivities.add(acts);
                         totalWeight += e.getWeightEquivalent(acts.getMETS(), weight);
                         totalWeight = Math.round(totalWeight);
@@ -444,44 +453,61 @@ public class AddPlanSActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up next_button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        View focusView = null;
+        boolean cancel = false;
+        boolean planName = !TextUtils.isEmpty(plan_name.getText());
+        List<String> selected;
+        List<Double> selectedMets;
+        ResultEvaluator e;
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.save) {
+            if(planName){
+                prefs = getSharedPreferences("values", MODE_PRIVATE);
+                editor = prefs.edit();
+                editor.putString("plan_name", plan_name.getText().toString());
+                editor.apply();
 
+                String title = prefs.getString("plan_name", null);
+                String date = prefs.getString("plan_date", null);
+                double cal = 100;
+                int initialMinutes = 0;
+                int freeTime = prefs.getInt("free", 0);
 
-            prefs = getSharedPreferences("values", MODE_PRIVATE);
-            editor = prefs.edit();
-            editor.putString("plan_name", plan_name.getText().toString());
-            editor.apply();
+                selected = new ArrayList<>();
+                selectedMets = new ArrayList<>();
+                e = new ResultEvaluator(getApplicationContext());
+                for (Activity a : acts
+                        ) {
+                    selected.add(a.Activities);
+                    double b = e.getWeightEquivalent(a.getMETS(), weight);
+                    System.out.println("b: " + b);
+                    selectedMets.add(b);
+                    initialMinutes += 15;
+                }
 
-            String title = prefs.getString("plan_name", null);
-            String date = prefs.getString("plan_date", null);
-            double cal = 100;
-            int initialMinutes = 0;
-            int freeTime = prefs.getInt("free", 0);
+                HeartBeatDB plans = new HeartBeatDB(getApplicationContext());
+                plans.open();
+                plans.createEntry1(uid, title, date, cal, initialMinutes, freeTime, false, totalWeight);
+                plans.createEntry2(selected, title, false, selectedMets);
+                plans.close();
 
-            List<String> selected = new ArrayList<>();
-            List<Double> selectedMets = new ArrayList<>();
-            ResultEvaluator e = new ResultEvaluator(getApplicationContext());
-            for (Activity a : selectedActivities
-                    ) {
-                selected.add(a.Activities);
-                double b = e.getWeightEquivalent(a.getMETS(), weight);
-                System.out.println("b: " + b);
-                selectedMets.add(b);
-                initialMinutes += 15;
+                startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                finish();
+                return true;
+            }else{
+                if(TextUtils.isEmpty(plan_name.getText())){
+                    plan_name.setError(getString(R.string.error_field_required));
+                    focusView = plan_name;
+                    cancel = true;
+                }
+                if (cancel) {
+                    // There was an error; don't attempt login and focus the first
+                    // form field with an error.
+                    focusView.requestFocus();
+                }
             }
 
-            Toast.makeText(getApplicationContext(), uid + "", Toast.LENGTH_SHORT).show();
-            HeartBeatDB plans = new HeartBeatDB(getApplicationContext());
-            plans.open();
-            plans.createEntry1(uid, title, date, cal, initialMinutes, freeTime, false, totalWeight);
-            plans.createEntry2(selected, title, false, selectedMets);
-            plans.close();
-
-            startActivity(new Intent(getApplicationContext(), MainActivity.class));
-            finish();
-            return true;
         }
 
         return super.onOptionsItemSelected(item);

@@ -451,6 +451,10 @@ public class DemographicsActivity extends AppCompatActivity {
                                     if(quest_total&&quest_hdl){
                                         alldone = true;
                                         showCoinDialog(d, allQuest);
+                                        HeartBeatDB db = new HeartBeatDB(getApplicationContext());
+                                        db.open();
+                                        db.updateCoins(uid,allQuest);
+                                        db.close();
                                     }else{
                                         alldone = false;
                                         showCoinDialog(dialog1, singleQuest);
@@ -486,6 +490,10 @@ public class DemographicsActivity extends AppCompatActivity {
                                     if(quest_bp&&quest_hdl){
                                         alldone = true;
                                         showCoinDialog(d, allQuest);
+                                        HeartBeatDB db = new HeartBeatDB(getApplicationContext());
+                                        db.open();
+                                        db.updateCoins(uid,allQuest);
+                                        db.close();
                                     }else{
                                         alldone = false;
                                         showCoinDialog(dialog1, singleQuest);
@@ -522,6 +530,10 @@ public class DemographicsActivity extends AppCompatActivity {
                                     if(quest_bp&&quest_total){
                                         alldone = true;
                                         showCoinDialog(d, allQuest);
+                                        HeartBeatDB db = new HeartBeatDB(getApplicationContext());
+                                        db.open();
+                                        db.updateCoins(uid,allQuest);
+                                        db.close();
                                     }else{
                                         alldone = false;
                                         showCoinDialog(dialog1, singleQuest);
@@ -544,6 +556,10 @@ public class DemographicsActivity extends AppCompatActivity {
                         public void onClick(View v) {
                             alldone = true;
                             showCoinDialog(d, allQuest);
+                            HeartBeatDB db = new HeartBeatDB(getApplicationContext());
+                            db.open();
+                            db.updateCoins(uid,allQuest);
+                            db.close();
                         }
                     });
 

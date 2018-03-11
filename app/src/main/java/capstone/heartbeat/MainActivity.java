@@ -11,7 +11,9 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -19,10 +21,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -34,6 +38,7 @@ import java.util.List;
 
 import capstone.heartbeat.account.LoginActivity;
 import capstone.heartbeat.account.ProfileActivity;
+import capstone.heartbeat.controllers.FragmentAdapter;
 import capstone.heartbeat.controllers.HeartBeatDB;
 import capstone.heartbeat.fragments.GoalsFragment;
 import capstone.heartbeat.fragments.PlansFragment;
@@ -64,6 +69,7 @@ public class MainActivity extends AppCompatActivity
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         user = getSharedPreferences("login",MODE_PRIVATE);
+        prefs = getSharedPreferences("values",MODE_PRIVATE);
 
         id = user.getInt("id", 1);
         /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -116,26 +122,8 @@ public class MainActivity extends AppCompatActivity
         adapter.addFragment(new ResultsFragment(prefs,id), "Results");
         adapter.addFragment(new SuggestionsFragment(prefs), "Suggestions");
         adapter.addFragment(new PlansFragment(user), "Plans");
-        adapter.addFragment(new GoalsFragment(user,id), "Goals & Quests");
+        adapter.addFragment(new GoalsFragment(user,id), "Goals");
         viewPager.setAdapter(adapter);
-    }
-
-    public void displayTutorial(Activity act, View view){
-        TapTargetView.showFor(act,
-                TapTarget.forView(view, "Add selected suggestions", "Select and add suggestions to a new plan")
-                        .outerCircleColor(R.color.bg_screen2)      // Specify a color for the outer circle
-                        .outerCircleAlpha(0.96f)
-                        .titleTextSize(20)
-                        .descriptionTextSize(16)
-                        .textColor(R.color.standardWhite) // Specify a color for both the title and description text
-                        .textTypeface(Typeface.SANS_SERIF)  // Specify a typeface for the text
-                        .dimColor(R.color.standardBlack)            // If set, will dim behind the view with 30% opacity of the given color
-                        .drawShadow(true)                   // Whether to draw a drop shadow or not
-                        .cancelable(false)                  // Whether tapping outside the outer circle dismisses the view
-                        .tintTarget(false)                   // Whether to tint the target view's color
-                        .transparentTarget(false)            // Specify a custom drawable to draw as the target
-                        .targetRadius(60)
-        );
     }
 
     @Override
@@ -243,9 +231,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
         Fragment fragment = null;
 
-        if (id == R.id.nav_home) {
-
-        } else if (id == R.id.nav_profile) {
+        if (id == R.id.nav_profile) {
             Intent i = new Intent(MainActivity.this, ProfileActivity.class);
             startActivity(i);
         } else if (id == R.id.nav_results) {
@@ -257,17 +243,6 @@ public class MainActivity extends AppCompatActivity
 
             fragment = new ResultsFragment();
         } else if (id == R.id.nav_plans) {
-            /*FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.fragment_plans, new PlansFragment());
-            ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-            ft.addToBackStack(null);
-            ft.commit();*/
-
-            PlansFragment plansFragment = new PlansFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, plansFragment)
-                    .addToBackStack(null)
-                    .commit();
         } else if (id == R.id.nav_suggestions) {
             fragment = new SuggestionsFragment(prefs);
         } else if (id == R.id.nav_goals) {
