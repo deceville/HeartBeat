@@ -281,13 +281,20 @@ public class ResultEvaluator extends AddPlanActivity {
     public double getGoalDays(List<Activity> activities){
          double days =0 ;
          double total = 0;
+         prefs = c.getSharedPreferences("values",MODE_PRIVATE);
+         weight = prefs.getInt("weight",0);
+         height = prefs.getInt("height",0);
          Goal g = getBMIGoal(weight,height);
+
          double goal=g.getValue()*1000;
+        System.out.println(goal);
+        System.out.println(goal);
         for (Activity a:activities
              ) {
-            total = total + getWeightEquivalent(a.getWeightLoss(),weight)*15;
+            total = total + a.getWeightLoss();
+            System.out.println(total);
         }
-
+        System.out.println(total);
         days = goal/total;
         return days;
     }

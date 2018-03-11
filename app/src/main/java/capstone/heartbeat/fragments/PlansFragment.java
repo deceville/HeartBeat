@@ -173,6 +173,8 @@ public class PlansFragment extends Fragment{
 
 
 
+
+
         PlanAdapter adapter = new PlanAdapter(getApplicationContext(), plans);
         recyclerView.setAdapter(adapter);
 

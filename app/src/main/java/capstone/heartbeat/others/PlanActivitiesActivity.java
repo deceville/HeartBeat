@@ -22,12 +22,15 @@ import capstone.heartbeat.MainActivity;
 import capstone.heartbeat.R;
 import capstone.heartbeat.controllers.Effects;
 import capstone.heartbeat.controllers.HeartBeatDB;
+import capstone.heartbeat.controllers.ResultEvaluator;
 import capstone.heartbeat.controllers.SwipeControllerActions;
 import capstone.heartbeat.controllers.ActivityAdapter;
 import capstone.heartbeat.controllers.SwipeController;
 import capstone.heartbeat.models.Activity;
 import capstone.heartbeat.models.Bank;
 import capstone.heartbeat.models.Progress;
+
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class PlanActivitiesActivity extends AppCompatActivity {
     RecyclerView rv_activities;
@@ -57,6 +60,11 @@ public class PlanActivitiesActivity extends AppCompatActivity {
         HeartBeatDB myDb = new HeartBeatDB(getApplicationContext());
         myDb.open();
         list = myDb.getActivities(title);
+
+        ResultEvaluator re = new ResultEvaluator(this);
+        double days = re.getGoalDays(list);
+
+        System.out.println("You can achieve your goal in "+days+". \n Hint: You can achieve your goal faster if you add more activities.");
 
         activityAdapter = new ActivityAdapter(getApplicationContext(),list);
         rv_activities.setAdapter(activityAdapter);
