@@ -422,12 +422,14 @@ public class AddPlanActivity extends AppCompatActivity {
         HeartBeatDB db = new HeartBeatDB(getApplicationContext());
         db.open();
         User user = db.getUserAssessData(uid);
+        double weight = prefs.getInt("weight",0);
+        double height = prefs.getInt("height",0);
         ResultEvaluator re = new ResultEvaluator(getApplicationContext());
 
         int age = prefs.getInt("age",25);
         //String age = user.birth;
         height = user.height;
-        double bmi = re.getBMI(user.weight, user.height);
+        double bmi = re.getBMI(weight, height);
         bmi = Math.round(bmi);
 
         String bmiCat = new ResultEvaluator(getApplicationContext()).getBMICat(bmi);

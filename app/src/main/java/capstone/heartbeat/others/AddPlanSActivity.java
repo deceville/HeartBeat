@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -16,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.support.design.widget.FloatingActionButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -25,18 +25,23 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import capstone.heartbeat.MainActivity;
 import capstone.heartbeat.R;
 import capstone.heartbeat.controllers.ActivityDatabase;
-import capstone.heartbeat.controllers.HeartBeatDB;
 import capstone.heartbeat.controllers.ListAdapter;
+import capstone.heartbeat.controllers.HeartBeatDB;
 import capstone.heartbeat.controllers.ResultEvaluator;
 import capstone.heartbeat.models.Activity;
 import capstone.heartbeat.models.Bank;
+import capstone.heartbeat.models.Goal;
 import capstone.heartbeat.models.Suggestions;
 import capstone.heartbeat.models.User;
 
@@ -48,7 +53,7 @@ public class AddPlanSActivity extends AppCompatActivity {
     ListAdapter adapter;
     Button btn_addSuggestion, btn_cancel, btn_currentdate, btn_buytime, btn_gotit;
     public int currYear, currMonth, currDay;
-    TextView text_plan_freetime, txtWeight, cat_age, cat_BMI, cat_SUGGEST,shop_coin;
+    TextView text_plan_freetime, txtWeight, cat_age, cat_BMI, cat_SUGGEST;
     private EditText plan_name;
 
     public static SharedPreferences prefs, use;
@@ -59,11 +64,12 @@ public class AddPlanSActivity extends AppCompatActivity {
     ArrayList<Activity> selectedActivities;
     private FirebaseDatabase database;
     public int uid, free, count, coins, total, current, fee, time, hours, minutes;
-    public double weight;
+    public double weight,height;
     double totalWeight;
+    private String freetime;
+    private TextView shop_coin;
     private Bank coin;
-    ArrayList<Activity> acts;
-    private boolean suggestion = false;
+    private boolean suggestion = false, planName = false;
 
 
     @Override
@@ -76,19 +82,16 @@ public class AddPlanSActivity extends AppCompatActivity {
         uid = use.getInt("id", 0);
         weight = prefs.getInt("weight", 60);
         free = prefs.getInt("free", 60);
+        freetime = prefs.getString("freetime", "");
 
         editor = prefs.edit();
-
-        Bundle b = getIntent().getExtras();
-        acts = b.getParcelableArrayList("acts");
-        double weight = b.getDouble("weight");
 
        /* cat_age = (TextView) findViewById(R.id.cat_age);
         cat_BMI = (TextView) findViewById(R.id.cat_BMI);
         cat_SUGGEST = (TextView) findViewById(R.id.cat_SUGGEST);
         btn_gotit = (Button) findViewById(R.id.btn_gotit);*/
 
-
+        displayActivityGuide();
 
         myDb = new ActivityDatabase(AddPlanSActivity.this);
 
@@ -99,12 +102,9 @@ public class AddPlanSActivity extends AppCompatActivity {
         txtWeight = (TextView) findViewById(R.id.weight_total);
         text_plan_freetime = (TextView) findViewById(R.id.text_plan_freetime);
 
-        btn_buytime = (Button) findViewById(R.id.btn_buytime);
-        txtWeight.setText(weight + " g");
-        adapter = new ListAdapter(getApplicationContext(), acts);
 
-        ListView lvPlan = (ListView) findViewById(R.id.plans_suggestions);
-        lvPlan.setAdapter(adapter);
+        btn_buytime = (Button) findViewById(R.id.btn_buytime);
+
         btn_buytime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -192,6 +192,8 @@ public class AddPlanSActivity extends AppCompatActivity {
                         invalidateOptionsMenu();
                     }
                 });
+
+
 
                 shop_done.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -355,6 +357,8 @@ public class AddPlanSActivity extends AppCompatActivity {
                 ed.apply();
                 for (Activity acts : myActivities) {
                     if (acts.isChecked()) {
+                        suggestion = true;
+                        invalidateOptionsMenu();
                         selectedActivities.add(acts);
                         totalWeight += e.getWeightEquivalent(acts.getMETS(), weight);
                         totalWeight = Math.round(totalWeight);
@@ -363,7 +367,7 @@ public class AddPlanSActivity extends AppCompatActivity {
 
 
                 }
-
+                txtWeight.setText(totalWeight + " g");
                        /*SharedPreferences.Editor edit = prefs.edit();
                        edit.putLong("totalWeight",(long)totalWeight);
                        edit.commit();*/
@@ -388,6 +392,7 @@ public class AddPlanSActivity extends AppCompatActivity {
                 });
 
                 dialog.dismiss();
+                plan_name.requestFocus();
             }
         });
 
@@ -417,17 +422,21 @@ public class AddPlanSActivity extends AppCompatActivity {
         HeartBeatDB db = new HeartBeatDB(getApplicationContext());
         db.open();
         User user = db.getUserAssessData(uid);
+        double weight = prefs.getInt("weight",0);
+        double height = prefs.getInt("height",0);
         ResultEvaluator re = new ResultEvaluator(getApplicationContext());
 
-
-        String age = user.birth;
-        double bmi = re.getBMI(user.weight, user.height);
+        int age = prefs.getInt("age",25);
+        //String age = user.birth;
+        height = user.height;
+        double bmi = re.getBMI(weight, height);
         bmi = Math.round(bmi);
 
-        System.out.println(age);
-        cat_age.setText("Your age is " + age);
-        cat_BMI.setText("and your BMI is " + bmi + " which is normal.");
-        cat_SUGGEST.setText("You should do ");
+        String bmiCat = new ResultEvaluator(getApplicationContext()).getBMICat(bmi);
+        String actCat = new ResultEvaluator(getApplicationContext()).getActCategory();
+        cat_age.setText("Your age is " + age + " years old");
+        cat_BMI.setText("and your BMI is " + bmi + " which is "+ bmiCat+".");
+        cat_SUGGEST.setText("You should do "+ actCat+" activities.");
 
         btn_gotit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -448,6 +457,23 @@ public class AddPlanSActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu){
+        if(updateProceedButton()){
+            menu.getItem(0).setEnabled(true);
+            menu.getItem(0).getIcon().setAlpha(255);
+        }else{
+            menu.getItem(0).setEnabled(false);
+            menu.getItem(0).getIcon().setAlpha(130);
+        }
+        invalidateOptionsMenu();
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    public boolean updateProceedButton(){
+        return suggestion;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up next_button, so long
@@ -455,13 +481,11 @@ public class AddPlanSActivity extends AppCompatActivity {
         int id = item.getItemId();
         View focusView = null;
         boolean cancel = false;
-        boolean planName = !TextUtils.isEmpty(plan_name.getText());
-        List<String> selected;
-        List<Double> selectedMets;
-        ResultEvaluator e;
+        planName = !TextUtils.isEmpty(plan_name.getText());
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.save) {
+
             if(planName){
                 prefs = getSharedPreferences("values", MODE_PRIVATE);
                 editor = prefs.edit();
@@ -474,10 +498,10 @@ public class AddPlanSActivity extends AppCompatActivity {
                 int initialMinutes = 0;
                 int freeTime = prefs.getInt("free", 0);
 
-                selected = new ArrayList<>();
-                selectedMets = new ArrayList<>();
-                e = new ResultEvaluator(getApplicationContext());
-                for (Activity a : acts
+                List<String> selected = new ArrayList<>();
+                List<Double> selectedMets = new ArrayList<>();
+                ResultEvaluator e = new ResultEvaluator(getApplicationContext());
+                for (Activity a : selectedActivities
                         ) {
                     selected.add(a.Activities);
                     double b = e.getWeightEquivalent(a.getMETS(), weight);
@@ -492,8 +516,48 @@ public class AddPlanSActivity extends AppCompatActivity {
                 plans.createEntry2(selected, title, false, selectedMets);
                 plans.close();
 
-                startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                finish();
+                ResultEvaluator re = new ResultEvaluator(this);
+                double days = re.getGoalDays(selectedActivities);
+
+                final Dialog dialog = new Dialog(AddPlanSActivity.this, android.R.style.Theme_Material_Light_Dialog);
+                dialog.setTitle("Program guide");
+                dialog.setContentView(R.layout.program_dialog);
+                dialog.create();
+
+
+                Goal dece_goal = re.getBMIGoal(weight,height);
+
+                TextView program_goal = (TextView) dialog.findViewById(R.id.program_goal);
+                TextView program_days = (TextView) dialog.findViewById(R.id.program_days);
+                if (dece_goal.getValue()>0){
+                    program_goal.setText("You will need to reduce "+dece_goal.getValue()+" kilograms of your weight and with this paln, you can reduce "+totalWeight+" g.");
+
+                    program_days.setText("You can complete your goal in "+ Math.floor(days)+" days. \n Hint: You can achieve your goals faster if you add more activities.");
+
+                }else {
+                    program_goal.setText("You just need to maintain your lifestyle.");
+                    //  program_days.setText("You can complete your goal in "+ Math.floor(days)+" days. \n Hint: You can achieve your goals faster if you add more activities.");
+
+                }
+                Button program_cancel = (Button) dialog.findViewById(R.id.program_cancel);
+                Button program_lets = (Button) dialog.findViewById(R.id.program_lets);
+
+                program_lets.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        finish();
+                    }
+                });
+                program_cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
                 return true;
             }else{
                 if(TextUtils.isEmpty(plan_name.getText())){
@@ -507,7 +571,6 @@ public class AddPlanSActivity extends AppCompatActivity {
                     focusView.requestFocus();
                 }
             }
-
         }
 
         return super.onOptionsItemSelected(item);
